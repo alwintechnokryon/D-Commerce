@@ -15,6 +15,7 @@ import org.springframework.orm.hibernate5.HibernateTransactionManager;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
+import com.technokryon.ecommerce.model.TKECMCATEGORY;
 import com.technokryon.ecommerce.model.TKECMUSER;
 import com.technokryon.ecommerce.model.TKECTUSERAUDIT;
 import com.technokryon.ecommerce.model.TKECTUSERSESSION;
@@ -51,7 +52,8 @@ public class Config {
 
 		factoryBean.setHibernateProperties(props);
 		// factoryBean.setHibernateProperties(props);
-		factoryBean.setAnnotatedClasses(TKECMUSER.class, TKECTUSERSESSION.class, TKECTUSERAUDIT.class);
+		factoryBean.setAnnotatedClasses(TKECMUSER.class, TKECTUSERSESSION.class, TKECTUSERAUDIT.class,
+				TKECMCATEGORY.class);
 
 		return factoryBean;
 	}

@@ -73,15 +73,15 @@ public class UserDaoImpl implements UserDao {
 
 		if (O_TKECM_USER1 == null) {
 
-			O_TKECM_USER.setTKECMU_ID("TKEC0001");
+			O_TKECM_USER.setTKECMU_ID("TKECU0001");
 		} else {
 
 			String userId = O_TKECM_USER1.getTKECMU_ID();
-			Integer Ag = Integer.valueOf(userId.substring(4));
+			Integer Ag = Integer.valueOf(userId.substring(5));
 			Ag++;
 
 			System.err.println(Ag);
-			O_TKECM_USER.setTKECMU_ID("TKEC" + String.format("%04d", Ag));
+			O_TKECM_USER.setTKECMU_ID("TKECU" + String.format("%04d", Ag));
 		}
 
 		try {
@@ -171,15 +171,15 @@ public class UserDaoImpl implements UserDao {
 
 		if (O_TKECM_USER1 == null) {
 
-			O_TKECM_USER.setTKECMU_ID("TKEC0001");
+			O_TKECM_USER.setTKECMU_ID("TKECU0001");
 		} else {
 
 			String userId = O_TKECM_USER1.getTKECMU_ID();
-			Integer Ag = Integer.valueOf(userId.substring(4));
+			Integer Ag = Integer.valueOf(userId.substring(5));
 			Ag++;
 
 			System.err.println(Ag);
-			O_TKECM_USER.setTKECMU_ID("TKEC" + String.format("%04d", Ag));
+			O_TKECM_USER.setTKECMU_ID("TKECU" + String.format("%04d", Ag));
 		}
 
 		try {
