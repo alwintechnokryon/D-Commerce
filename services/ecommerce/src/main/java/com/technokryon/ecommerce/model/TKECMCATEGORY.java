@@ -18,15 +18,15 @@ public class TKECMCATEGORY {
 
 	@Id
 	@Column(name = "TKECMC_CATEGORY_ID")
-	private String TKECMC_CATEGORY_ID;
+	private String tkecmcCategoryId;
 
 	@Column(name = "TKECMC_PARENT_ID")
-	private String TKECMC_PARENT_ID;
+	private String tkecmcParentId;
 
 	@Column(name = "TKECMC_CATEGORY_NAME")
-	private String TKECMC_CATEGORY_NAME;
+	private String tkecmcCategoryName;
 
 	@Column(name = "TKECMC_CATEGORY_LEVEL")
-	private Integer TKECMC_CATEGORY_LEVEL;
+	private Integer tkecmcCategoryLevel;
 
 }

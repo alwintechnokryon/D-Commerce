@@ -36,8 +36,8 @@ public class UserProfileController {
 			return new ResponseEntity<Object>(O_PJ_Response, HttpStatus.UNPROCESSABLE_ENTITY);
 		}
 
-		O_PJ_TKECMUSER_DETAIL.setPassword(null);
-		O_PJ_TKECMUSER_DETAIL.setUserId(null);
+		O_PJ_TKECMUSER_DETAIL.setTkecmuPassword(null);
+		O_PJ_TKECMUSER_DETAIL.setTkecmuId(null);
 
 		O_PJ_Response.setMessage("Success!");
 		return new ResponseEntity<Object>(O_PJ_TKECMUSER_DETAIL, HttpStatus.UNPROCESSABLE_ENTITY);

@@ -10,9 +10,9 @@ import lombok.NoArgsConstructor;
 
 public class PJ_TKECTUSERSESSION {
 
-	String userId;
-	String apiKey;
-	String createdIp;
-	OffsetDateTime createdDate;
-	String aliveYN;
+	String tkectusUserId;
+	String tkectusApiKey;
+	String tkectusCreatedIp;
+	OffsetDateTime tkectusCreatedDate;
+	String tkectusAliveYN;
 }

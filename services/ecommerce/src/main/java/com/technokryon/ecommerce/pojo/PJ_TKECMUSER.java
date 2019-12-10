@@ -10,20 +10,20 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class PJ_TKECMUSER {
 
-	String userId;
-	String name;
-	String password;
-	int otp;
-	OffsetDateTime otpExp;
-	String regType;
-	String mail;
-	String hashKey;
-	BigInteger phoneNo;
-	Integer countryCode;
-	OffsetDateTime createdDate;
-	String status;
-	String otpStatus;
-	OffsetDateTime modifiedDate;
+	String tkecmuId;
+	String tkecmuName;
+	String tkecmuRegType;
+	String tkecmuMail;
+	int tkecmuOtp;
+	OffsetDateTime tkecmuOtpExp;
+	String tkecmuHashKey;
+	String tkecmuPassword;
+	OffsetDateTime tkecmuCreatedDate;
+	BigInteger tkecmuPhone;
+	Integer tkecmuCountryCode;
+	String tkecmuOtpStatus;
+	String tkecmuStatus;
+	OffsetDateTime tkecmuModifideDate;
 	String oldPassword;
 	String apiKey;
 }

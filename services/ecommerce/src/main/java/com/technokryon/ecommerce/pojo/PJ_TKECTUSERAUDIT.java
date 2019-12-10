@@ -8,13 +8,13 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class PJ_TKECTUSERAUDIT {
 
-	Integer agId;
-	String userId;
-	String userAgent;
-	OffsetDateTime loginTime;
-	OffsetDateTime logoutTime;
-	Double latitude;
-	Double longitude;
-	String ip;
-	String apiKey;
+	Integer tkectuaAgId;
+	String tkectuaUserId;
+	OffsetDateTime tkectuaLoginTime;
+	OffsetDateTime tkectuaLogouttime;
+	String tkectuaUserAgent;
+	Double tkectuaLat;
+	Double tkectuaLong;
+	String tkectuaIp;
+	String tkectuaApiKey;
 }

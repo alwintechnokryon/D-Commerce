@@ -46,97 +46,97 @@ public class RegisterController {
 
 		PJ_Response O_PJ_Response = new PJ_Response();
 
-		if (RO_PJ_TKECMUSER.getRegType() == null || RO_PJ_TKECMUSER.getRegType().isEmpty()) {
+		if (RO_PJ_TKECMUSER.getTkecmuRegType() == null || RO_PJ_TKECMUSER.getTkecmuRegType().isEmpty()) {
 
 			O_PJ_Response.setMessage("Registration Type is Missing..!");
 			return new ResponseEntity<Object>(O_PJ_Response, HttpStatus.UNPROCESSABLE_ENTITY);
 
 		}
 
-		if (RO_PJ_TKECMUSER.getName() == null || RO_PJ_TKECMUSER.getName().trim().equals("")) {
+		if (RO_PJ_TKECMUSER.getTkecmuName() == null || RO_PJ_TKECMUSER.getTkecmuName().trim().equals("")) {
 			O_PJ_Response.setMessage("User Name is Empty..!");
 			return new ResponseEntity<Object>(O_PJ_Response, HttpStatus.UNPROCESSABLE_ENTITY);
 		}
 
-		if (RO_PJ_TKECMUSER.getRegType().equals("E")) {
+		if (RO_PJ_TKECMUSER.getTkecmuRegType().equals("E")) {
 
 			// Null-check for user name
-			if (RO_PJ_TKECMUSER.getMail() == null || RO_PJ_TKECMUSER.getMail().trim().equals("")) {
+			if (RO_PJ_TKECMUSER.getTkecmuMail() == null || RO_PJ_TKECMUSER.getTkecmuMail().trim().equals("")) {
 
 				O_PJ_Response.setMessage("Email Id is Empty..!");
 				return new ResponseEntity<Object>(O_PJ_Response, HttpStatus.UNPROCESSABLE_ENTITY);
 			}
 			// Email Validation
-			if (!SingleTon.isEmailValid(RO_PJ_TKECMUSER.getMail())) {
+			if (!SingleTon.isEmailValid(RO_PJ_TKECMUSER.getTkecmuMail())) {
 
 				O_PJ_Response.setMessage("Invalid Email Id..!");
 				return new ResponseEntity<Object>(O_PJ_Response, HttpStatus.UNPROCESSABLE_ENTITY);
 			}
 
-			PJ_TKECMUSER O_PJ_TKECMUSER_DETAIL = O_UserService.isUserEmailAvailable(RO_PJ_TKECMUSER.getMail());
+			PJ_TKECMUSER O_PJ_TKECMUSER_DETAIL = O_UserService.isUserEmailAvailable(RO_PJ_TKECMUSER.getTkecmuMail());
 			if (O_PJ_TKECMUSER_DETAIL != null) {
 
 				O_PJ_Response.setMessage("Email Already Exist..!");
 				return new ResponseEntity<Object>(O_PJ_Response, HttpStatus.UNPROCESSABLE_ENTITY);
 			}
 			// Password Validation
-			if (RO_PJ_TKECMUSER.getPassword().length() > 14 || RO_PJ_TKECMUSER.getPassword().length() < 4) {
+			if (RO_PJ_TKECMUSER.getTkecmuPassword().length() > 14 || RO_PJ_TKECMUSER.getTkecmuPassword().length() < 4) {
 
 				O_PJ_Response.setMessage("Password Shoud be 4 to 14 Charaters ..!");
 				return new ResponseEntity<Object>(O_PJ_Response, HttpStatus.UNPROCESSABLE_ENTITY);
 			}
 
-			RO_PJ_TKECMUSER.setPassword(new BCryptPasswordEncoder().encode(RO_PJ_TKECMUSER.getPassword()));
+			RO_PJ_TKECMUSER.setTkecmuPassword(new BCryptPasswordEncoder().encode(RO_PJ_TKECMUSER.getTkecmuPassword()));
 
 			String userId = O_UserService.createNewUserByEmail(RO_PJ_TKECMUSER);
 
-			O_MailService.sendMail(RO_PJ_TKECMUSER.getMail(), SingleTon.PASSWORD_RESET_MAIL_HEADER,
+			O_MailService.sendMail(RO_PJ_TKECMUSER.getTkecmuMail(), SingleTon.PASSWORD_RESET_MAIL_HEADER,
 
 					"Your OTP is " + OTP);
 
 			PJ_TKECMUSER O_PJ_TKECMUSER1 = new PJ_TKECMUSER();
 
-			O_PJ_TKECMUSER1.setHashKey(O_UserService.saveOTPDetails(OTP, userId));
+			O_PJ_TKECMUSER1.setTkecmuHashKey(O_UserService.saveOTPDetails(OTP, userId));
 
 			return new ResponseEntity<Object>(O_PJ_TKECMUSER1, HttpStatus.OK);
 
 		} else {
 
-			if (RO_PJ_TKECMUSER.getPhoneNo() == null) {
+			if (RO_PJ_TKECMUSER.getTkecmuPhone() == null) {
 
 				O_PJ_Response.setMessage("Mobile Number Is Empty..!");
 				return new ResponseEntity<Object>(O_PJ_Response, HttpStatus.UNPROCESSABLE_ENTITY);
 			}
 
-			if (RO_PJ_TKECMUSER.getCountryCode() == null) {
+			if (RO_PJ_TKECMUSER.getTkecmuCountryCode() == null) {
 
 				O_PJ_Response.setMessage("Country Code Is Empty..!");
 				return new ResponseEntity<Object>(O_PJ_Response, HttpStatus.UNPROCESSABLE_ENTITY);
 			}
 
-			PJ_TKECMUSER O_PJ_TKECMUSER_DETAIL = O_UserService.isUserPhoneNoAvailable(RO_PJ_TKECMUSER.getPhoneNo());
+			PJ_TKECMUSER O_PJ_TKECMUSER_DETAIL = O_UserService.isUserPhoneNoAvailable(RO_PJ_TKECMUSER.getTkecmuPhone());
 			if (O_PJ_TKECMUSER_DETAIL != null) {
 
 				O_PJ_Response.setMessage("Mobile Number Already Exist..!");
 				return new ResponseEntity<Object>(O_PJ_Response, HttpStatus.UNPROCESSABLE_ENTITY);
 			}
 			// Password Validation
-			if (RO_PJ_TKECMUSER.getPassword().length() > 14 || RO_PJ_TKECMUSER.getPassword().length() < 4) {
+			if (RO_PJ_TKECMUSER.getTkecmuPassword().length() > 14 || RO_PJ_TKECMUSER.getTkecmuPassword().length() < 4) {
 
 				O_PJ_Response.setMessage("Password Shoud be 4 to 14 Charaters ..!");
 				return new ResponseEntity<Object>(O_PJ_Response, HttpStatus.UNPROCESSABLE_ENTITY);
 			}
-			RO_PJ_TKECMUSER.setPassword(new BCryptPasswordEncoder().encode(RO_PJ_TKECMUSER.getPassword()));
+			RO_PJ_TKECMUSER.setTkecmuPassword(new BCryptPasswordEncoder().encode(RO_PJ_TKECMUSER.getTkecmuPassword()));
 
 			String userId = O_UserService.createNewUserByPhoneNo(RO_PJ_TKECMUSER);
 
-			O_MailService.sendSMS(RO_PJ_TKECMUSER.getPhoneNo(), RO_PJ_TKECMUSER.getCountryCode(), "Your OTP is " + OTP);
+			O_MailService.sendSMS(RO_PJ_TKECMUSER.getTkecmuPhone(), RO_PJ_TKECMUSER.getTkecmuCountryCode(), "Your OTP is " + OTP);
 
 			System.err.println("OTP---->" + OTP);
 
 			PJ_TKECMUSER O_PJ_TKECMUSER1 = new PJ_TKECMUSER();
 
-			O_PJ_TKECMUSER1.setHashKey(O_UserService.saveOTPDetails(OTP, userId));
+			O_PJ_TKECMUSER1.setTkecmuHashKey(O_UserService.saveOTPDetails(OTP, userId));
 
 			return new ResponseEntity<Object>(O_PJ_TKECMUSER1, HttpStatus.OK);
 
@@ -151,13 +151,13 @@ public class RegisterController {
 
 		PJ_Response O_PJ_Response = new PJ_Response();
 
-		if (RO_PJ_TKECMUSER.getOtp() == 0) {
+		if (RO_PJ_TKECMUSER.getTkecmuOtp() == 0) {
 
 			O_PJ_Response.setMessage("Invalid OTP..!");
 			return new ResponseEntity<Object>(O_PJ_Response, HttpStatus.UNPROCESSABLE_ENTITY);
 		}
 
-		if (RO_PJ_TKECMUSER.getHashKey().isEmpty()) {
+		if (RO_PJ_TKECMUSER.getTkecmuHashKey().isEmpty()) {
 
 			O_PJ_Response.setMessage("Hash Key Is Empty..!");
 			return new ResponseEntity<Object>(O_PJ_Response, HttpStatus.UNPROCESSABLE_ENTITY);
@@ -171,19 +171,19 @@ public class RegisterController {
 			return new ResponseEntity<Object>(O_PJ_Response, HttpStatus.UNPROCESSABLE_ENTITY);
 		}
 
-		if (O_PJ_TKECMUSER_DETAIL.getOtpExp().isBefore(OffsetDateTime.now())) {
+		if (O_PJ_TKECMUSER_DETAIL.getTkecmuOtpExp().isBefore(OffsetDateTime.now())) {
 
 			O_PJ_Response.setMessage("OTP Expired..!");
 			return new ResponseEntity<Object>(O_PJ_Response, HttpStatus.UNPROCESSABLE_ENTITY);
 		}
 
-		if (RO_PJ_TKECMUSER.getOtp() != O_PJ_TKECMUSER_DETAIL.getOtp()) {
+		if (RO_PJ_TKECMUSER.getTkecmuOtp() != O_PJ_TKECMUSER_DETAIL.getTkecmuOtp()) {
 
 			O_PJ_Response.setMessage("Invalid OTP..!");
 			return new ResponseEntity<Object>(O_PJ_Response, HttpStatus.UNPROCESSABLE_ENTITY);
 		}
 
-		O_UserService.changeOTPStatus(O_PJ_TKECMUSER_DETAIL.getUserId());
+		O_UserService.changeOTPStatus(O_PJ_TKECMUSER_DETAIL.getTkecmuId());
 
 		O_PJ_Response.setMessage("Success..!");
 		return new ResponseEntity<Object>(O_PJ_Response, HttpStatus.OK);
@@ -197,31 +197,31 @@ public class RegisterController {
 
 		PJ_Response O_PJ_Response = new PJ_Response();
 
-		if (RO_PJ_TKECMUSER.getRegType() == null || RO_PJ_TKECMUSER.getRegType().isEmpty()) {
+		if (RO_PJ_TKECMUSER.getTkecmuRegType() == null || RO_PJ_TKECMUSER.getTkecmuRegType().isEmpty()) {
 
 			O_PJ_Response.setMessage("Registration Type is Missing..!");
 			return new ResponseEntity<Object>(O_PJ_Response, HttpStatus.UNPROCESSABLE_ENTITY);
 
 		}
 
-		if (RO_PJ_TKECMUSER.getRegType().equals("E")) {
+		if (RO_PJ_TKECMUSER.getTkecmuRegType().equals("E")) {
 
 			// Null-check for Email Id
-			if (RO_PJ_TKECMUSER.getMail() == null || RO_PJ_TKECMUSER.getMail().trim().equals("")) {
+			if (RO_PJ_TKECMUSER.getTkecmuMail() == null || RO_PJ_TKECMUSER.getTkecmuMail().trim().equals("")) {
 
 				O_PJ_Response.setMessage("Email Id is Empty..!");
 				return new ResponseEntity<Object>(O_PJ_Response, HttpStatus.UNPROCESSABLE_ENTITY);
 			}
 
 			// Email Validation
-			if (!SingleTon.isEmailValid(RO_PJ_TKECMUSER.getMail())) {
+			if (!SingleTon.isEmailValid(RO_PJ_TKECMUSER.getTkecmuMail())) {
 
 				O_PJ_Response.setMessage("Invalid Email Id..!");
 				return new ResponseEntity<Object>(O_PJ_Response, HttpStatus.UNPROCESSABLE_ENTITY);
 			}
 
 			// Email Registered Or Not
-			PJ_TKECMUSER O_PJ_TKECMUSER_DETAIL = O_UserService.isUserEmailAvailable(RO_PJ_TKECMUSER.getMail());
+			PJ_TKECMUSER O_PJ_TKECMUSER_DETAIL = O_UserService.isUserEmailAvailable(RO_PJ_TKECMUSER.getTkecmuMail());
 			if (O_PJ_TKECMUSER_DETAIL == null) {
 
 				O_PJ_Response.setMessage("Email Id Not Registered..!");
@@ -229,29 +229,29 @@ public class RegisterController {
 			}
 
 			// OTP STATUS
-			if (O_PJ_TKECMUSER_DETAIL.getOtpStatus().equals("N")) {
+			if (O_PJ_TKECMUSER_DETAIL.getTkecmuOtpStatus().equals("N")) {
 
-				O_MailService.sendMail(RO_PJ_TKECMUSER.getMail(), SingleTon.PASSWORD_RESET_MAIL_HEADER,
+				O_MailService.sendMail(RO_PJ_TKECMUSER.getTkecmuMail(), SingleTon.PASSWORD_RESET_MAIL_HEADER,
 
 						"Your OTP is " + OTP);
 
 				PJ_TKECMUSER O_PJ_TKECMUSER1 = new PJ_TKECMUSER();
-				O_PJ_TKECMUSER1.setHashKey(O_UserService.saveOTPDetails(OTP, O_PJ_TKECMUSER_DETAIL.getUserId()));
+				O_PJ_TKECMUSER1.setTkecmuHashKey(O_UserService.saveOTPDetails(OTP, O_PJ_TKECMUSER_DETAIL.getTkecmuId()));
 
 				return new ResponseEntity<Object>(O_PJ_TKECMUSER1, HttpStatus.OK);
 
 			}
 
 			// Validate STATUS
-			if (O_PJ_TKECMUSER_DETAIL.getStatus().equals("N")) {
+			if (O_PJ_TKECMUSER_DETAIL.getTkecmuStatus().equals("N")) {
 
 				O_PJ_Response.setMessage("Your Account is Deactivated..!");
 				return new ResponseEntity<Object>(O_PJ_Response, HttpStatus.UNPROCESSABLE_ENTITY);
 			}
 
 			// Validate Password
-			if (!new BCryptPasswordEncoder().matches(RO_PJ_TKECMUSER.getPassword(),
-					O_PJ_TKECMUSER_DETAIL.getPassword())) {
+			if (!new BCryptPasswordEncoder().matches(RO_PJ_TKECMUSER.getTkecmuPassword(),
+					O_PJ_TKECMUSER_DETAIL.getTkecmuPassword())) {
 
 				O_PJ_Response.setMessage("Wrong Password..!");
 				return new ResponseEntity<Object>(O_PJ_Response, HttpStatus.UNPROCESSABLE_ENTITY);
@@ -260,7 +260,7 @@ public class RegisterController {
 					.encode(String.valueOf(Calendar.getInstance().getTimeInMillis()));
 
 			PJ_TKECTUSERSESSION O_PJ_TKECTUSERSESSION = O_UserService.getApiSecretDataByNewSecret(apisecret,
-					O_PJ_TKECMUSER_DETAIL.getUserId());
+					O_PJ_TKECMUSER_DETAIL.getTkecmuId());
 
 			O_PJ_TKECMUSER_DETAIL.setApiKey(apisecret);
 
@@ -271,40 +271,40 @@ public class RegisterController {
 		} else {
 
 			// Null-check for Phone
-			if (RO_PJ_TKECMUSER.getPhoneNo() == null) {
+			if (RO_PJ_TKECMUSER.getTkecmuPhone() == null) {
 
 				O_PJ_Response.setMessage("Phone Number Is Empty..!");
 				return new ResponseEntity<Object>(O_PJ_Response, HttpStatus.UNPROCESSABLE_ENTITY);
 			}
 			// Phone Number Registered Or Not
-			PJ_TKECMUSER O_PJ_TKECMUSER_DETAIL = O_UserService.isUserPhoneNoAvailable(RO_PJ_TKECMUSER.getPhoneNo());
+			PJ_TKECMUSER O_PJ_TKECMUSER_DETAIL = O_UserService.isUserPhoneNoAvailable(RO_PJ_TKECMUSER.getTkecmuPhone());
 			if (O_PJ_TKECMUSER_DETAIL == null) {
 
 				O_PJ_Response.setMessage("Phone Number Not Registered..!");
 				return new ResponseEntity<Object>(O_PJ_Response, HttpStatus.UNPROCESSABLE_ENTITY);
 			}
 			// OTP STATUS
-			if (O_PJ_TKECMUSER_DETAIL.getOtpStatus().equals("N")) {
+			if (O_PJ_TKECMUSER_DETAIL.getTkecmuOtpStatus().equals("N")) {
 
-				O_MailService.sendSMS(RO_PJ_TKECMUSER.getPhoneNo(), RO_PJ_TKECMUSER.getCountryCode(),
+				O_MailService.sendSMS(RO_PJ_TKECMUSER.getTkecmuPhone(), RO_PJ_TKECMUSER.getTkecmuCountryCode(),
 						"Your OTP is " + OTP);
 
 				PJ_TKECMUSER O_PJ_TKECMUSER1 = new PJ_TKECMUSER();
 
-				O_PJ_TKECMUSER1.setHashKey(O_UserService.saveOTPDetails(OTP, O_PJ_TKECMUSER_DETAIL.getUserId()));
+				O_PJ_TKECMUSER1.setTkecmuHashKey(O_UserService.saveOTPDetails(OTP, O_PJ_TKECMUSER_DETAIL.getTkecmuId()));
 
 				return new ResponseEntity<Object>(O_PJ_TKECMUSER1, HttpStatus.OK);
 
 			} // Validate STATUS
-			if (O_PJ_TKECMUSER_DETAIL.getStatus().equals("N")) {
+			if (O_PJ_TKECMUSER_DETAIL.getTkecmuStatus().equals("N")) {
 
 				O_PJ_Response.setMessage("Your Account is Deactivated..!");
 				return new ResponseEntity<Object>(O_PJ_Response, HttpStatus.UNPROCESSABLE_ENTITY);
 			}
 
 			// Validate Password
-			if (!new BCryptPasswordEncoder().matches(RO_PJ_TKECMUSER.getPassword(),
-					O_PJ_TKECMUSER_DETAIL.getPassword())) {
+			if (!new BCryptPasswordEncoder().matches(RO_PJ_TKECMUSER.getTkecmuPassword(),
+					O_PJ_TKECMUSER_DETAIL.getTkecmuPassword())) {
 
 				O_PJ_Response.setMessage("Wrong Password..!");
 				return new ResponseEntity<Object>(O_PJ_Response, HttpStatus.UNPROCESSABLE_ENTITY);
@@ -314,7 +314,7 @@ public class RegisterController {
 					.encode(String.valueOf(Calendar.getInstance().getTimeInMillis()));
 
 			PJ_TKECTUSERSESSION O_PJ_TKECTUSERSESSION = O_UserService.getApiSecretDataByNewSecret(apisecret,
-					O_PJ_TKECMUSER_DETAIL.getUserId());
+					O_PJ_TKECMUSER_DETAIL.getTkecmuId());
 
 			O_PJ_TKECMUSER_DETAIL.setApiKey(apisecret);
 
@@ -332,63 +332,63 @@ public class RegisterController {
 
 		PJ_Response O_PJ_Response = new PJ_Response();
 
-		if (RO_PJ_TKECMUSER.getRegType() == null || RO_PJ_TKECMUSER.getRegType().isEmpty()) {
+		if (RO_PJ_TKECMUSER.getTkecmuRegType() == null || RO_PJ_TKECMUSER.getTkecmuRegType().isEmpty()) {
 
 			O_PJ_Response.setMessage("Registration Type is Missing..!");
 			return new ResponseEntity<Object>(O_PJ_Response, HttpStatus.UNPROCESSABLE_ENTITY);
 
 		}
 
-		if (RO_PJ_TKECMUSER.getRegType().equals("E")) {
+		if (RO_PJ_TKECMUSER.getTkecmuRegType().equals("E")) {
 
-			if (RO_PJ_TKECMUSER.getMail() == null || RO_PJ_TKECMUSER.getMail().trim().equals("")) {
+			if (RO_PJ_TKECMUSER.getTkecmuMail() == null || RO_PJ_TKECMUSER.getTkecmuMail().trim().equals("")) {
 
 				O_PJ_Response.setMessage("Email Id Is Empty..!");
 
 				return new ResponseEntity<>(O_PJ_Response, HttpStatus.UNPROCESSABLE_ENTITY);
 			}
 
-			if (!SingleTon.isEmailValid(RO_PJ_TKECMUSER.getMail())) {
+			if (!SingleTon.isEmailValid(RO_PJ_TKECMUSER.getTkecmuMail())) {
 
 				O_PJ_Response.setMessage("Invalid Email Id..!");
 				return new ResponseEntity<Object>(O_PJ_Response, HttpStatus.UNPROCESSABLE_ENTITY);
 			}
-			PJ_TKECMUSER O_PJ_TKECMUSER_DETAIL = O_UserService.isUserEmailAvailable(RO_PJ_TKECMUSER.getMail());
+			PJ_TKECMUSER O_PJ_TKECMUSER_DETAIL = O_UserService.isUserEmailAvailable(RO_PJ_TKECMUSER.getTkecmuMail());
 			if (O_PJ_TKECMUSER_DETAIL == null) {
 
 				O_PJ_Response.setMessage("Email Id Not Registered..!");
 				return new ResponseEntity<Object>(O_PJ_Response, HttpStatus.UNPROCESSABLE_ENTITY);
 			}
 
-			O_MailService.sendMail(RO_PJ_TKECMUSER.getMail(), SingleTon.PASSWORD_RESET_MAIL_HEADER,
+			O_MailService.sendMail(RO_PJ_TKECMUSER.getTkecmuMail(), SingleTon.PASSWORD_RESET_MAIL_HEADER,
 
 					"Your OTP is " + OTP);
 
 			PJ_TKECMUSER O_PJ_TKECMUSER1 = new PJ_TKECMUSER();
 
-			O_PJ_TKECMUSER1.setHashKey(O_UserService.saveOTPDetails(OTP, O_PJ_TKECMUSER_DETAIL.getUserId()));
+			O_PJ_TKECMUSER1.setTkecmuHashKey(O_UserService.saveOTPDetails(OTP, O_PJ_TKECMUSER_DETAIL.getTkecmuId()));
 
 			return new ResponseEntity<Object>(O_PJ_TKECMUSER1, HttpStatus.OK);
 
 		} else {
-			if (RO_PJ_TKECMUSER.getPhoneNo() == null) {
+			if (RO_PJ_TKECMUSER.getTkecmuPhone() == null) {
 
 				O_PJ_Response.setMessage("Mobile Number Is Empty..!");
 				return new ResponseEntity<Object>(O_PJ_Response, HttpStatus.UNPROCESSABLE_ENTITY);
 			}
 
-			PJ_TKECMUSER O_PJ_TKECMUSER_DETAIL = O_UserService.isUserPhoneNoAvailable(RO_PJ_TKECMUSER.getPhoneNo());
+			PJ_TKECMUSER O_PJ_TKECMUSER_DETAIL = O_UserService.isUserPhoneNoAvailable(RO_PJ_TKECMUSER.getTkecmuPhone());
 			if (O_PJ_TKECMUSER_DETAIL == null) {
 
 				O_PJ_Response.setMessage("Mobile Number Not Registered..!");
 				return new ResponseEntity<Object>(O_PJ_Response, HttpStatus.UNPROCESSABLE_ENTITY);
 			}
 
-			O_MailService.sendSMS(RO_PJ_TKECMUSER.getPhoneNo(), RO_PJ_TKECMUSER.getCountryCode(), "Your OTP is " + OTP);
+			O_MailService.sendSMS(RO_PJ_TKECMUSER.getTkecmuPhone(), RO_PJ_TKECMUSER.getTkecmuCountryCode(), "Your OTP is " + OTP);
 
 			PJ_TKECMUSER O_PJ_TKECMUSER1 = new PJ_TKECMUSER();
 
-			O_PJ_TKECMUSER1.setHashKey(O_UserService.saveOTPDetails(OTP, O_PJ_TKECMUSER_DETAIL.getUserId()));
+			O_PJ_TKECMUSER1.setTkecmuHashKey(O_UserService.saveOTPDetails(OTP, O_PJ_TKECMUSER_DETAIL.getTkecmuId()));
 
 			return new ResponseEntity<Object>(O_PJ_TKECMUSER1, HttpStatus.OK);
 
@@ -402,13 +402,13 @@ public class RegisterController {
 
 		PJ_Response O_PJ_Response = new PJ_Response();
 
-		if (RO_PJ_TKECMUSER.getPassword().length() > 14 || RO_PJ_TKECMUSER.getPassword().length() < 4) {
+		if (RO_PJ_TKECMUSER.getTkecmuPassword().length() > 14 || RO_PJ_TKECMUSER.getTkecmuPassword().length() < 4) {
 
 			O_PJ_Response.setMessage("Password Shoud be 4 to 14 Charaters ..!");
 			return new ResponseEntity<Object>(O_PJ_Response, HttpStatus.UNPROCESSABLE_ENTITY);
 		}
 
-		if (RO_PJ_TKECMUSER.getHashKey().isEmpty()) {
+		if (RO_PJ_TKECMUSER.getTkecmuHashKey().isEmpty()) {
 
 			O_PJ_Response.setMessage("Hash Key Is Empty..!");
 			return new ResponseEntity<Object>(O_PJ_Response, HttpStatus.UNPROCESSABLE_ENTITY);
@@ -421,7 +421,7 @@ public class RegisterController {
 			O_PJ_Response.setMessage("Not Registered..!");
 			return new ResponseEntity<Object>(O_PJ_Response, HttpStatus.UNPROCESSABLE_ENTITY);
 		}
-		O_PJ_TKECMUSER_DETAIL.setPassword(new BCryptPasswordEncoder().encode(RO_PJ_TKECMUSER.getPassword()));
+		O_PJ_TKECMUSER_DETAIL.setTkecmuPassword(new BCryptPasswordEncoder().encode(RO_PJ_TKECMUSER.getTkecmuPassword()));
 
 		O_UserService.updatePassword(O_PJ_TKECMUSER_DETAIL);
 		O_PJ_Response.setMessage("Password Updated Successfully..!");
@@ -443,19 +443,19 @@ public class RegisterController {
 			O_PJ_Response.setMessage("Session Expired..!");
 			return new ResponseEntity<Object>(O_PJ_Response, HttpStatus.UNPROCESSABLE_ENTITY);
 		}
-		if (RO_PJ_TKECMUSER.getPassword().length() > 14 || RO_PJ_TKECMUSER.getPassword().length() < 4) {
+		if (RO_PJ_TKECMUSER.getTkecmuPassword().length() > 14 || RO_PJ_TKECMUSER.getTkecmuPassword().length() < 4) {
 
 			O_PJ_Response.setMessage("Password Shoud be 4 to 14 Charaters ..!");
 			return new ResponseEntity<Object>(O_PJ_Response, HttpStatus.UNPROCESSABLE_ENTITY);
 		}
 		if (!new BCryptPasswordEncoder().matches(RO_PJ_TKECMUSER.getOldPassword(),
-				O_PJ_TKECMUSER_DETAIL.getPassword())) {
+				O_PJ_TKECMUSER_DETAIL.getTkecmuPassword())) {
 
 			O_PJ_Response.setMessage("Invalid Old Password..!");
 			return new ResponseEntity<Object>(O_PJ_Response, HttpStatus.UNPROCESSABLE_ENTITY);
 		}
-		RO_PJ_TKECMUSER.setUserId(O_PJ_TKECMUSER_DETAIL.getUserId());
-		RO_PJ_TKECMUSER.setPassword(new BCryptPasswordEncoder().encode(RO_PJ_TKECMUSER.getPassword()));
+		RO_PJ_TKECMUSER.setTkecmuId(O_PJ_TKECMUSER_DETAIL.getTkecmuId());
+		RO_PJ_TKECMUSER.setTkecmuPassword(new BCryptPasswordEncoder().encode(RO_PJ_TKECMUSER.getTkecmuPassword()));
 
 		O_UserService.updatePassword(RO_PJ_TKECMUSER);
 		O_PJ_Response.setMessage("Password Changed Successfully..!");
