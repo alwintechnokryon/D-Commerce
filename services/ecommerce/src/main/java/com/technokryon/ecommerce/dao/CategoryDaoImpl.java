@@ -85,8 +85,7 @@ public class CategoryDaoImpl implements CategoryDao {
 		System.out.println("Root Category size.." + LO_TKECMCATEGORY.size());
 		for (TKECMCATEGORY O_TKECMCATEGORY : LO_TKECMCATEGORY) {
 
-			LO_PJ_TKECMCATEGORY.add(
-					new PJ_TKECMCATEGORY(O_TKECMCATEGORY, getChildCategories(O_TKECMCATEGORY.getTkecmcCategoryId())));
+			LO_PJ_TKECMCATEGORY.add(new PJ_TKECMCATEGORY(O_TKECMCATEGORY, getChildCategories(O_TKECMCATEGORY.getTkecmcCategoryId())));
 		}
 		return LO_PJ_TKECMCATEGORY;
 	}

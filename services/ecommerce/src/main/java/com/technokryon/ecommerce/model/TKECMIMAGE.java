@@ -12,27 +12,31 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import org.hibernate.annotations.ManyToAny;
-
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name="TKECT_PRODUCT_CONFIGURABLE_LINK")
+@Table(name = "TKECM_IMAGE")
 @Data
 @NoArgsConstructor
-public class TKECTPRODUCTCONFIGURABLELINK {
+public class TKECMIMAGE {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name="TKECTPCL_AG_ID")
-	private Integer tkectpclAgId;
+	@Column(name = "TKECMI_AG_ID")
+	private Integer tkecmiAgId;
 	
 	@ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
-	@JoinColumn(name="TKECTPCL_PRODUCT_ID", foreignKey = @ForeignKey(name="FK_TKECTPCL_PARENT_ID"))
-	private TKECMPRODUCT tkectpclProductId;
+	@JoinColumn(name = "TKECMI_PRODUCT_ID", foreignKey = @ForeignKey(name="FK_TKECMI_PRODUCT_ID"))
+	private TKECMPRODUCT tkecmiProductId;
 	
-	@ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
-	@JoinColumn(name="TKECTPCL_PARENT_ID", foreignKey = @ForeignKey(name="FK_TKECTPCL_PRODUCT_ID"))
-	private TKECMPRODUCT tkectpclParentId;
+	@Column(name = "TKECMI_FILE_NAME")
+	private String tkecmpiFileName;
+	
+	@Column(name = "TKECMI_FILE_TYPE")
+	private String tkecmiFileType;
+	
+	@Column(name = "TKECMI_URL")
+	private String tkecmiUrl;
+	
 }

@@ -1,6 +1,7 @@
 package com.technokryon.ecommerce.pojo;
 
 import java.time.OffsetDateTime;
+import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -12,7 +13,7 @@ import lombok.NoArgsConstructor;
 
 public class PJ_TKECMPRODUCT {
 
-	Integer tkecmpAgId;
+	String tkecmpId;
 	String tkecmpSKU;
 	String tkecmpName;
 	String tkecmpCategoryId;
@@ -26,7 +27,10 @@ public class PJ_TKECMPRODUCT {
 	OffsetDateTime tkecmpModifiedDate;
 	String tkecmpModifiedUserId;
 	String tkecmpStatus;
-	String tkecmpType;
-	Float tkecmpSellingPrice;
-	Float tkecmpOriginalPrice;
+	Integer tkecmpType;
+	Double tkecmpPrice;
+	Integer pageNumber;
+	String tkecmpParentId;
+	String tkecmpDefault;
+	List<PJ_TKECMIMAGE> images;
 }

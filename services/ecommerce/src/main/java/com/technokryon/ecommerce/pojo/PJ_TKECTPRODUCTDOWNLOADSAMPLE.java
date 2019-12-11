@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 public class PJ_TKECTPRODUCTDOWNLOADSAMPLE {
 
 	Integer tkectpdsAgId;
-	Integer tkectpdsProductId;
+	String tkectpdsProductId;
 	String tkectpdsUrl;
 	String tkectpdsTitle;
 	String tkectpdsFile;

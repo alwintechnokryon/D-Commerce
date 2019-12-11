@@ -14,7 +14,5 @@ public class PJ_TKECTPRODUCTATTRIBUTE {
 	String tkectpaOptionAttributeId;
 	OffsetDateTime tkectpaCreatedDate;
 	String tkectpaCreatedUserId;
-	String tkectpaDefault;
-	
-	
+
 }

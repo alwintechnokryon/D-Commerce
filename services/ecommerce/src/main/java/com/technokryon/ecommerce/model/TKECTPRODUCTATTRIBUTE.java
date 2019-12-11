@@ -19,7 +19,6 @@ import lombok.NoArgsConstructor;
 @Table(name = "TKECT_PRODUCT_ATTRIBUTE")
 @Data
 @NoArgsConstructor
-
 public class TKECTPRODUCTATTRIBUTE {
 
 	@Id
@@ -41,7 +40,4 @@ public class TKECTPRODUCTATTRIBUTE {
 	@Column(name = "TKECTPA_CREATED_USERID")
 	private String tkectpaCreatedUserId;
 
-	@Column(name = "TKECTPA_DEFAULT")
-	private String tkectpaDefault;
-	
 }

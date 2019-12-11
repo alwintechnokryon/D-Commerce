@@ -19,7 +19,7 @@ import com.technokryon.ecommerce.service.CategoryService;
 
 @Controller
 @CrossOrigin
-@RequestMapping("/api/v1/category")
+@RequestMapping("/api/v1/admin/category")
 public class CategoryController {
 
 	@Autowired
