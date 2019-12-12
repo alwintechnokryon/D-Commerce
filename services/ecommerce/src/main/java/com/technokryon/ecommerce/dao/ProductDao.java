@@ -8,4 +8,7 @@ public interface ProductDao {
 
 	List<PJ_TKECMPRODUCT> getListByCategory(String tkecmpCategoryId, Integer pageNumber);
 
+	PJ_TKECMPRODUCT getDetailById(String tkecmpId);
+
+
 }

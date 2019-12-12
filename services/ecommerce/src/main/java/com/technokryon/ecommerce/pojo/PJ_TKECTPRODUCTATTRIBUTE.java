@@ -1,6 +1,7 @@
 package com.technokryon.ecommerce.pojo;
 
 import java.time.OffsetDateTime;
+import java.util.List;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -14,5 +15,5 @@ public class PJ_TKECTPRODUCTATTRIBUTE {
 	String tkectpaOptionAttributeId;
 	OffsetDateTime tkectpaCreatedDate;
 	String tkectpaCreatedUserId;
-
+	
 }

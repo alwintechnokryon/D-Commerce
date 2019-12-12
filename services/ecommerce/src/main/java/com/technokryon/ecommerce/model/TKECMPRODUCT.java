@@ -77,9 +77,6 @@ public class TKECMPRODUCT {
 	@Column(name = "TKECMP_PRICE")
 	private Double tkecmpPrice;
 
-	@Column(name = "TKECMP_PARENT_ID")
-	private String tkecmpParentId;
-
 	@Column(name = "TKECMP_DEFAULT")
 	private String tkecmpDefault;
 

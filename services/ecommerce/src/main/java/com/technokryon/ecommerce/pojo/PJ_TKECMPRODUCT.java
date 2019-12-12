@@ -30,7 +30,9 @@ public class PJ_TKECMPRODUCT {
 	Integer tkecmpType;
 	Double tkecmpPrice;
 	Integer pageNumber;
-	String tkecmpParentId;
 	String tkecmpDefault;
+	String attributeName;
+	String attributeId;
+	List<PJ_TKECTOPTIONATTRIBUTE> optionAttribute;
 	List<PJ_TKECMIMAGE> images;
 }

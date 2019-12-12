@@ -8,4 +8,6 @@ public interface ProductService {
 
 	List<PJ_TKECMPRODUCT> getListByCategory(String tkecmpCategoryId, Integer PageNumber);
 
+	PJ_TKECMPRODUCT getDetailById(String tkecmpId);
+
 }

@@ -21,8 +21,15 @@ public class ProductServiceImpl implements ProductService{
 
 	@Override
 	public List<PJ_TKECMPRODUCT> getListByCategory(String tkecmpCategoryId,Integer PageNumber) {
-		// TODO Auto-generated method stub
+		
 		return O_ProductDao.getListByCategory(tkecmpCategoryId,PageNumber);
 	}
+
+	@Override
+	public PJ_TKECMPRODUCT getDetailById(String tkecmpId) {
+		// TODO Auto-generated method stub
+		return O_ProductDao.getDetailById(tkecmpId);
+	}
+
 	
 }

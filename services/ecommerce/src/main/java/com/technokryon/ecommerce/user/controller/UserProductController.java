@@ -24,11 +24,21 @@ public class UserProductController {
 	
 	@ResponseBody
 	@PostMapping("/list/category")
-	private ResponseEntity<?> LIST_BY_CATEGORY(@RequestBody PJ_TKECMPRODUCT RO_PJ_TKECMPRODUCT){
+	private ResponseEntity<?> PRODUCT_LIST_BY_CATEGORY(@RequestBody PJ_TKECMPRODUCT RO_PJ_TKECMPRODUCT){
 		
 	List<PJ_TKECMPRODUCT> LO_PJ_TKECMPRODUCT =	O_ProductService.getListByCategory(RO_PJ_TKECMPRODUCT.getTkecmpCategoryId(),RO_PJ_TKECMPRODUCT.getPageNumber());
 		
 	return new ResponseEntity<Object>(LO_PJ_TKECMPRODUCT, HttpStatus.OK);
+	}
+	
+	
+	@ResponseBody
+	@PostMapping("/detail/id")
+	private ResponseEntity<?> PRODUCT_DETAIL_BY_ID(@RequestBody PJ_TKECMPRODUCT RO_PJ_TKECMPRODUCT){
+		
+	PJ_TKECMPRODUCT O_PJ_TKECMPRODUCT = O_ProductService.getDetailById(RO_PJ_TKECMPRODUCT.getTkecmpId());
+		
+	return new ResponseEntity<Object>(O_PJ_TKECMPRODUCT, HttpStatus.OK);
 	}
 	
 }
