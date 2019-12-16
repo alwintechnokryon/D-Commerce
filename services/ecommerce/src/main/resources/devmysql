@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Dec 10, 2019 at 11:13 PM
+-- Generation Time: Dec 16, 2019 at 01:25 PM
 -- Server version: 5.7.23
 -- PHP Version: 5.6.38
 
@@ -112,7 +112,7 @@ CREATE TABLE IF NOT EXISTS `TKECM_IMAGE` (
   `TKECMI_URL` text COLLATE utf8_unicode_ci,
   PRIMARY KEY (`TKECMI_AG_ID`),
   KEY `FK_TKECMI_PRODUCT_ID` (`TKECMI_PRODUCT_ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Dumping data for table `TKECM_IMAGE`
@@ -123,7 +123,8 @@ INSERT INTO `TKECM_IMAGE` (`TKECMI_AG_ID`, `TKECMI_PRODUCT_ID`, `TKECMI_FILE_NAM
 (2, '2', NULL, 'Image', 'https://www.gutenberg.org/ebooks/60879'),
 (3, '3', NULL, 'Image', 'https://www.gutenberg.org/ebooks/60879'),
 (4, '4', 'Shirt', 'Image', NULL),
-(5, '5', NULL, 'Image', 'https://www.gutenberg.org/ebooks/60879');
+(5, '5', NULL, 'Image', 'https://www.gutenberg.org/ebooks/60879'),
+(6, '6', NULL, 'Image', 'https://www.gutenberg.org/ebooks/60879');
 
 -- --------------------------------------------------------
 
@@ -149,7 +150,6 @@ CREATE TABLE IF NOT EXISTS `TKECM_PRODUCT` (
   `TKECMP_STATUS` varchar(10) COLLATE utf8_unicode_ci DEFAULT NULL,
   `TKECMP_TYPE` int(11) DEFAULT NULL,
   `TKECMP_PRICE` double DEFAULT NULL,
-  `TKECMP_PARENT_ID` varchar(20) COLLATE utf8_unicode_ci DEFAULT NULL,
   `TKECMP_DEFAULT` varchar(5) COLLATE utf8_unicode_ci NOT NULL,
   PRIMARY KEY (`TKECMP_ID`),
   UNIQUE KEY `UNIQUESKU` (`TKECMP_SKU`),
@@ -162,15 +162,15 @@ CREATE TABLE IF NOT EXISTS `TKECM_PRODUCT` (
 -- Dumping data for table `TKECM_PRODUCT`
 --
 
-INSERT INTO `TKECM_PRODUCT` (`TKECMP_ID`, `TKECMP_SKU`, `TKECMP_NAME`, `TKECMP_CATEGORY_ID`, `TKECMP_WEIGHT`, `TKECMP_QUANTITY`, `TKECMP_SHORT_DESC`, `TKECMP_LONG_DESC`, `TKECMP_COUNTRY_OF_MFG`, `TKECMP_CREATED_DATE`, `TKECMP_CREATED_USERID`, `TKECMP_MODIFIED_DATE`, `TKECMP_MODIFIED_USERID`, `TKECMP_STATUS`, `TKECMP_TYPE`, `TKECMP_PRICE`, `TKECMP_PARENT_ID`, `TKECMP_DEFAULT`) VALUES
-('1', 'RN7PRO', 'Redmi Note 7 Pro', 'TKECC0016', NULL, 5, 'Redmi Note 7 Pro', 'The former is slightly faster and more efficient. The Pro model also offers more RAM and internal storage than the regular model, as well as stronger camera hardware. The Xiaomi Redmi Note 7 Pro has a 48MP + 5MP rear camera setup like the Redmi Note 7.', 'China', NULL, NULL, NULL, NULL, 'Y', 1, 17000, NULL, 'Y'),
-('2', 'LED123', 'LED', 'TKECC0018', NULL, 10, 'LED', 'A light-emitting diode (LED) is a semiconductor light source that emits light when current flows through it. Electrons in the semiconductor recombine with electron holes, releasing energy in the form of photons.', 'India', NULL, NULL, NULL, NULL, 'Y', 1, 45000, NULL, 'Y'),
-('3', 'WedSet56', 'Wedding Set', 'TKECC0023', NULL, 3, 'Wedding Set', 'A wedding set includes the engagement ring, matching band for her and a band for him. A bridal set consists of an engagement ring and matching band for the bride, leaving the groom on his own for his band.', 'India', NULL, NULL, NULL, NULL, 'Y', 1, 6000, NULL, 'Y'),
-('4', 'ShirtRed001', 'Shirt Red', 'TKECC0020', NULL, 5, 'Shirt Red', 'Casual Shirts for Men - Buy new arrivals & latest Casual Shirt for Men from Mufti, Tommy Hilfiger, Roadster, UCB & more.', 'India', NULL, NULL, NULL, NULL, 'Y', 2, 850, NULL, 'N'),
-('5', 'ShirtPink002', 'Shirt Pink', 'TKECC0020', NULL, 4, 'Shirt Pink', 'Casual Shirts for Men - Buy new arrivals & latest Casual Shirt for Men from Mufti, Tommy Hilfiger, Roadster, UCB & more.', 'India', NULL, NULL, NULL, NULL, 'Y', 4, 875, '4', 'Y'),
-('6', 'Ebook003', 'Ebook', 'TKECC0029', NULL, 3, 'Ebooks', 'An electronic book, also known as an e-book or eBook, is a book publication made available in digital form, consisting of text, images, or both, readable ', 'India', NULL, NULL, NULL, NULL, 'Y', 3, 450, NULL, 'Y'),
-('7', 'Books004', 'Books', 'TKECC0030', NULL, 2, 'Books', 'Books Advanced Search New Releases & Pre-orders Best Sellers Browse Genres Children\'s & Young Adult Textbooks Exam Central All Indian Languages', 'India', NULL, NULL, NULL, NULL, 'Y', 3, 250, NULL, 'Y'),
-('8', 'ShirtOrange003', 'Shirt Orange', 'TKECC0020', NULL, 3, 'Shirt Orange', 'Casual Shirts for Men - Buy new arrivals & latest Casual Shirt for Men from Mufti, Tommy Hilfiger, Roadster, UCB & more.', 'India', NULL, NULL, NULL, NULL, 'Y', 4, 325, '4', 'N');
+INSERT INTO `TKECM_PRODUCT` (`TKECMP_ID`, `TKECMP_SKU`, `TKECMP_NAME`, `TKECMP_CATEGORY_ID`, `TKECMP_WEIGHT`, `TKECMP_QUANTITY`, `TKECMP_SHORT_DESC`, `TKECMP_LONG_DESC`, `TKECMP_COUNTRY_OF_MFG`, `TKECMP_CREATED_DATE`, `TKECMP_CREATED_USERID`, `TKECMP_MODIFIED_DATE`, `TKECMP_MODIFIED_USERID`, `TKECMP_STATUS`, `TKECMP_TYPE`, `TKECMP_PRICE`, `TKECMP_DEFAULT`) VALUES
+('1', 'RN7PRO', 'Redmi Note 7 Pro', 'TKECC0016', NULL, 5, 'Redmi Note 7 Pro', 'The former is slightly faster and more efficient. The Pro model also offers more RAM and internal storage than the regular model, as well as stronger camera hardware. The Xiaomi Redmi Note 7 Pro has a 48MP + 5MP rear camera setup like the Redmi Note 7.', 'China', NULL, NULL, NULL, NULL, 'Y', 1, 17000, 'Y'),
+('2', 'LED123', 'LED', 'TKECC0018', NULL, 10, 'LED', 'A light-emitting diode (LED) is a semiconductor light source that emits light when current flows through it. Electrons in the semiconductor recombine with electron holes, releasing energy in the form of photons.', 'India', NULL, NULL, NULL, NULL, 'Y', 1, 45000, 'Y'),
+('3', 'WedSet56', 'Wedding Set', 'TKECC0023', NULL, 3, 'Wedding Set', 'A wedding set includes the engagement ring, matching band for her and a band for him. A bridal set consists of an engagement ring and matching band for the bride, leaving the groom on his own for his band.', 'India', NULL, NULL, NULL, NULL, 'Y', 1, 6000, 'Y'),
+('4', 'ShirtRed001', 'Shirt Red', 'TKECC0020', NULL, 5, 'Shirt Red', 'Casual Shirts for Men - Buy new arrivals & latest Casual Shirt for Men from Mufti, Tommy Hilfiger, Roadster, UCB & more.', 'India', NULL, NULL, NULL, NULL, 'Y', 2, 850, 'N'),
+('5', 'ShirtPink002', 'Shirt Pink', 'TKECC0020', NULL, 4, 'Shirt Pink', 'Casual Shirts for Men - Buy new arrivals & latest Casual Shirt for Men from Mufti, Tommy Hilfiger, Roadster, UCB & more.', 'India', NULL, NULL, NULL, NULL, 'Y', 4, 875, 'Y'),
+('6', 'Ebook003', 'Ebook', 'TKECC0029', NULL, 3, 'Ebooks', 'An electronic book, also known as an e-book or eBook, is a book publication made available in digital form, consisting of text, images, or both, readable ', 'India', NULL, NULL, NULL, NULL, 'Y', 3, 450, 'Y'),
+('7', 'Books004', 'Books', 'TKECC0030', NULL, 2, 'Books', 'Books Advanced Search New Releases & Pre-orders Best Sellers Browse Genres Children\'s & Young Adult Textbooks Exam Central All Indian Languages', 'India', NULL, NULL, NULL, NULL, 'Y', 3, 250, 'Y'),
+('8', 'ShirtOrange003', 'Shirt Orange', 'TKECC0020', NULL, 3, 'Shirt Orange', 'Casual Shirts for Men - Buy new arrivals & latest Casual Shirt for Men from Mufti, Tommy Hilfiger, Roadster, UCB & more.', 'India', NULL, NULL, NULL, NULL, 'Y', 4, 325, 'N');
 
 -- --------------------------------------------------------
 
@@ -269,6 +269,30 @@ INSERT INTO `TKECM_USER` (`TKECMU_ID`, `TKECMU_NAME`, `TKECMU_REG_TYPE`, `TKECMU
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `TKECT_CONFIGURABLE_LINK`
+--
+
+DROP TABLE IF EXISTS `TKECT_CONFIGURABLE_LINK`;
+CREATE TABLE IF NOT EXISTS `TKECT_CONFIGURABLE_LINK` (
+  `TKECTCL_AG_ID` int(11) NOT NULL AUTO_INCREMENT,
+  `TKECTCL_PRODUCT_ID` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `TKECTCL_PARENT_ID` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  PRIMARY KEY (`TKECTCL_AG_ID`),
+  KEY `FK_TKECTCL_PRODUCT_ID` (`TKECTCL_PRODUCT_ID`) USING BTREE,
+  KEY `FK_TKECTCL_PARENT_ID` (`TKECTCL_PARENT_ID`) USING BTREE
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Dumping data for table `TKECT_CONFIGURABLE_LINK`
+--
+
+INSERT INTO `TKECT_CONFIGURABLE_LINK` (`TKECTCL_AG_ID`, `TKECTCL_PRODUCT_ID`, `TKECTCL_PARENT_ID`) VALUES
+(1, '5', '4'),
+(2, '8', '4');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `TKECT_OPTION_ATTRIBUTE`
 --
 
@@ -330,9 +354,6 @@ INSERT INTO `TKECT_PRODUCT_ATTRIBUTE` (`TKECTPA_AG_ID`, `TKECTPA_PRODUCT_ID`, `T
 (1, '1', 'TKECOA0003', NULL, NULL),
 (2, '2', 'TKECOA0012', NULL, NULL),
 (3, '3', 'TKECOA0007', NULL, NULL),
-(4, '4', 'TKECOA0004', NULL, NULL),
-(5, '4', 'TKECOA0006', NULL, NULL),
-(6, '4', 'TKECOA0011', NULL, NULL),
 (7, '5', 'TKECOA0001', NULL, NULL),
 (8, '5', 'TKECOA0009', NULL, NULL),
 (9, '5', 'TKECOA0011', NULL, NULL),
@@ -472,6 +493,13 @@ ALTER TABLE `TKECM_PRODUCT`
 --
 ALTER TABLE `TKECM_PRODUCT_DOWNLOAD`
   ADD CONSTRAINT `FK_TKECMPD_PRODUCT_ID` FOREIGN KEY (`TKECMPD_PRODUCT_ID`) REFERENCES `TKECM_PRODUCT` (`TKECMP_ID`);
+
+--
+-- Constraints for table `TKECT_CONFIGURABLE_LINK`
+--
+ALTER TABLE `TKECT_CONFIGURABLE_LINK`
+  ADD CONSTRAINT `FK_TKECTCL_PARENT_ID` FOREIGN KEY (`TKECTCL_PARENT_ID`) REFERENCES `TKECM_PRODUCT` (`TKECMP_ID`),
+  ADD CONSTRAINT `FK_TKECTCL_PRODUCT_ID` FOREIGN KEY (`TKECTCL_PRODUCT_ID`) REFERENCES `TKECM_PRODUCT` (`TKECMP_ID`);
 
 --
 -- Constraints for table `TKECT_OPTION_ATTRIBUTE`

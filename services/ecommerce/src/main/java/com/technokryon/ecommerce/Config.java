@@ -22,6 +22,7 @@ import com.technokryon.ecommerce.model.TKECMPRODUCT;
 import com.technokryon.ecommerce.model.TKECMPRODUCTDOWNLOAD;
 import com.technokryon.ecommerce.model.TKECMPRODUCTTYPE;
 import com.technokryon.ecommerce.model.TKECMUSER;
+import com.technokryon.ecommerce.model.TKECTCONFIGURABLELINK;
 import com.technokryon.ecommerce.model.TKECTOPTIONATTRIBUTE;
 import com.technokryon.ecommerce.model.TKECTPRODUCTATTRIBUTE;
 import com.technokryon.ecommerce.model.TKECTPRODUCTDOWNLOADSAMPLE;
@@ -63,7 +64,7 @@ public class Config {
 		factoryBean.setAnnotatedClasses(TKECMUSER.class, TKECTUSERSESSION.class, TKECTUSERAUDIT.class,
 				TKECMCATEGORY.class, TKECMATTRIBUTE.class, TKECTOPTIONATTRIBUTE.class, TKECTPRODUCTATTRIBUTE.class,
 				TKECMIMAGE.class, TKECMPRODUCT.class, TKECMPRODUCTDOWNLOAD.class, TKECMPRODUCTTYPE.class,
-				TKECTPRODUCTDOWNLOADSAMPLE.class);
+				TKECTPRODUCTDOWNLOADSAMPLE.class,TKECTCONFIGURABLELINK.class);
 
 		return factoryBean;
 	}

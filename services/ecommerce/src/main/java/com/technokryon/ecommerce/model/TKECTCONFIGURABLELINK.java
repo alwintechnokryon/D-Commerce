@@ -1,8 +1,5 @@
 package com.technokryon.ecommerce.model;
 
-import java.math.BigInteger;
-import java.time.OffsetDateTime;
-
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -34,7 +31,7 @@ public class TKECTCONFIGURABLELINK {
 	private TKECMPRODUCT tkectclProductId;
 
 	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	@JoinColumn(name = "TKECTC_PARENT_ID", foreignKey = @ForeignKey(name = "FK_TKECTCL_PARENT_ID"))
+	@JoinColumn(name = "TKECTCL_PARENT_ID", foreignKey = @ForeignKey(name = "FK_TKECTCL_PARENT_ID"))
 	private TKECMPRODUCT tkectclParentId;
 
 }

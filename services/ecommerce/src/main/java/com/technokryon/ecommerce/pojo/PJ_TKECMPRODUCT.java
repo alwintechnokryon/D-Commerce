@@ -33,6 +33,12 @@ public class PJ_TKECMPRODUCT {
 	String tkecmpDefault;
 	String attributeName;
 	String attributeId;
-	List<PJ_TKECTOPTIONATTRIBUTE> optionAttribute;
-	List<PJ_TKECMIMAGE> images;
+	String tkecmpdIsSharable;
+	String tkecmpdUrl;
+	String tkecmpdFile;
+	String tkecmpdTitle;
+	List<PJ_TKECTPRODUCTATTRIBUTE> LO_PJ_TKECTPRODUCTATTRIBUTE;
+	List<PJ_TKECTOPTIONATTRIBUTE> LO_PJ_TKECTOPTIONATTRIBUTE;
+	List<PJ_TKECMIMAGE> LO_PJ_TKECMIMAGE;
+
 }
