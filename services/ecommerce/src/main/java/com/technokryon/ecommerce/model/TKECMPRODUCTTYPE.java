@@ -19,9 +19,9 @@ public class TKECMPRODUCTTYPE {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "TKECMPT_AG_ID")
-	private Integer tkecmptAgId;
+	private Integer agId;
 
 	@Column(name = "TKECMPT_TYPE")
-	private String tkecmptType;
+	private String type;
 
 }

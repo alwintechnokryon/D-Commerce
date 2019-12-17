@@ -10,7 +10,7 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.technokryon.ecommerce.dao.ProductDao;
-import com.technokryon.ecommerce.pojo.PJ_TKECMPRODUCT;
+import com.technokryon.ecommerce.pojo.PRODUCT;
 
 @Service("ProductService")
 @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -20,15 +20,15 @@ public class ProductServiceImpl implements ProductService{
 	private ProductDao O_ProductDao;
 
 	@Override
-	public List<PJ_TKECMPRODUCT> getListByCategory(String tkecmpCategoryId,Integer PageNumber) {
+	public List<PRODUCT> getListByCategory(String categoryId,Integer PageNumber) {
 		
-		return O_ProductDao.getListByCategory(tkecmpCategoryId,PageNumber);
+		return O_ProductDao.getListByCategory(categoryId,PageNumber);
 	}
 
 	@Override
-	public PJ_TKECMPRODUCT getDetailById(String tkecmpId) {
+	public PRODUCT getDetailById(String id) {
 		// TODO Auto-generated method stub
-		return O_ProductDao.getDetailById(tkecmpId);
+		return O_ProductDao.getDetailById(id);
 	}
 
 	

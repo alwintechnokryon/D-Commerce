@@ -24,14 +24,14 @@ public class TKECTCONFIGURABLELINK {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "TKECTCL_AG_ID")
-	private Integer tkectclAgId;
+	private Integer agId;
 
 	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	@JoinColumn(name = "TKECTCL_PRODUCT_ID", foreignKey = @ForeignKey(name = "FK_TKECTCL_PRODUCT_ID"))
-	private TKECMPRODUCT tkectclProductId;
+	private TKECMPRODUCT productId;
 
 	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	@JoinColumn(name = "TKECTCL_PARENT_ID", foreignKey = @ForeignKey(name = "FK_TKECTCL_PARENT_ID"))
-	private TKECMPRODUCT tkectclParentId;
+	private TKECMPRODUCT parentId;
 
 }

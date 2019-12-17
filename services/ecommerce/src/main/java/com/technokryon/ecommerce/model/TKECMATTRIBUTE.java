@@ -17,9 +17,9 @@ public class TKECMATTRIBUTE {
 
 	@Id
 	@Column(name = "TKECMA_ID")
-	private String tkecmaId;
+	private String id;
 
 	@Column(name = "TKECMA_NAME")
-	private String tkecmaName;
+	private String name;
 
 }

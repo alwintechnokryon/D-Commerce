@@ -4,32 +4,32 @@ import java.math.BigInteger;
 
 import javax.servlet.http.HttpServletRequest;
 
-import com.technokryon.ecommerce.pojo.PJ_TKECMUSER;
-import com.technokryon.ecommerce.pojo.PJ_TKECTUSERSESSION;
+import com.technokryon.ecommerce.pojo.USER;
+import com.technokryon.ecommerce.pojo.USERSESSION;
 
 public interface UserService {
 
-	PJ_TKECMUSER isUserEmailAvailable(String mail);
+	USER isUserEmailAvailable(String mail);
 
-	String createNewUserByEmail(PJ_TKECMUSER RO_UserPojo);
+	String createNewUserByEmail(USER RO_UserPojo);
 
 	String saveOTPDetails(Integer oTP, String userId);
 
-	PJ_TKECMUSER isUserPhoneNoAvailable(BigInteger phoneNo);
+	USER isUserPhoneNoAvailable(BigInteger phoneNo);
 
-	String createNewUserByPhoneNo(PJ_TKECMUSER RO_UserPojo);
+	String createNewUserByPhoneNo(USER RO_UserPojo);
 
-	PJ_TKECMUSER getUserDetailHash(PJ_TKECMUSER RO_UserPojo);
+	USER getUserDetailHash(USER RO_UserPojo);
 
 	void changeOTPStatus(String userId);
 
-	void updatePassword(PJ_TKECMUSER o_PJ_TKECMUSER_DETAIL);
+	void updatePassword(USER o_USER_DETAIL);
 
-	PJ_TKECTUSERSESSION getApiSecretDataByNewSecret(String apisecret, String userId);
+	USERSESSION getApiSecretDataByNewSecret(String apisecret, String userId);
 
-	Boolean addAuditDetail(PJ_TKECMUSER O_PJ_TKECMUSER_DETAIL, HttpServletRequest httpServletRequest);
+	Boolean addAuditDetail(USER O_USER_DETAIL, HttpServletRequest httpServletRequest);
 
-	PJ_TKECMUSER getUserDetailAPIKey(String apiKey);
+	USER getUserDetailAPIKey(String apiKey);
 
 	Boolean userLogout(String apiKey);
 

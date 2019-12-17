@@ -10,7 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.technokryon.ecommerce.dao.CategoryDao;
 import com.technokryon.ecommerce.model.TKECMCATEGORY;
-import com.technokryon.ecommerce.pojo.PJ_TKECMCATEGORY;
+import com.technokryon.ecommerce.pojo.CATEGORY;
 
 @Service("CategoryService")
 @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -20,20 +20,20 @@ public class CategoryServiceImpl implements CategoryService {
 	private CategoryDao O_CategoryDao;
 
 	@Override
-	public String addCategory(PJ_TKECMCATEGORY rO_PJ_TKECMCATEGORY) {
+	public String addCategory(CATEGORY rO_CATEGORY) {
 		// TODO Auto-generated method stub
-		return O_CategoryDao.addCategory(rO_PJ_TKECMCATEGORY);
+		return O_CategoryDao.addCategory(rO_CATEGORY);
 	}
 
 	@Override
-	public List<PJ_TKECMCATEGORY> categoryList() {
+	public List<CATEGORY> categoryList() {
 		// TODO Auto-generated method stub
 		return O_CategoryDao.categoryList();
 	}
 
 	@Override
-	public List<PJ_TKECMCATEGORY> categoryListById(PJ_TKECMCATEGORY rO_PJ_TKECMCATEGORY) {
+	public List<CATEGORY> categoryListById(CATEGORY rO_CATEGORY) {
 		// TODO Auto-generated method stub
-		return O_CategoryDao.categoryListById(rO_PJ_TKECMCATEGORY);
+		return O_CategoryDao.categoryListById(rO_CATEGORY);
 	}
 }

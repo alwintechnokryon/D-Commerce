@@ -2,12 +2,12 @@ package com.technokryon.ecommerce.service;
 
 import java.util.List;
 
-import com.technokryon.ecommerce.pojo.PJ_TKECMPRODUCT;
+import com.technokryon.ecommerce.pojo.PRODUCT;
 
 public interface ProductService {
 
-	List<PJ_TKECMPRODUCT> getListByCategory(String tkecmpCategoryId, Integer PageNumber);
+	List<PRODUCT> getListByCategory(String categoryId, Integer PageNumber);
 
-	PJ_TKECMPRODUCT getDetailById(String tkecmpId);
+	PRODUCT getDetailById(String id);
 
 }

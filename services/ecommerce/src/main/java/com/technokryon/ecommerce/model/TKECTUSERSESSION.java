@@ -26,18 +26,18 @@ public class TKECTUSERSESSION {
 
 	@Id
 	@Column(name = "TKECTUS_API_KEY")
-	private String tkectusApiKey;
+	private String apiKey;
 	
 	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	@JoinColumn(name = "TKECTUS_USER_ID", foreignKey = @ForeignKey(name = "FK_TKECTUS_USER_ID"))
-	private TKECMUSER tkectusUserId;
+	private TKECMUSER userId;
 
 	@Column(name = "TKECTUS_CR_DATE")
-	private OffsetDateTime tkectusCreatedDate;
+	private OffsetDateTime createdDate;
 
 	@Column(name = "TKECTUS_CR_IP")
-	private String tkectusCreatedIp; 
+	private String createdIp; 
 	
 	@Column(name = "TKECTUS_ALIVE_YN")
-	private String tkectusAliveYN;
+	private String aliveYN;
 }

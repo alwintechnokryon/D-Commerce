@@ -5,9 +5,9 @@ import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
-public class PJ_TKECMPRODUCTTYPE {
 
-	Integer tkecmptAgId;
-	String tkecmptType;
+public class ATTRIBUTE {
 
+	String id;
+	String name;
 }

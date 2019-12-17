@@ -26,22 +26,22 @@ public class TKECMPRODUCTDOWNLOAD {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "TKECMPD_AG_ID")
-	private Integer tkecmpdAgId;
+	private Integer agId;
 
 	@ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
 	@JoinColumn(name = "TKECMPD_PRODUCT_ID", foreignKey = @ForeignKey(name="FK_TKECMPD_PRODUCT_ID") )
-	private TKECMPRODUCT tkecmpdProductId;
+	private TKECMPRODUCT productId;
 	
 	@Column(name = "TKECMPD_IS_SHARABLE")
-	private String tkecmpdIsSharable;
+	private String isSharable;
 	
 	@Column(name = "TKECMPD_URL")
-	private String tkecmpdUrl;
+	private String url;
 	
 	@Column(name = "TKECMPD_FILE")
-	private String tkecmpdFile;
+	private String file;
 	
 	@Column(name = "TKECMPD_TITLE")
-	private String tkecmpdTitle;
+	private String title;
 	
 }

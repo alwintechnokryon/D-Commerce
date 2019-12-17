@@ -5,10 +5,8 @@ import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
-public class PJ_TKECTCONFIGURABLELINK {
+public class Response {
 
-	Integer tkectclAgId;
-	String tkectclProductId;
-	String tkectclParentId;
+	String message;
 
 }

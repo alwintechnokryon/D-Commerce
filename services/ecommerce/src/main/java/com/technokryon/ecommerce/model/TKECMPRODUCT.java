@@ -28,56 +28,56 @@ public class TKECMPRODUCT {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "TKECMP_ID")
-	private String tkecmpId;
+	private String id;
 
 	@Column(name = "TKECMP_SKU", unique = true)
-	private String tkecmpSKU;
+	private String sku;
 
 	@Column(name = "TKECMP_NAME", unique = true)
-	private String tkecmpName;
+	private String name;
 
 	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	@JoinColumn(name = "TKECMP_CATEGORY_ID", foreignKey = @ForeignKey(name = "FK_TKECMP_CATEGORY_ID"))
-	private TKECMCATEGORY tkecmpCategoryId;
+	private TKECMCATEGORY categoryId;
 
 	@Column(name = "TKECMP_WEIGHT")
-	private Float tkecmpWeight;
+	private Float weight;
 
 	@Column(name = "TKECMP_QUANTITY")
-	private Integer tkecmpQuantity;
+	private Integer quantity;
 
 	@Column(name = "TKECMP_SHORT_DESC")
-	private String tkecmpShortDesc;
+	private String shortDesc;
 
 	@Column(name = "TKECMP_LONG_DESC")
-	private String tkecmpLongDesc;
+	private String longDesc;
 
 	@Column(name = "TKECMP_COUNTRY_OF_MFG")
-	private String tkecmpCountryOfMfg;
+	private String countryOfMfg;
 
 	@Column(name = "TKECMP_CREATED_DATE")
-	private OffsetDateTime tkecmpCreatedDate;
+	private OffsetDateTime createdDate;
 
 	@Column(name = "TKECMP_CREATED_USERID")
-	private String tkecmpCreatedUserId;
+	private String createdUserId;
 
 	@Column(name = "TKECMP_MODIFIED_DATE")
-	private OffsetDateTime tkecmpModifiedDate;
+	private OffsetDateTime modifiedDate;
 
 	@Column(name = "TKECMP_MODIFIED_USERID")
-	private String tkecmpModifiedUserId;
+	private String mdifiedUserId;
 
 	@Column(name = "TKECMP_STATUS")
-	private String tkecmpStatus;
+	private String status;
 
 	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	@JoinColumn(name = "TKECMP_TYPE", foreignKey = @ForeignKey(name = "FK_TKECMP_TYPE"))
-	private TKECMPRODUCTTYPE tkecmpType;
+	private TKECMPRODUCTTYPE type;
 
 	@Column(name = "TKECMP_PRICE")
-	private Double tkecmpPrice;
+	private Double price;
 
-	@Column(name = "TKECMP_DEFAULT")
-	private String tkecmpDefault;
+	@Column(name = "TKECMP_DEFAULT_YN")
+	private String defaultYN;
 
 }

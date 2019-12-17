@@ -5,8 +5,9 @@ import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
-public class PJ_Response {
+public class PRODUCTTYPE {
 
-	String message;
+	Integer agId;
+	String type;
 
 }

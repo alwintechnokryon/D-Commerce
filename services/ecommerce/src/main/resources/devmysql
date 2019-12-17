@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Dec 16, 2019 at 01:25 PM
+-- Generation Time: Dec 16, 2019 at 10:52 PM
 -- Server version: 5.7.23
 -- PHP Version: 5.6.38
 
@@ -150,7 +150,8 @@ CREATE TABLE IF NOT EXISTS `TKECM_PRODUCT` (
   `TKECMP_STATUS` varchar(10) COLLATE utf8_unicode_ci DEFAULT NULL,
   `TKECMP_TYPE` int(11) DEFAULT NULL,
   `TKECMP_PRICE` double DEFAULT NULL,
-  `TKECMP_DEFAULT` varchar(5) COLLATE utf8_unicode_ci NOT NULL,
+  `TKECMP_DEFAULT_YN` varchar(5) COLLATE utf8_unicode_ci NOT NULL,
+  `TKECMP_DEFAULT` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`TKECMP_ID`),
   UNIQUE KEY `UNIQUESKU` (`TKECMP_SKU`),
   UNIQUE KEY `TKECMP_NAME` (`TKECMP_NAME`),
@@ -162,15 +163,15 @@ CREATE TABLE IF NOT EXISTS `TKECM_PRODUCT` (
 -- Dumping data for table `TKECM_PRODUCT`
 --
 
-INSERT INTO `TKECM_PRODUCT` (`TKECMP_ID`, `TKECMP_SKU`, `TKECMP_NAME`, `TKECMP_CATEGORY_ID`, `TKECMP_WEIGHT`, `TKECMP_QUANTITY`, `TKECMP_SHORT_DESC`, `TKECMP_LONG_DESC`, `TKECMP_COUNTRY_OF_MFG`, `TKECMP_CREATED_DATE`, `TKECMP_CREATED_USERID`, `TKECMP_MODIFIED_DATE`, `TKECMP_MODIFIED_USERID`, `TKECMP_STATUS`, `TKECMP_TYPE`, `TKECMP_PRICE`, `TKECMP_DEFAULT`) VALUES
-('1', 'RN7PRO', 'Redmi Note 7 Pro', 'TKECC0016', NULL, 5, 'Redmi Note 7 Pro', 'The former is slightly faster and more efficient. The Pro model also offers more RAM and internal storage than the regular model, as well as stronger camera hardware. The Xiaomi Redmi Note 7 Pro has a 48MP + 5MP rear camera setup like the Redmi Note 7.', 'China', NULL, NULL, NULL, NULL, 'Y', 1, 17000, 'Y'),
-('2', 'LED123', 'LED', 'TKECC0018', NULL, 10, 'LED', 'A light-emitting diode (LED) is a semiconductor light source that emits light when current flows through it. Electrons in the semiconductor recombine with electron holes, releasing energy in the form of photons.', 'India', NULL, NULL, NULL, NULL, 'Y', 1, 45000, 'Y'),
-('3', 'WedSet56', 'Wedding Set', 'TKECC0023', NULL, 3, 'Wedding Set', 'A wedding set includes the engagement ring, matching band for her and a band for him. A bridal set consists of an engagement ring and matching band for the bride, leaving the groom on his own for his band.', 'India', NULL, NULL, NULL, NULL, 'Y', 1, 6000, 'Y'),
-('4', 'ShirtRed001', 'Shirt Red', 'TKECC0020', NULL, 5, 'Shirt Red', 'Casual Shirts for Men - Buy new arrivals & latest Casual Shirt for Men from Mufti, Tommy Hilfiger, Roadster, UCB & more.', 'India', NULL, NULL, NULL, NULL, 'Y', 2, 850, 'N'),
-('5', 'ShirtPink002', 'Shirt Pink', 'TKECC0020', NULL, 4, 'Shirt Pink', 'Casual Shirts for Men - Buy new arrivals & latest Casual Shirt for Men from Mufti, Tommy Hilfiger, Roadster, UCB & more.', 'India', NULL, NULL, NULL, NULL, 'Y', 4, 875, 'Y'),
-('6', 'Ebook003', 'Ebook', 'TKECC0029', NULL, 3, 'Ebooks', 'An electronic book, also known as an e-book or eBook, is a book publication made available in digital form, consisting of text, images, or both, readable ', 'India', NULL, NULL, NULL, NULL, 'Y', 3, 450, 'Y'),
-('7', 'Books004', 'Books', 'TKECC0030', NULL, 2, 'Books', 'Books Advanced Search New Releases & Pre-orders Best Sellers Browse Genres Children\'s & Young Adult Textbooks Exam Central All Indian Languages', 'India', NULL, NULL, NULL, NULL, 'Y', 3, 250, 'Y'),
-('8', 'ShirtOrange003', 'Shirt Orange', 'TKECC0020', NULL, 3, 'Shirt Orange', 'Casual Shirts for Men - Buy new arrivals & latest Casual Shirt for Men from Mufti, Tommy Hilfiger, Roadster, UCB & more.', 'India', NULL, NULL, NULL, NULL, 'Y', 4, 325, 'N');
+INSERT INTO `TKECM_PRODUCT` (`TKECMP_ID`, `TKECMP_SKU`, `TKECMP_NAME`, `TKECMP_CATEGORY_ID`, `TKECMP_WEIGHT`, `TKECMP_QUANTITY`, `TKECMP_SHORT_DESC`, `TKECMP_LONG_DESC`, `TKECMP_COUNTRY_OF_MFG`, `TKECMP_CREATED_DATE`, `TKECMP_CREATED_USERID`, `TKECMP_MODIFIED_DATE`, `TKECMP_MODIFIED_USERID`, `TKECMP_STATUS`, `TKECMP_TYPE`, `TKECMP_PRICE`, `TKECMP_DEFAULT_YN`, `TKECMP_DEFAULT`) VALUES
+('1', 'RN7PRO', 'Redmi Note 7 Pro', 'TKECC0016', NULL, 5, 'Redmi Note 7 Pro', 'The former is slightly faster and more efficient. The Pro model also offers more RAM and internal storage than the regular model, as well as stronger camera hardware. The Xiaomi Redmi Note 7 Pro has a 48MP + 5MP rear camera setup like the Redmi Note 7.', 'China', NULL, NULL, NULL, NULL, 'Y', 1, 17000, 'Y', NULL),
+('2', 'LED123', 'LED', 'TKECC0018', NULL, 10, 'LED', 'A light-emitting diode (LED) is a semiconductor light source that emits light when current flows through it. Electrons in the semiconductor recombine with electron holes, releasing energy in the form of photons.', 'India', NULL, NULL, NULL, NULL, 'Y', 1, 45000, 'Y', NULL),
+('3', 'WedSet56', 'Wedding Set', 'TKECC0023', NULL, 3, 'Wedding Set', 'A wedding set includes the engagement ring, matching band for her and a band for him. A bridal set consists of an engagement ring and matching band for the bride, leaving the groom on his own for his band.', 'India', NULL, NULL, NULL, NULL, 'Y', 1, 6000, 'Y', NULL),
+('4', 'ShirtRed001', 'Shirt Red', 'TKECC0020', NULL, 5, 'Shirt Red', 'Casual Shirts for Men - Buy new arrivals & latest Casual Shirt for Men from Mufti, Tommy Hilfiger, Roadster, UCB & more.', 'India', NULL, NULL, NULL, NULL, 'Y', 2, 850, 'N', NULL),
+('5', 'ShirtPink002', 'Shirt Pink', 'TKECC0020', NULL, 4, 'Shirt Pink', 'Casual Shirts for Men - Buy new arrivals & latest Casual Shirt for Men from Mufti, Tommy Hilfiger, Roadster, UCB & more.', 'India', NULL, NULL, NULL, NULL, 'Y', 4, 875, 'Y', NULL),
+('6', 'Ebook003', 'Ebook', 'TKECC0029', NULL, 3, 'Ebooks', 'An electronic book, also known as an e-book or eBook, is a book publication made available in digital form, consisting of text, images, or both, readable ', 'India', NULL, NULL, NULL, NULL, 'Y', 3, 450, 'Y', NULL),
+('7', 'Books004', 'Books', 'TKECC0030', NULL, 2, 'Books', 'Books Advanced Search New Releases & Pre-orders Best Sellers Browse Genres Children\'s & Young Adult Textbooks Exam Central All Indian Languages', 'India', NULL, NULL, NULL, NULL, 'Y', 3, 250, 'Y', NULL),
+('8', 'ShirtOrange003', 'Shirt Orange', 'TKECC0020', NULL, 3, 'Shirt Orange', 'Casual Shirts for Men - Buy new arrivals & latest Casual Shirt for Men from Mufti, Tommy Hilfiger, Roadster, UCB & more.', 'India', NULL, NULL, NULL, NULL, 'Y', 4, 325, 'N', NULL);
 
 -- --------------------------------------------------------
 
@@ -262,9 +263,10 @@ INSERT INTO `TKECM_USER` (`TKECMU_ID`, `TKECMU_NAME`, `TKECMU_REG_TYPE`, `TKECMU
 ('TKEC0013', 'sasikumar', 'E', 'sasikumarmsk1996@gmail.com', 110026, '2019-11-28 18:50:39', '$2a$10$EALs6eMAceYbZUrtOgeFt.0/6Jq1e60USMmVada6WXeyeesveerj6', '$2a$10$RJk9EUwH98Z3IQUuQM5gbO4Zuh8BgSAZOwUt0tYU/I/DokAVa4e0i', '2019-11-28 18:45:35', NULL, NULL, 'Y', 'Y', NULL, NULL),
 ('TKEC0014', 'sasi', 'E', 'sasi1887@gmail.com', 145345, '2019-11-28 19:17:05', '$2a$10$EKXWiqfX19d9PdSPcID0luHaOqbOEb5Od3qtEuzEIMFA5Xnkm0tt2', '$2a$10$xQcaWvLP3Ay6W4YKU0.skOhTpPlPKoD0TSMnR/YphW52HKRg0gqpS', '2019-11-28 19:07:58', NULL, NULL, 'Y', 'Y', NULL, NULL),
 ('TKEC0015', 'akila', 'M', NULL, 193306, '2019-11-29 14:29:52', '$2a$10$JtgJkeJuShV48lQTlNrXPOaG3QcalG2J1x79cNOig9aa1F.z5NUIe', '$2a$10$SBEPZifC/HC0VV7oh4sP7O5rJm8/laN6X4k.Kquxpq6PUfHnIpCkC', '2019-11-29 12:35:00', 7825967476, 91, 'Y', 'Y', '2019-11-29 14:25:55', NULL),
-('TKEC0016', 'string', 'M', NULL, 182714, '2019-11-29 12:41:17', '$2a$10$hRsmc6WsZi8iuzVtUBYAVO.1Nha2l5JerZc.iwQzE3oqbERMmUoM.', '$2a$10$BE62ISyWPMZj4y7ynCbHOOaqUXv5s.aZlXwzQdN5s9hNlzMVSUznu', '2019-11-29 12:36:16', 0, 0, 'N', 'N', NULL, NULL),
-('TKEC0017', 'indhra', 'M', NULL, 165058, '2019-12-04 17:07:54', '$2a$10$lNnAKwecPLY8UgW3/NcIguOoajvipGAHUS3qi1e75Do7u9FRwD2pi', '$2a$10$eHlwmuufM5K6vc0Zdo1u9eZkJB9KQAJYbNoLt5b7Aco8RCi/JkzT6', '2019-12-04 16:41:14', 7825967475, 91, 'Y', 'Y', '2019-12-04 17:04:48', NULL),
-('TKECU0018', 'Dharshini', 'M', NULL, 194826, '2019-12-10 12:57:15', '$2a$10$8H9j32DYUpGZqpz.qihJ4uA6G5eekFhJSb8/LGq7ci5b5uFdHUncG', '$2a$10$zLXWDWczhGsA639phAupqeZ3ErfREq0W5gdnxImkwp.ephDkTkYti', '2019-12-10 12:48:44', 8248428818, 91, 'Y', 'Y', NULL, '2019-12-10 12:55:31');
+('TKEC0016', 'string', 'M', NULL, 109594, '2019-12-17 13:02:14', '$2a$10$jh5Cprp29BUp2osUniynAOkhVlLqWO4GJd.8Ki9VbCChMMVsMB/lC', '$2a$10$BE62ISyWPMZj4y7ynCbHOOaqUXv5s.aZlXwzQdN5s9hNlzMVSUznu', '2019-11-29 12:36:16', 0, 0, 'N', 'N', NULL, NULL),
+('TKEC0017', 'indhra', 'M', NULL, 165058, '2019-12-04 17:07:54', '$2a$10$lNnAKwecPLY8UgW3/NcIguOoajvipGAHUS3qi1e75Do7u9FRwD2pi', '$2a$10$eHlwmuufM5K6vc0Zdo1u9eZkJB9KQAJYbNoLt5b7Aco8RCi/JkzT6', '2019-12-04 16:41:14', 7825967470, 91, 'Y', 'Y', '2019-12-04 17:04:48', NULL),
+('TKECU0018', 'Dharshini', 'M', NULL, 194826, '2019-12-10 12:57:15', '$2a$10$8H9j32DYUpGZqpz.qihJ4uA6G5eekFhJSb8/LGq7ci5b5uFdHUncG', '$2a$10$zLXWDWczhGsA639phAupqeZ3ErfREq0W5gdnxImkwp.ephDkTkYti', '2019-12-10 12:48:44', 8248428818, 91, 'Y', 'Y', NULL, '2019-12-10 12:55:31'),
+('TKECU0019', 'kani', 'M', NULL, 198746, '2019-12-17 13:05:22', '$2a$10$k/TzF00S0TJNuOHoZaJ2geOUGlLEgRCcm02yvuGwWVdg0husPRgjW', '$2a$10$.SyrSoAbCMZjSG4JLmcbOufYOFERxf1rYcuoTbKrGkxT3jQGeQG3K', '2019-12-17 12:55:54', 7825967475, 91, 'Y', 'Y', NULL, '2019-12-17 13:03:00');
 
 -- --------------------------------------------------------
 
@@ -277,6 +279,7 @@ CREATE TABLE IF NOT EXISTS `TKECT_CONFIGURABLE_LINK` (
   `TKECTCL_AG_ID` int(11) NOT NULL AUTO_INCREMENT,
   `TKECTCL_PRODUCT_ID` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `TKECTCL_PARENT_ID` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `TKECTC_PARENT_ID` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`TKECTCL_AG_ID`),
   KEY `FK_TKECTCL_PRODUCT_ID` (`TKECTCL_PRODUCT_ID`) USING BTREE,
   KEY `FK_TKECTCL_PARENT_ID` (`TKECTCL_PARENT_ID`) USING BTREE
@@ -286,9 +289,9 @@ CREATE TABLE IF NOT EXISTS `TKECT_CONFIGURABLE_LINK` (
 -- Dumping data for table `TKECT_CONFIGURABLE_LINK`
 --
 
-INSERT INTO `TKECT_CONFIGURABLE_LINK` (`TKECTCL_AG_ID`, `TKECTCL_PRODUCT_ID`, `TKECTCL_PARENT_ID`) VALUES
-(1, '5', '4'),
-(2, '8', '4');
+INSERT INTO `TKECT_CONFIGURABLE_LINK` (`TKECTCL_AG_ID`, `TKECTCL_PRODUCT_ID`, `TKECTCL_PARENT_ID`, `TKECTC_PARENT_ID`) VALUES
+(1, '5', '4', NULL),
+(2, '8', '4', NULL);
 
 -- --------------------------------------------------------
 
@@ -399,37 +402,41 @@ CREATE TABLE IF NOT EXISTS `TKECT_USER_AUDIT` (
   `TKECTUA_LOGIN_TIME` datetime DEFAULT NULL,
   `TKECTUA_LOGOUT_TIME` datetime DEFAULT NULL,
   `TKECTUA_USER_AGENT` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `TKECTUA_LAT` double DEFAULT NULL,
-  `TKECTUA_LONG` double DEFAULT NULL,
+  `TKECTUA_LATTITUDE` double DEFAULT NULL,
+  `TKECTUA_LONGITUDE` double DEFAULT NULL,
   `TKECTUA_IP` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL,
   `TKECTUA_API_KEY` varchar(500) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `TKECTUA_LAT` double DEFAULT NULL,
+  `TKECTUA_LONG` double DEFAULT NULL,
   PRIMARY KEY (`TKECTUA_AG_ID`),
   KEY `FK_TKECTUA_USER_ID` (`TKECTUA_USER_ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Dumping data for table `TKECT_USER_AUDIT`
 --
 
-INSERT INTO `TKECT_USER_AUDIT` (`TKECTUA_AG_ID`, `TKECTUA_USER_ID`, `TKECTUA_LOGIN_TIME`, `TKECTUA_LOGOUT_TIME`, `TKECTUA_USER_AGENT`, `TKECTUA_LAT`, `TKECTUA_LONG`, `TKECTUA_IP`, `TKECTUA_API_KEY`) VALUES
-(5, 'TKEC0009', '2019-11-28 15:07:17', NULL, 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.108 Safari/537.36', NULL, NULL, '0:0:0:0:0:0:0:1', '$2a$2a$10$xxWqJlspp//66JkC3l89Cu7rMoNUPKX6p./rq9ch0V46S6xSBkNom'),
-(6, 'TKEC0010', '2019-11-28 18:03:41', '2019-11-28 18:04:59', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.108 Safari/537.36', NULL, NULL, NULL, '$2a$10$XZFhuCvOvpyaLMVTmg8JNOyhA3mqf.XZn9F0biYIILS14fQXAPtC6'),
-(7, 'TKEC0011', '2019-11-28 18:08:53', NULL, 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.108 Safari/537.36', NULL, NULL, NULL, NULL),
-(8, 'TKEC0012', '2019-11-28 18:35:21', NULL, 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.108 Safari/537.36', NULL, NULL, NULL, NULL),
-(9, 'TKEC0012', '2019-11-28 18:37:40', NULL, 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.108 Safari/537.36', NULL, NULL, NULL, NULL),
-(10, 'TKEC0013', '2019-11-28 18:49:52', NULL, 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.108 Safari/537.36', NULL, NULL, NULL, NULL),
-(11, 'TKEC0014', '2019-11-28 19:10:25', '2019-11-28 19:12:52', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.108 Safari/537.36', NULL, NULL, NULL, '$2a$10$UEkIt8EcjbAvO4eiTXkQAehl8Iy9OF8sEhotnrXne04.0ARLf/3yi'),
-(12, 'TKEC0014', '2019-11-29 11:53:18', NULL, 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.108 Safari/537.36', NULL, NULL, NULL, '$2a$10$VZvmqcHDgvg2KX1HeKOJieMJj1SRcRrFVlB.9SdLFxDguEoRkAcJi'),
-(13, 'TKEC0014', '2019-11-29 12:26:35', NULL, 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.108 Safari/537.36', NULL, NULL, '0:0:0:0:0:0:0:1', '$2a$10$ADKrJDn.GHV09pNCouv6duCqTWSDaRGrZi4JkUfsigbwuIzwk.mte'),
-(14, 'TKEC0015', '2019-11-29 12:38:54', NULL, 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.108 Safari/537.36', NULL, NULL, NULL, '$2a$10$hrrXGYxOFXTKr9wU2X0jHOlTwFZoCWWr2TM3HjLZGB5HBWy9/MFgu'),
-(15, 'TKEC0015', '2019-11-29 14:12:08', '2019-11-29 14:15:16', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.108 Safari/537.36', NULL, NULL, NULL, '$2a$10$XqAM0x0jy4uK4ZmPPV678OWx2wwQkfybVOrSdZYZiyVQVw8mg/ax2'),
-(16, 'TKEC0015', '2019-11-29 14:27:00', NULL, 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.108 Safari/537.36', NULL, NULL, '0:0:0:0:0:0:0:1', '$2a$10$MXEip4LrocoufacF4U6l/.qezxRjT7tJ9RnmSrM4rDiyY5mw824eW'),
-(17, 'TKEC0017', '2019-12-04 16:43:44', '2019-12-04 16:57:19', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.108 Safari/537.36', NULL, NULL, NULL, '$2a$10$nVO1q9r/nSnqIM4pVTAkY.lYEMKHmbYnMKKnDdD2EQJ2.LI9mfXE.'),
-(18, 'TKEC0017', '2019-12-04 17:05:33', NULL, 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.108 Safari/537.36', NULL, NULL, NULL, '$2a$10$5rHjl22mAirJpo1cXeuV/uYKUdh0puwnIrIYbbOLdRvg7bAaj8oQu'),
-(19, 'TKECU0018', '2019-12-10 12:51:11', NULL, 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.108 Safari/537.36', NULL, NULL, NULL, '$2a$10$HwbR9SLAZaauFobH495w5eqeqbEzrmsmhKJxAyf3L/c45trZRW/LC'),
-(20, 'TKECU0018', '2019-12-10 12:53:50', NULL, 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.108 Safari/537.36', NULL, NULL, NULL, '$2a$10$dskWbgU1r2QSADQDCvAvE.6vdrN7P2.Lbgjxya3sL1YImmNgv8wEy'),
-(21, 'TKECU0018', '2019-12-10 12:54:06', NULL, 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.108 Safari/537.36', NULL, NULL, NULL, '$2a$10$zZe2ozT3ASHUsVH5wMHxmOkbYyP09.6vX6lji1iXRm//vrNBCdfWi'),
-(22, 'TKECU0018', '2019-12-10 12:55:50', '2019-12-10 12:56:11', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.108 Safari/537.36', NULL, NULL, NULL, '$2a$10$mtoB/ugPS8X6r4Z56PHX2OIyUjQ7DOSIxh/w6Lh45NetNiF/1dlaS');
+INSERT INTO `TKECT_USER_AUDIT` (`TKECTUA_AG_ID`, `TKECTUA_USER_ID`, `TKECTUA_LOGIN_TIME`, `TKECTUA_LOGOUT_TIME`, `TKECTUA_USER_AGENT`, `TKECTUA_LATTITUDE`, `TKECTUA_LONGITUDE`, `TKECTUA_IP`, `TKECTUA_API_KEY`, `TKECTUA_LAT`, `TKECTUA_LONG`) VALUES
+(5, 'TKEC0009', '2019-11-28 15:07:17', NULL, 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.108 Safari/537.36', NULL, NULL, '0:0:0:0:0:0:0:1', '$2a$2a$10$xxWqJlspp//66JkC3l89Cu7rMoNUPKX6p./rq9ch0V46S6xSBkNom', NULL, NULL),
+(6, 'TKEC0010', '2019-11-28 18:03:41', '2019-11-28 18:04:59', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.108 Safari/537.36', NULL, NULL, NULL, '$2a$10$XZFhuCvOvpyaLMVTmg8JNOyhA3mqf.XZn9F0biYIILS14fQXAPtC6', NULL, NULL),
+(7, 'TKEC0011', '2019-11-28 18:08:53', NULL, 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.108 Safari/537.36', NULL, NULL, NULL, NULL, NULL, NULL),
+(8, 'TKEC0012', '2019-11-28 18:35:21', NULL, 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.108 Safari/537.36', NULL, NULL, NULL, NULL, NULL, NULL),
+(9, 'TKEC0012', '2019-11-28 18:37:40', NULL, 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.108 Safari/537.36', NULL, NULL, NULL, NULL, NULL, NULL),
+(10, 'TKEC0013', '2019-11-28 18:49:52', NULL, 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.108 Safari/537.36', NULL, NULL, NULL, NULL, NULL, NULL),
+(11, 'TKEC0014', '2019-11-28 19:10:25', '2019-11-28 19:12:52', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.108 Safari/537.36', NULL, NULL, NULL, '$2a$10$UEkIt8EcjbAvO4eiTXkQAehl8Iy9OF8sEhotnrXne04.0ARLf/3yi', NULL, NULL),
+(12, 'TKEC0014', '2019-11-29 11:53:18', NULL, 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.108 Safari/537.36', NULL, NULL, NULL, '$2a$10$VZvmqcHDgvg2KX1HeKOJieMJj1SRcRrFVlB.9SdLFxDguEoRkAcJi', NULL, NULL),
+(13, 'TKEC0014', '2019-11-29 12:26:35', NULL, 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.108 Safari/537.36', NULL, NULL, '0:0:0:0:0:0:0:1', '$2a$10$ADKrJDn.GHV09pNCouv6duCqTWSDaRGrZi4JkUfsigbwuIzwk.mte', NULL, NULL),
+(14, 'TKEC0015', '2019-11-29 12:38:54', NULL, 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.108 Safari/537.36', NULL, NULL, NULL, '$2a$10$hrrXGYxOFXTKr9wU2X0jHOlTwFZoCWWr2TM3HjLZGB5HBWy9/MFgu', NULL, NULL),
+(15, 'TKEC0015', '2019-11-29 14:12:08', '2019-11-29 14:15:16', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.108 Safari/537.36', NULL, NULL, NULL, '$2a$10$XqAM0x0jy4uK4ZmPPV678OWx2wwQkfybVOrSdZYZiyVQVw8mg/ax2', NULL, NULL),
+(16, 'TKEC0015', '2019-11-29 14:27:00', NULL, 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.108 Safari/537.36', NULL, NULL, '0:0:0:0:0:0:0:1', '$2a$10$MXEip4LrocoufacF4U6l/.qezxRjT7tJ9RnmSrM4rDiyY5mw824eW', NULL, NULL),
+(17, 'TKEC0017', '2019-12-04 16:43:44', '2019-12-04 16:57:19', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.108 Safari/537.36', NULL, NULL, NULL, '$2a$10$nVO1q9r/nSnqIM4pVTAkY.lYEMKHmbYnMKKnDdD2EQJ2.LI9mfXE.', NULL, NULL),
+(18, 'TKEC0017', '2019-12-04 17:05:33', NULL, 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.108 Safari/537.36', NULL, NULL, NULL, '$2a$10$5rHjl22mAirJpo1cXeuV/uYKUdh0puwnIrIYbbOLdRvg7bAaj8oQu', NULL, NULL),
+(19, 'TKECU0018', '2019-12-10 12:51:11', NULL, 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.108 Safari/537.36', NULL, NULL, NULL, '$2a$10$HwbR9SLAZaauFobH495w5eqeqbEzrmsmhKJxAyf3L/c45trZRW/LC', NULL, NULL),
+(20, 'TKECU0018', '2019-12-10 12:53:50', NULL, 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.108 Safari/537.36', NULL, NULL, NULL, '$2a$10$dskWbgU1r2QSADQDCvAvE.6vdrN7P2.Lbgjxya3sL1YImmNgv8wEy', NULL, NULL),
+(21, 'TKECU0018', '2019-12-10 12:54:06', NULL, 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.108 Safari/537.36', NULL, NULL, NULL, '$2a$10$zZe2ozT3ASHUsVH5wMHxmOkbYyP09.6vX6lji1iXRm//vrNBCdfWi', NULL, NULL),
+(22, 'TKECU0018', '2019-12-10 12:55:50', '2019-12-10 12:56:11', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.108 Safari/537.36', NULL, NULL, NULL, '$2a$10$mtoB/ugPS8X6r4Z56PHX2OIyUjQ7DOSIxh/w6Lh45NetNiF/1dlaS', NULL, NULL),
+(23, 'TKECU0019', '2019-12-17 12:59:31', '2019-12-17 13:05:23', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.108 Safari/537.36', NULL, NULL, NULL, '$2a$10$JEJ4eLBKMIyiuo4IRL2Gx.ohgvRDpnOhm/ZPJqaQLyqhDLm.AY5kK', NULL, NULL),
+(24, 'TKECU0019', '2019-12-17 13:03:32', '2019-12-17 13:04:29', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.108 Safari/537.36', NULL, NULL, NULL, '$2a$10$A9hJjjOplV/Wj6u3Fmnq9u2GX9277qQhL04An5P67BzKyL74J5FeW', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -455,11 +462,13 @@ CREATE TABLE IF NOT EXISTS `TKECT_USER_SESSION` (
 INSERT INTO `TKECT_USER_SESSION` (`TKECTUS_USER_ID`, `TKECTUS_API_KEY`, `TKECTUS_CR_DATE`, `TKECTUS_CR_IP`, `TKECTUS_ALIVE_YN`) VALUES
 ('TKEC0017', '$2a$10$5rHjl22mAirJpo1cXeuV/uYKUdh0puwnIrIYbbOLdRvg7bAaj8oQu', '2019-12-04 17:05:33', NULL, 'Y'),
 ('TKEC0012', '$2a$10$7Iht98s.enmY3pRutt7mPOmhU/jGJ0SgXexML7DZbiuFUQv5.7LWm', '2019-11-28 18:37:40', NULL, 'Y'),
+('TKECU0019', '$2a$10$A9hJjjOplV/Wj6u3Fmnq9u2GX9277qQhL04An5P67BzKyL74J5FeW', '2019-12-17 13:03:31', NULL, 'N'),
 ('TKEC0014', '$2a$10$ADKrJDn.GHV09pNCouv6duCqTWSDaRGrZi4JkUfsigbwuIzwk.mte', '2019-11-29 12:26:35', NULL, 'Y'),
 ('TKECU0018', '$2a$10$dskWbgU1r2QSADQDCvAvE.6vdrN7P2.Lbgjxya3sL1YImmNgv8wEy', '2019-12-10 12:53:50', NULL, 'Y'),
 ('TKEC0012', '$2a$10$fkUaZzxaHBH85EtHIPV3JeI8KLRE6CWp3H89sprdsRptAiyCxVDju', '2019-11-28 18:35:21', NULL, 'Y'),
 ('TKEC0015', '$2a$10$hrrXGYxOFXTKr9wU2X0jHOlTwFZoCWWr2TM3HjLZGB5HBWy9/MFgu', '2019-11-29 12:38:54', NULL, 'Y'),
 ('TKECU0018', '$2a$10$HwbR9SLAZaauFobH495w5eqeqbEzrmsmhKJxAyf3L/c45trZRW/LC', '2019-12-10 12:51:11', NULL, 'Y'),
+('TKECU0019', '$2a$10$JEJ4eLBKMIyiuo4IRL2Gx.ohgvRDpnOhm/ZPJqaQLyqhDLm.AY5kK', '2019-12-17 12:59:30', NULL, 'N'),
 ('TKECU0018', '$2a$10$mtoB/ugPS8X6r4Z56PHX2OIyUjQ7DOSIxh/w6Lh45NetNiF/1dlaS', '2019-12-10 12:55:50', NULL, 'N'),
 ('TKEC0015', '$2a$10$MXEip4LrocoufacF4U6l/.qezxRjT7tJ9RnmSrM4rDiyY5mw824eW', '2019-11-29 14:27:00', NULL, 'Y'),
 ('TKEC0017', '$2a$10$nVO1q9r/nSnqIM4pVTAkY.lYEMKHmbYnMKKnDdD2EQJ2.LI9mfXE.', '2019-12-04 16:43:44', NULL, 'N'),

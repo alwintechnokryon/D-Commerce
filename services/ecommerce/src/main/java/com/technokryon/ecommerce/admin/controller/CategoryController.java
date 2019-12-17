@@ -13,8 +13,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.technokryon.ecommerce.pojo.PJ_Response;
-import com.technokryon.ecommerce.pojo.PJ_TKECMCATEGORY;
+import com.technokryon.ecommerce.pojo.Response;
+import com.technokryon.ecommerce.pojo.CATEGORY;
 import com.technokryon.ecommerce.service.CategoryService;
 
 @Controller
@@ -27,14 +27,14 @@ public class CategoryController {
 
 	@ResponseBody
 	@PostMapping("/add")
-	private ResponseEntity<?> ADD_CATEGORY(@RequestBody PJ_TKECMCATEGORY RO_PJ_TKECMCATEGORY) {
+	private ResponseEntity<?> ADD_CATEGORY(@RequestBody CATEGORY RO_CATEGORY) {
 
-		PJ_Response O_PJ_Response = new PJ_Response();
+		Response O_Response = new Response();
 
-		String addCategory = O_CategoryService.addCategory(RO_PJ_TKECMCATEGORY);
+		String addCategory = O_CategoryService.addCategory(RO_CATEGORY);
 
-		O_PJ_Response.setMessage("Success");
-		return new ResponseEntity<Object>(O_PJ_Response, HttpStatus.OK);
+		O_Response.setMessage("Success");
+		return new ResponseEntity<Object>(O_Response, HttpStatus.OK);
 
 	}
 
@@ -42,18 +42,18 @@ public class CategoryController {
 	@GetMapping("/list")
 	private ResponseEntity<?> LIST() {
 
-		List<PJ_TKECMCATEGORY> LO_PJ_TKECMCATEGORY = O_CategoryService.categoryList();
+		List<CATEGORY> LO_CATEGORY = O_CategoryService.categoryList();
 
-		return new ResponseEntity<Object>(LO_PJ_TKECMCATEGORY, HttpStatus.OK);
+		return new ResponseEntity<Object>(LO_CATEGORY, HttpStatus.OK);
 
 	}
 
 	@ResponseBody
 	@PostMapping("/list/id") 
-	private ResponseEntity<?> LIST_BY_ID(@RequestBody PJ_TKECMCATEGORY RO_PJ_TKECMCATEGORY){
+	private ResponseEntity<?> LIST_BY_ID(@RequestBody CATEGORY RO_CATEGORY){
 		
 
-		List<PJ_TKECMCATEGORY> LO_PJ_TKECMCATEGORY = O_CategoryService.categoryListById(RO_PJ_TKECMCATEGORY);
+		List<CATEGORY> LO_CATEGORY = O_CategoryService.categoryListById(RO_CATEGORY);
 		
-		return new ResponseEntity<Object>(LO_PJ_TKECMCATEGORY, HttpStatus.OK);	}
+		return new ResponseEntity<Object>(LO_CATEGORY, HttpStatus.OK);	}
 }

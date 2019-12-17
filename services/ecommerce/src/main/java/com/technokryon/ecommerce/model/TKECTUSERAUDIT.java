@@ -21,30 +21,30 @@ public class TKECTUSERAUDIT {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "TKECTUA_AG_ID")
-	private Integer tkectuaAgId;
+	private Integer agId;
 
 	@Column(name = "TKECTUA_USER_ID")
-	private String tkectuaUserId;
+	private String userId;
 
 	@Column(name = "TKECTUA_LOGIN_TIME")
-	private OffsetDateTime tkectuaLoginTime;
+	private OffsetDateTime loginTime;
 
 	@Column(name = "TKECTUA_LOGOUT_TIME")
-	private OffsetDateTime tkectuaLogouttime;
+	private OffsetDateTime logouttime;
 
 	@Column(name = "TKECTUA_USER_AGENT")
-	private String tkectuaUserAgent;
+	private String userAgent;
 
-	@Column(name = "TKECTUA_LAT")
-	private Double tkectuaLat;
+	@Column(name = "TKECTUA_LATTITUDE")
+	private Double lattitude;
 
-	@Column(name = "TKECTUA_LONG")
-	private Double tkectuaLong;
+	@Column(name = "TKECTUA_LONGITUDE")
+	private Double longitude;
 
 	@Column(name = "TKECTUA_IP")
-	private String tkectuaIp;
+	private String ip;
 
 	@Column(name = "TKECTUA_API_KEY")
-	private String tkectuaApiKey;
+	private String apiKey;
 
 }

@@ -5,9 +5,11 @@ import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
+public class IMAGE {
 
-public class PJ_TKECMATTRIBUTE {
-
-	String tkecmaId;
-	String tkecmaName;
+	Integer agId;
+	String productId;
+	String fileName;
+	String fileType;
+	String url;
 }

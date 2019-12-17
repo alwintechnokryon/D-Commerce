@@ -14,10 +14,10 @@ import com.technokryon.ecommerce.model.TKECMPRODUCT;
 import com.technokryon.ecommerce.model.TKECMPRODUCTDOWNLOAD;
 import com.technokryon.ecommerce.model.TKECTCONFIGURABLELINK;
 import com.technokryon.ecommerce.model.TKECTPRODUCTATTRIBUTE;
-import com.technokryon.ecommerce.pojo.PJ_TKECMIMAGE;
-import com.technokryon.ecommerce.pojo.PJ_TKECMPRODUCT;
-import com.technokryon.ecommerce.pojo.PJ_TKECTOPTIONATTRIBUTE;
-import com.technokryon.ecommerce.pojo.PJ_TKECTPRODUCTATTRIBUTE;
+import com.technokryon.ecommerce.pojo.IMAGE;
+import com.technokryon.ecommerce.pojo.OPTIONATTRIBUTE;
+import com.technokryon.ecommerce.pojo.PRODUCT;
+import com.technokryon.ecommerce.pojo.PRODUCTATTRIBUTE;
 
 @Repository("ProductDao")
 @Transactional
@@ -28,15 +28,15 @@ public class ProductDaoImpl implements ProductDao {
 	private SessionFactory O_SessionFactory;
 
 	@Override
-	public List<PJ_TKECMPRODUCT> getListByCategory(String tkecmpCategoryId, Integer PageNumber) {
+	public List<PRODUCT> getListByCategory(String categoryId, Integer PageNumber) {
 
-		List<PJ_TKECMPRODUCT> LO_PJ_TKECMPRODUCT = new ArrayList<>();
+		List<PRODUCT> LO_PRODUCT = new ArrayList<>();
 
-		String productQuery = "FROM TKECMPRODUCT WHERE tkecmpCategoryId.tkecmcCategoryId =:categoryId AND tkecmpDefault=:default";
+		String productQuery = "FROM TKECMPRODUCT WHERE categoryId.categoryId =:categoryId AND defaultYN=:default";
 
-		String proAttrQuery = "FROM TKECTPRODUCTATTRIBUTE WHERE tkectpaProductId.tkecmpId =:productId";
+		String proAttrQuery = "FROM TKECTPRODUCTATTRIBUTE WHERE productId.id =:productId";
 
-		String imageQuery = "FROM TKECMIMAGE WHERE tkecmiProductId.tkecmpId =:productId";
+		String imageQuery = "FROM TKECMIMAGE WHERE productId.id =:productId";
 
 		Query query = O_SessionFactory.getCurrentSession().createQuery(productQuery);
 
@@ -44,76 +44,76 @@ public class ProductDaoImpl implements ProductDao {
 		query.setFirstResult((PageNumber - 1) * pageSize);
 		query.setMaxResults(pageSize);
 
-		query.setParameter("categoryId", tkecmpCategoryId);
+		query.setParameter("categoryId", categoryId);
 		query.setParameter("default", "Y");
 
 		List<TKECMPRODUCT> LO_TKECMPRODUCT = query.list();
 
 		for (TKECMPRODUCT O_TKECMPRODUCT : LO_TKECMPRODUCT) {
 
-			PJ_TKECMPRODUCT O_PJ_TKECMPRODUCT = new PJ_TKECMPRODUCT();
+			PRODUCT O_PRODUCT = new PRODUCT();
 
-			O_PJ_TKECMPRODUCT.setTkecmpId(O_TKECMPRODUCT.getTkecmpId());
-			O_PJ_TKECMPRODUCT.setTkecmpName(O_TKECMPRODUCT.getTkecmpName());
-			O_PJ_TKECMPRODUCT.setTkecmpPrice(O_TKECMPRODUCT.getTkecmpPrice());
+			O_PRODUCT.setId(O_TKECMPRODUCT.getId());
+			O_PRODUCT.setName(O_TKECMPRODUCT.getName());
+			O_PRODUCT.setPrice(O_TKECMPRODUCT.getPrice());
 
-			List<PJ_TKECTOPTIONATTRIBUTE> LO_PJ_TKECTOPTIONATTRIBUTE = new ArrayList<>();
+			List<OPTIONATTRIBUTE> LO_OPTIONATTRIBUTE = new ArrayList<>();
 
 			Query queryProductAttribute = O_SessionFactory.getCurrentSession().createQuery(proAttrQuery);
 
-			queryProductAttribute.setParameter("productId", O_TKECMPRODUCT.getTkecmpId());
+			queryProductAttribute.setParameter("productId", O_TKECMPRODUCT.getId());
 
 			List<TKECTPRODUCTATTRIBUTE> LO_TKECTPRODUCTATTRIBUTE = queryProductAttribute.list();
 
 			for (TKECTPRODUCTATTRIBUTE O_TKECTPRODUCTATTRIBUTE : LO_TKECTPRODUCTATTRIBUTE) {
 
-				PJ_TKECTOPTIONATTRIBUTE O_PJ_TKECTOPTIONATTRIBUTE = new PJ_TKECTOPTIONATTRIBUTE();
+				OPTIONATTRIBUTE O_OPTIONATTRIBUTE = new OPTIONATTRIBUTE();
 
-				O_PJ_TKECTOPTIONATTRIBUTE.setTkectoaAttributeId(
-						O_TKECTPRODUCTATTRIBUTE.getTkectpaOptionAttributeId().getTkectoaAttributeId().getTkecmaId());
-				O_PJ_TKECTOPTIONATTRIBUTE
-						.setTkectoaName(O_TKECTPRODUCTATTRIBUTE.getTkectpaOptionAttributeId().getTkectoaName());
-				LO_PJ_TKECTOPTIONATTRIBUTE.add(O_PJ_TKECTOPTIONATTRIBUTE);
+				O_OPTIONATTRIBUTE.setAttributeId(
+						O_TKECTPRODUCTATTRIBUTE.getOptionAttributeId().getAttributeId().getId());
+				O_OPTIONATTRIBUTE
+						.setName(O_TKECTPRODUCTATTRIBUTE.getOptionAttributeId().getName());
+				LO_OPTIONATTRIBUTE.add(O_OPTIONATTRIBUTE);
 			}
-			O_PJ_TKECMPRODUCT.setLO_PJ_TKECTOPTIONATTRIBUTE(LO_PJ_TKECTOPTIONATTRIBUTE);
+			O_PRODUCT.setLO_OPTIONATTRIBUTE(LO_OPTIONATTRIBUTE);
 
-			List<PJ_TKECMIMAGE> LO_PJ_TKECMIMAGE = new ArrayList<PJ_TKECMIMAGE>();
+			List<IMAGE> LO_IMAGE = new ArrayList<IMAGE>();
 
 			Query query1 = O_SessionFactory.getCurrentSession().createQuery(imageQuery);
 
-			query1.setParameter("productId", O_TKECMPRODUCT.getTkecmpId());
+			query1.setParameter("productId", O_TKECMPRODUCT.getId());
 
 			List<TKECMIMAGE> LO_TKECMIMAGE = query1.list();
 
 			for (TKECMIMAGE O_TKECMIMAGE : LO_TKECMIMAGE) {
 
-				PJ_TKECMIMAGE O_PJ_TKECMIMAGE = new PJ_TKECMIMAGE();
+				IMAGE O_IMAGE = new IMAGE();
 
-				O_PJ_TKECMIMAGE.setTkecmiUrl(O_TKECMIMAGE.getTkecmiUrl());
-				O_PJ_TKECMIMAGE.setTkecmiFileType(O_TKECMIMAGE.getTkecmiFileType());
-				O_PJ_TKECMIMAGE.setTkecmpiFileName(O_TKECMIMAGE.getTkecmpiFileName());
-				LO_PJ_TKECMIMAGE.add(O_PJ_TKECMIMAGE);
+				O_IMAGE.setUrl(O_TKECMIMAGE.getUrl());
+				O_IMAGE.setFileType(O_TKECMIMAGE.getFileType());
+				O_IMAGE.setFileName(O_TKECMIMAGE.getFileName());
+				LO_IMAGE.add(O_IMAGE);
 
 			}
 
-			O_PJ_TKECMPRODUCT.setLO_PJ_TKECMIMAGE(LO_PJ_TKECMIMAGE);
-			LO_PJ_TKECMPRODUCT.add(O_PJ_TKECMPRODUCT);
+			O_PRODUCT.setLO_IMAGE(LO_IMAGE);
+			LO_PRODUCT.add(O_PRODUCT);
 		}
-		return LO_PJ_TKECMPRODUCT;
+		return LO_PRODUCT;
 	}
 
 	@Override
-	public PJ_TKECMPRODUCT getDetailById(String tkecmpId) {
+	public PRODUCT getDetailById(String tkecmpId) {
 
-		PJ_TKECMPRODUCT O_PJ_TKECMPRODUCT = new PJ_TKECMPRODUCT();
+		PRODUCT O_PRODUCT = new PRODUCT();
 
-		String configurableProduct = "FROM TKECTCONFIGURABLELINK WHERE tkectclProductId.tkecmpId =:productId";
+		String configurableProduct = "FROM TKECTCONFIGURABLELINK WHERE productId.id =:productId";
 
-		String configurableParent = "FROM TKECTCONFIGURABLELINK WHERE tkectclParentId.tkecmpId =:parentId";
+		String configurableParent = "FROM TKECTCONFIGURABLELINK WHERE parentId.id =:parentId";
 
-		String productAttribute = "FROM TKECTPRODUCTATTRIBUTE WHERE tkectpaProductId.tkecmpId =:proAttrProductId ";
+		String productAttribute = "FROM TKECTPRODUCTATTRIBUTE WHERE productId.id =:proAttrProductId ";
 
-		String image = "FROM TKECMIMAGE WHERE tkecmiProductId.tkecmpId =:productId";
+		String image = "FROM TKECMIMAGE WHERE productId.id =:productId";
 
 		Query configurableProductQuery = O_SessionFactory.getCurrentSession().createQuery(configurableProduct);
 
@@ -123,84 +123,77 @@ public class ProductDaoImpl implements ProductDao {
 
 		if (O_TKECTCONFIGURABLELINK != null) {
 
-			O_PJ_TKECMPRODUCT.setTkecmpId(tkecmpId);
-			O_PJ_TKECMPRODUCT.setTkecmpName(O_TKECTCONFIGURABLELINK.getTkectclProductId().getTkecmpName());
-			O_PJ_TKECMPRODUCT.setTkecmpPrice(O_TKECTCONFIGURABLELINK.getTkectclProductId().getTkecmpPrice());
-			O_PJ_TKECMPRODUCT.setTkecmpShortDesc(O_TKECTCONFIGURABLELINK.getTkectclProductId().getTkecmpShortDesc());
-			O_PJ_TKECMPRODUCT.setTkecmpLongDesc(O_TKECTCONFIGURABLELINK.getTkectclProductId().getTkecmpLongDesc());
-			O_PJ_TKECMPRODUCT.setTkecmpWeight(O_TKECTCONFIGURABLELINK.getTkectclProductId().getTkecmpWeight());
-			O_PJ_TKECMPRODUCT.setTkecmpQuantity(O_TKECTCONFIGURABLELINK.getTkectclProductId().getTkecmpQuantity());
-			O_PJ_TKECMPRODUCT
-					.setTkecmpCountryOfMfg(O_TKECTCONFIGURABLELINK.getTkectclProductId().getTkecmpCountryOfMfg());
-			O_PJ_TKECMPRODUCT
-					.setTkecmpType(O_TKECTCONFIGURABLELINK.getTkectclProductId().getTkecmpType().getTkecmptAgId());
+			O_PRODUCT.setId(tkecmpId);
+			O_PRODUCT.setName(O_TKECTCONFIGURABLELINK.getProductId().getName());
+			O_PRODUCT.setPrice(O_TKECTCONFIGURABLELINK.getProductId().getPrice());
+			O_PRODUCT.setShortDesc(O_TKECTCONFIGURABLELINK.getProductId().getShortDesc());
+			O_PRODUCT.setLongDesc(O_TKECTCONFIGURABLELINK.getProductId().getLongDesc());
+			O_PRODUCT.setWeight(O_TKECTCONFIGURABLELINK.getProductId().getWeight());
+			O_PRODUCT.setQuantity(O_TKECTCONFIGURABLELINK.getProductId().getQuantity());
+			O_PRODUCT.setCountryOfMfg(O_TKECTCONFIGURABLELINK.getProductId().getCountryOfMfg());
+			O_PRODUCT.setType(O_TKECTCONFIGURABLELINK.getProductId().getType().getAgId());
 
 			Query configurableParentQuery = O_SessionFactory.getCurrentSession().createQuery(configurableParent);
 
-			configurableParentQuery.setParameter("parentId",
-					O_TKECTCONFIGURABLELINK.getTkectclParentId().getTkecmpId());
+			configurableParentQuery.setParameter("parentId",O_TKECTCONFIGURABLELINK.getParentId().getId());
 
 			List<TKECTCONFIGURABLELINK> LO_TKECTCONFIGURABLELINK = configurableParentQuery.list();
 
-			List<PJ_TKECTPRODUCTATTRIBUTE> LO_PJ_TKECTPRODUCTATTRIBUTE = new ArrayList<PJ_TKECTPRODUCTATTRIBUTE>();
+			List<PRODUCTATTRIBUTE> LO_PRODUCTATTRIBUTE = new ArrayList<PRODUCTATTRIBUTE>();
 
 			System.err.println(LO_TKECTCONFIGURABLELINK.size());
-
-			System.err.println(LO_TKECTCONFIGURABLELINK);
 
 			for (TKECTCONFIGURABLELINK child_TKECTCONFIGURABLELINK : LO_TKECTCONFIGURABLELINK) {
 
 				Query productAttributeQuery = O_SessionFactory.getCurrentSession().createQuery(productAttribute);
 
-				productAttributeQuery.setParameter("proAttrProductId",
-						child_TKECTCONFIGURABLELINK.getTkectclProductId().getTkecmpId());
+				productAttributeQuery.setParameter("proAttrProductId",child_TKECTCONFIGURABLELINK.getProductId().getId());
 
-				PJ_TKECTPRODUCTATTRIBUTE O_PJ_TKECTPRODUCTATTRIBUTE = new PJ_TKECTPRODUCTATTRIBUTE();
+				PRODUCTATTRIBUTE O_PRODUCTATTRIBUTE = new PRODUCTATTRIBUTE();
 
 				List<TKECTPRODUCTATTRIBUTE> LO_TKECTPRODUCTATTRIBUTE = productAttributeQuery.list();
 
 				System.err.println("ReqId" + tkecmpId);
 
-				System.err.println("Id" + child_TKECTCONFIGURABLELINK.getTkectclProductId().getTkecmpId());
+				System.err.println("Id" + child_TKECTCONFIGURABLELINK.getProductId().getId());
 
-				O_PJ_TKECTPRODUCTATTRIBUTE
-						.setSubProductId(child_TKECTCONFIGURABLELINK.getTkectclProductId().getTkecmpId());
+				O_PRODUCTATTRIBUTE.setSubProductId(child_TKECTCONFIGURABLELINK.getProductId().getId());
 
-				if (tkecmpId.equals(child_TKECTCONFIGURABLELINK.getTkectclProductId().getTkecmpId())) {
+				if (tkecmpId.equals(child_TKECTCONFIGURABLELINK.getProductId().getId())) {
 
-					O_PJ_TKECTPRODUCTATTRIBUTE.setDefaultYN("Y");
+					O_PRODUCTATTRIBUTE.setDefaultYN("Y");
 
 				} else {
 
-					O_PJ_TKECTPRODUCTATTRIBUTE.setDefaultYN("N");
+					O_PRODUCTATTRIBUTE.setDefaultYN("N");
 
 				}
 
-				List<PJ_TKECTOPTIONATTRIBUTE> LO_PJ_TKECTOPTIONATTRIBUTE = new ArrayList<>();
+				List<OPTIONATTRIBUTE> LO_OPTIONATTRIBUTE = new ArrayList<>();
 
 				for (TKECTPRODUCTATTRIBUTE O_TKECTPRODUCTATTRIBUTE : LO_TKECTPRODUCTATTRIBUTE) {
 
-					PJ_TKECTOPTIONATTRIBUTE O_PJ_TKECTOPTIONATTRIBUTE = new PJ_TKECTOPTIONATTRIBUTE();
+					OPTIONATTRIBUTE O_OPTIONATTRIBUTE = new OPTIONATTRIBUTE();
 
-					O_PJ_TKECTOPTIONATTRIBUTE.setTkectoaAttributeId(O_TKECTPRODUCTATTRIBUTE
-							.getTkectpaOptionAttributeId().getTkectoaAttributeId().getTkecmaId());
-					O_PJ_TKECTOPTIONATTRIBUTE
-							.setTkectoaName(O_TKECTPRODUCTATTRIBUTE.getTkectpaOptionAttributeId().getTkectoaName());
-					LO_PJ_TKECTOPTIONATTRIBUTE.add(O_PJ_TKECTOPTIONATTRIBUTE);
+					O_OPTIONATTRIBUTE.setAttributeId(O_TKECTPRODUCTATTRIBUTE
+							.getOptionAttributeId().getAttributeId().getId());
+					O_OPTIONATTRIBUTE
+							.setName(O_TKECTPRODUCTATTRIBUTE.getOptionAttributeId().getName());
+					LO_OPTIONATTRIBUTE.add(O_OPTIONATTRIBUTE);
 				}
 
-				O_PJ_TKECTPRODUCTATTRIBUTE.setLO_PJ_TKECTOPTIONATTRIBUTE(LO_PJ_TKECTOPTIONATTRIBUTE);
+				O_PRODUCTATTRIBUTE.setLO_OPTIONATTRIBUTE(LO_OPTIONATTRIBUTE);
 
-				LO_PJ_TKECTPRODUCTATTRIBUTE.add(O_PJ_TKECTPRODUCTATTRIBUTE);
+				LO_PRODUCTATTRIBUTE.add(O_PRODUCTATTRIBUTE);
 
 			}
-			O_PJ_TKECMPRODUCT.setLO_PJ_TKECTPRODUCTATTRIBUTE(LO_PJ_TKECTPRODUCTATTRIBUTE);
+			O_PRODUCT.setLO_PRODUCTATTRIBUTE(LO_PRODUCTATTRIBUTE);
 
-			List<PJ_TKECMIMAGE> LO_PJ_TKECMIMAGE = new ArrayList<PJ_TKECMIMAGE>();
+			List<IMAGE> LO_IMAGE = new ArrayList<IMAGE>();
 
 			Query imageQuery = O_SessionFactory.getCurrentSession().createQuery(image);
 
-			imageQuery.setParameter("productId", O_TKECTCONFIGURABLELINK.getTkectclProductId().getTkecmpId());
+			imageQuery.setParameter("productId", O_TKECTCONFIGURABLELINK.getProductId().getId());
 
 			List<TKECMIMAGE> LO_TKECMIMAGE = imageQuery.list();
 
@@ -208,48 +201,46 @@ public class ProductDaoImpl implements ProductDao {
 
 			for (TKECMIMAGE O_TKECMIMAGE : LO_TKECMIMAGE) {
 
-				PJ_TKECMIMAGE O_PJ_TKECMIMAGE = new PJ_TKECMIMAGE();
+				IMAGE O_IMAGE = new IMAGE();
 
-				O_PJ_TKECMIMAGE.setTkecmiUrl(O_TKECMIMAGE.getTkecmiUrl());
-				O_PJ_TKECMIMAGE.setTkecmiFileType(O_TKECMIMAGE.getTkecmiFileType());
-				O_PJ_TKECMIMAGE.setTkecmpiFileName(O_TKECMIMAGE.getTkecmpiFileName());
-				LO_PJ_TKECMIMAGE.add(O_PJ_TKECMIMAGE);
+				O_IMAGE.setUrl(O_TKECMIMAGE.getUrl());
+				O_IMAGE.setFileType(O_TKECMIMAGE.getFileType());
+				O_IMAGE.setFileName(O_TKECMIMAGE.getFileName());
+				LO_IMAGE.add(O_IMAGE);
 
 			}
 
-			O_PJ_TKECMPRODUCT.setLO_PJ_TKECMIMAGE(LO_PJ_TKECMIMAGE);
+			O_PRODUCT.setLO_IMAGE(LO_IMAGE);
 
 		} else {
 
-			String simpleProduct = "FROM TKECMPRODUCT WHERE tkecmpId =:productId";
+			String simpleProduct = "FROM TKECMPRODUCT WHERE id =:productId";
 
-			String proAttrQuery = "FROM TKECTPRODUCTATTRIBUTE WHERE tkectpaProductId.tkecmpId =:productId";
+			String proAttrQuery = "FROM TKECTPRODUCTATTRIBUTE WHERE productId.id =:productId";
 
-			String downloadableProduct = "FROM TKECMPRODUCTDOWNLOAD WHERE tkecmpdProductId.tkecmpId =:downloadProductId";
+			String downloadableProduct = "FROM TKECMPRODUCTDOWNLOAD WHERE productId.id =:downloadProductId";
 
 			Query simpleProductQuery = O_SessionFactory.getCurrentSession().createQuery(simpleProduct);
 
 			simpleProductQuery.setParameter("productId", tkecmpId);
 
-			
-			
 			TKECMPRODUCT O_TKECMPRODUCT = (TKECMPRODUCT) simpleProductQuery.uniqueResult();
-			
+
 			if (O_TKECMPRODUCT == null) {
 
 				return null;
 			}
-			
-			O_PJ_TKECMPRODUCT.setTkecmpId(O_TKECMPRODUCT.getTkecmpId());
-			O_PJ_TKECMPRODUCT.setTkecmpName(O_TKECMPRODUCT.getTkecmpName());
-			O_PJ_TKECMPRODUCT.setTkecmpLongDesc(O_TKECMPRODUCT.getTkecmpLongDesc());
-			O_PJ_TKECMPRODUCT.setTkecmpShortDesc(O_TKECMPRODUCT.getTkecmpShortDesc());
-			O_PJ_TKECMPRODUCT.setTkecmpCountryOfMfg(O_TKECMPRODUCT.getTkecmpCountryOfMfg());
-			O_PJ_TKECMPRODUCT.setTkecmpQuantity(O_TKECMPRODUCT.getTkecmpQuantity());
-			O_PJ_TKECMPRODUCT.setTkecmpType(O_TKECMPRODUCT.getTkecmpType().getTkecmptAgId());
-			O_PJ_TKECMPRODUCT.setTkecmpPrice(O_TKECMPRODUCT.getTkecmpPrice());
 
-			if (O_TKECMPRODUCT.getTkecmpType().getTkecmptAgId().equals(3)) {
+			O_PRODUCT.setId(O_TKECMPRODUCT.getId());
+			O_PRODUCT.setName(O_TKECMPRODUCT.getName());
+			O_PRODUCT.setLongDesc(O_TKECMPRODUCT.getLongDesc());
+			O_PRODUCT.setShortDesc(O_TKECMPRODUCT.getShortDesc());
+			O_PRODUCT.setCountryOfMfg(O_TKECMPRODUCT.getCountryOfMfg());
+			O_PRODUCT.setQuantity(O_TKECMPRODUCT.getQuantity());
+			O_PRODUCT.setType(O_TKECMPRODUCT.getType().getAgId());
+			O_PRODUCT.setPrice(O_TKECMPRODUCT.getPrice());
+
+			if (O_TKECMPRODUCT.getType().getAgId().equals(3)) {
 
 				Query downloadableProductQuery = O_SessionFactory.getCurrentSession().createQuery(downloadableProduct);
 
@@ -258,56 +249,56 @@ public class ProductDaoImpl implements ProductDao {
 				TKECMPRODUCTDOWNLOAD O_TKECMPRODUCTDOWNLOAD = (TKECMPRODUCTDOWNLOAD) downloadableProductQuery
 						.uniqueResult();
 
-				O_PJ_TKECMPRODUCT.setTkecmpdFile(O_TKECMPRODUCTDOWNLOAD.getTkecmpdFile());
-				O_PJ_TKECMPRODUCT.setTkecmpdIsSharable(O_TKECMPRODUCTDOWNLOAD.getTkecmpdIsSharable());
-				O_PJ_TKECMPRODUCT.setTkecmpdTitle(O_TKECMPRODUCTDOWNLOAD.getTkecmpdTitle());
-				O_PJ_TKECMPRODUCT.setTkecmpdUrl(O_TKECMPRODUCTDOWNLOAD.getTkecmpdUrl());
+				O_PRODUCT.setFile(O_TKECMPRODUCTDOWNLOAD.getFile());
+				O_PRODUCT.setIsSharable(O_TKECMPRODUCTDOWNLOAD.getIsSharable());
+				O_PRODUCT.setTitle(O_TKECMPRODUCTDOWNLOAD.getTitle());
+				O_PRODUCT.setUrl(O_TKECMPRODUCTDOWNLOAD.getUrl());
 
 			}
-			List<PJ_TKECTOPTIONATTRIBUTE> LO_PJ_TKECTOPTIONATTRIBUTE = new ArrayList<>();
+			List<OPTIONATTRIBUTE> LO_OPTIONATTRIBUTE = new ArrayList<>();
 
 			Query queryProductAttribute = O_SessionFactory.getCurrentSession().createQuery(proAttrQuery);
 
-			queryProductAttribute.setParameter("productId", O_TKECMPRODUCT.getTkecmpId());
+			queryProductAttribute.setParameter("productId", O_TKECMPRODUCT.getId());
 
 			List<TKECTPRODUCTATTRIBUTE> LO_TKECTPRODUCTATTRIBUTE = queryProductAttribute.list();
 
 			for (TKECTPRODUCTATTRIBUTE O_TKECTPRODUCTATTRIBUTE : LO_TKECTPRODUCTATTRIBUTE) {
 
-				PJ_TKECTOPTIONATTRIBUTE O_PJ_TKECTOPTIONATTRIBUTE = new PJ_TKECTOPTIONATTRIBUTE();
+				OPTIONATTRIBUTE O_OPTIONATTRIBUTE = new OPTIONATTRIBUTE();
 
-				O_PJ_TKECTOPTIONATTRIBUTE.setTkectoaAttributeId(
-						O_TKECTPRODUCTATTRIBUTE.getTkectpaOptionAttributeId().getTkectoaAttributeId().getTkecmaId());
-				O_PJ_TKECTOPTIONATTRIBUTE
-						.setTkectoaName(O_TKECTPRODUCTATTRIBUTE.getTkectpaOptionAttributeId().getTkectoaName());
-				LO_PJ_TKECTOPTIONATTRIBUTE.add(O_PJ_TKECTOPTIONATTRIBUTE);
+				O_OPTIONATTRIBUTE.setAttributeId(
+						O_TKECTPRODUCTATTRIBUTE.getOptionAttributeId().getAttributeId().getId());
+				O_OPTIONATTRIBUTE
+						.setName(O_TKECTPRODUCTATTRIBUTE.getOptionAttributeId().getName());
+				LO_OPTIONATTRIBUTE.add(O_OPTIONATTRIBUTE);
 			}
-			O_PJ_TKECMPRODUCT.setLO_PJ_TKECTOPTIONATTRIBUTE(LO_PJ_TKECTOPTIONATTRIBUTE);
+			O_PRODUCT.setLO_OPTIONATTRIBUTE(LO_OPTIONATTRIBUTE);
 
-			List<PJ_TKECMIMAGE> LO_PJ_TKECMIMAGE = new ArrayList<PJ_TKECMIMAGE>();
+			List<IMAGE> LO_IMAGE = new ArrayList<IMAGE>();
 
 			Query imageQuery = O_SessionFactory.getCurrentSession().createQuery(image);
 
-			imageQuery.setParameter("productId", O_TKECMPRODUCT.getTkecmpId());
+			imageQuery.setParameter("productId", O_TKECMPRODUCT.getId());
 
 			List<TKECMIMAGE> LO_TKECMIMAGE = imageQuery.list();
 
 			for (TKECMIMAGE O_TKECMIMAGE : LO_TKECMIMAGE) {
 
-				PJ_TKECMIMAGE O_PJ_TKECMIMAGE = new PJ_TKECMIMAGE();
+				IMAGE O_IMAGE = new IMAGE();
 
-				O_PJ_TKECMIMAGE.setTkecmiUrl(O_TKECMIMAGE.getTkecmiUrl());
-				O_PJ_TKECMIMAGE.setTkecmiFileType(O_TKECMIMAGE.getTkecmiFileType());
-				O_PJ_TKECMIMAGE.setTkecmpiFileName(O_TKECMIMAGE.getTkecmpiFileName());
-				LO_PJ_TKECMIMAGE.add(O_PJ_TKECMIMAGE);
+				O_IMAGE.setUrl(O_TKECMIMAGE.getUrl());
+				O_IMAGE.setFileType(O_TKECMIMAGE.getFileType());
+				O_IMAGE.setFileName(O_TKECMIMAGE.getFileName());
+				LO_IMAGE.add(O_IMAGE);
 
 			}
 
-			O_PJ_TKECMPRODUCT.setLO_PJ_TKECMIMAGE(LO_PJ_TKECMIMAGE);
+			O_PRODUCT.setLO_IMAGE(LO_IMAGE);
 
 		}
 
-		return O_PJ_TKECMPRODUCT;
+		return O_PRODUCT;
 	}
 
 }

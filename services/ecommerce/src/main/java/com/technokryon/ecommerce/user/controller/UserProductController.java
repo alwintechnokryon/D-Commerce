@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-import com.technokryon.ecommerce.pojo.PJ_TKECMPRODUCT;
+import com.technokryon.ecommerce.pojo.PRODUCT;
 import com.technokryon.ecommerce.service.ProductService;
 
 @Controller
@@ -24,21 +24,21 @@ public class UserProductController {
 	
 	@ResponseBody
 	@PostMapping("/list/category")
-	private ResponseEntity<?> PRODUCT_LIST_BY_CATEGORY(@RequestBody PJ_TKECMPRODUCT RO_PJ_TKECMPRODUCT){
+	private ResponseEntity<?> PRODUCT_LIST_BY_CATEGORY(@RequestBody PRODUCT RO_PRODUCT){
 		
-	List<PJ_TKECMPRODUCT> LO_PJ_TKECMPRODUCT =	O_ProductService.getListByCategory(RO_PJ_TKECMPRODUCT.getTkecmpCategoryId(),RO_PJ_TKECMPRODUCT.getPageNumber());
+	List<PRODUCT> LO_PRODUCT =	O_ProductService.getListByCategory(RO_PRODUCT.getCategoryId(),RO_PRODUCT.getPageNumber());
 		
-	return new ResponseEntity<Object>(LO_PJ_TKECMPRODUCT, HttpStatus.OK);
+	return new ResponseEntity<Object>(LO_PRODUCT, HttpStatus.OK);
 	}
 	
 	
 	@ResponseBody
 	@PostMapping("/detail/id")
-	private ResponseEntity<?> PRODUCT_DETAIL_BY_ID(@RequestBody PJ_TKECMPRODUCT RO_PJ_TKECMPRODUCT){
+	private ResponseEntity<?> PRODUCT_DETAIL_BY_ID(@RequestBody PRODUCT RO_PRODUCT){
 		
-	PJ_TKECMPRODUCT O_PJ_TKECMPRODUCT = O_ProductService.getDetailById(RO_PJ_TKECMPRODUCT.getTkecmpId());
+	PRODUCT O_PRODUCT = O_ProductService.getDetailById(RO_PRODUCT.getId());
 		
-	return new ResponseEntity<Object>(O_PJ_TKECMPRODUCT, HttpStatus.OK);
+	return new ResponseEntity<Object>(O_PRODUCT, HttpStatus.OK);
 	}
 	
 }

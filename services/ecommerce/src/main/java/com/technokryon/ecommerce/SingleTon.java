@@ -6,8 +6,6 @@ import java.util.regex.Pattern;
 
 import org.springframework.http.HttpStatus;
 
-import com.technokryon.ecommerce.pojo.PJ_Response;
-
 public class SingleTon {
 
 	public static final String PASSWORD_RESET_MAIL_HEADER = "Ecommerce - OTP Verification";

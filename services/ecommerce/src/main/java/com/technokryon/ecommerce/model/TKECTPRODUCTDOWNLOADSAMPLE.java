@@ -24,18 +24,18 @@ public class TKECTPRODUCTDOWNLOADSAMPLE {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name="TKECTPDS_AG_ID")
-	private Integer tkectpdsAgId;
+	private Integer agId;
 	
 	@ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
 	@JoinColumn(name="TKECTPDS_PRODUCT_ID", foreignKey = @ForeignKey(name="FK_TKECTPDS_PRODUCT_ID"))
-	private TKECMPRODUCT tkectpdsProductId;
+	private TKECMPRODUCT productId;
 	
 	@Column(name="TKECTPDS_URL")
-	private String tkectpdsUrl;
+	private String url;
 	
 	@Column(name="TKECTPDS_TITLE")
-	private String tkectpdsTitle;
+	private String title;
 	
 	@Column(name="TKECTPDS_FILE")
-	private String tkectpdsFile;
+	private String file;
 }
