@@ -2,8 +2,10 @@ package com.technokryon.ecommerce.dao;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
@@ -27,8 +29,13 @@ public class ProductDaoImpl implements ProductDao {
 	@Autowired
 	private SessionFactory O_SessionFactory;
 
+	@Autowired
+	private ModelMapper O_ModelMapper;
+
 	@Override
 	public List<PRODUCT> getListByCategory(String categoryId, Integer PageNumber) {
+
+		// ModelMapper O_ModelMapper = new ModelMapper();
 
 		List<PRODUCT> LO_PRODUCT = new ArrayList<>();
 
@@ -67,12 +74,11 @@ public class ProductDaoImpl implements ProductDao {
 
 			for (TKECTPRODUCTATTRIBUTE O_TKECTPRODUCTATTRIBUTE : LO_TKECTPRODUCTATTRIBUTE) {
 
-				OPTIONATTRIBUTE O_OPTIONATTRIBUTE = new OPTIONATTRIBUTE();
+				OPTIONATTRIBUTE O_OPTIONATTRIBUTE = O_ModelMapper.map(O_TKECTPRODUCTATTRIBUTE, OPTIONATTRIBUTE.class);
 
-				O_OPTIONATTRIBUTE.setAttributeId(
-						O_TKECTPRODUCTATTRIBUTE.getOptionAttributeId().getAttributeId().getId());
-				O_OPTIONATTRIBUTE
-						.setName(O_TKECTPRODUCTATTRIBUTE.getOptionAttributeId().getName());
+//				O_OPTIONATTRIBUTE
+//						.setAttributeId(O_TKECTPRODUCTATTRIBUTE.getOptionAttributeId().getAttributeId().getId());
+//				O_OPTIONATTRIBUTE.setName(O_TKECTPRODUCTATTRIBUTE.getOptionAttributeId().getName());
 				LO_OPTIONATTRIBUTE.add(O_OPTIONATTRIBUTE);
 			}
 			O_PRODUCT.setLO_OPTIONATTRIBUTE(LO_OPTIONATTRIBUTE);
@@ -87,11 +93,11 @@ public class ProductDaoImpl implements ProductDao {
 
 			for (TKECMIMAGE O_TKECMIMAGE : LO_TKECMIMAGE) {
 
-				IMAGE O_IMAGE = new IMAGE();
+				IMAGE O_IMAGE = O_ModelMapper.map(O_TKECMIMAGE, IMAGE.class);
 
-				O_IMAGE.setUrl(O_TKECMIMAGE.getUrl());
-				O_IMAGE.setFileType(O_TKECMIMAGE.getFileType());
-				O_IMAGE.setFileName(O_TKECMIMAGE.getFileName());
+//				O_IMAGE.setUrl(O_TKECMIMAGE.getUrl());
+//				O_IMAGE.setFileType(O_TKECMIMAGE.getFileType());
+//				O_IMAGE.setFileName(O_TKECMIMAGE.getFileName());
 				LO_IMAGE.add(O_IMAGE);
 
 			}
@@ -104,6 +110,8 @@ public class ProductDaoImpl implements ProductDao {
 
 	@Override
 	public PRODUCT getDetailById(String tkecmpId) {
+
+		// ModelMapper O_ModelMapper = new ModelMapper();
 
 		PRODUCT O_PRODUCT = new PRODUCT();
 
@@ -135,7 +143,7 @@ public class ProductDaoImpl implements ProductDao {
 
 			Query configurableParentQuery = O_SessionFactory.getCurrentSession().createQuery(configurableParent);
 
-			configurableParentQuery.setParameter("parentId",O_TKECTCONFIGURABLELINK.getParentId().getId());
+			configurableParentQuery.setParameter("parentId", O_TKECTCONFIGURABLELINK.getParentId().getId());
 
 			List<TKECTCONFIGURABLELINK> LO_TKECTCONFIGURABLELINK = configurableParentQuery.list();
 
@@ -147,7 +155,8 @@ public class ProductDaoImpl implements ProductDao {
 
 				Query productAttributeQuery = O_SessionFactory.getCurrentSession().createQuery(productAttribute);
 
-				productAttributeQuery.setParameter("proAttrProductId",child_TKECTCONFIGURABLELINK.getProductId().getId());
+				productAttributeQuery.setParameter("proAttrProductId",
+						child_TKECTCONFIGURABLELINK.getProductId().getId());
 
 				PRODUCTATTRIBUTE O_PRODUCTATTRIBUTE = new PRODUCTATTRIBUTE();
 
@@ -173,12 +182,12 @@ public class ProductDaoImpl implements ProductDao {
 
 				for (TKECTPRODUCTATTRIBUTE O_TKECTPRODUCTATTRIBUTE : LO_TKECTPRODUCTATTRIBUTE) {
 
-					OPTIONATTRIBUTE O_OPTIONATTRIBUTE = new OPTIONATTRIBUTE();
+					OPTIONATTRIBUTE O_OPTIONATTRIBUTE = O_ModelMapper.map(O_TKECTPRODUCTATTRIBUTE,
+							OPTIONATTRIBUTE.class);
 
-					O_OPTIONATTRIBUTE.setAttributeId(O_TKECTPRODUCTATTRIBUTE
-							.getOptionAttributeId().getAttributeId().getId());
-					O_OPTIONATTRIBUTE
-							.setName(O_TKECTPRODUCTATTRIBUTE.getOptionAttributeId().getName());
+//					O_OPTIONATTRIBUTE
+//							.setAttributeId(O_TKECTPRODUCTATTRIBUTE.getOptionAttributeId().getAttributeId().getId());
+//					O_OPTIONATTRIBUTE.setName(O_TKECTPRODUCTATTRIBUTE.getOptionAttributeId().getName());
 					LO_OPTIONATTRIBUTE.add(O_OPTIONATTRIBUTE);
 				}
 
@@ -201,11 +210,11 @@ public class ProductDaoImpl implements ProductDao {
 
 			for (TKECMIMAGE O_TKECMIMAGE : LO_TKECMIMAGE) {
 
-				IMAGE O_IMAGE = new IMAGE();
+				IMAGE O_IMAGE = O_ModelMapper.map(O_TKECMIMAGE, IMAGE.class);
 
-				O_IMAGE.setUrl(O_TKECMIMAGE.getUrl());
-				O_IMAGE.setFileType(O_TKECMIMAGE.getFileType());
-				O_IMAGE.setFileName(O_TKECMIMAGE.getFileName());
+//				O_IMAGE.setUrl(O_TKECMIMAGE.getUrl());
+//				O_IMAGE.setFileType(O_TKECMIMAGE.getFileType());
+//				O_IMAGE.setFileName(O_TKECMIMAGE.getFileName());
 				LO_IMAGE.add(O_IMAGE);
 
 			}
@@ -265,12 +274,11 @@ public class ProductDaoImpl implements ProductDao {
 
 			for (TKECTPRODUCTATTRIBUTE O_TKECTPRODUCTATTRIBUTE : LO_TKECTPRODUCTATTRIBUTE) {
 
-				OPTIONATTRIBUTE O_OPTIONATTRIBUTE = new OPTIONATTRIBUTE();
+				OPTIONATTRIBUTE O_OPTIONATTRIBUTE = O_ModelMapper.map(O_TKECTPRODUCTATTRIBUTE, OPTIONATTRIBUTE.class);
 
-				O_OPTIONATTRIBUTE.setAttributeId(
-						O_TKECTPRODUCTATTRIBUTE.getOptionAttributeId().getAttributeId().getId());
-				O_OPTIONATTRIBUTE
-						.setName(O_TKECTPRODUCTATTRIBUTE.getOptionAttributeId().getName());
+//				O_OPTIONATTRIBUTE
+//						.setAttributeId(O_TKECTPRODUCTATTRIBUTE.getOptionAttributeId().getAttributeId().getId());
+//				O_OPTIONATTRIBUTE.setName(O_TKECTPRODUCTATTRIBUTE.getOptionAttributeId().getName());
 				LO_OPTIONATTRIBUTE.add(O_OPTIONATTRIBUTE);
 			}
 			O_PRODUCT.setLO_OPTIONATTRIBUTE(LO_OPTIONATTRIBUTE);
@@ -285,11 +293,11 @@ public class ProductDaoImpl implements ProductDao {
 
 			for (TKECMIMAGE O_TKECMIMAGE : LO_TKECMIMAGE) {
 
-				IMAGE O_IMAGE = new IMAGE();
+				IMAGE O_IMAGE = O_ModelMapper.map(O_TKECMIMAGE, IMAGE.class);
 
-				O_IMAGE.setUrl(O_TKECMIMAGE.getUrl());
-				O_IMAGE.setFileType(O_TKECMIMAGE.getFileType());
-				O_IMAGE.setFileName(O_TKECMIMAGE.getFileName());
+//				O_IMAGE.setUrl(O_TKECMIMAGE.getUrl());
+//				O_IMAGE.setFileType(O_TKECMIMAGE.getFileType());
+//				O_IMAGE.setFileName(O_TKECMIMAGE.getFileName());
 				LO_IMAGE.add(O_IMAGE);
 
 			}

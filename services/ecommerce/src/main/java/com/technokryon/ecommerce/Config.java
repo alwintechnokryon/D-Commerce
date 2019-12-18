@@ -4,6 +4,7 @@ import java.util.Properties;
 import javax.sql.DataSource;
 
 import org.apache.commons.dbcp2.BasicDataSource;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaAutoConfiguration;
@@ -64,7 +65,7 @@ public class Config {
 		factoryBean.setAnnotatedClasses(TKECMUSER.class, TKECTUSERSESSION.class, TKECTUSERAUDIT.class,
 				TKECMCATEGORY.class, TKECMATTRIBUTE.class, TKECTOPTIONATTRIBUTE.class, TKECTPRODUCTATTRIBUTE.class,
 				TKECMIMAGE.class, TKECMPRODUCT.class, TKECMPRODUCTDOWNLOAD.class, TKECMPRODUCTTYPE.class,
-				TKECTPRODUCTDOWNLOADSAMPLE.class,TKECTCONFIGURABLELINK.class);
+				TKECTPRODUCTDOWNLOADSAMPLE.class, TKECTCONFIGURABLELINK.class);
 
 		return factoryBean;
 	}
@@ -74,6 +75,14 @@ public class Config {
 		HibernateTransactionManager transactionManager = new HibernateTransactionManager();
 		transactionManager.setSessionFactory(getECommerceSessionFactory().getObject());
 		return transactionManager;
+	}
+
+	@Bean
+	public ModelMapper getModelMapper() {
+
+		ModelMapper O_ModelMapper = new ModelMapper();
+
+		return O_ModelMapper;
 	}
 
 }
