@@ -2,24 +2,28 @@ package com.technokryon.ecommerce.dao;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
 import org.modelmapper.ModelMapper;
+import org.modelmapper.PropertyMap;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.technokryon.ecommerce.model.TKECMCATEGORY;
 import com.technokryon.ecommerce.model.TKECMIMAGE;
 import com.technokryon.ecommerce.model.TKECMPRODUCT;
 import com.technokryon.ecommerce.model.TKECMPRODUCTDOWNLOAD;
 import com.technokryon.ecommerce.model.TKECTCONFIGURABLELINK;
 import com.technokryon.ecommerce.model.TKECTPRODUCTATTRIBUTE;
+import com.technokryon.ecommerce.pojo.CATEGORY;
 import com.technokryon.ecommerce.pojo.IMAGE;
 import com.technokryon.ecommerce.pojo.OPTIONATTRIBUTE;
 import com.technokryon.ecommerce.pojo.PRODUCT;
 import com.technokryon.ecommerce.pojo.PRODUCTATTRIBUTE;
+import com.technokryon.ecommerce.pojo.PRODUCTDOWNLOAD;
 
 @Repository("ProductDao")
 @Transactional
@@ -141,6 +145,9 @@ public class ProductDaoImpl implements ProductDao {
 			O_PRODUCT.setCountryOfMfg(O_TKECTCONFIGURABLELINK.getProductId().getCountryOfMfg());
 			O_PRODUCT.setType(O_TKECTCONFIGURABLELINK.getProductId().getType().getAgId());
 
+			O_PRODUCT.setLO_CATEGORY(
+					getCategory(O_TKECTCONFIGURABLELINK.getProductId().getCategoryId().getCategoryId()));
+
 			Query configurableParentQuery = O_SessionFactory.getCurrentSession().createQuery(configurableParent);
 
 			configurableParentQuery.setParameter("parentId", O_TKECTCONFIGURABLELINK.getParentId().getId());
@@ -248,7 +255,7 @@ public class ProductDaoImpl implements ProductDao {
 			O_PRODUCT.setQuantity(O_TKECMPRODUCT.getQuantity());
 			O_PRODUCT.setType(O_TKECMPRODUCT.getType().getAgId());
 			O_PRODUCT.setPrice(O_TKECMPRODUCT.getPrice());
-
+			O_PRODUCT.setLO_CATEGORY(getCategory(O_TKECMPRODUCT.getCategoryId().getCategoryId()));
 			if (O_TKECMPRODUCT.getType().getAgId().equals(3)) {
 
 				Query downloadableProductQuery = O_SessionFactory.getCurrentSession().createQuery(downloadableProduct);
@@ -309,4 +316,32 @@ public class ProductDaoImpl implements ProductDao {
 		return O_PRODUCT;
 	}
 
+	@Cacheable("CATEGORY")
+	private List<CATEGORY> getCategory(String categoryId) {
+
+		List<CATEGORY> LO_CATEGORY = new ArrayList<>();
+
+		while (categoryId != null) {
+
+			String categoryById = "FROM TKECMCATEGORY WHERE categoryId =: categoryId";
+
+			Query categoryIdQuery = O_SessionFactory.getCurrentSession().createQuery(categoryById);
+
+			categoryIdQuery.setParameter("categoryId", categoryId);
+
+			TKECMCATEGORY O_CATEGORY = (TKECMCATEGORY) categoryIdQuery.uniqueResult();
+
+			CATEGORY OM_CATEGORY = O_ModelMapper.map(O_CATEGORY, CATEGORY.class);
+
+			LO_CATEGORY.add(OM_CATEGORY);
+
+			categoryId = O_CATEGORY.getParentId();
+
+			if (categoryId == null) {
+				break;
+			}
+		}
+		return LO_CATEGORY;
+
+	}
 }

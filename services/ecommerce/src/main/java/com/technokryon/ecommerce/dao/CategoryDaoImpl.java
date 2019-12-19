@@ -72,6 +72,8 @@ public class CategoryDaoImpl implements CategoryDao {
 	}
 
 	@Override
+	// @Cacheable("CATEGORY")
+	// @CacheEvict(value="CATEGORY", allEntries=true)
 	public List<CATEGORY> categoryList() {
 
 		List<CATEGORY> LO_CATEGORY = new ArrayList<CATEGORY>();
@@ -104,8 +106,8 @@ public class CategoryDaoImpl implements CategoryDao {
 
 		for (TKECMCATEGORY child_O_TKECMCATEGORY : child_LO_TKECMCATEGORY) {
 
-			LO_CATEGORY.add(new CATEGORY(child_O_TKECMCATEGORY,
-					getChildCategories(child_O_TKECMCATEGORY.getCategoryId())));
+			LO_CATEGORY.add(
+					new CATEGORY(child_O_TKECMCATEGORY, getChildCategories(child_O_TKECMCATEGORY.getCategoryId())));
 		}
 
 		return LO_CATEGORY;
@@ -117,9 +119,7 @@ public class CategoryDaoImpl implements CategoryDao {
 		List<CATEGORY> LO_CATEGORY = new ArrayList<>();
 
 		ModelMapper O_ModelMapper = new ModelMapper();
-		
-		
-		
+
 		String categoryListById = "FROM TKECMCATEGORY WHERE parentId =:parentid";
 
 		Query categoryListByIdQry = O_SessionFactory.getCurrentSession().createQuery(categoryListById);
@@ -127,6 +127,15 @@ public class CategoryDaoImpl implements CategoryDao {
 		categoryListByIdQry.setParameter("parentid", rO_CATEGORY.getCategoryId());
 
 		List<TKECMCATEGORY> LO_TKECMCATEGORY = categoryListByIdQry.getResultList();
+
+//		PropertyMap<TKECMCATEGORY, CATEGORY> skipModifiedFieldsMap = new PropertyMap<TKECMCATEGORY, CATEGORY>() {
+//		protected void configure() {
+//
+//			skip().setCategoryLevel(null);
+//			skip().setCategoryName(null);
+//		}
+//	};
+//	O_ModelMapper.addMappings(skipModifiedFieldsMap);
 
 		for (TKECMCATEGORY O_TKECMCATEGORY : LO_TKECMCATEGORY) {
 
