@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.technokryon.ecommerce.pojo.Response;
+import com.technokryon.ecommerce.pojo.RESPONSE;
 import com.technokryon.ecommerce.pojo.USER;
 import com.technokryon.ecommerce.service.UserService;
 
@@ -26,7 +26,7 @@ public class UserProfileController {
 	@GetMapping(value = { "/detail" })
 	ResponseEntity<?> USER_DETAIL(@RequestHeader(value = "X-Auth-Token") String apiKey) {
 
-		Response O_Response = new Response();
+		RESPONSE O_Response = new RESPONSE();
 
 		USER O_USER_DETAIL = O_UserService.getUserDetailAPIKey(apiKey);
 
@@ -36,8 +36,9 @@ public class UserProfileController {
 			return new ResponseEntity<Object>(O_Response, HttpStatus.UNPROCESSABLE_ENTITY);
 		}
 
-		O_USER_DETAIL.setPassword(null);
-		O_USER_DETAIL.setId(null);;
+		O_USER_DETAIL.setUPassword(null);
+		O_USER_DETAIL.setUId(null);
+		
 
 		O_Response.setMessage("Success!");
 		return new ResponseEntity<Object>(O_USER_DETAIL, HttpStatus.UNPROCESSABLE_ENTITY);

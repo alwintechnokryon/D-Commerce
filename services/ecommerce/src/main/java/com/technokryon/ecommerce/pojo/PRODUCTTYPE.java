@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class PRODUCTTYPE {
 
-	Integer agId;
-	String type;
+	Integer ptAgId;
+	String ptType;
 
 }

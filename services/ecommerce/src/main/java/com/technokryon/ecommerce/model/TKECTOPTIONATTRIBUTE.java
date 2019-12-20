@@ -24,19 +24,19 @@ public class TKECTOPTIONATTRIBUTE {
 
 	@Id
 	@Column(name = "TKECTOA_ID")
-	private String id;
+	private String oaId;
 
 	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	@JoinColumn(name = "TKECTOA_ATTRIBUTE_ID", foreignKey = @ForeignKey(name = "FK_TKECTOA_ATTRIBUTE_ID"))
-	private TKECMATTRIBUTE attributeId;
+	private TKECMATTRIBUTE oaAttributeId;
 
 	@Column(name = "TKECTOA_NAME")
-	private String name;
+	private String oaName;
 
 	@Column(name = "TKECTOA_CREATED_DATE")
-	private OffsetDateTime createdDate;
+	private OffsetDateTime oaCreatedDate;
 
 	@Column(name = "TKECTOA_CREATED_USERID")
-	private String createdUserId;
+	private String oaCreatedUserId;
 
 }

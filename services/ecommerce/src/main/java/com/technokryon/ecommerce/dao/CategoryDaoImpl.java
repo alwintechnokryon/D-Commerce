@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
+
 import com.technokryon.ecommerce.model.TKECMCATEGORY;
 import com.technokryon.ecommerce.pojo.CATEGORY;
 
@@ -39,27 +40,27 @@ public class CategoryDaoImpl implements CategoryDao {
 
 		if (O_TKECMCATEGORY1 == null) {
 
-			O_TKECMCATEGORY.setCategoryId("TKECC0001");
+			O_TKECMCATEGORY.setCCategoryId("TKECC0001");
 		} else {
 
-			String categoryId = O_TKECMCATEGORY1.getCategoryId();
+			String categoryId = O_TKECMCATEGORY1.getCCategoryId();
 			Integer Ag = Integer.valueOf(categoryId.substring(5));
 			Ag++;
 
 			System.err.println(Ag);
-			O_TKECMCATEGORY.setCategoryId("TKECC" + String.format("%04d", Ag));
+			O_TKECMCATEGORY.setCCategoryId("TKECC" + String.format("%04d", Ag));
 		}
 
 		try {
 
-			O_TKECMCATEGORY.setCategoryName(rO_CATEGORY.getCategoryName());
-			O_TKECMCATEGORY.setParentId(rO_CATEGORY.getParentId());
-			O_TKECMCATEGORY.setCategoryLevel(rO_CATEGORY.getCategoryLevel());
+			O_TKECMCATEGORY.setCCategoryName(rO_CATEGORY.getCCategoryName());
+			O_TKECMCATEGORY.setCParentId(rO_CATEGORY.getCParentId());
+			O_TKECMCATEGORY.setCCategoryLevel(rO_CATEGORY.getCCategoryLevel());
 			session.save(O_TKECMCATEGORY);
 			tx.commit();
 			session.close();
 
-			return O_TKECMCATEGORY.getCategoryId();
+			return O_TKECMCATEGORY.getCCategoryId();
 		} catch (Exception e) {
 			e.printStackTrace();
 			if (tx.isActive()) {
@@ -78,7 +79,7 @@ public class CategoryDaoImpl implements CategoryDao {
 
 		List<CATEGORY> LO_CATEGORY = new ArrayList<CATEGORY>();
 
-		String parentCategory = "FROM TKECMCATEGORY WHERE parentId IS NULL";
+		String parentCategory = "FROM TKECMCATEGORY WHERE cParentId IS NULL";
 
 		Query parentCategoryQry = O_SessionFactory.getCurrentSession().createQuery(parentCategory);
 
@@ -87,8 +88,10 @@ public class CategoryDaoImpl implements CategoryDao {
 //		System.out.println("Root Category size.." + LO_TKECMCATEGORY.size());
 		for (TKECMCATEGORY O_TKECMCATEGORY : LO_TKECMCATEGORY) {
 
-			LO_CATEGORY.add(new CATEGORY(O_TKECMCATEGORY, getChildCategories(O_TKECMCATEGORY.getCategoryId())));
+			LO_CATEGORY.add(new CATEGORY(O_TKECMCATEGORY, getChildCategories(O_TKECMCATEGORY.getCCategoryId())));
+
 		}
+
 		return LO_CATEGORY;
 	}
 
@@ -96,7 +99,7 @@ public class CategoryDaoImpl implements CategoryDao {
 
 		List<CATEGORY> LO_CATEGORY = new ArrayList<CATEGORY>();
 
-		String childCategory = "FROM TKECMCATEGORY WHERE parentId =: parentId";
+		String childCategory = "FROM TKECMCATEGORY WHERE cParentId =: parentId";
 
 		Query childCategoryQry = O_SessionFactory.getCurrentSession().createQuery(childCategory);
 
@@ -107,7 +110,7 @@ public class CategoryDaoImpl implements CategoryDao {
 		for (TKECMCATEGORY child_O_TKECMCATEGORY : child_LO_TKECMCATEGORY) {
 
 			LO_CATEGORY.add(
-					new CATEGORY(child_O_TKECMCATEGORY, getChildCategories(child_O_TKECMCATEGORY.getCategoryId())));
+					new CATEGORY(child_O_TKECMCATEGORY, getChildCategories(child_O_TKECMCATEGORY.getCCategoryId())));
 		}
 
 		return LO_CATEGORY;
@@ -120,31 +123,27 @@ public class CategoryDaoImpl implements CategoryDao {
 
 		ModelMapper O_ModelMapper = new ModelMapper();
 
-		String categoryListById = "FROM TKECMCATEGORY WHERE parentId =:parentid";
+//		PropertyMap<TKECMCATEGORY, CATEGORY> skipModifiedFieldsMap = new PropertyMap<TKECMCATEGORY, CATEGORY>() {
+//			protected void configure() {
+//
+//				skip().setCategoryLevel(null);
+//				skip().setCategoryName(null);
+//			}
+//		};
+//		O_ModelMapper.addMappings(skipModifiedFieldsMap);
+
+		String categoryListById = "FROM TKECMCATEGORY WHERE cParentId =:parentid";
 
 		Query categoryListByIdQry = O_SessionFactory.getCurrentSession().createQuery(categoryListById);
 
-		categoryListByIdQry.setParameter("parentid", rO_CATEGORY.getCategoryId());
+		categoryListByIdQry.setParameter("parentid", rO_CATEGORY.getCCategoryId());
 
 		List<TKECMCATEGORY> LO_TKECMCATEGORY = categoryListByIdQry.getResultList();
-
-//		PropertyMap<TKECMCATEGORY, CATEGORY> skipModifiedFieldsMap = new PropertyMap<TKECMCATEGORY, CATEGORY>() {
-//		protected void configure() {
-//
-//			skip().setCategoryLevel(null);
-//			skip().setCategoryName(null);
-//		}
-//	};
-//	O_ModelMapper.addMappings(skipModifiedFieldsMap);
 
 		for (TKECMCATEGORY O_TKECMCATEGORY : LO_TKECMCATEGORY) {
 
 			CATEGORY O_CATEGORY = O_ModelMapper.map(O_TKECMCATEGORY, CATEGORY.class);
 
-//			O_PJ_TKECMCATEGORY.setTkecmcCategoryLevel(O_TKECMCATEGORY.getTkecmcCategoryLevel());
-//			O_PJ_TKECMCATEGORY.setTkecmcCategoryName(O_TKECMCATEGORY.getTkecmcCategoryName());
-//			O_PJ_TKECMCATEGORY.setTkecmcCategoryId(O_TKECMCATEGORY.getTkecmcCategoryId());
-//			O_PJ_TKECMCATEGORY.setTkecmcParentId(O_TKECMCATEGORY.getTkecmcParentId());
 			LO_CATEGORY.add(O_CATEGORY);
 
 		}

@@ -10,11 +10,11 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 
 public class PRODUCTATTRIBUTE {
-	String agId;
-	String productId;
-	String optionAttributeId;
-	OffsetDateTime createdDate;
-	String createdUserId;
+	String paAgId;
+	String paProductId;
+	String paOptionAttributeId;
+	OffsetDateTime paCreatedDate;
+	String paCreatedUserId;
 	String defaultYN;
 	String SubProductId;
 	List<OPTIONATTRIBUTE> LO_OPTIONATTRIBUTE;

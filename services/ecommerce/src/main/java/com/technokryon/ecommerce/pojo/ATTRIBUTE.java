@@ -8,6 +8,6 @@ import lombok.NoArgsConstructor;
 
 public class ATTRIBUTE {
 
-	String id;
-	String name;
+	String aId;
+	String aName;
 }

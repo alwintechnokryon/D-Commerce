@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.technokryon.ecommerce.pojo.Response;
+import com.technokryon.ecommerce.pojo.RESPONSE;
 import com.technokryon.ecommerce.pojo.CATEGORY;
 import com.technokryon.ecommerce.service.CategoryService;
 
@@ -29,7 +29,7 @@ public class CategoryController {
 	@PostMapping("/add")
 	private ResponseEntity<?> ADD_CATEGORY(@RequestBody CATEGORY RO_CATEGORY) {
 
-		Response O_Response = new Response();
+		RESPONSE O_Response = new RESPONSE();
 
 		String addCategory = O_CategoryService.addCategory(RO_CATEGORY);
 

@@ -26,7 +26,7 @@ public class UserProductController {
 	@PostMapping("/list/category")
 	private ResponseEntity<?> PRODUCT_LIST_BY_CATEGORY(@RequestBody PRODUCT RO_PRODUCT){
 		
-	List<PRODUCT> LO_PRODUCT =	O_ProductService.getListByCategory(RO_PRODUCT.getCategoryId(),RO_PRODUCT.getPageNumber());
+	List<PRODUCT> LO_PRODUCT =	O_ProductService.getListByCategory(RO_PRODUCT.getPCategoryId(),RO_PRODUCT.getPageNumber());
 		
 	return new ResponseEntity<Object>(LO_PRODUCT, HttpStatus.OK);
 	}
@@ -36,7 +36,7 @@ public class UserProductController {
 	@PostMapping("/detail/id")
 	private ResponseEntity<?> PRODUCT_DETAIL_BY_ID(@RequestBody PRODUCT RO_PRODUCT){
 		
-	PRODUCT O_PRODUCT = O_ProductService.getDetailById(RO_PRODUCT.getId());
+	PRODUCT O_PRODUCT = O_ProductService.getDetailById(RO_PRODUCT.getPId());
 		
 	return new ResponseEntity<Object>(O_PRODUCT, HttpStatus.OK);
 	}

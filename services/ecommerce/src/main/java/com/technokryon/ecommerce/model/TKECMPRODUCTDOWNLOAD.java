@@ -12,8 +12,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import org.hibernate.annotations.GeneratorType;
-
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -26,22 +24,22 @@ public class TKECMPRODUCTDOWNLOAD {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "TKECMPD_AG_ID")
-	private Integer agId;
+	private Integer pdAgId;
 
 	@ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
 	@JoinColumn(name = "TKECMPD_PRODUCT_ID", foreignKey = @ForeignKey(name="FK_TKECMPD_PRODUCT_ID") )
-	private TKECMPRODUCT productId;
+	private TKECMPRODUCT pdProductId;
 	
 	@Column(name = "TKECMPD_IS_SHARABLE")
-	private String isSharable;
+	private String pdIsSharable;
 	
 	@Column(name = "TKECMPD_URL")
-	private String url;
+	private String pdUrl;
 	
 	@Column(name = "TKECMPD_FILE")
-	private String file;
+	private String pdFile;
 	
 	@Column(name = "TKECMPD_TITLE")
-	private String title;
+	private String pdTitle;
 	
 }

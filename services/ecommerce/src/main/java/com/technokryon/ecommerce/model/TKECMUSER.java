@@ -19,45 +19,45 @@ public class TKECMUSER {
 
 	@Id
 	@Column(name = "TKECMU_ID")
-	private String Id;
+	private String uId;
 
 	@Column(name = "TKECMU_NAME")
-	private String name;
+	private String uName;
 
 	@Column(name = "TKECMU_REG_TYPE")
-	private String regType;
+	private String uRegType;
 
 	@Column(name = "TKECMU_MAIL")
-	private String mail;
+	private String uMail;
 
 	@Column(name = "TKECMU_OTP")
-	private Integer otp;
+	private Integer uOtp;
 
 	@Column(name = "TKECMU_OTP_EXP")
-	private OffsetDateTime otpExp;
+	private OffsetDateTime uOtpExp;
 
 	@Column(name = "TKECMU_HASH_KEY")
-	private String hashKey;
+	private String uHashKey;
 
 	@Column(name = "TKECMU_PASSWORD")
-	private String password;
+	private String uPassword;
 
 	@Column(name = "TKECMU_CREATED_DATE")
-	private OffsetDateTime createdDate;
+	private OffsetDateTime uCreatedDate;
 
 	@Column(name = "TKECMU_PHONE")
-	private BigInteger phone;
+	private BigInteger uPhone;
 
 	@Column(name = "TKECMU_COUNTRY_CODE")
-	private Integer countryCode;
+	private Integer uCountryCode;
 
 	@Column(name = "TKECMU_OTP_STATUS")
-	private String otpStatus;
+	private String uOtpStatus;
 	
 	@Column(name = "TKECMU_STATUS")
-	private String status;           
+	private String uStatus;           
 	
 	@Column(name = "TKECMU_MODIFIED_DATE")
-	private OffsetDateTime modifideDate;
+	private OffsetDateTime uModifideDate;
 	
 }

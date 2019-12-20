@@ -10,20 +10,20 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class USER {
 
-	String id;
-	String name;
-	String regType;
-	String mail;
-	int otp;
-	OffsetDateTime otpExp;
-	String hashKey;
-	String password;
-	OffsetDateTime createdDate;
-	BigInteger phone;
-	Integer countryCode;
-	String otpStatus;
-	String status;
-	OffsetDateTime modifideDate;
+	String uId;
+	String uName;
+	String uRegType;
+	String uMail;
+	int uOtp;
+	OffsetDateTime uOtpExp;
+	String uHashKey;
+	String uPassword;
+	OffsetDateTime uCreatedDate;
+	BigInteger uPhone;
+	Integer uCountryCode;
+	String uOtpStatus;
+	String uStatus;
+	OffsetDateTime uModifideDate;
 	String oldPassword;
 	String apiKey;
 }

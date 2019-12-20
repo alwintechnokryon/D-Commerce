@@ -10,9 +10,10 @@ import lombok.NoArgsConstructor;
 
 public class OPTIONATTRIBUTE {
 
-	String id;
-	String attributeId;
-	String name;
-	OffsetDateTime createdDate;
-	String createdUserId;
+	String oaId;
+	String aId;
+	String oaAttributeId;
+	String oaName;
+	OffsetDateTime oaCreatedDate;
+	String oaCreatedUserId;
 }

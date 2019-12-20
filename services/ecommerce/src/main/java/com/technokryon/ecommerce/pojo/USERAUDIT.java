@@ -8,13 +8,13 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class USERAUDIT {
 
-	Integer agId;
-	String userId;
-	OffsetDateTime loginTime;
-	OffsetDateTime logouttime;
-	String userAgent;
-	Double lattitude;
-	Double longitude;
-	String ip;
-	String apiKey;
+	Integer uaAgId;
+	String uaUserId;
+	OffsetDateTime uaLoginTime;
+	OffsetDateTime uaLogoutTime;
+	String uaUserAgent;
+	Double uaLattitude;
+	Double uaLongitude;
+	String uaIp;
+	String uaApiKey;
 }

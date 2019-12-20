@@ -2,8 +2,6 @@ package com.technokryon.ecommerce.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
@@ -18,15 +16,15 @@ public class TKECMCATEGORY {
 
 	@Id
 	@Column(name = "TKECMC_CATEGORY_ID")
-	private String categoryId;
+	private String cCategoryId;
 
 	@Column(name = "TKECMC_PARENT_ID")
-	private String parentId;
+	private String cParentId;
 
 	@Column(name = "TKECMC_CATEGORY_NAME")
-	private String categoryName;
+	private String cCategoryName;
 
 	@Column(name = "TKECMC_CATEGORY_LEVEL")
-	private Integer categoryLevel;
+	private Integer cCategoryLevel;
 
 }

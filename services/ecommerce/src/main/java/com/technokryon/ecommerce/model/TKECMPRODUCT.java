@@ -14,8 +14,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -28,56 +26,56 @@ public class TKECMPRODUCT {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "TKECMP_ID")
-	private String id;
+	private String pId;
 
 	@Column(name = "TKECMP_SKU", unique = true)
-	private String sku;
+	private String pSku;
 
 	@Column(name = "TKECMP_NAME", unique = true)
-	private String name;
+	private String pName;
 
 	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	@JoinColumn(name = "TKECMP_CATEGORY_ID", foreignKey = @ForeignKey(name = "FK_TKECMP_CATEGORY_ID"))
-	private TKECMCATEGORY categoryId;
+	private TKECMCATEGORY pCategoryId;
 
 	@Column(name = "TKECMP_WEIGHT")
-	private Float weight;
+	private Float pWeight;
 
 	@Column(name = "TKECMP_QUANTITY")
-	private Integer quantity;
+	private Integer pQuantity;
 
 	@Column(name = "TKECMP_SHORT_DESC")
-	private String shortDesc;
+	private String pShortDesc;
 
 	@Column(name = "TKECMP_LONG_DESC")
-	private String longDesc;
+	private String pLongDesc;
 
 	@Column(name = "TKECMP_COUNTRY_OF_MFG")
-	private String countryOfMfg;
+	private String pCountryOfMfg;
 
 	@Column(name = "TKECMP_CREATED_DATE")
-	private OffsetDateTime createdDate;
+	private OffsetDateTime pCreatedDate;
 
 	@Column(name = "TKECMP_CREATED_USERID")
-	private String createdUserId;
+	private String pCreatedUserId;
 
 	@Column(name = "TKECMP_MODIFIED_DATE")
-	private OffsetDateTime modifiedDate;
+	private OffsetDateTime pModifiedDate;
 
 	@Column(name = "TKECMP_MODIFIED_USERID")
-	private String mdifiedUserId;
+	private String pModifiedUserId;
 
 	@Column(name = "TKECMP_STATUS")
-	private String status;
+	private String pStatus;
 
 	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	@JoinColumn(name = "TKECMP_TYPE", foreignKey = @ForeignKey(name = "FK_TKECMP_TYPE"))
-	private TKECMPRODUCTTYPE type;
+	private TKECMPRODUCTTYPE pType;
 
 	@Column(name = "TKECMP_PRICE")
-	private Double price;
+	private Double pPrice;
 
 	@Column(name = "TKECMP_DEFAULT_YN")
-	private String defaultYN;
+	private String pDefaultYN;
 
 }

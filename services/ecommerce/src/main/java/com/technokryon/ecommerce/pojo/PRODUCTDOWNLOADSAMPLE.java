@@ -7,9 +7,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class PRODUCTDOWNLOADSAMPLE {
 
-	Integer agId;
-	String productId;
-	String url;
-	String title;
-	String file;
+	Integer pdsAgId;
+	String pdsProductId;
+	String pdsUrl;
+	String pdsTitle;
+	String pdsFile;
 }

@@ -10,9 +10,9 @@ import lombok.NoArgsConstructor;
 
 public class USERSESSION {
 
-	String userId;
-	String apiKey;
-	String createdIp;
-	OffsetDateTime createdDate;
-	String aliveYN;
+	String usApiKey;
+	String usUserId;
+	String usCreatedIp;
+	OffsetDateTime usCreatedDate;
+	String usAliveYN;
 }

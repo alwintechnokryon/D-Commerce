@@ -2,7 +2,6 @@ package com.technokryon.ecommerce.dao;
 
 import java.math.BigInteger;
 import java.time.OffsetDateTime;
-import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -32,12 +31,13 @@ public class UserDaoImpl implements UserDao {
 	@Autowired
 	private SessionFactory O_SessionFactory;
 
+	@Autowired
+	private ModelMapper O_ModelMapper;
+	
 	@Override
 	public USER isUserEmailAvailable(String mail) {
 
-		ModelMapper O_ModelMapper = new ModelMapper();
-
-		String getUserByEmail = "FROM TKECMUSER WHERE mail= :email";
+		String getUserByEmail = "FROM TKECMUSER WHERE uMail= :email";
 
 		Query getUserByEmailQry = O_SessionFactory.getCurrentSession().createQuery(getUserByEmail);
 		getUserByEmailQry.setParameter("email", mail);
@@ -66,7 +66,7 @@ public class UserDaoImpl implements UserDao {
 		Session session = O_SessionFactory.openSession();
 		Transaction tx = session.beginTransaction();
 
-		String getUserId = "FROM TKECMUSER ORDER BY id DESC";
+		String getUserId = "FROM TKECMUSER ORDER BY uId DESC";
 
 		Query userIdQuery = O_SessionFactory.getCurrentSession().createQuery(getUserId);
 		userIdQuery.setMaxResults(1);
@@ -76,32 +76,32 @@ public class UserDaoImpl implements UserDao {
 
 		if (O_TKECM_USER1 == null) {
 
-			O_TKECM_USER.setId("TKECU0001");
+			O_TKECM_USER.setUId("TKECU0001");
 		} else {
 
-			String userId = O_TKECM_USER1.getId();
+			String userId = O_TKECM_USER1.getUId();
 			Integer Ag = Integer.valueOf(userId.substring(5));
 			Ag++;
 
 			System.err.println(Ag);
-			O_TKECM_USER.setId("TKECU" + String.format("%04d", Ag));
+			O_TKECM_USER.setUId("TKECU" + String.format("%04d", Ag));
 		}
 
 		try {
 
-			O_TKECM_USER.setName(RO_UserPojo.getName());
-			O_TKECM_USER.setMail(RO_UserPojo.getMail());
-			O_TKECM_USER.setPassword(RO_UserPojo.getPassword());
-			O_TKECM_USER.setCreatedDate(OffsetDateTime.now());
-			O_TKECM_USER.setRegType("E");
-			O_TKECM_USER.setStatus("N");
-			O_TKECM_USER.setOtpStatus("N");
+			O_TKECM_USER.setUName(RO_UserPojo.getUName());
+			O_TKECM_USER.setUMail(RO_UserPojo.getUMail());
+			O_TKECM_USER.setUPassword(RO_UserPojo.getUPassword());
+			O_TKECM_USER.setUCreatedDate(OffsetDateTime.now());
+			O_TKECM_USER.setURegType("E");
+			O_TKECM_USER.setUStatus("N");
+			O_TKECM_USER.setUOtpStatus("N");
 			session.save(O_TKECM_USER);
 			tx.commit();
 			session.close();
 
 			System.out.println("New User Created By EmailId");
-			return O_TKECM_USER.getId();
+			return O_TKECM_USER.getUId();
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -123,9 +123,9 @@ public class UserDaoImpl implements UserDao {
 
 		TKECMUSER O_TKECMUSER = session.get(TKECMUSER.class, userId);
 
-		O_TKECMUSER.setOtp(oTP);
-		O_TKECMUSER.setHashKey(hash);
-		O_TKECMUSER.setOtpExp((OffsetDateTime.now().plusMinutes(5)));
+		O_TKECMUSER.setUOtp(oTP);
+		O_TKECMUSER.setUHashKey(hash);
+		O_TKECMUSER.setUOtpExp((OffsetDateTime.now().plusMinutes(5)));
 
 		session.save(O_TKECMUSER);
 
@@ -135,9 +135,7 @@ public class UserDaoImpl implements UserDao {
 	@Override
 	public USER isUserPhoneNoAvailable(BigInteger phoneNo) {
 
-		ModelMapper O_ModelMapper = new ModelMapper();
-
-		String getUserByPhone = "FROM TKECMUSER  WHERE phone= :phoneNo";
+		String getUserByPhone = "FROM TKECMUSER  WHERE uPhone= :phoneNo";
 
 		Query getUserByPhoneQry = O_SessionFactory.getCurrentSession().createQuery(getUserByPhone);
 		getUserByPhoneQry.setParameter("phoneNo", phoneNo);
@@ -166,7 +164,7 @@ public class UserDaoImpl implements UserDao {
 		Session session = O_SessionFactory.openSession();
 		Transaction tx = session.beginTransaction();
 
-		String getUserId = "FROM TKECMUSER ORDER BY id DESC";
+		String getUserId = "FROM TKECMUSER ORDER BY uId DESC";
 
 		Query userIdQuery = O_SessionFactory.getCurrentSession().createQuery(getUserId);
 		userIdQuery.setMaxResults(1);
@@ -176,34 +174,34 @@ public class UserDaoImpl implements UserDao {
 
 		if (O_TKECM_USER1 == null) {
 
-			O_TKECM_USER.setId("TKECU0001");
+			O_TKECM_USER.setUId("TKECU0001");
 		} else {
 
-			String userId = O_TKECM_USER1.getId();
+			String userId = O_TKECM_USER1.getUId();
 			Integer Ag = Integer.valueOf(userId.substring(5));
 			Ag++;
 
 			System.err.println(Ag);
-			O_TKECM_USER.setId("TKECU" + String.format("%04d", Ag));
+			O_TKECM_USER.setUId("TKECU" + String.format("%04d", Ag));
 		}
 
 		try {
 
-			O_TKECM_USER.setName(RO_UserPojo.getName());
-			O_TKECM_USER.setOtp(RO_UserPojo.getOtp());
-			O_TKECM_USER.setPhone(RO_UserPojo.getPhone());
-			O_TKECM_USER.setPassword(RO_UserPojo.getPassword());
-			O_TKECM_USER.setCreatedDate(OffsetDateTime.now());
-			O_TKECM_USER.setRegType("M");
-			O_TKECM_USER.setCountryCode(RO_UserPojo.getCountryCode());
-			O_TKECM_USER.setOtpStatus("N");
-			O_TKECM_USER.setStatus("N");
+			O_TKECM_USER.setUName(RO_UserPojo.getUName());
+			O_TKECM_USER.setUOtp(RO_UserPojo.getUOtp());
+			O_TKECM_USER.setUPhone(RO_UserPojo.getUPhone());
+			O_TKECM_USER.setUPassword(RO_UserPojo.getUPassword());
+			O_TKECM_USER.setUCreatedDate(OffsetDateTime.now());
+			O_TKECM_USER.setURegType("M");
+			O_TKECM_USER.setUCountryCode(RO_UserPojo.getUCountryCode());
+			O_TKECM_USER.setUOtpStatus("N");
+			O_TKECM_USER.setUStatus("N");
 			session.save(O_TKECM_USER);
 			tx.commit();
 			session.close();
 
 			System.out.println("New User Created By PhoneNo");
-			return O_TKECM_USER.getId();
+			return O_TKECM_USER.getUId();
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -220,12 +218,10 @@ public class UserDaoImpl implements UserDao {
 	@Override
 	public USER getUserDetailHash(USER RO_UserPojo) {
 
-		String getUserDetail = "FROM TKECMUSER WHERE hashKey =:hashKey";
-
-		ModelMapper O_ModelMapper = new ModelMapper();
+		String getUserDetail = "FROM TKECMUSER WHERE uHashKey =:hashKey";
 
 		Query query = O_SessionFactory.getCurrentSession().createQuery(getUserDetail);
-		query.setParameter("hashKey", RO_UserPojo.getHashKey());
+		query.setParameter("hashKey", RO_UserPojo.getUHashKey());
 		TKECMUSER O_TKECMUSER = (TKECMUSER) query.uniqueResult();
 
 		if (O_TKECMUSER == null) {
@@ -244,18 +240,17 @@ public class UserDaoImpl implements UserDao {
 	public void changeOTPStatus(String userId) {
 
 		TKECMUSER O_TKECMUSER = O_SessionFactory.getCurrentSession().get(TKECMUSER.class, userId);
-		O_TKECMUSER.setStatus("Y");
-		O_TKECMUSER.setOtpStatus("Y");
+		O_TKECMUSER.setUStatus("Y");
+		O_TKECMUSER.setUOtpStatus("Y");
 		O_SessionFactory.getCurrentSession().update(O_TKECMUSER);
 	}
 
 	@Override
 	public void updatePassword(USER o_USER_DETAIL) {
 
-		TKECMUSER O_TKECMUSER = O_SessionFactory.getCurrentSession().get(TKECMUSER.class,
-				o_USER_DETAIL.getId());
-		O_TKECMUSER.setPassword(o_USER_DETAIL.getPassword());
-		O_TKECMUSER.setModifideDate(OffsetDateTime.now());
+		TKECMUSER O_TKECMUSER = O_SessionFactory.getCurrentSession().get(TKECMUSER.class, o_USER_DETAIL.getUId());
+		O_TKECMUSER.setUPassword(o_USER_DETAIL.getUPassword());
+		O_TKECMUSER.setUModifideDate(OffsetDateTime.now());
 		O_SessionFactory.getCurrentSession().update(O_TKECMUSER);
 
 	}
@@ -269,10 +264,10 @@ public class UserDaoImpl implements UserDao {
 		Transaction tx = session.beginTransaction();
 
 		TKECTUSERSESSION O_TKECTUSERSESSION = new TKECTUSERSESSION();
-		O_TKECTUSERSESSION.setUserId(O_TKECMUSER);
-		O_TKECTUSERSESSION.setApiKey(apisecret);
-		O_TKECTUSERSESSION.setCreatedDate(OffsetDateTime.now());
-		O_TKECTUSERSESSION.setAliveYN("Y");
+		O_TKECTUSERSESSION.setUsUserId(O_TKECMUSER);
+		O_TKECTUSERSESSION.setUsApiKey(apisecret);
+		O_TKECTUSERSESSION.setUsCreatedDate(OffsetDateTime.now());
+		O_TKECTUSERSESSION.setUsAliveYN("Y");
 		session.save(O_TKECTUSERSESSION);
 
 		tx.commit();
@@ -280,7 +275,7 @@ public class UserDaoImpl implements UserDao {
 
 		USERSESSION O_USERSESSION = new USERSESSION();
 
-		O_USERSESSION.setApiKey(O_TKECTUSERSESSION.getApiKey());
+		O_USERSESSION.setUsApiKey(O_TKECTUSERSESSION.getUsApiKey());
 
 		return O_USERSESSION;
 	}
@@ -290,10 +285,10 @@ public class UserDaoImpl implements UserDao {
 
 		TKECTUSERAUDIT O_TKECTUSERAUDIT = new TKECTUSERAUDIT();
 
-		O_TKECTUSERAUDIT.setLoginTime(OffsetDateTime.now());
-		O_TKECTUSERAUDIT.setUserAgent(httpServletRequest.getHeader("user-agent"));
-		O_TKECTUSERAUDIT.setUserId(O_USER_DETAIL.getId());
-		O_TKECTUSERAUDIT.setApiKey(O_USER_DETAIL.getApiKey());
+		O_TKECTUSERAUDIT.setUaLoginTime(OffsetDateTime.now());
+		O_TKECTUSERAUDIT.setUaUserAgent(httpServletRequest.getHeader("user-agent"));
+		O_TKECTUSERAUDIT.setUaUserId(O_USER_DETAIL.getUId());
+		O_TKECTUSERAUDIT.setUaApiKey(O_USER_DETAIL.getApiKey());
 		// O_TKECTUSERAUDIT.setTKECTUA_IP(httpServletRequest.getRemoteHost());
 
 		O_SessionFactory.getCurrentSession().save(O_TKECTUSERAUDIT);
@@ -305,7 +300,7 @@ public class UserDaoImpl implements UserDao {
 	public USER getUserDetailAPIKey(String apiKey) {
 
 		ModelMapper O_ModelMapper = new ModelMapper();
-		String apiQuery = "FROM TKECTUSERSESSION WHERE apiKey =:apikey";
+		String apiQuery = "FROM TKECTUSERSESSION WHERE usApiKey =:apikey";
 
 		Query query = O_SessionFactory.getCurrentSession().createQuery(apiQuery);
 		query.setParameter("apikey", apiKey);
@@ -320,11 +315,11 @@ public class UserDaoImpl implements UserDao {
 
 		USER O_USER = new USER();
 
-		O_USER.setName(O_TKECTUSERSESSION.getUserId().getName());
-		O_USER.setMail(O_TKECTUSERSESSION.getUserId().getMail());
-		O_USER.setPhone(O_TKECTUSERSESSION.getUserId().getPhone());
-		O_USER.setPassword(O_TKECTUSERSESSION.getUserId().getPassword());
-		O_USER.setId(O_TKECTUSERSESSION.getUserId().getId());
+		O_USER.setUName(O_TKECTUSERSESSION.getUsUserId().getUName());
+		O_USER.setUMail(O_TKECTUSERSESSION.getUsUserId().getUMail());
+		O_USER.setUPhone(O_TKECTUSERSESSION.getUsUserId().getUPhone());
+		O_USER.setUPassword(O_TKECTUSERSESSION.getUsUserId().getUPassword());
+		O_USER.setUId(O_TKECTUSERSESSION.getUsUserId().getUId());
 		return O_USER;
 	}
 
@@ -333,7 +328,7 @@ public class UserDaoImpl implements UserDao {
 		Session session = O_SessionFactory.openSession();
 		Transaction tx = session.beginTransaction();
 
-		String getApiKey = "FROM TKECTUSERSESSION WHERE apiKey =:apiKey";
+		String getApiKey = "FROM TKECTUSERSESSION WHERE usApiKey =:apiKey";
 
 		try {
 
@@ -341,17 +336,17 @@ public class UserDaoImpl implements UserDao {
 			getApiKeyQuery.setParameter("apiKey", apiKey);
 			TKECTUSERSESSION O_TKECTUSERSESSION = (TKECTUSERSESSION) getApiKeyQuery.uniqueResult();
 
-			O_TKECTUSERSESSION.setAliveYN("N");
+			O_TKECTUSERSESSION.setUsAliveYN("N");
 
 			session.update(O_TKECTUSERSESSION);
 
-			String getUserId1 = "FROM TKECTUSERAUDIT WHERE apiKey =:apikey ";
+			String getUserId1 = "FROM TKECTUSERAUDIT WHERE uaApiKey =:apikey ";
 
 			Query query1 = session.createQuery(getUserId1);
 			query1.setParameter("apikey", apiKey);
 
 			TKECTUSERAUDIT O_TKECTUSERAUDIT = (TKECTUSERAUDIT) query1.uniqueResult();
-			O_TKECTUSERAUDIT.setLogouttime((OffsetDateTime.now()));
+			O_TKECTUSERAUDIT.setUaLogoutTime((OffsetDateTime.now()));
 			session.update(O_TKECTUSERAUDIT);
 
 			tx.commit();

@@ -2,7 +2,6 @@ package com.technokryon.ecommerce.pojo;
 
 import java.util.List;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.technokryon.ecommerce.model.TKECMCATEGORY;
 
 import lombok.Data;
@@ -12,17 +11,17 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class CATEGORY {
 
-	String categoryId;
-	String parentId;
-	String categoryName;
-	Integer categoryLevel;
+	String cCategoryId;
+	String cParentId;
+	String cCategoryName;
+	Integer cCategoryLevel;
 	List<CATEGORY> childCategory;
 
 	public CATEGORY(TKECMCATEGORY child_O_TKECMCATEGORY, List<CATEGORY> childCategories) {
-		this.categoryId = child_O_TKECMCATEGORY.getCategoryId();
-		this.parentId = child_O_TKECMCATEGORY.getParentId();
-		this.categoryName = child_O_TKECMCATEGORY.getCategoryName();
-		this.categoryLevel = child_O_TKECMCATEGORY.getCategoryLevel();
+		this.cCategoryId = child_O_TKECMCATEGORY.getCCategoryId();
+		this.cParentId = child_O_TKECMCATEGORY.getCParentId();
+		this.cCategoryName = child_O_TKECMCATEGORY.getCCategoryName();
+		this.cCategoryLevel = child_O_TKECMCATEGORY.getCCategoryLevel();
 		this.childCategory = childCategories;
 	}
 }

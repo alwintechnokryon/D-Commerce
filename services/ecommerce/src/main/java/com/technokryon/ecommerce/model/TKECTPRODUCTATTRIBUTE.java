@@ -24,20 +24,20 @@ public class TKECTPRODUCTATTRIBUTE {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "TKECTPA_AG_ID")
-	private String agId;
+	private String paAgId;
 
 	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	@JoinColumn(name = "TKECTPA_PRODUCT_ID", foreignKey = @ForeignKey(name = "FK_TKECMP_CATEGORY_ID"))
-	private TKECMPRODUCT productId;
+	private TKECMPRODUCT paProductId;
 
 	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	@JoinColumn(name = "TKECTPA_OPTION_ATTRIBUTE_ID", foreignKey = @ForeignKey(name = "FK_TKECTPA_OPTION_ID"))
-	private TKECTOPTIONATTRIBUTE optionAttributeId;
+	private TKECTOPTIONATTRIBUTE paOptionAttributeId;
 
 	@Column(name = "TKECTPA_CREATED_DATE")
-	private String createdDate;
+	private String paCreatedDate;
 
 	@Column(name = "TKECTPA_CREATED_USERID")
-	private String createdUserId;
+	private String paCreatedUserId;
 
 }

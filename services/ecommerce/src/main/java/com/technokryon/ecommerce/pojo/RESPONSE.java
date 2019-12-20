@@ -5,7 +5,7 @@ import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
-public class Response {
+public class RESPONSE {
 
 	String message;
 

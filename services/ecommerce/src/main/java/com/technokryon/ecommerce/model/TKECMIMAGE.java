@@ -24,19 +24,19 @@ public class TKECMIMAGE {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "TKECMI_AG_ID")
-	private Integer agId;
+	private Integer iAgId;
 	
 	@ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
 	@JoinColumn(name = "TKECMI_PRODUCT_ID", foreignKey = @ForeignKey(name="FK_TKECMI_PRODUCT_ID"))
-	private TKECMPRODUCT productId;
+	private TKECMPRODUCT iProductId;
 	
 	@Column(name = "TKECMI_FILE_NAME")
-	private String fileName;
+	private String iFileName;
 	
 	@Column(name = "TKECMI_FILE_TYPE")
-	private String fileType;
+	private String iFileType;
 	
 	@Column(name = "TKECMI_URL")
-	private String url;
+	private String iUrl;
 	
 }

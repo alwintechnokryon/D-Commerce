@@ -7,9 +7,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class IMAGE {
 
-	Integer agId;
-	String productId;
-	String fileName;
-	String fileType;
-	String url;
+	Integer iAgId;
+	String iProductId;
+	String iFileName;
+	String iFileType;
+	String iUrl;
 }

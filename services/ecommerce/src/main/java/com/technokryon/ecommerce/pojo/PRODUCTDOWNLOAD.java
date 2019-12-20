@@ -7,10 +7,10 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class PRODUCTDOWNLOAD {
 
-	Integer agId;
-	String productId;
-	String isSharable;
-	String url;
-	String file;
-	String title;
+	Integer pdAgId;
+	String pdProductId;
+	String pdIsSharable;
+	String pdUrl;
+	String pdFile;
+	String pdTitle;
 }
