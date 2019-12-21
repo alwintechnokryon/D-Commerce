@@ -24,7 +24,6 @@ import lombok.NoArgsConstructor;
 public class TKECMPRODUCT {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "TKECMP_ID")
 	private String pId;
 

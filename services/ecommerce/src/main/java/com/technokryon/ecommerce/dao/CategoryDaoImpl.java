@@ -134,15 +134,26 @@ public class CategoryDaoImpl implements CategoryDao {
 
 		String categoryListById = "FROM TKECMCATEGORY WHERE cParentId =:parentid";
 
-		Query categoryListByIdQry = O_SessionFactory.getCurrentSession().createQuery(categoryListById);
+		String parentId = "FROM TKECMCATEGORY WHERE cParentId IS NULL";
 
-		categoryListByIdQry.setParameter("parentid", rO_CATEGORY.getCCategoryId());
+		Query categoryListByIdQry;
+
+
+		if (rO_CATEGORY.getCCategoryId() == null) {
+
+			categoryListByIdQry = O_SessionFactory.getCurrentSession().createQuery(parentId);
+
+		}else {
+			categoryListByIdQry = O_SessionFactory.getCurrentSession().createQuery(categoryListById);
+			categoryListByIdQry.setParameter("parentid", rO_CATEGORY.getCCategoryId());
+		}
 
 		List<TKECMCATEGORY> LO_TKECMCATEGORY = categoryListByIdQry.getResultList();
 
 		for (TKECMCATEGORY O_TKECMCATEGORY : LO_TKECMCATEGORY) {
 
 			CATEGORY O_CATEGORY = O_ModelMapper.map(O_TKECMCATEGORY, CATEGORY.class);
+			O_CATEGORY.setChildCategory(getChildCategories(O_TKECMCATEGORY.getCCategoryId()));
 
 			LO_CATEGORY.add(O_CATEGORY);
 

@@ -287,7 +287,7 @@ public class UserDaoImpl implements UserDao {
 
 		O_TKECTUSERAUDIT.setUaLoginTime(OffsetDateTime.now());
 		O_TKECTUSERAUDIT.setUaUserAgent(httpServletRequest.getHeader("user-agent"));
-		O_TKECTUSERAUDIT.setUaUserId(O_USER_DETAIL.getUId());
+		O_TKECTUSERAUDIT.setUaUserId(O_SessionFactory.getCurrentSession().get(TKECMUSER.class,O_USER_DETAIL.getUId()));
 		O_TKECTUSERAUDIT.setUaApiKey(O_USER_DETAIL.getApiKey());
 		// O_TKECTUSERAUDIT.setTKECTUA_IP(httpServletRequest.getRemoteHost());
 
