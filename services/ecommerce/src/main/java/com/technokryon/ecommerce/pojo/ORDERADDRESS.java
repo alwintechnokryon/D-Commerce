@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 public class ORDERADDRESS {
 
 	Integer oaAgId;
-	String oaOrderId;
+	String oaTkecmoId;
 	String oaFirstName;
 	String oaMiddleName;
 	String oaLastName;

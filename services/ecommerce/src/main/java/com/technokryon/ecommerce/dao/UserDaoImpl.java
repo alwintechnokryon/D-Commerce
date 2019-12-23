@@ -33,7 +33,7 @@ public class UserDaoImpl implements UserDao {
 
 	@Autowired
 	private ModelMapper O_ModelMapper;
-	
+
 	@Override
 	public USER isUserEmailAvailable(String mail) {
 
@@ -264,7 +264,7 @@ public class UserDaoImpl implements UserDao {
 		Transaction tx = session.beginTransaction();
 
 		TKECTUSERSESSION O_TKECTUSERSESSION = new TKECTUSERSESSION();
-		O_TKECTUSERSESSION.setUsUserId(O_TKECMUSER);
+		O_TKECTUSERSESSION.setUsTkecmuId(O_TKECMUSER);
 		O_TKECTUSERSESSION.setUsApiKey(apisecret);
 		O_TKECTUSERSESSION.setUsCreatedDate(OffsetDateTime.now());
 		O_TKECTUSERSESSION.setUsAliveYN("Y");
@@ -287,7 +287,8 @@ public class UserDaoImpl implements UserDao {
 
 		O_TKECTUSERAUDIT.setUaLoginTime(OffsetDateTime.now());
 		O_TKECTUSERAUDIT.setUaUserAgent(httpServletRequest.getHeader("user-agent"));
-		O_TKECTUSERAUDIT.setUaUserId(O_SessionFactory.getCurrentSession().get(TKECMUSER.class,O_USER_DETAIL.getUId()));
+		O_TKECTUSERAUDIT
+				.setUaTkecmuId(O_SessionFactory.getCurrentSession().get(TKECMUSER.class, O_USER_DETAIL.getUId()));
 		O_TKECTUSERAUDIT.setUaApiKey(O_USER_DETAIL.getApiKey());
 		// O_TKECTUSERAUDIT.setTKECTUA_IP(httpServletRequest.getRemoteHost());
 
@@ -315,11 +316,11 @@ public class UserDaoImpl implements UserDao {
 
 		USER O_USER = new USER();
 
-		O_USER.setUName(O_TKECTUSERSESSION.getUsUserId().getUName());
-		O_USER.setUMail(O_TKECTUSERSESSION.getUsUserId().getUMail());
-		O_USER.setUPhone(O_TKECTUSERSESSION.getUsUserId().getUPhone());
-		O_USER.setUPassword(O_TKECTUSERSESSION.getUsUserId().getUPassword());
-		O_USER.setUId(O_TKECTUSERSESSION.getUsUserId().getUId());
+		O_USER.setUName(O_TKECTUSERSESSION.getUsTkecmuId().getUName());
+		O_USER.setUMail(O_TKECTUSERSESSION.getUsTkecmuId().getUMail());
+		O_USER.setUPhone(O_TKECTUSERSESSION.getUsTkecmuId().getUPhone());
+		O_USER.setUPassword(O_TKECTUSERSESSION.getUsTkecmuId().getUPassword());
+		O_USER.setUId(O_TKECTUSERSESSION.getUsTkecmuId().getUId());
 		return O_USER;
 	}
 

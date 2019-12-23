@@ -11,8 +11,8 @@ import lombok.NoArgsConstructor;
 public class OPTIONATTRIBUTE {
 
 	String oaId;
-	String aId;
-	String oaAttributeId;
+	//String aId;
+	String oaTkecmaId;
 	String oaName;
 	OffsetDateTime oaCreatedDate;
 	String oaCreatedUserId;

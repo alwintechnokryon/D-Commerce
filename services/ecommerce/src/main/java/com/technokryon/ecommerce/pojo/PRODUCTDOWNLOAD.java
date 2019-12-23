@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 public class PRODUCTDOWNLOAD {
 
 	Integer pdAgId;
-	String pdProductId;
+	String pdTkecmpId;
 	String pdIsSharable;
 	String pdUrl;
 	String pdFile;

@@ -27,8 +27,8 @@ public class TKECMPRODUCTDOWNLOAD {
 	private Integer pdAgId;
 
 	@ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
-	@JoinColumn(name = "TKECMPD_PRODUCT_ID", foreignKey = @ForeignKey(name="FK_TKECMPD_PRODUCT_ID") )
-	private TKECMPRODUCT pdProductId;
+	@JoinColumn(name = "TKECMPD_TKECMP_ID", foreignKey = @ForeignKey(name="FK_TKECMPD_TKECMP_ID") )
+	private TKECMPRODUCT pdTkecmpId;
 	
 	@Column(name = "TKECMPD_IS_SHARABLE")
 	private String pdIsSharable;

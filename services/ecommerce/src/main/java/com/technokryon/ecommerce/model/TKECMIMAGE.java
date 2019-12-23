@@ -27,8 +27,8 @@ public class TKECMIMAGE {
 	private Integer iAgId;
 	
 	@ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
-	@JoinColumn(name = "TKECMI_PRODUCT_ID", foreignKey = @ForeignKey(name="FK_TKECMI_PRODUCT_ID"))
-	private TKECMPRODUCT iProductId;
+	@JoinColumn(name = "TKECMI_TKECMP_ID", foreignKey = @ForeignKey(name="FK_TKECMI_TKECMP_ID"))
+	private TKECMPRODUCT iTkecmpId;
 	
 	@Column(name = "TKECMI_FILE_NAME")
 	private String iFileName;

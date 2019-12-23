@@ -1,7 +1,5 @@
 package com.technokryon.ecommerce.model;
 
-import java.time.OffsetDateTime;
-
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -29,12 +27,12 @@ public class TKECTORDERITEM {
 	private Integer oiAgId;
 
 	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	@JoinColumn(name = "TKECTOI_ORDER_ID", foreignKey = @ForeignKey(name = "FK_TKECTOI_ORDER_ID"))
-	private TKECMORDER oiOrderId;
+	@JoinColumn(name = "TKECTOI_TKECMO_ID", foreignKey = @ForeignKey(name = "FK_TKECTOI_TKECMO_ID"))
+	private TKECMORDER oiTkecmoId;
 
 	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	@JoinColumn(name = "TKECTOI_PRODUCT_ID", foreignKey = @ForeignKey(name = "FK_TKECTOI_PRODUCT_ID"))
-	private TKECMPRODUCT oiProductId;
+	@JoinColumn(name = "TKECTOI_TKECMP_ID", foreignKey = @ForeignKey(name = "FK_TKECTOI_TKECMP_ID"))
+	private TKECMPRODUCT oiTkecmpId;
 
 	@Column(name = "TKECTOI_SKU")
 	private String oiSku;

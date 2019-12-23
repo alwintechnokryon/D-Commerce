@@ -30,8 +30,8 @@ public class TKECTUSERADDRESS {
 	private Integer uadAgId;
 
 	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	@JoinColumn(name = "TKECTUA_USER_ID", foreignKey = @ForeignKey(name = "FK_TKECTUAD_USER_ID"))
-	private TKECMUSER uadUserId;
+	@JoinColumn(name = "TKECTUA_TKECMU_ID", foreignKey = @ForeignKey(name = "FK_TKECTUAD_TKECMU_ID"))
+	private TKECMUSER uadTkecmuId;
 	
 	@Column(name = "TKECTUA_NAME")
 	private String uadName;

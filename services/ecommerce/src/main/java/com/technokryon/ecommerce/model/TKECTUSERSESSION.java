@@ -27,8 +27,8 @@ public class TKECTUSERSESSION {
 	private String usApiKey;
 	
 	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	@JoinColumn(name = "TKECTUS_USER_ID", foreignKey = @ForeignKey(name = "FK_TKECTUS_USER_ID"))
-	private TKECMUSER usUserId;
+	@JoinColumn(name = "TKECTUS_TKECMU_ID", foreignKey = @ForeignKey(name = "FK_TKECTUS_TKECMU_ID"))
+	private TKECMUSER usTkecmuId;
 
 	@Column(name = "TKECTUS_CR_DATE")
 	private OffsetDateTime usCreatedDate;

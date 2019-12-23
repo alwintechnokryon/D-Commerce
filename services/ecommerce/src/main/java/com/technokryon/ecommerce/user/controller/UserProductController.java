@@ -26,7 +26,7 @@ public class UserProductController {
 	@PostMapping("/list/category")
 	private ResponseEntity<?> PRODUCT_LIST_BY_CATEGORY(@RequestBody PRODUCT RO_PRODUCT){
 		
-	List<PRODUCT> LO_PRODUCT =	O_ProductService.getListByCategory(RO_PRODUCT.getPCategoryId(),RO_PRODUCT.getPageNumber());
+	List<PRODUCT> LO_PRODUCT =	O_ProductService.getListByCategory(RO_PRODUCT.getPTkecmcCategoryId(),RO_PRODUCT.getPageNumber());
 		
 	return new ResponseEntity<Object>(LO_PRODUCT, HttpStatus.OK);
 	}

@@ -8,8 +8,8 @@ import lombok.NoArgsConstructor;
 public class ORDERITEM {
 
 	Integer oiAgId;
-	String oiOrderId;
-	String oiProductId;
+	String oiTkecmoId;
+	String oiTkecmpId;
 	String oiSku;
 	String oiName;
 	Float oiWeight;

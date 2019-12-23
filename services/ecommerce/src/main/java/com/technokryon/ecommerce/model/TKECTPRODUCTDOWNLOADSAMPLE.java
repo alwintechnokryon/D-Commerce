@@ -27,8 +27,8 @@ public class TKECTPRODUCTDOWNLOADSAMPLE {
 	private Integer pdsAgId;
 	
 	@ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
-	@JoinColumn(name="TKECTPDS_PRODUCT_ID", foreignKey = @ForeignKey(name="FK_TKECTPDS_PRODUCT_ID"))
-	private TKECMPRODUCT pdsProductId;
+	@JoinColumn(name="TKECTPDS_TKECMP_ID", foreignKey = @ForeignKey(name="FK_TKECTPDS_TKECMP_ID"))
+	private TKECMPRODUCT pdsTkecmpId;
 	
 	@Column(name="TKECTPDS_URL")
 	private String pdsUrl;

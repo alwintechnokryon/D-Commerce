@@ -42,11 +42,11 @@ public class ProductDaoImpl implements ProductDao {
 
 		List<PRODUCT> LO_PRODUCT = new ArrayList<>();
 
-		String productQuery = "FROM TKECMPRODUCT WHERE pCategoryId.cCategoryId =:categoryId AND pDefaultYN=:default";
+		String productQuery = "FROM TKECMPRODUCT WHERE pTkecmcCategoryId.cCategoryId =:categoryId AND pDefaultYN=:default";
 
-		String proAttrQuery = "FROM TKECTPRODUCTATTRIBUTE WHERE paProductId.pId =:productId";
+		String proAttrQuery = "FROM TKECTPRODUCTATTRIBUTE WHERE paTkecmpId.pId =:productId";
 
-		String imageQuery = "FROM TKECMIMAGE WHERE iProductId.pId =:productId";
+		String imageQuery = "FROM TKECMIMAGE WHERE iTkecmpId.pId =:productId";
 
 		Query query = O_SessionFactory.getCurrentSession().createQuery(productQuery);
 
@@ -81,9 +81,8 @@ public class ProductDaoImpl implements ProductDao {
 
 				// O_ModelMapper.map(O_TKECTPRODUCTATTRIBUTE, OPTIONATTRIBUTE.class);
 
-				O_OPTIONATTRIBUTE
-						.setOaAttributeId(O_TKECTPRODUCTATTRIBUTE.getPaOptionAttributeId().getOaAttributeId().getAId());
-				O_OPTIONATTRIBUTE.setOaName(O_TKECTPRODUCTATTRIBUTE.getPaOptionAttributeId().getOaName());
+				O_OPTIONATTRIBUTE.setOaTkecmaId(O_TKECTPRODUCTATTRIBUTE.getPaTkectoaId().getOaTkecmaId().getAId());
+				O_OPTIONATTRIBUTE.setOaName(O_TKECTPRODUCTATTRIBUTE.getPaTkectoaId().getOaName());
 				LO_OPTIONATTRIBUTE.add(O_OPTIONATTRIBUTE);
 			}
 			O_PRODUCT.setLO_OPTIONATTRIBUTE(LO_OPTIONATTRIBUTE);
@@ -120,13 +119,13 @@ public class ProductDaoImpl implements ProductDao {
 
 		PRODUCT O_PRODUCT = new PRODUCT();
 
-		String configurableProduct = "FROM TKECTCONFIGURABLELINK WHERE clProductId.pId =:productId";
+		String configurableProduct = "FROM TKECTCONFIGURABLELINK WHERE clTkecmpId.pId =:productId";
 
 		String configurableParent = "FROM TKECTCONFIGURABLELINK WHERE clParentId.pId =:parentId";
 
-		String productAttribute = "FROM TKECTPRODUCTATTRIBUTE WHERE paProductId.pId =:proAttrProductId ";
+		String productAttribute = "FROM TKECTPRODUCTATTRIBUTE WHERE paTkecmpId.pId =:proAttrProductId ";
 
-		String image = "FROM TKECMIMAGE WHERE iProductId.pId =:productId";
+		String image = "FROM TKECMIMAGE WHERE iTkecmpId.pId =:productId";
 
 		Query configurableProductQuery = O_SessionFactory.getCurrentSession().createQuery(configurableProduct);
 
@@ -137,17 +136,17 @@ public class ProductDaoImpl implements ProductDao {
 		if (O_TKECTCONFIGURABLELINK != null) {
 
 			O_PRODUCT.setPId(tkecmpId);
-			O_PRODUCT.setPName(O_TKECTCONFIGURABLELINK.getClProductId().getPName());
-			O_PRODUCT.setPPrice(O_TKECTCONFIGURABLELINK.getClProductId().getPPrice());
-			O_PRODUCT.setPShortDesc(O_TKECTCONFIGURABLELINK.getClProductId().getPShortDesc());
-			O_PRODUCT.setPLongDesc(O_TKECTCONFIGURABLELINK.getClProductId().getPLongDesc());
-			O_PRODUCT.setPWeight(O_TKECTCONFIGURABLELINK.getClProductId().getPWeight());
-			O_PRODUCT.setPQuantity(O_TKECTCONFIGURABLELINK.getClProductId().getPQuantity());
-			O_PRODUCT.setPCountryOfMfg(O_TKECTCONFIGURABLELINK.getClProductId().getPCountryOfMfg());
-			O_PRODUCT.setPType(O_TKECTCONFIGURABLELINK.getClProductId().getPType().getPtAgId());
+			O_PRODUCT.setPName(O_TKECTCONFIGURABLELINK.getClTkecmpId().getPName());
+			O_PRODUCT.setPPrice(O_TKECTCONFIGURABLELINK.getClTkecmpId().getPPrice());
+			O_PRODUCT.setPShortDesc(O_TKECTCONFIGURABLELINK.getClTkecmpId().getPShortDesc());
+			O_PRODUCT.setPLongDesc(O_TKECTCONFIGURABLELINK.getClTkecmpId().getPLongDesc());
+			O_PRODUCT.setPWeight(O_TKECTCONFIGURABLELINK.getClTkecmpId().getPWeight());
+			O_PRODUCT.setPQuantity(O_TKECTCONFIGURABLELINK.getClTkecmpId().getPQuantity());
+			O_PRODUCT.setPCountryOfMfg(O_TKECTCONFIGURABLELINK.getClTkecmpId().getPCountryOfMfg());
+			O_PRODUCT.setPTkecmptAgId(O_TKECTCONFIGURABLELINK.getClTkecmpId().getPTkecmptAgId().getPtAgId());
 
 			O_PRODUCT.setLO_CATEGORY(
-					getCategory(O_TKECTCONFIGURABLELINK.getClProductId().getPCategoryId().getCCategoryId()));
+					getCategory(O_TKECTCONFIGURABLELINK.getClTkecmpId().getPTkecmcCategoryId().getCCategoryId()));
 
 			Query configurableParentQuery = O_SessionFactory.getCurrentSession().createQuery(configurableParent);
 
@@ -164,7 +163,7 @@ public class ProductDaoImpl implements ProductDao {
 				Query productAttributeQuery = O_SessionFactory.getCurrentSession().createQuery(productAttribute);
 
 				productAttributeQuery.setParameter("proAttrProductId",
-						child_TKECTCONFIGURABLELINK.getClProductId().getPId());
+						child_TKECTCONFIGURABLELINK.getClTkecmpId().getPId());
 
 				PRODUCTATTRIBUTE O_PRODUCTATTRIBUTE = new PRODUCTATTRIBUTE();
 
@@ -172,11 +171,11 @@ public class ProductDaoImpl implements ProductDao {
 
 				System.err.println("ReqId" + tkecmpId);
 
-				System.err.println("Id" + child_TKECTCONFIGURABLELINK.getClProductId().getPId());
+				System.err.println("Id" + child_TKECTCONFIGURABLELINK.getClTkecmpId().getPId());
 
-				O_PRODUCTATTRIBUTE.setSubProductId(child_TKECTCONFIGURABLELINK.getClProductId().getPId());
+				O_PRODUCTATTRIBUTE.setSubProductId(child_TKECTCONFIGURABLELINK.getClTkecmpId().getPId());
 
-				if (tkecmpId.equals(child_TKECTCONFIGURABLELINK.getClProductId().getPId())) {
+				if (tkecmpId.equals(child_TKECTCONFIGURABLELINK.getClTkecmpId().getPId())) {
 
 					O_PRODUCTATTRIBUTE.setDefaultYN("Y");
 
@@ -194,9 +193,8 @@ public class ProductDaoImpl implements ProductDao {
 
 					// O_ModelMapper.map(O_TKECTPRODUCTATTRIBUTE, OPTIONATTRIBUTE.class);
 
-					O_OPTIONATTRIBUTE.setOaAttributeId(
-							O_TKECTPRODUCTATTRIBUTE.getPaOptionAttributeId().getOaAttributeId().getAId());
-					O_OPTIONATTRIBUTE.setOaName(O_TKECTPRODUCTATTRIBUTE.getPaOptionAttributeId().getOaName());
+					O_OPTIONATTRIBUTE.setOaTkecmaId(O_TKECTPRODUCTATTRIBUTE.getPaTkectoaId().getOaTkecmaId().getAId());
+					O_OPTIONATTRIBUTE.setOaName(O_TKECTPRODUCTATTRIBUTE.getPaTkectoaId().getOaName());
 					LO_OPTIONATTRIBUTE.add(O_OPTIONATTRIBUTE);
 				}
 
@@ -211,7 +209,7 @@ public class ProductDaoImpl implements ProductDao {
 
 			Query imageQuery = O_SessionFactory.getCurrentSession().createQuery(image);
 
-			imageQuery.setParameter("productId", O_TKECTCONFIGURABLELINK.getClProductId().getPId());
+			imageQuery.setParameter("productId", O_TKECTCONFIGURABLELINK.getClTkecmpId().getPId());
 
 			List<TKECMIMAGE> LO_TKECMIMAGE = imageQuery.list();
 
@@ -234,9 +232,9 @@ public class ProductDaoImpl implements ProductDao {
 
 			String simpleProduct = "FROM TKECMPRODUCT WHERE pId =:productId";
 
-			String proAttrQuery = "FROM TKECTPRODUCTATTRIBUTE WHERE paProductId.pId =:productId";
+			String proAttrQuery = "FROM TKECTPRODUCTATTRIBUTE WHERE paTkecmpId.pId =:productId";
 
-			String downloadableProduct = "FROM TKECMPRODUCTDOWNLOAD WHERE pdProductId.pId =:downloadProductId";
+			String downloadableProduct = "FROM TKECMPRODUCTDOWNLOAD WHERE pdTkecmpId.pId =:downloadProductId";
 
 			Query simpleProductQuery = O_SessionFactory.getCurrentSession().createQuery(simpleProduct);
 
@@ -255,10 +253,10 @@ public class ProductDaoImpl implements ProductDao {
 			O_PRODUCT.setPShortDesc(O_TKECMPRODUCT.getPShortDesc());
 			O_PRODUCT.setPCountryOfMfg(O_TKECMPRODUCT.getPCountryOfMfg());
 			O_PRODUCT.setPQuantity(O_TKECMPRODUCT.getPQuantity());
-			O_PRODUCT.setPType(O_TKECMPRODUCT.getPType().getPtAgId());
+			O_PRODUCT.setPTkecmptAgId(O_TKECMPRODUCT.getPTkecmptAgId().getPtAgId());
 			O_PRODUCT.setPPrice(O_TKECMPRODUCT.getPPrice());
-			O_PRODUCT.setLO_CATEGORY(getCategory(O_TKECMPRODUCT.getPCategoryId().getCCategoryId()));
-			if (O_TKECMPRODUCT.getPType().getPtAgId().equals(3)) {
+			O_PRODUCT.setLO_CATEGORY(getCategory(O_TKECMPRODUCT.getPTkecmcCategoryId().getCCategoryId()));
+			if (O_TKECMPRODUCT.getPTkecmptAgId().getPtAgId().equals(3)) {
 
 				Query downloadableProductQuery = O_SessionFactory.getCurrentSession().createQuery(downloadableProduct);
 
@@ -286,9 +284,8 @@ public class ProductDaoImpl implements ProductDao {
 				OPTIONATTRIBUTE O_OPTIONATTRIBUTE = new OPTIONATTRIBUTE();
 				// O_ModelMapper.map(O_TKECTPRODUCTATTRIBUTE, OPTIONATTRIBUTE.class);
 
-				O_OPTIONATTRIBUTE
-						.setOaAttributeId(O_TKECTPRODUCTATTRIBUTE.getPaOptionAttributeId().getOaAttributeId().getAId());
-				O_OPTIONATTRIBUTE.setOaName(O_TKECTPRODUCTATTRIBUTE.getPaOptionAttributeId().getOaName());
+				O_OPTIONATTRIBUTE.setOaTkecmaId(O_TKECTPRODUCTATTRIBUTE.getPaTkectoaId().getOaTkecmaId().getAId());
+				O_OPTIONATTRIBUTE.setOaName(O_TKECTPRODUCTATTRIBUTE.getPaTkectoaId().getOaName());
 				LO_OPTIONATTRIBUTE.add(O_OPTIONATTRIBUTE);
 			}
 			O_PRODUCT.setLO_OPTIONATTRIBUTE(LO_OPTIONATTRIBUTE);

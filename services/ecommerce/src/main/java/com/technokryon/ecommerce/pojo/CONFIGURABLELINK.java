@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 public class CONFIGURABLELINK {
 
 	Integer clAgId;
-	String clProductId;
+	String clTkecmpId;
 	String clParentId;
 
 }

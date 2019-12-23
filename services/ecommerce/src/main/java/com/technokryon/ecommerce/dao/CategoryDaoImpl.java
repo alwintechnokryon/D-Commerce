@@ -30,7 +30,7 @@ public class CategoryDaoImpl implements CategoryDao {
 		Session session = O_SessionFactory.openSession();
 		Transaction tx = session.beginTransaction();
 
-		String getCategory = "FROM TKECMCATEGORY ORDER BY categoryId DESC";
+		String getCategory = "FROM TKECMCATEGORY ORDER BY cCategoryId DESC";
 
 		Query categoryQuery = O_SessionFactory.getCurrentSession().createQuery(getCategory);
 		categoryQuery.setMaxResults(1);

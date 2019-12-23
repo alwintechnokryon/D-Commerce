@@ -5,11 +5,11 @@ import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
-public class IMAGE {
+public class STATE {
 
-	Integer iAgId;
-	String iTkecmpId;
-	String iFileName;
-	String iFileType;
-	String iUrl;
+	Integer sAgId;
+	String sName;
+	Integer sTkecmcnAgId;
+	String sFipsCode;
+
 }

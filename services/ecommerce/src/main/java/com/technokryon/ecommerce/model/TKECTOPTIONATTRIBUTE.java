@@ -27,8 +27,8 @@ public class TKECTOPTIONATTRIBUTE {
 	private String oaId;
 
 	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	@JoinColumn(name = "TKECTOA_ATTRIBUTE_ID", foreignKey = @ForeignKey(name = "FK_TKECTOA_ATTRIBUTE_ID"))
-	private TKECMATTRIBUTE oaAttributeId;
+	@JoinColumn(name = "TKECTOA_TKECMA_ID", foreignKey = @ForeignKey(name = "FK_TKECTOA_TKECMA_ID"))
+	private TKECMATTRIBUTE oaTkecmaId;
 
 	@Column(name = "TKECTOA_NAME")
 	private String oaName;

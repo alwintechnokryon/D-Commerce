@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 public class USERAUDIT {
 
 	Integer uaAgId;
-	String uaUserId;
+	String uaTkecmuId;
 	OffsetDateTime uaLoginTime;
 	OffsetDateTime uaLogoutTime;
 	String uaUserAgent;

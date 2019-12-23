@@ -34,8 +34,8 @@ public class TKECMPRODUCT {
 	private String pName;
 
 	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	@JoinColumn(name = "TKECMP_CATEGORY_ID", foreignKey = @ForeignKey(name = "FK_TKECMP_CATEGORY_ID"))
-	private TKECMCATEGORY pCategoryId;
+	@JoinColumn(name = "TKECMP_TKECMC_CATEGORY_ID", foreignKey = @ForeignKey(name = "FK_TKECMP_TKECMC_CATEGORY_ID"))
+	private TKECMCATEGORY pTkecmcCategoryId;
 
 	@Column(name = "TKECMP_WEIGHT")
 	private Float pWeight;
@@ -68,8 +68,8 @@ public class TKECMPRODUCT {
 	private String pStatus;
 
 	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	@JoinColumn(name = "TKECMP_TYPE", foreignKey = @ForeignKey(name = "FK_TKECMP_TYPE"))
-	private TKECMPRODUCTTYPE pType;
+	@JoinColumn(name = "TKECMP_TKECMPT_AG_ID", foreignKey = @ForeignKey(name = "FK_TKECMP_TKECMPT_AG_ID"))
+	private TKECMPRODUCTTYPE pTkecmptAgId;
 
 	@Column(name = "TKECMP_PRICE")
 	private Double pPrice;

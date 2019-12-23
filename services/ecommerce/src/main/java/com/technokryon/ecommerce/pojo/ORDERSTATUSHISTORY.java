@@ -10,8 +10,8 @@ import lombok.NoArgsConstructor;
 public class ORDERSTATUSHISTORY {
 
 	Integer oshAgId;
-	String oshOrderId;
-	String oshStatus;
+	String oshTkecmoId;
+	String oshTkecmosStatus;
 	String oshComment;
 	OffsetDateTime oshCreatedDate;
 	String oshCreatedUserId;

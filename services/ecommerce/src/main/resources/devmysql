@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Dec 21, 2019 at 01:38 PM
+-- Generation Time: Dec 23, 2019 at 01:40 PM
 -- Server version: 5.7.23
 -- PHP Version: 5.6.38
 
@@ -377,11 +377,13 @@ INSERT INTO `TKECM_COUNTRY` (`TKECMCN_AG_ID`, `TKEMCN_NAME`, `TKEMCN_ISO3`, `TKE
 DROP TABLE IF EXISTS `TKECM_IMAGE`;
 CREATE TABLE IF NOT EXISTS `TKECM_IMAGE` (
   `TKECMI_AG_ID` int(11) NOT NULL AUTO_INCREMENT,
-  `TKECMI_PRODUCT_ID` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `TKECMI_TKECMP_ID` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `TKECMI_FILE_NAME` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `TKECMI_FILE_TYPE` varchar(10) COLLATE utf8_unicode_ci DEFAULT NULL,
   `TKECMI_URL` text COLLATE utf8_unicode_ci,
+  `TKECMI_PRODUCT_ID` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`TKECMI_AG_ID`),
+  KEY `FK_TKECMI_TKECMP_ID` (`TKECMI_TKECMP_ID`),
   KEY `FK_TKECMI_PRODUCT_ID` (`TKECMI_PRODUCT_ID`)
 ) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
@@ -389,13 +391,13 @@ CREATE TABLE IF NOT EXISTS `TKECM_IMAGE` (
 -- Dumping data for table `TKECM_IMAGE`
 --
 
-INSERT INTO `TKECM_IMAGE` (`TKECMI_AG_ID`, `TKECMI_PRODUCT_ID`, `TKECMI_FILE_NAME`, `TKECMI_FILE_TYPE`, `TKECMI_URL`) VALUES
-(1, '1', 'Redmi', 'Image', NULL),
-(2, '2', NULL, 'Image', 'https://www.gutenberg.org/ebooks/60879'),
-(3, '3', NULL, 'Image', 'https://www.gutenberg.org/ebooks/60879'),
-(4, '4', 'Shirt', 'Image', NULL),
-(5, '5', NULL, 'Image', 'https://www.gutenberg.org/ebooks/60879'),
-(6, '6', NULL, 'Image', 'https://www.gutenberg.org/ebooks/60879');
+INSERT INTO `TKECM_IMAGE` (`TKECMI_AG_ID`, `TKECMI_TKECMP_ID`, `TKECMI_FILE_NAME`, `TKECMI_FILE_TYPE`, `TKECMI_URL`, `TKECMI_PRODUCT_ID`) VALUES
+(1, '1', 'Redmi', 'Image', NULL, NULL),
+(2, '2', NULL, 'Image', 'https://www.gutenberg.org/ebooks/60879', NULL),
+(3, '3', NULL, 'Image', 'https://www.gutenberg.org/ebooks/60879', NULL),
+(4, '4', 'Shirt', 'Image', NULL, NULL),
+(5, '5', NULL, 'Image', 'https://www.gutenberg.org/ebooks/60879', NULL),
+(6, '6', NULL, 'Image', 'https://www.gutenberg.org/ebooks/60879', NULL);
 
 -- --------------------------------------------------------
 
@@ -406,7 +408,7 @@ INSERT INTO `TKECM_IMAGE` (`TKECMI_AG_ID`, `TKECMI_PRODUCT_ID`, `TKECMI_FILE_NAM
 DROP TABLE IF EXISTS `TKECM_ORDER`;
 CREATE TABLE IF NOT EXISTS `TKECM_ORDER` (
   `TKECMO_ID` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `TKECMO_USER_ID` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `TKECMO_TKECMU_ID` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `TKECMO_COUPEN_CODE` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL,
   `TKECMO_BASE_AMOUNT` double DEFAULT NULL,
   `TKECMO_DETECTED_AMOUNT` double DEFAULT NULL,
@@ -422,8 +424,10 @@ CREATE TABLE IF NOT EXISTS `TKECM_ORDER` (
   `TKECMO_PAYMENT_TYPE` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL,
   `TKECMO_CREATED_DATE` datetime DEFAULT NULL,
   `TKECMO_CREATED_USER_ID` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `TKECMO_EXPECTED_DELIVERY` datetime DEFAULT NULL,
+  `TKECMO_DELIVERY_DATE` datetime DEFAULT NULL,
   PRIMARY KEY (`TKECMO_ID`),
-  KEY `FK_TKECMO_USER_ID` (`TKECMO_USER_ID`)
+  KEY `FK_TKECMO_TKECMU_ID` (`TKECMO_TKECMU_ID`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
@@ -450,7 +454,7 @@ CREATE TABLE IF NOT EXISTS `TKECM_PRODUCT` (
   `TKECMP_ID` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `TKECMP_SKU` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
   `TKECMP_NAME` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `TKECMP_CATEGORY_ID` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `TKECMP_TKECMC_CATEGORY_ID` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `TKECMP_WEIGHT` float DEFAULT NULL,
   `TKECMP_QUANTITY` int(11) DEFAULT NULL,
   `TKECMP_SHORT_DESC` text COLLATE utf8_unicode_ci,
@@ -461,30 +465,31 @@ CREATE TABLE IF NOT EXISTS `TKECM_PRODUCT` (
   `TKECMP_MODIFIED_DATE` datetime DEFAULT NULL,
   `TKECMP_MODIFIED_USERID` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL,
   `TKECMP_STATUS` varchar(10) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `TKECMP_TYPE` int(11) DEFAULT NULL,
+  `TKECMP_TKECMPT_AG_ID` int(11) DEFAULT NULL,
   `TKECMP_PRICE` double DEFAULT NULL,
   `TKECMP_DEFAULT_YN` varchar(5) COLLATE utf8_unicode_ci NOT NULL,
-  `TKECMP_DEFAULT` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `TKECMP_CATEGORY_ID` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `TKECMP_TYPE` int(11) DEFAULT NULL,
   PRIMARY KEY (`TKECMP_ID`),
   UNIQUE KEY `UNIQUESKU` (`TKECMP_SKU`),
   UNIQUE KEY `TKECMP_NAME` (`TKECMP_NAME`),
-  KEY `FK_TKECMP_CATEGORY_ID` (`TKECMP_CATEGORY_ID`),
-  KEY `FK_TKECMP_TYPE` (`TKECMP_TYPE`)
+  KEY `FK_TKECMP_TKECMC_CATEGORY_ID` (`TKECMP_TKECMC_CATEGORY_ID`) USING BTREE,
+  KEY `FK_TKECMP_TKECMPT_AG_ID` (`TKECMP_TKECMPT_AG_ID`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Dumping data for table `TKECM_PRODUCT`
 --
 
-INSERT INTO `TKECM_PRODUCT` (`TKECMP_ID`, `TKECMP_SKU`, `TKECMP_NAME`, `TKECMP_CATEGORY_ID`, `TKECMP_WEIGHT`, `TKECMP_QUANTITY`, `TKECMP_SHORT_DESC`, `TKECMP_LONG_DESC`, `TKECMP_COUNTRY_OF_MFG`, `TKECMP_CREATED_DATE`, `TKECMP_CREATED_USERID`, `TKECMP_MODIFIED_DATE`, `TKECMP_MODIFIED_USERID`, `TKECMP_STATUS`, `TKECMP_TYPE`, `TKECMP_PRICE`, `TKECMP_DEFAULT_YN`, `TKECMP_DEFAULT`) VALUES
-('1', 'RN7PRO', 'Redmi Note 7 Pro', 'TKECC0016', NULL, 5, 'Redmi Note 7 Pro', 'The former is slightly faster and more efficient. The Pro model also offers more RAM and internal storage than the regular model, as well as stronger camera hardware. The Xiaomi Redmi Note 7 Pro has a 48MP + 5MP rear camera setup like the Redmi Note 7.', 'China', NULL, NULL, NULL, NULL, 'Y', 1, 17000, 'Y', NULL),
-('2', 'LED123', 'LED', 'TKECC0018', NULL, 10, 'LED', 'A light-emitting diode (LED) is a semiconductor light source that emits light when current flows through it. Electrons in the semiconductor recombine with electron holes, releasing energy in the form of photons.', 'India', NULL, NULL, NULL, NULL, 'Y', 1, 45000, 'Y', NULL),
-('3', 'WedSet56', 'Wedding Set', 'TKECC0023', NULL, 3, 'Wedding Set', 'A wedding set includes the engagement ring, matching band for her and a band for him. A bridal set consists of an engagement ring and matching band for the bride, leaving the groom on his own for his band.', 'India', NULL, NULL, NULL, NULL, 'Y', 1, 6000, 'Y', NULL),
-('4', 'ShirtRed001', 'Shirt Red', 'TKECC0020', NULL, 5, 'Shirt Red', 'Casual Shirts for Men - Buy new arrivals & latest Casual Shirt for Men from Mufti, Tommy Hilfiger, Roadster, UCB & more.', 'India', NULL, NULL, NULL, NULL, 'Y', 2, 850, 'N', NULL),
-('5', 'ShirtPink002', 'Shirt Pink', 'TKECC0020', NULL, 4, 'Shirt Pink', 'Casual Shirts for Men - Buy new arrivals & latest Casual Shirt for Men from Mufti, Tommy Hilfiger, Roadster, UCB & more.', 'India', NULL, NULL, NULL, NULL, 'Y', 4, 875, 'Y', NULL),
-('6', 'Ebook003', 'Ebook', 'TKECC0029', NULL, 3, 'Ebooks', 'An electronic book, also known as an e-book or eBook, is a book publication made available in digital form, consisting of text, images, or both, readable ', 'India', NULL, NULL, NULL, NULL, 'Y', 3, 450, 'Y', NULL),
-('7', 'Books004', 'Books', 'TKECC0030', NULL, 2, 'Books', 'Books Advanced Search New Releases & Pre-orders Best Sellers Browse Genres Children\'s & Young Adult Textbooks Exam Central All Indian Languages', 'India', NULL, NULL, NULL, NULL, 'Y', 3, 250, 'Y', NULL),
-('8', 'ShirtOrange003', 'Shirt Orange', 'TKECC0020', NULL, 3, 'Shirt Orange', 'Casual Shirts for Men - Buy new arrivals & latest Casual Shirt for Men from Mufti, Tommy Hilfiger, Roadster, UCB & more.', 'India', NULL, NULL, NULL, NULL, 'Y', 4, 325, 'N', NULL);
+INSERT INTO `TKECM_PRODUCT` (`TKECMP_ID`, `TKECMP_SKU`, `TKECMP_NAME`, `TKECMP_TKECMC_CATEGORY_ID`, `TKECMP_WEIGHT`, `TKECMP_QUANTITY`, `TKECMP_SHORT_DESC`, `TKECMP_LONG_DESC`, `TKECMP_COUNTRY_OF_MFG`, `TKECMP_CREATED_DATE`, `TKECMP_CREATED_USERID`, `TKECMP_MODIFIED_DATE`, `TKECMP_MODIFIED_USERID`, `TKECMP_STATUS`, `TKECMP_TKECMPT_AG_ID`, `TKECMP_PRICE`, `TKECMP_DEFAULT_YN`, `TKECMP_CATEGORY_ID`, `TKECMP_TYPE`) VALUES
+('1', 'RN7PRO', 'Redmi Note 7 Pro', 'TKECC0016', NULL, 5, 'Redmi Note 7 Pro', 'The former is slightly faster and more efficient. The Pro model also offers more RAM and internal storage than the regular model, as well as stronger camera hardware. The Xiaomi Redmi Note 7 Pro has a 48MP + 5MP rear camera setup like the Redmi Note 7.', 'China', NULL, NULL, NULL, NULL, 'Y', 1, 17000, 'Y', NULL, NULL),
+('2', 'LED123', 'LED', 'TKECC0018', NULL, 10, 'LED', 'A light-emitting diode (LED) is a semiconductor light source that emits light when current flows through it. Electrons in the semiconductor recombine with electron holes, releasing energy in the form of photons.', 'India', NULL, NULL, NULL, NULL, 'Y', 1, 45000, 'Y', NULL, NULL),
+('3', 'WedSet56', 'Wedding Set', 'TKECC0023', NULL, 3, 'Wedding Set', 'A wedding set includes the engagement ring, matching band for her and a band for him. A bridal set consists of an engagement ring and matching band for the bride, leaving the groom on his own for his band.', 'India', NULL, NULL, NULL, NULL, 'Y', 1, 6000, 'Y', NULL, NULL),
+('4', 'ShirtRed001', 'Shirt Red', 'TKECC0020', NULL, 5, 'Shirt Red', 'Casual Shirts for Men - Buy new arrivals & latest Casual Shirt for Men from Mufti, Tommy Hilfiger, Roadster, UCB & more.', 'India', NULL, NULL, NULL, NULL, 'Y', 2, 850, 'N', NULL, NULL),
+('5', 'ShirtPink002', 'Shirt Pink', 'TKECC0020', NULL, 4, 'Shirt Pink', 'Casual Shirts for Men - Buy new arrivals & latest Casual Shirt for Men from Mufti, Tommy Hilfiger, Roadster, UCB & more.', 'India', NULL, NULL, NULL, NULL, 'Y', 4, 875, 'Y', NULL, NULL),
+('6', 'Ebook003', 'Ebook', 'TKECC0029', NULL, 3, 'Ebooks', 'An electronic book, also known as an e-book or eBook, is a book publication made available in digital form, consisting of text, images, or both, readable ', 'India', NULL, NULL, NULL, NULL, 'Y', 3, 450, 'Y', NULL, NULL),
+('7', 'Books004', 'Books', 'TKECC0030', NULL, 2, 'Books', 'Books Advanced Search New Releases & Pre-orders Best Sellers Browse Genres Children\'s & Young Adult Textbooks Exam Central All Indian Languages', 'India', NULL, NULL, NULL, NULL, 'Y', 3, 250, 'Y', NULL, NULL),
+('8', 'ShirtOrange003', 'Shirt Orange', 'TKECC0020', NULL, 3, 'Shirt Orange', 'Casual Shirts for Men - Buy new arrivals & latest Casual Shirt for Men from Mufti, Tommy Hilfiger, Roadster, UCB & more.', 'India', NULL, NULL, NULL, NULL, 'Y', 4, 325, 'N', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -495,22 +500,36 @@ INSERT INTO `TKECM_PRODUCT` (`TKECMP_ID`, `TKECMP_SKU`, `TKECMP_NAME`, `TKECMP_C
 DROP TABLE IF EXISTS `TKECM_PRODUCT_DOWNLOAD`;
 CREATE TABLE IF NOT EXISTS `TKECM_PRODUCT_DOWNLOAD` (
   `TKECMPD_AG_ID` int(11) NOT NULL AUTO_INCREMENT,
-  `TKECMPD_PRODUCT_ID` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `TKECMPD_TKECMP_ID` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `TKECMPD_IS_SHARABLE` varchar(5) COLLATE utf8_unicode_ci DEFAULT NULL,
   `TKECMPD_URL` text COLLATE utf8_unicode_ci,
   `TKECMPD_FILE` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `TKECMPD_TITLE` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `TKECMPD_PRODUCT_ID` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`TKECMPD_AG_ID`),
-  KEY `FK_TKECMPD_PRODUCT_ID` (`TKECMPD_PRODUCT_ID`)
+  KEY `FK_TKECMPD_TKECMP_ID` (`TKECMPD_TKECMP_ID`) USING BTREE
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Dumping data for table `TKECM_PRODUCT_DOWNLOAD`
 --
 
-INSERT INTO `TKECM_PRODUCT_DOWNLOAD` (`TKECMPD_AG_ID`, `TKECMPD_PRODUCT_ID`, `TKECMPD_IS_SHARABLE`, `TKECMPD_URL`, `TKECMPD_FILE`, `TKECMPD_TITLE`) VALUES
-(1, '6', 'Y', 'https://www.gutenberg.org/ebooks/60879', NULL, 'Leibniz by Wilhelm Max Wundt'),
-(2, '7', 'Y', 'https://www.bookrix.com/_ebook-jingjing-zhu-the-lost-hero/', NULL, 'The Lost Hero');
+INSERT INTO `TKECM_PRODUCT_DOWNLOAD` (`TKECMPD_AG_ID`, `TKECMPD_TKECMP_ID`, `TKECMPD_IS_SHARABLE`, `TKECMPD_URL`, `TKECMPD_FILE`, `TKECMPD_TITLE`, `TKECMPD_PRODUCT_ID`) VALUES
+(1, '6', 'Y', 'https://www.gutenberg.org/ebooks/60879', NULL, 'Leibniz by Wilhelm Max Wundt', NULL),
+(2, '7', 'Y', 'https://www.bookrix.com/_ebook-jingjing-zhu-the-lost-hero/', NULL, 'The Lost Hero', NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `TKECM_PRODUCT_PAYMENT_TYPE`
+--
+
+DROP TABLE IF EXISTS `TKECM_PRODUCT_PAYMENT_TYPE`;
+CREATE TABLE IF NOT EXISTS `TKECM_PRODUCT_PAYMENT_TYPE` (
+  `TKECMPPT_ID` varchar(10) COLLATE utf8_unicode_ci NOT NULL,
+  `TKECMPPT_TYPE` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL,
+  PRIMARY KEY (`TKECMPPT_ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -556,7 +575,6 @@ CREATE TABLE IF NOT EXISTS `TKECM_USER` (
   `TKECMU_COUNTRY_CODE` int(11) DEFAULT NULL,
   `TKECMU_OTP_STATUS` varchar(1) COLLATE utf8_unicode_ci DEFAULT NULL,
   `TKECMU_STATUS` varchar(1) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `TKECMU_MOD_DATE` datetime DEFAULT NULL,
   `TKECMU_MODIFIED_DATE` datetime DEFAULT NULL,
   PRIMARY KEY (`TKECMU_ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
@@ -565,28 +583,30 @@ CREATE TABLE IF NOT EXISTS `TKECM_USER` (
 -- Dumping data for table `TKECM_USER`
 --
 
-INSERT INTO `TKECM_USER` (`TKECMU_ID`, `TKECMU_NAME`, `TKECMU_REG_TYPE`, `TKECMU_MAIL`, `TKECMU_OTP`, `TKECMU_OTP_EXP`, `TKECMU_HASH_KEY`, `TKECMU_PASSWORD`, `TKECMU_CREATED_DATE`, `TKECMU_PHONE`, `TKECMU_COUNTRY_CODE`, `TKECMU_OTP_STATUS`, `TKECMU_STATUS`, `TKECMU_MOD_DATE`, `TKECMU_MODIFIED_DATE`) VALUES
-('TKEC0003', 'sangeetha', 'M', NULL, 486470, '2019-11-28 11:24:52', '$2a$10$u1VpgKGNdbwuI2fG6TXjGuAIjapadm9uthjSsIRkZS7VtVw.FZXAW', '$2a$10$cLCOip0qpIyBtaI0g4vBXenXk0B91DI45BgSrZGqiAiWo0Unhecai', '2019-11-27 17:57:11', 7825967474, 91, 'Y', 'Y', NULL, NULL),
-('TKEC0007', 'sasi', 'M', NULL, 6378, '2019-11-28 12:20:03', '$2a$10$oARGCHPdvKJ6QNl4sL6Sn.NpWsvtLf/ejuqKDa1/jFlV/hAB3SHqq', '$2a$10$ObdIfU3x1Xs02pHc5yjJ0ugFaOy2MFCmyf8QSXEbxmG4p4cUaQAl6', '2019-11-28 12:15:02', 9710401369, 91, 'Y', 'Y', NULL, NULL),
-('TKEC0008', 'sasi', 'M', NULL, 150748, '2019-11-28 12:54:26', '$2a$10$bR4r16jHLLBrt52ntk81luGZV7RrBn9OjqY9CBEs/9/9Px4X.FNyC', '$2a$10$Zo516SW5mTMlOoZVckEj3.IpMfyyhN6xEghT43vGJ25COm5x.dE5e', '2019-11-28 12:38:13', 9843233220, 91, 'N', 'N', NULL, NULL),
-('TKEC0009', 'sasifaff', 'E', 'sasikumar@gamil.com', 147716, '2019-11-28 12:55:45', '$2a$10$GI4ZzUexsxvweTE3OvJlcO9g2hMMcPHP9WXZeLDZfguloeRQIYz96', '$2a$10$9GCrYLaRQ58FfDJtLg62seMT6by4s0R3uGjuPhoWUWzfuDC4iCL8O', '2019-11-28 12:50:41', NULL, NULL, 'Y', 'Y', NULL, NULL),
-('TKEC0010', 'sasikumar', 'E', 'sasik6@gmail.com', 516094, '2019-11-28 18:06:58', '$2a$10$KnBFSAjQfyYCjDAh4EluBetzcTVR110JpO3ldVLu0STcVj7cISUdC', '$2a$10$ffrdzdSAqheTEAeOgpYlEedoMQvnSbuoQEM/dsdo483TKEKUwEbie', '2019-11-28 18:01:53', NULL, NULL, 'Y', 'Y', NULL, NULL),
-('TKEC0011', 'sangeethans', 'E', 'sangeetham67@gmail.com', 195821, '2019-11-28 18:20:34', '$2a$10$dKxklQ7/CMXxCx7/J8lvwOo0Uk0Sxaow5rOeTSHKbRp0IZ0W95PPC', '222222', '2019-11-28 18:05:33', NULL, NULL, 'Y', 'Y', '2019-11-28 18:26:10', NULL),
-('TKEC0012', 'sangeethans', 'E', 'sangeethamca567@gmail.com', 115267, '2019-11-28 18:38:06', '$2a$10$zqGU5ULs6Xsh4f/57cL2fuE6EWezhCdcaUiYdud2YiMEf0XD0ZZNG', '$2a$10$2ADGAPJoI4plLBt.fv20B.5aHBfG2yRkMsi./K9q5GPXwj/jlwkOW', '2019-11-28 18:33:02', NULL, NULL, 'Y', 'Y', '2019-11-28 18:36:59', NULL),
-('TKEC0013', 'sasikumar', 'E', 'sasikumarmsk1996@gmail.com', 110026, '2019-11-28 18:50:39', '$2a$10$EALs6eMAceYbZUrtOgeFt.0/6Jq1e60USMmVada6WXeyeesveerj6', '$2a$10$RJk9EUwH98Z3IQUuQM5gbO4Zuh8BgSAZOwUt0tYU/I/DokAVa4e0i', '2019-11-28 18:45:35', NULL, NULL, 'Y', 'Y', NULL, NULL),
-('TKEC0014', 'sasi', 'E', 'sasi1887@gmail.com', 145345, '2019-11-28 19:17:05', '$2a$10$EKXWiqfX19d9PdSPcID0luHaOqbOEb5Od3qtEuzEIMFA5Xnkm0tt2', '$2a$10$xQcaWvLP3Ay6W4YKU0.skOhTpPlPKoD0TSMnR/YphW52HKRg0gqpS', '2019-11-28 19:07:58', NULL, NULL, 'Y', 'Y', NULL, NULL),
-('TKEC0015', 'akila', 'M', NULL, 193306, '2019-11-29 14:29:52', '$2a$10$JtgJkeJuShV48lQTlNrXPOaG3QcalG2J1x79cNOig9aa1F.z5NUIe', '$2a$10$SBEPZifC/HC0VV7oh4sP7O5rJm8/laN6X4k.Kquxpq6PUfHnIpCkC', '2019-11-29 12:35:00', 7825967476, 91, 'Y', 'Y', '2019-11-29 14:25:55', NULL),
-('TKEC0016', 'string', 'M', NULL, 109594, '2019-12-17 13:02:14', '$2a$10$jh5Cprp29BUp2osUniynAOkhVlLqWO4GJd.8Ki9VbCChMMVsMB/lC', '$2a$10$BE62ISyWPMZj4y7ynCbHOOaqUXv5s.aZlXwzQdN5s9hNlzMVSUznu', '2019-11-29 12:36:16', 0, 0, 'N', 'N', NULL, NULL),
-('TKEC0017', 'indhra', 'M', NULL, 165058, '2019-12-04 17:07:54', '$2a$10$lNnAKwecPLY8UgW3/NcIguOoajvipGAHUS3qi1e75Do7u9FRwD2pi', '$2a$10$eHlwmuufM5K6vc0Zdo1u9eZkJB9KQAJYbNoLt5b7Aco8RCi/JkzT6', '2019-12-04 16:41:14', 7825967470, 91, 'Y', 'Y', '2019-12-04 17:04:48', NULL),
-('TKECU0018', 'Dharshini', 'M', NULL, 194826, '2019-12-10 12:57:15', '$2a$10$8H9j32DYUpGZqpz.qihJ4uA6G5eekFhJSb8/LGq7ci5b5uFdHUncG', '$2a$10$zLXWDWczhGsA639phAupqeZ3ErfREq0W5gdnxImkwp.ephDkTkYti', '2019-12-10 12:48:44', 8248428818, 91, 'Y', 'Y', NULL, '2019-12-10 12:55:31'),
-('TKECU0019', 'kani', 'M', NULL, 198746, '2019-12-17 13:05:22', '$2a$10$k/TzF00S0TJNuOHoZaJ2geOUGlLEgRCcm02yvuGwWVdg0husPRgjW', '$2a$10$.SyrSoAbCMZjSG4JLmcbOufYOFERxf1rYcuoTbKrGkxT3jQGeQG3K', '2019-12-17 12:55:54', 7825967475, 91, 'Y', 'Y', NULL, '2019-12-17 13:03:00'),
-('TKECU0020', 'sasikum', 'M', NULL, 177216, '2019-12-20 17:32:24', '$2a$10$kdEigdHrjT27oR/1FGRL/.2h7Ytor9Hh16SdMccpnYZleZxAgQKaO', '$2a$10$xOPYaPhWAasMrng.Ovj.0OrvyC0PvS20V7vpt5JbYwjICrML7LhIW', '2019-12-20 17:22:57', 9710401366, 91, 'Y', 'Y', NULL, '2019-12-20 17:32:53'),
-('TKECU0021', 'sasikum', 'M', NULL, 145993, '2019-12-20 17:42:14', '$2a$10$714cBwkQTuoKz75Vu1.i6.gzpJhx9EvXvIC4Ot967K9/PDM9dN5ce', '$2a$10$tfIks9h/HfHbnceifj4uVOwPcqJG0MKanrOoYTaNJCHFDTUhTWwYm', '2019-12-20 17:37:13', 9710401360, 91, 'N', 'N', NULL, NULL),
-('TKECU0022', 'sasa', 'M', NULL, 192971, '2019-12-20 17:43:16', '$2a$10$HCsf6HwUM6thKMy6lC71VuWw5mzG6902uD4k3.I3sCWKe3vETtPeK', '$2a$10$GGqRQLecfIey0Yo6JrZH9ew0qhdtwqRNmuQ4Crhn/mJLEvQ7IBt1W', '2019-12-20 17:38:16', 9710401333, 91, 'N', 'N', NULL, NULL),
-('TKECU0023', 'sasimsk', 'E', 'sasimsk@gmail.com', 161795, '2019-12-20 17:57:47', '$2a$10$oZjiqBgr5ZflPD2YjXW3he1Ogk4Anhw96a1pBDrH9z58cMfQat0XS', '$2a$10$lZgKeRp1LcK1PHY16MI5O.MM4hlrRwUMq9F0n5w6mefPR2ZUNtRAW', '2019-12-20 17:52:41', NULL, NULL, 'N', 'N', NULL, NULL),
-('TKECU0024', 'string', 'E', 'sasimsk1@gmail.com', 103230, '2019-12-20 17:59:43', '$2a$10$iVBo4/dS6nQe9hdLwgcfk.jQcO4crn4cCDAv3wu1dotg5QKBGb48i', '$2a$10$U0cDJziYvzIujIm6exHo4eZRNgUBV0lIsO5UALGKM0myl3UmMCYWm', '2019-12-20 17:54:39', NULL, NULL, 'N', 'N', NULL, NULL),
-('TKECU0025', 'sangeesan', 'M', NULL, 154924, '2019-12-20 18:11:52', '$2a$10$uwzk8vFdS8tMRBrzIifrm.uPI4.CfFXx.ZX0rrgVZrp/s4pXX6Miu', '$2a$10$wl8DCbASdAB7z8wgjSiWE.2tkrG2VCRXG41OSWQyyCwTvJBA3ayUy', '2019-12-20 18:06:51', 7825967401, 91, 'N', 'N', NULL, NULL),
-('TKECU0026', 'sangeesan', 'M', NULL, 110653, '2019-12-20 18:12:30', '$2a$10$aNwAx9r2.1mWybCR6JXHPOutBuoGPozyBpzMD.y/NhRM3NHFnpGq.', '$2a$10$jnM8i6YvuS4suRdVC8gH.ucTsLaUYU1gOWO2CTD406bR2k/jqL936', '2019-12-20 18:07:29', 7825967402, 91, 'N', 'N', NULL, NULL);
+INSERT INTO `TKECM_USER` (`TKECMU_ID`, `TKECMU_NAME`, `TKECMU_REG_TYPE`, `TKECMU_MAIL`, `TKECMU_OTP`, `TKECMU_OTP_EXP`, `TKECMU_HASH_KEY`, `TKECMU_PASSWORD`, `TKECMU_CREATED_DATE`, `TKECMU_PHONE`, `TKECMU_COUNTRY_CODE`, `TKECMU_OTP_STATUS`, `TKECMU_STATUS`, `TKECMU_MODIFIED_DATE`) VALUES
+('TKEC0003', 'sangeetha', 'M', NULL, 486470, '2019-11-28 11:24:52', '$2a$10$u1VpgKGNdbwuI2fG6TXjGuAIjapadm9uthjSsIRkZS7VtVw.FZXAW', '$2a$10$cLCOip0qpIyBtaI0g4vBXenXk0B91DI45BgSrZGqiAiWo0Unhecai', '2019-11-27 17:57:11', 7825967474, 91, 'Y', 'Y', NULL),
+('TKEC0007', 'sasi', 'M', NULL, 6378, '2019-11-28 12:20:03', '$2a$10$oARGCHPdvKJ6QNl4sL6Sn.NpWsvtLf/ejuqKDa1/jFlV/hAB3SHqq', '$2a$10$ObdIfU3x1Xs02pHc5yjJ0ugFaOy2MFCmyf8QSXEbxmG4p4cUaQAl6', '2019-11-28 12:15:02', 9710401369, 91, 'Y', 'Y', NULL),
+('TKEC0008', 'sasi', 'M', NULL, 150748, '2019-11-28 12:54:26', '$2a$10$bR4r16jHLLBrt52ntk81luGZV7RrBn9OjqY9CBEs/9/9Px4X.FNyC', '$2a$10$Zo516SW5mTMlOoZVckEj3.IpMfyyhN6xEghT43vGJ25COm5x.dE5e', '2019-11-28 12:38:13', 9843233220, 91, 'N', 'N', NULL),
+('TKEC0009', 'sasifaff', 'E', 'sasikumar@gamil.com', 147716, '2019-11-28 12:55:45', '$2a$10$GI4ZzUexsxvweTE3OvJlcO9g2hMMcPHP9WXZeLDZfguloeRQIYz96', '$2a$10$9GCrYLaRQ58FfDJtLg62seMT6by4s0R3uGjuPhoWUWzfuDC4iCL8O', '2019-11-28 12:50:41', NULL, NULL, 'Y', 'Y', NULL),
+('TKEC0010', 'sasikumar', 'E', 'sasik6@gmail.com', 516094, '2019-11-28 18:06:58', '$2a$10$KnBFSAjQfyYCjDAh4EluBetzcTVR110JpO3ldVLu0STcVj7cISUdC', '$2a$10$ffrdzdSAqheTEAeOgpYlEedoMQvnSbuoQEM/dsdo483TKEKUwEbie', '2019-11-28 18:01:53', NULL, NULL, 'Y', 'Y', NULL),
+('TKEC0011', 'sangeethans', 'E', 'sangeetham67@gmail.com', 195821, '2019-11-28 18:20:34', '$2a$10$dKxklQ7/CMXxCx7/J8lvwOo0Uk0Sxaow5rOeTSHKbRp0IZ0W95PPC', '222222', '2019-11-28 18:05:33', NULL, NULL, 'Y', 'Y', NULL),
+('TKEC0012', 'sangeethans', 'E', 'sangeethamca567@gmail.com', 115267, '2019-11-28 18:38:06', '$2a$10$zqGU5ULs6Xsh4f/57cL2fuE6EWezhCdcaUiYdud2YiMEf0XD0ZZNG', '$2a$10$2ADGAPJoI4plLBt.fv20B.5aHBfG2yRkMsi./K9q5GPXwj/jlwkOW', '2019-11-28 18:33:02', NULL, NULL, 'Y', 'Y', NULL),
+('TKEC0013', 'sasikumar', 'E', 'sasikumarmsk1996@gmail.com', 110026, '2019-11-28 18:50:39', '$2a$10$EALs6eMAceYbZUrtOgeFt.0/6Jq1e60USMmVada6WXeyeesveerj6', '$2a$10$RJk9EUwH98Z3IQUuQM5gbO4Zuh8BgSAZOwUt0tYU/I/DokAVa4e0i', '2019-11-28 18:45:35', NULL, NULL, 'Y', 'Y', NULL),
+('TKEC0014', 'sasi', 'E', 'sasi1887@gmail.com', 145345, '2019-11-28 19:17:05', '$2a$10$EKXWiqfX19d9PdSPcID0luHaOqbOEb5Od3qtEuzEIMFA5Xnkm0tt2', '$2a$10$xQcaWvLP3Ay6W4YKU0.skOhTpPlPKoD0TSMnR/YphW52HKRg0gqpS', '2019-11-28 19:07:58', NULL, NULL, 'Y', 'Y', NULL),
+('TKEC0015', 'akila', 'M', NULL, 193306, '2019-11-29 14:29:52', '$2a$10$JtgJkeJuShV48lQTlNrXPOaG3QcalG2J1x79cNOig9aa1F.z5NUIe', '$2a$10$SBEPZifC/HC0VV7oh4sP7O5rJm8/laN6X4k.Kquxpq6PUfHnIpCkC', '2019-11-29 12:35:00', 7825967476, 91, 'Y', 'Y', NULL),
+('TKEC0016', 'string', 'M', NULL, 109594, '2019-12-17 13:02:14', '$2a$10$jh5Cprp29BUp2osUniynAOkhVlLqWO4GJd.8Ki9VbCChMMVsMB/lC', '$2a$10$BE62ISyWPMZj4y7ynCbHOOaqUXv5s.aZlXwzQdN5s9hNlzMVSUznu', '2019-11-29 12:36:16', 0, 0, 'N', 'N', NULL),
+('TKEC0017', 'indhra', 'M', NULL, 165058, '2019-12-04 17:07:54', '$2a$10$lNnAKwecPLY8UgW3/NcIguOoajvipGAHUS3qi1e75Do7u9FRwD2pi', '$2a$10$eHlwmuufM5K6vc0Zdo1u9eZkJB9KQAJYbNoLt5b7Aco8RCi/JkzT6', '2019-12-04 16:41:14', 7825967470, 91, 'Y', 'Y', NULL),
+('TKECU0018', 'Dharshini', 'M', NULL, 194826, '2019-12-10 12:57:15', '$2a$10$8H9j32DYUpGZqpz.qihJ4uA6G5eekFhJSb8/LGq7ci5b5uFdHUncG', '$2a$10$zLXWDWczhGsA639phAupqeZ3ErfREq0W5gdnxImkwp.ephDkTkYti', '2019-12-10 12:48:44', 8248428818, 91, 'Y', 'Y', '2019-12-10 12:55:31'),
+('TKECU0019', 'kani', 'M', NULL, 198746, '2019-12-17 13:05:22', '$2a$10$k/TzF00S0TJNuOHoZaJ2geOUGlLEgRCcm02yvuGwWVdg0husPRgjW', '$2a$10$.SyrSoAbCMZjSG4JLmcbOufYOFERxf1rYcuoTbKrGkxT3jQGeQG3K', '2019-12-17 12:55:54', 7825967475, 91, 'Y', 'Y', '2019-12-17 13:03:00'),
+('TKECU0020', 'sasikum', 'M', NULL, 177216, '2019-12-20 17:32:24', '$2a$10$kdEigdHrjT27oR/1FGRL/.2h7Ytor9Hh16SdMccpnYZleZxAgQKaO', '$2a$10$xOPYaPhWAasMrng.Ovj.0OrvyC0PvS20V7vpt5JbYwjICrML7LhIW', '2019-12-20 17:22:57', 9710401366, 91, 'Y', 'Y', '2019-12-20 17:32:53'),
+('TKECU0021', 'sasikum', 'M', NULL, 145993, '2019-12-20 17:42:14', '$2a$10$714cBwkQTuoKz75Vu1.i6.gzpJhx9EvXvIC4Ot967K9/PDM9dN5ce', '$2a$10$tfIks9h/HfHbnceifj4uVOwPcqJG0MKanrOoYTaNJCHFDTUhTWwYm', '2019-12-20 17:37:13', 9710401360, 91, 'N', 'N', NULL),
+('TKECU0022', 'sasa', 'M', NULL, 192971, '2019-12-20 17:43:16', '$2a$10$HCsf6HwUM6thKMy6lC71VuWw5mzG6902uD4k3.I3sCWKe3vETtPeK', '$2a$10$GGqRQLecfIey0Yo6JrZH9ew0qhdtwqRNmuQ4Crhn/mJLEvQ7IBt1W', '2019-12-20 17:38:16', 9710401333, 91, 'N', 'N', NULL),
+('TKECU0023', 'sasimsk', 'E', 'sasimsk@gmail.com', 161795, '2019-12-20 17:57:47', '$2a$10$oZjiqBgr5ZflPD2YjXW3he1Ogk4Anhw96a1pBDrH9z58cMfQat0XS', '$2a$10$lZgKeRp1LcK1PHY16MI5O.MM4hlrRwUMq9F0n5w6mefPR2ZUNtRAW', '2019-12-20 17:52:41', NULL, NULL, 'N', 'N', NULL),
+('TKECU0024', 'string', 'E', 'sasimsk1@gmail.com', 103230, '2019-12-20 17:59:43', '$2a$10$iVBo4/dS6nQe9hdLwgcfk.jQcO4crn4cCDAv3wu1dotg5QKBGb48i', '$2a$10$U0cDJziYvzIujIm6exHo4eZRNgUBV0lIsO5UALGKM0myl3UmMCYWm', '2019-12-20 17:54:39', NULL, NULL, 'N', 'N', NULL),
+('TKECU0025', 'sangeesan', 'M', NULL, 154924, '2019-12-20 18:11:52', '$2a$10$uwzk8vFdS8tMRBrzIifrm.uPI4.CfFXx.ZX0rrgVZrp/s4pXX6Miu', '$2a$10$wl8DCbASdAB7z8wgjSiWE.2tkrG2VCRXG41OSWQyyCwTvJBA3ayUy', '2019-12-20 18:06:51', 7825967401, 91, 'N', 'N', NULL),
+('TKECU0026', 'sangeesan', 'M', NULL, 110653, '2019-12-20 18:12:30', '$2a$10$aNwAx9r2.1mWybCR6JXHPOutBuoGPozyBpzMD.y/NhRM3NHFnpGq.', '$2a$10$jnM8i6YvuS4suRdVC8gH.ucTsLaUYU1gOWO2CTD406bR2k/jqL936', '2019-12-20 18:07:29', 7825967402, 91, 'N', 'N', NULL),
+('TKECU0027', 'sasikumar.M', 'E', 'sasi6@gmail.com', 169277, '2019-12-23 12:13:24', '$2a$10$GtKgS94ERjhhImKjuToKc.lQEsck37np4ZZiXmPhGpTWejnCourXi', '$2a$10$3H59BXy1dyYNqCF9W4N/beuQJ563GT0eU3RYcBxDRnAAdpya5w.S.', '2019-12-23 12:01:19', NULL, NULL, 'Y', 'Y', '2019-12-23 12:09:20'),
+('TKECU0028', 'msk', 'M', NULL, 172242, '2019-12-23 15:16:29', '$2a$10$tqo/Z9fI9.ymZzqkYhmfluJfGy2.COGZRXD5Yf/n0uwhInMfLzHwi', '$2a$10$E7RLzXm8GUR2xhnPTnzGV.dLqur43Qqe.ABODUDibGi826mheea7y', '2019-12-23 15:04:01', 9710401457, 0, 'Y', 'Y', '2019-12-23 15:13:57');
 
 -- --------------------------------------------------------
 
@@ -597,19 +617,20 @@ INSERT INTO `TKECM_USER` (`TKECMU_ID`, `TKECMU_NAME`, `TKECMU_REG_TYPE`, `TKECMU
 DROP TABLE IF EXISTS `TKECT_CONFIGURABLE_LINK`;
 CREATE TABLE IF NOT EXISTS `TKECT_CONFIGURABLE_LINK` (
   `TKECTCL_AG_ID` int(11) NOT NULL AUTO_INCREMENT,
-  `TKECTCL_PRODUCT_ID` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `TKECTCL_TKECMP_ID` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `TKECTCL_PARENT_ID` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `TKECTC_PARENT_ID` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `TKECTCL_PRODUCT_ID` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`TKECTCL_AG_ID`),
-  KEY `FK_TKECTCL_PRODUCT_ID` (`TKECTCL_PRODUCT_ID`) USING BTREE,
-  KEY `FK_TKECTCL_PARENT_ID` (`TKECTCL_PARENT_ID`) USING BTREE
+  KEY `FK_TKECTCL_PARENT_ID` (`TKECTCL_PARENT_ID`) USING BTREE,
+  KEY `FK_TKECTCL_TKECMP_ID` (`TKECTCL_TKECMP_ID`) USING BTREE,
+  KEY `FK_TKECTCL_PRODUCT_ID` (`TKECTCL_PRODUCT_ID`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Dumping data for table `TKECT_CONFIGURABLE_LINK`
 --
 
-INSERT INTO `TKECT_CONFIGURABLE_LINK` (`TKECTCL_AG_ID`, `TKECTCL_PRODUCT_ID`, `TKECTCL_PARENT_ID`, `TKECTC_PARENT_ID`) VALUES
+INSERT INTO `TKECT_CONFIGURABLE_LINK` (`TKECTCL_AG_ID`, `TKECTCL_TKECMP_ID`, `TKECTCL_PARENT_ID`, `TKECTCL_PRODUCT_ID`) VALUES
 (1, '5', '4', NULL),
 (2, '8', '4', NULL);
 
@@ -622,34 +643,35 @@ INSERT INTO `TKECT_CONFIGURABLE_LINK` (`TKECTCL_AG_ID`, `TKECTCL_PRODUCT_ID`, `T
 DROP TABLE IF EXISTS `TKECT_OPTION_ATTRIBUTE`;
 CREATE TABLE IF NOT EXISTS `TKECT_OPTION_ATTRIBUTE` (
   `TKECTOA_ID` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
-  `TKECTOA_ATTRIBUTE_ID` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `TKECTOA_TKECMA_ID` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL,
   `TKECTOA_NAME` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL,
   `TKECTOA_CREATED_DATE` datetime DEFAULT NULL,
   `TKECTOA_CREATED_USERID` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `TKECTOA_ATTRIBUTE_ID` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`TKECTOA_ID`),
-  KEY `FK_TKECTOA_ATTRIBUTE_ID` (`TKECTOA_ATTRIBUTE_ID`)
+  KEY `FK_TKECTOA_TKECMA_ID` (`TKECTOA_TKECMA_ID`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Dumping data for table `TKECT_OPTION_ATTRIBUTE`
 --
 
-INSERT INTO `TKECT_OPTION_ATTRIBUTE` (`TKECTOA_ID`, `TKECTOA_ATTRIBUTE_ID`, `TKECTOA_NAME`, `TKECTOA_CREATED_DATE`, `TKECTOA_CREATED_USERID`) VALUES
-('TKECOA0001', 'TKECA0001', 'Pink', NULL, NULL),
-('TKECOA0002', 'TKECA0001', 'Black', NULL, NULL),
-('TKECOA0003', 'TKECA0001', 'Blue', NULL, NULL),
-('TKECOA0004', 'TKECA0001', 'Red', NULL, NULL),
-('TKECOA0005', 'TKECA0001', 'Green', NULL, NULL),
-('TKECOA0006', 'TKECA0002', 'S', NULL, NULL),
-('TKECOA0007', 'TKECA0002', 'M', NULL, NULL),
-('TKECOA0008', 'TKECA0002', 'XL', NULL, NULL),
-('TKECOA0009', 'TKECA0002', 'XXL', NULL, NULL),
-('TKECOA0010', 'TKECA0002', 'XXXL', NULL, NULL),
-('TKECOA0011', 'TKECA0003', 'Raymond', NULL, NULL),
-('TKECOA0012', 'TKECA0003', 'Sony', NULL, NULL),
-('TKECOA0013', 'TKECA0003', 'Redmi', NULL, NULL),
-('TKECOA0014', 'TKECA0003', 'Prisma', NULL, NULL),
-('TKECOA0015', 'TKECA0003', 'Titan', NULL, NULL);
+INSERT INTO `TKECT_OPTION_ATTRIBUTE` (`TKECTOA_ID`, `TKECTOA_TKECMA_ID`, `TKECTOA_NAME`, `TKECTOA_CREATED_DATE`, `TKECTOA_CREATED_USERID`, `TKECTOA_ATTRIBUTE_ID`) VALUES
+('TKECOA0001', 'TKECA0001', 'Pink', NULL, NULL, NULL),
+('TKECOA0002', 'TKECA0001', 'Black', NULL, NULL, NULL),
+('TKECOA0003', 'TKECA0001', 'Blue', NULL, NULL, NULL),
+('TKECOA0004', 'TKECA0001', 'Red', NULL, NULL, NULL),
+('TKECOA0005', 'TKECA0001', 'Green', NULL, NULL, NULL),
+('TKECOA0006', 'TKECA0002', 'S', NULL, NULL, NULL),
+('TKECOA0007', 'TKECA0002', 'M', NULL, NULL, NULL),
+('TKECOA0008', 'TKECA0002', 'XL', NULL, NULL, NULL),
+('TKECOA0009', 'TKECA0002', 'XXL', NULL, NULL, NULL),
+('TKECOA0010', 'TKECA0002', 'XXXL', NULL, NULL, NULL),
+('TKECOA0011', 'TKECA0003', 'Raymond', NULL, NULL, NULL),
+('TKECOA0012', 'TKECA0003', 'Sony', NULL, NULL, NULL),
+('TKECOA0013', 'TKECA0003', 'Redmi', NULL, NULL, NULL),
+('TKECOA0014', 'TKECA0003', 'Prisma', NULL, NULL, NULL),
+('TKECOA0015', 'TKECA0003', 'Titan', NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -660,7 +682,7 @@ INSERT INTO `TKECT_OPTION_ATTRIBUTE` (`TKECTOA_ID`, `TKECTOA_ATTRIBUTE_ID`, `TKE
 DROP TABLE IF EXISTS `TKECT_ORDER_ADDRESS`;
 CREATE TABLE IF NOT EXISTS `TKECT_ORDER_ADDRESS` (
   `TKECTOA_AG_ID` int(11) NOT NULL AUTO_INCREMENT,
-  `TKECTOA_ORDER_ID` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `TKECTOA_TKECMO_ID` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `TKECTOA_FIRST_NAME` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL,
   `TKECTOA_MIDDLE_NAME` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL,
   `TKECTOA_LAST_NAME` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL,
@@ -675,7 +697,7 @@ CREATE TABLE IF NOT EXISTS `TKECT_ORDER_ADDRESS` (
   `TKECTOA_FLAG_ADDRESS` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT 'BILL,SHIP',
   `TKECTOA_ADDRESS_TYPE` varchar(10) COLLATE utf8_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`TKECTOA_AG_ID`),
-  KEY `FK_TKECTOA_ORDER_ID` (`TKECTOA_ORDER_ID`)
+  KEY `FK_TKECTOA_TKECMO_ID` (`TKECTOA_TKECMO_ID`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
@@ -687,8 +709,8 @@ CREATE TABLE IF NOT EXISTS `TKECT_ORDER_ADDRESS` (
 DROP TABLE IF EXISTS `TKECT_ORDER_ITEM`;
 CREATE TABLE IF NOT EXISTS `TKECT_ORDER_ITEM` (
   `TKECTOI_AG_ID` int(11) NOT NULL AUTO_INCREMENT,
-  `TKECTOI_ORDER_ID` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `TKECTOI_PRODUCT_ID` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `TKECTOI_TKECMO_ID` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `TKECTOI_TKECMP_ID` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `TKECTOI_SKU` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL,
   `TKECTOI_NAME` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `TKECTOI_WEIGHT` float DEFAULT NULL,
@@ -698,8 +720,8 @@ CREATE TABLE IF NOT EXISTS `TKECT_ORDER_ITEM` (
   `TKECTOI_PAYMENT_TYPE` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL,
   `TKECTOI_TRANSACTION_ID` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`TKECTOI_AG_ID`),
-  KEY `FK_TKECTOI_ORDER_ID` (`TKECTOI_ORDER_ID`),
-  KEY `FK_TKECTOI_PRODUCT_ID` (`TKECTOI_PRODUCT_ID`)
+  KEY `FK_TKECTOI_TKECMP_ID` (`TKECTOI_TKECMP_ID`) USING BTREE,
+  KEY `FK_TKECTOI_TKECMO_ID` (`TKECTOI_TKECMO_ID`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
@@ -711,14 +733,14 @@ CREATE TABLE IF NOT EXISTS `TKECT_ORDER_ITEM` (
 DROP TABLE IF EXISTS `TKECT_ORDER_STATUS_HISTORY`;
 CREATE TABLE IF NOT EXISTS `TKECT_ORDER_STATUS_HISTORY` (
   `TKECTOSH_AG_ID` int(11) NOT NULL AUTO_INCREMENT,
-  `TKECTOSH_ORDER_ID` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `TKECTOSH_STATUS` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `TKECTOSH_TKECMO_ID` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `TKECTOSH_TKECMOS_STATUS` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL,
   `TKECTOSH_COMMENT` varchar(500) COLLATE utf8_unicode_ci DEFAULT NULL,
   `TKECTOSH_CREATED_DATE` datetime DEFAULT NULL,
   `TKECTOSH_CREATED_USER_ID` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`TKECTOSH_AG_ID`),
-  KEY `FK_TKECTOSH_ORDER_ID` (`TKECTOSH_ORDER_ID`),
-  KEY `FK_TKECTOSH_STATUS` (`TKECTOSH_STATUS`)
+  KEY `FK_TKECTOSH_TKECMO_ID` (`TKECTOSH_TKECMO_ID`) USING BTREE,
+  KEY `FK_TKECTOSH_TKECMOS_STATUS` (`TKECTOSH_TKECMOS_STATUS`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
@@ -730,12 +752,15 @@ CREATE TABLE IF NOT EXISTS `TKECT_ORDER_STATUS_HISTORY` (
 DROP TABLE IF EXISTS `TKECT_PRODUCT_ATTRIBUTE`;
 CREATE TABLE IF NOT EXISTS `TKECT_PRODUCT_ATTRIBUTE` (
   `TKECTPA_AG_ID` int(11) NOT NULL AUTO_INCREMENT,
-  `TKECTPA_PRODUCT_ID` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `TKECTPA_OPTION_ATTRIBUTE_ID` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `TKECTPA_TKECMP_ID` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `TKECTPA_TKECTOA_ID` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `TKECTPA_CREATED_DATE` datetime DEFAULT NULL,
   `TKECTPA_CREATED_USERID` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `TKECTPA_OPTION_ATTRIBUTE_ID` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `TKECTPA_PRODUCT_ID` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`TKECTPA_AG_ID`),
-  KEY `FK_TKECTPA_PRODUCT_ID` (`TKECTPA_PRODUCT_ID`),
+  KEY `FK_TKECTPA_TKECTOA_ID` (`TKECTPA_TKECTOA_ID`) USING BTREE,
+  KEY `FK_TKECTPA_TKECMP_ID` (`TKECTPA_TKECMP_ID`),
   KEY `FK_TKECTPA_OPTION_ID` (`TKECTPA_OPTION_ATTRIBUTE_ID`)
 ) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
@@ -743,16 +768,16 @@ CREATE TABLE IF NOT EXISTS `TKECT_PRODUCT_ATTRIBUTE` (
 -- Dumping data for table `TKECT_PRODUCT_ATTRIBUTE`
 --
 
-INSERT INTO `TKECT_PRODUCT_ATTRIBUTE` (`TKECTPA_AG_ID`, `TKECTPA_PRODUCT_ID`, `TKECTPA_OPTION_ATTRIBUTE_ID`, `TKECTPA_CREATED_DATE`, `TKECTPA_CREATED_USERID`) VALUES
-(1, '1', 'TKECOA0003', NULL, NULL),
-(2, '2', 'TKECOA0012', NULL, NULL),
-(3, '3', 'TKECOA0007', NULL, NULL),
-(7, '5', 'TKECOA0001', NULL, NULL),
-(8, '5', 'TKECOA0009', NULL, NULL),
-(9, '5', 'TKECOA0011', NULL, NULL),
-(10, '8', 'TKECOA0005', NULL, NULL),
-(11, '8', 'TKECOA0010', NULL, NULL),
-(12, '8', 'TKECOA0012', NULL, NULL);
+INSERT INTO `TKECT_PRODUCT_ATTRIBUTE` (`TKECTPA_AG_ID`, `TKECTPA_TKECMP_ID`, `TKECTPA_TKECTOA_ID`, `TKECTPA_CREATED_DATE`, `TKECTPA_CREATED_USERID`, `TKECTPA_OPTION_ATTRIBUTE_ID`, `TKECTPA_PRODUCT_ID`) VALUES
+(1, '1', 'TKECOA0003', NULL, NULL, NULL, NULL),
+(2, '2', 'TKECOA0012', NULL, NULL, NULL, NULL),
+(3, '3', 'TKECOA0007', NULL, NULL, NULL, NULL),
+(7, '5', 'TKECOA0001', NULL, NULL, NULL, NULL),
+(8, '5', 'TKECOA0009', NULL, NULL, NULL, NULL),
+(9, '5', 'TKECOA0011', NULL, NULL, NULL, NULL),
+(10, '8', 'TKECOA0005', NULL, NULL, NULL, NULL),
+(11, '8', 'TKECOA0010', NULL, NULL, NULL, NULL),
+(12, '8', 'TKECOA0012', NULL, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -763,21 +788,22 @@ INSERT INTO `TKECT_PRODUCT_ATTRIBUTE` (`TKECTPA_AG_ID`, `TKECTPA_PRODUCT_ID`, `T
 DROP TABLE IF EXISTS `TKECT_PRODUCT_DOWNLOAD_SAMPLE`;
 CREATE TABLE IF NOT EXISTS `TKECT_PRODUCT_DOWNLOAD_SAMPLE` (
   `TKECTPDS_AG_ID` int(11) NOT NULL AUTO_INCREMENT,
-  `TKECTPDS_PRODUCT_ID` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `TKECTPDS_TKECMP_ID` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `TKECTPDS_URL` text COLLATE utf8_unicode_ci,
   `TKECTPDS_TITLE` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `TKECTPDS_FILE` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `TKECTPDS_PRODUCT_ID` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`TKECTPDS_AG_ID`),
-  KEY `FK_TKECTPDS_PRODUCT_ID` (`TKECTPDS_PRODUCT_ID`)
+  KEY `FK_TKECTPDS_TKECMP_ID` (`TKECTPDS_TKECMP_ID`) USING BTREE
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Dumping data for table `TKECT_PRODUCT_DOWNLOAD_SAMPLE`
 --
 
-INSERT INTO `TKECT_PRODUCT_DOWNLOAD_SAMPLE` (`TKECTPDS_AG_ID`, `TKECTPDS_PRODUCT_ID`, `TKECTPDS_URL`, `TKECTPDS_TITLE`, `TKECTPDS_FILE`) VALUES
-(1, '6', 'https://www.gutenberg.org/ebooks/60879', 'Leibniz by Wilhelm Max Wundt', ''),
-(2, '7', 'https://www.bookrix.com/_ebook-jingjing-zhu-the-lost-hero/', 'The Lost Hero', NULL);
+INSERT INTO `TKECT_PRODUCT_DOWNLOAD_SAMPLE` (`TKECTPDS_AG_ID`, `TKECTPDS_TKECMP_ID`, `TKECTPDS_URL`, `TKECTPDS_TITLE`, `TKECTPDS_FILE`, `TKECTPDS_PRODUCT_ID`) VALUES
+(1, '6', 'https://www.gutenberg.org/ebooks/60879', 'Leibniz by Wilhelm Max Wundt', '', NULL),
+(2, '7', 'https://www.bookrix.com/_ebook-jingjing-zhu-the-lost-hero/', 'The Lost Hero', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -791,7 +817,8 @@ CREATE TABLE IF NOT EXISTS `TKECT_STATE` (
   `TKECTS_NAME` varchar(255) NOT NULL,
   `TKECTS_TKECMCN_AG_ID` int(8) UNSIGNED NOT NULL,
   `TKECTS_FIPS_CODE` varchar(255) DEFAULT NULL,
-  PRIMARY KEY (`TKECTS_AG_ID`)
+  PRIMARY KEY (`TKECTS_AG_ID`),
+  KEY `FK_TKECTS_TKECMCN_AG_ID` (`TKECTS_TKECMCN_AG_ID`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4852 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
 
 --
@@ -5663,7 +5690,7 @@ INSERT INTO `TKECT_STATE` (`TKECTS_AG_ID`, `TKECTS_NAME`, `TKECTS_TKECMCN_AG_ID`
 DROP TABLE IF EXISTS `TKECT_USER_ADDRESS`;
 CREATE TABLE IF NOT EXISTS `TKECT_USER_ADDRESS` (
   `TKECTUA_AG_ID` int(11) NOT NULL AUTO_INCREMENT,
-  `TKECTUA_USER_ID` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `TKECTUA_TKECMU_ID` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `TKECTUA_NAME` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL,
   `TKECTUA_PHONE` bigint(20) DEFAULT NULL,
   `TKECTUA_ALTERNATIVE_PHONE` bigint(20) DEFAULT NULL,
@@ -5678,7 +5705,7 @@ CREATE TABLE IF NOT EXISTS `TKECT_USER_ADDRESS` (
   `TKECTUA_MODIFIED_DATE` datetime DEFAULT NULL,
   `TKECTUA_MODIFIED_USER_ID` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`TKECTUA_AG_ID`),
-  KEY `FK_TKECTUAD_USER_ID` (`TKECTUA_USER_ID`)
+  KEY `FK_TKECTUAD_TKECMU_ID` (`TKECTUA_TKECMU_ID`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
@@ -5690,7 +5717,7 @@ CREATE TABLE IF NOT EXISTS `TKECT_USER_ADDRESS` (
 DROP TABLE IF EXISTS `TKECT_USER_AUDIT`;
 CREATE TABLE IF NOT EXISTS `TKECT_USER_AUDIT` (
   `TKECTUA_AG_ID` int(11) NOT NULL AUTO_INCREMENT,
-  `TKECTUA_USER_ID` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `TKECTUA_TKECMU_ID` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL,
   `TKECTUA_LOGIN_TIME` datetime DEFAULT NULL,
   `TKECTUA_LOGOUT_TIME` datetime DEFAULT NULL,
   `TKECTUA_USER_AGENT` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
@@ -5698,39 +5725,42 @@ CREATE TABLE IF NOT EXISTS `TKECT_USER_AUDIT` (
   `TKECTUA_LONGITUDE` double DEFAULT NULL,
   `TKECTUA_IP` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL,
   `TKECTUA_API_KEY` varchar(500) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `TKECTUA_LAT` double DEFAULT NULL,
-  `TKECTUA_LONG` double DEFAULT NULL,
+  `TKECTUA_USER_ID` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`TKECTUA_AG_ID`),
-  KEY `FK_TKECTUA_USER_ID` (`TKECTUA_USER_ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=27 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+  KEY `FK_TKECTUA_TKECMU_ID` (`TKECTUA_TKECMU_ID`) USING BTREE
+) ENGINE=InnoDB AUTO_INCREMENT=31 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Dumping data for table `TKECT_USER_AUDIT`
 --
 
-INSERT INTO `TKECT_USER_AUDIT` (`TKECTUA_AG_ID`, `TKECTUA_USER_ID`, `TKECTUA_LOGIN_TIME`, `TKECTUA_LOGOUT_TIME`, `TKECTUA_USER_AGENT`, `TKECTUA_LATTITUDE`, `TKECTUA_LONGITUDE`, `TKECTUA_IP`, `TKECTUA_API_KEY`, `TKECTUA_LAT`, `TKECTUA_LONG`) VALUES
-(5, 'TKEC0009', '2019-11-28 15:07:17', NULL, 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.108 Safari/537.36', NULL, NULL, '0:0:0:0:0:0:0:1', '$2a$2a$10$xxWqJlspp//66JkC3l89Cu7rMoNUPKX6p./rq9ch0V46S6xSBkNom', NULL, NULL),
-(6, 'TKEC0010', '2019-11-28 18:03:41', '2019-11-28 18:04:59', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.108 Safari/537.36', NULL, NULL, NULL, '$2a$10$XZFhuCvOvpyaLMVTmg8JNOyhA3mqf.XZn9F0biYIILS14fQXAPtC6', NULL, NULL),
-(7, 'TKEC0011', '2019-11-28 18:08:53', NULL, 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.108 Safari/537.36', NULL, NULL, NULL, NULL, NULL, NULL),
-(8, 'TKEC0012', '2019-11-28 18:35:21', NULL, 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.108 Safari/537.36', NULL, NULL, NULL, NULL, NULL, NULL),
-(9, 'TKEC0012', '2019-11-28 18:37:40', NULL, 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.108 Safari/537.36', NULL, NULL, NULL, NULL, NULL, NULL),
-(10, 'TKEC0013', '2019-11-28 18:49:52', NULL, 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.108 Safari/537.36', NULL, NULL, NULL, NULL, NULL, NULL),
-(11, 'TKEC0014', '2019-11-28 19:10:25', '2019-11-28 19:12:52', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.108 Safari/537.36', NULL, NULL, NULL, '$2a$10$UEkIt8EcjbAvO4eiTXkQAehl8Iy9OF8sEhotnrXne04.0ARLf/3yi', NULL, NULL),
-(12, 'TKEC0014', '2019-11-29 11:53:18', NULL, 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.108 Safari/537.36', NULL, NULL, NULL, '$2a$10$VZvmqcHDgvg2KX1HeKOJieMJj1SRcRrFVlB.9SdLFxDguEoRkAcJi', NULL, NULL),
-(13, 'TKEC0014', '2019-11-29 12:26:35', NULL, 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.108 Safari/537.36', NULL, NULL, '0:0:0:0:0:0:0:1', '$2a$10$ADKrJDn.GHV09pNCouv6duCqTWSDaRGrZi4JkUfsigbwuIzwk.mte', NULL, NULL),
-(14, 'TKEC0015', '2019-11-29 12:38:54', NULL, 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.108 Safari/537.36', NULL, NULL, NULL, '$2a$10$hrrXGYxOFXTKr9wU2X0jHOlTwFZoCWWr2TM3HjLZGB5HBWy9/MFgu', NULL, NULL),
-(15, 'TKEC0015', '2019-11-29 14:12:08', '2019-11-29 14:15:16', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.108 Safari/537.36', NULL, NULL, NULL, '$2a$10$XqAM0x0jy4uK4ZmPPV678OWx2wwQkfybVOrSdZYZiyVQVw8mg/ax2', NULL, NULL),
-(16, 'TKEC0015', '2019-11-29 14:27:00', NULL, 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.108 Safari/537.36', NULL, NULL, '0:0:0:0:0:0:0:1', '$2a$10$MXEip4LrocoufacF4U6l/.qezxRjT7tJ9RnmSrM4rDiyY5mw824eW', NULL, NULL),
-(17, 'TKEC0017', '2019-12-04 16:43:44', '2019-12-04 16:57:19', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.108 Safari/537.36', NULL, NULL, NULL, '$2a$10$nVO1q9r/nSnqIM4pVTAkY.lYEMKHmbYnMKKnDdD2EQJ2.LI9mfXE.', NULL, NULL),
-(18, 'TKEC0017', '2019-12-04 17:05:33', NULL, 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.108 Safari/537.36', NULL, NULL, NULL, '$2a$10$5rHjl22mAirJpo1cXeuV/uYKUdh0puwnIrIYbbOLdRvg7bAaj8oQu', NULL, NULL),
-(19, 'TKECU0018', '2019-12-10 12:51:11', NULL, 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.108 Safari/537.36', NULL, NULL, NULL, '$2a$10$HwbR9SLAZaauFobH495w5eqeqbEzrmsmhKJxAyf3L/c45trZRW/LC', NULL, NULL),
-(20, 'TKECU0018', '2019-12-10 12:53:50', NULL, 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.108 Safari/537.36', NULL, NULL, NULL, '$2a$10$dskWbgU1r2QSADQDCvAvE.6vdrN7P2.Lbgjxya3sL1YImmNgv8wEy', NULL, NULL),
-(21, 'TKECU0018', '2019-12-10 12:54:06', NULL, 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.108 Safari/537.36', NULL, NULL, NULL, '$2a$10$zZe2ozT3ASHUsVH5wMHxmOkbYyP09.6vX6lji1iXRm//vrNBCdfWi', NULL, NULL),
-(22, 'TKECU0018', '2019-12-10 12:55:50', '2019-12-10 12:56:11', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.108 Safari/537.36', NULL, NULL, NULL, '$2a$10$mtoB/ugPS8X6r4Z56PHX2OIyUjQ7DOSIxh/w6Lh45NetNiF/1dlaS', NULL, NULL),
-(23, 'TKECU0019', '2019-12-17 12:59:31', '2019-12-17 13:05:23', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.108 Safari/537.36', NULL, NULL, NULL, '$2a$10$JEJ4eLBKMIyiuo4IRL2Gx.ohgvRDpnOhm/ZPJqaQLyqhDLm.AY5kK', NULL, NULL),
-(24, 'TKECU0019', '2019-12-17 13:03:32', '2019-12-17 13:04:29', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.108 Safari/537.36', NULL, NULL, NULL, '$2a$10$A9hJjjOplV/Wj6u3Fmnq9u2GX9277qQhL04An5P67BzKyL74J5FeW', NULL, NULL),
-(25, 'TKECU0020', '2019-12-20 17:25:59', '2019-12-20 17:35:04', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.88 Safari/537.36', NULL, NULL, NULL, '$2a$10$GnqZB.8iU7Ne7NGGBDLm/.4jW9db9JnWtYJEOBdsPcVQ5Poe5zHYC', NULL, NULL),
-(26, 'TKECU0020', '2019-12-20 17:30:07', NULL, 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.88 Safari/537.36', NULL, NULL, NULL, '$2a$10$2EX0WAC8eClCabQMNXQhouIYWrk96PR/PzNnnbgTzIFwLuB5Pc.y6', NULL, NULL);
+INSERT INTO `TKECT_USER_AUDIT` (`TKECTUA_AG_ID`, `TKECTUA_TKECMU_ID`, `TKECTUA_LOGIN_TIME`, `TKECTUA_LOGOUT_TIME`, `TKECTUA_USER_AGENT`, `TKECTUA_LATTITUDE`, `TKECTUA_LONGITUDE`, `TKECTUA_IP`, `TKECTUA_API_KEY`, `TKECTUA_USER_ID`) VALUES
+(5, 'TKEC0009', '2019-11-28 15:07:17', NULL, 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.108 Safari/537.36', NULL, NULL, '0:0:0:0:0:0:0:1', '$2a$2a$10$xxWqJlspp//66JkC3l89Cu7rMoNUPKX6p./rq9ch0V46S6xSBkNom', NULL),
+(6, 'TKEC0010', '2019-11-28 18:03:41', '2019-11-28 18:04:59', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.108 Safari/537.36', NULL, NULL, NULL, '$2a$10$XZFhuCvOvpyaLMVTmg8JNOyhA3mqf.XZn9F0biYIILS14fQXAPtC6', NULL),
+(7, 'TKEC0011', '2019-11-28 18:08:53', NULL, 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.108 Safari/537.36', NULL, NULL, NULL, NULL, NULL),
+(8, 'TKEC0012', '2019-11-28 18:35:21', NULL, 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.108 Safari/537.36', NULL, NULL, NULL, NULL, NULL),
+(9, 'TKEC0012', '2019-11-28 18:37:40', NULL, 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.108 Safari/537.36', NULL, NULL, NULL, NULL, NULL),
+(10, 'TKEC0013', '2019-11-28 18:49:52', NULL, 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.108 Safari/537.36', NULL, NULL, NULL, NULL, NULL),
+(11, 'TKEC0014', '2019-11-28 19:10:25', '2019-11-28 19:12:52', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.108 Safari/537.36', NULL, NULL, NULL, '$2a$10$UEkIt8EcjbAvO4eiTXkQAehl8Iy9OF8sEhotnrXne04.0ARLf/3yi', NULL),
+(12, 'TKEC0014', '2019-11-29 11:53:18', NULL, 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.108 Safari/537.36', NULL, NULL, NULL, '$2a$10$VZvmqcHDgvg2KX1HeKOJieMJj1SRcRrFVlB.9SdLFxDguEoRkAcJi', NULL),
+(13, 'TKEC0014', '2019-11-29 12:26:35', NULL, 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.108 Safari/537.36', NULL, NULL, '0:0:0:0:0:0:0:1', '$2a$10$ADKrJDn.GHV09pNCouv6duCqTWSDaRGrZi4JkUfsigbwuIzwk.mte', NULL),
+(14, 'TKEC0015', '2019-11-29 12:38:54', NULL, 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.108 Safari/537.36', NULL, NULL, NULL, '$2a$10$hrrXGYxOFXTKr9wU2X0jHOlTwFZoCWWr2TM3HjLZGB5HBWy9/MFgu', NULL),
+(15, 'TKEC0015', '2019-11-29 14:12:08', '2019-11-29 14:15:16', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.108 Safari/537.36', NULL, NULL, NULL, '$2a$10$XqAM0x0jy4uK4ZmPPV678OWx2wwQkfybVOrSdZYZiyVQVw8mg/ax2', NULL),
+(16, 'TKEC0015', '2019-11-29 14:27:00', NULL, 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.108 Safari/537.36', NULL, NULL, '0:0:0:0:0:0:0:1', '$2a$10$MXEip4LrocoufacF4U6l/.qezxRjT7tJ9RnmSrM4rDiyY5mw824eW', NULL),
+(17, 'TKEC0017', '2019-12-04 16:43:44', '2019-12-04 16:57:19', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.108 Safari/537.36', NULL, NULL, NULL, '$2a$10$nVO1q9r/nSnqIM4pVTAkY.lYEMKHmbYnMKKnDdD2EQJ2.LI9mfXE.', NULL),
+(18, 'TKEC0017', '2019-12-04 17:05:33', NULL, 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.108 Safari/537.36', NULL, NULL, NULL, '$2a$10$5rHjl22mAirJpo1cXeuV/uYKUdh0puwnIrIYbbOLdRvg7bAaj8oQu', NULL),
+(19, 'TKECU0018', '2019-12-10 12:51:11', NULL, 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.108 Safari/537.36', NULL, NULL, NULL, '$2a$10$HwbR9SLAZaauFobH495w5eqeqbEzrmsmhKJxAyf3L/c45trZRW/LC', NULL),
+(20, 'TKECU0018', '2019-12-10 12:53:50', NULL, 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.108 Safari/537.36', NULL, NULL, NULL, '$2a$10$dskWbgU1r2QSADQDCvAvE.6vdrN7P2.Lbgjxya3sL1YImmNgv8wEy', NULL),
+(21, 'TKECU0018', '2019-12-10 12:54:06', NULL, 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.108 Safari/537.36', NULL, NULL, NULL, '$2a$10$zZe2ozT3ASHUsVH5wMHxmOkbYyP09.6vX6lji1iXRm//vrNBCdfWi', NULL),
+(22, 'TKECU0018', '2019-12-10 12:55:50', '2019-12-10 12:56:11', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.108 Safari/537.36', NULL, NULL, NULL, '$2a$10$mtoB/ugPS8X6r4Z56PHX2OIyUjQ7DOSIxh/w6Lh45NetNiF/1dlaS', NULL),
+(23, 'TKECU0019', '2019-12-17 12:59:31', '2019-12-17 13:05:23', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.108 Safari/537.36', NULL, NULL, NULL, '$2a$10$JEJ4eLBKMIyiuo4IRL2Gx.ohgvRDpnOhm/ZPJqaQLyqhDLm.AY5kK', NULL),
+(24, 'TKECU0019', '2019-12-17 13:03:32', '2019-12-17 13:04:29', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.108 Safari/537.36', NULL, NULL, NULL, '$2a$10$A9hJjjOplV/Wj6u3Fmnq9u2GX9277qQhL04An5P67BzKyL74J5FeW', NULL),
+(25, 'TKECU0020', '2019-12-20 17:25:59', '2019-12-20 17:35:04', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.88 Safari/537.36', NULL, NULL, NULL, '$2a$10$GnqZB.8iU7Ne7NGGBDLm/.4jW9db9JnWtYJEOBdsPcVQ5Poe5zHYC', NULL),
+(26, 'TKECU0020', '2019-12-20 17:30:07', NULL, 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.88 Safari/537.36', NULL, NULL, NULL, '$2a$10$2EX0WAC8eClCabQMNXQhouIYWrk96PR/PzNnnbgTzIFwLuB5Pc.y6', NULL),
+(27, 'TKECU0027', '2019-12-23 12:05:13', NULL, 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.88 Safari/537.36', NULL, NULL, NULL, '$2a$10$YwK/p15q8PLOqp7c5UxoMucCXS0wMqCc3n7StZa8RayJPCqdha1mG', NULL),
+(28, 'TKECU0027', '2019-12-23 12:09:43', '2019-12-23 12:10:01', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.88 Safari/537.36', NULL, NULL, NULL, '$2a$10$0m38bTKN99RFmtyFuaMgEOFlOZmjAQ9f07.8tO4kdLUuOsYoLmY9q', NULL),
+(29, 'TKECU0028', '2019-12-23 15:06:58', NULL, 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.88 Safari/537.36', NULL, NULL, NULL, '$2a$10$uRF10Q6hCquJNxueLn5tU.MxsBrqrI1RLqYl0EnyavPv0FU08PKv6', NULL),
+(30, 'TKECU0028', '2019-12-23 15:14:16', '2019-12-23 15:15:48', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.88 Safari/537.36', NULL, NULL, NULL, '$2a$10$z7sR6JJJE.LhoPN.X61e3e/oEAcqQYqkzUl1bhUBVOfGpX354skxy', NULL);
 
 -- --------------------------------------------------------
 
@@ -5740,41 +5770,46 @@ INSERT INTO `TKECT_USER_AUDIT` (`TKECTUA_AG_ID`, `TKECTUA_USER_ID`, `TKECTUA_LOG
 
 DROP TABLE IF EXISTS `TKECT_USER_SESSION`;
 CREATE TABLE IF NOT EXISTS `TKECT_USER_SESSION` (
-  `TKECTUS_USER_ID` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
+  `TKECTUS_TKECMU_ID` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
   `TKECTUS_API_KEY` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `TKECTUS_CR_DATE` datetime NOT NULL,
   `TKECTUS_CR_IP` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `TKECTUS_ALIVE_YN` varchar(1) COLLATE utf8_unicode_ci NOT NULL,
+  `TKECTUS_USER_ID` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`TKECTUS_API_KEY`),
-  KEY `FK_TKECTUS_USER_ID` (`TKECTUS_USER_ID`)
+  KEY `FK_TKECTUS_TKECMU_ID` (`TKECTUS_TKECMU_ID`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Dumping data for table `TKECT_USER_SESSION`
 --
 
-INSERT INTO `TKECT_USER_SESSION` (`TKECTUS_USER_ID`, `TKECTUS_API_KEY`, `TKECTUS_CR_DATE`, `TKECTUS_CR_IP`, `TKECTUS_ALIVE_YN`) VALUES
-('TKECU0020', '$2a$10$2EX0WAC8eClCabQMNXQhouIYWrk96PR/PzNnnbgTzIFwLuB5Pc.y6', '2019-12-20 17:30:07', NULL, 'Y'),
-('TKEC0017', '$2a$10$5rHjl22mAirJpo1cXeuV/uYKUdh0puwnIrIYbbOLdRvg7bAaj8oQu', '2019-12-04 17:05:33', NULL, 'Y'),
-('TKEC0012', '$2a$10$7Iht98s.enmY3pRutt7mPOmhU/jGJ0SgXexML7DZbiuFUQv5.7LWm', '2019-11-28 18:37:40', NULL, 'Y'),
-('TKECU0019', '$2a$10$A9hJjjOplV/Wj6u3Fmnq9u2GX9277qQhL04An5P67BzKyL74J5FeW', '2019-12-17 13:03:31', NULL, 'N'),
-('TKEC0014', '$2a$10$ADKrJDn.GHV09pNCouv6duCqTWSDaRGrZi4JkUfsigbwuIzwk.mte', '2019-11-29 12:26:35', NULL, 'Y'),
-('TKECU0018', '$2a$10$dskWbgU1r2QSADQDCvAvE.6vdrN7P2.Lbgjxya3sL1YImmNgv8wEy', '2019-12-10 12:53:50', NULL, 'Y'),
-('TKEC0012', '$2a$10$fkUaZzxaHBH85EtHIPV3JeI8KLRE6CWp3H89sprdsRptAiyCxVDju', '2019-11-28 18:35:21', NULL, 'Y'),
-('TKECU0020', '$2a$10$GnqZB.8iU7Ne7NGGBDLm/.4jW9db9JnWtYJEOBdsPcVQ5Poe5zHYC', '2019-12-20 17:25:59', NULL, 'N'),
-('TKEC0015', '$2a$10$hrrXGYxOFXTKr9wU2X0jHOlTwFZoCWWr2TM3HjLZGB5HBWy9/MFgu', '2019-11-29 12:38:54', NULL, 'Y'),
-('TKECU0018', '$2a$10$HwbR9SLAZaauFobH495w5eqeqbEzrmsmhKJxAyf3L/c45trZRW/LC', '2019-12-10 12:51:11', NULL, 'Y'),
-('TKECU0019', '$2a$10$JEJ4eLBKMIyiuo4IRL2Gx.ohgvRDpnOhm/ZPJqaQLyqhDLm.AY5kK', '2019-12-17 12:59:30', NULL, 'N'),
-('TKECU0018', '$2a$10$mtoB/ugPS8X6r4Z56PHX2OIyUjQ7DOSIxh/w6Lh45NetNiF/1dlaS', '2019-12-10 12:55:50', NULL, 'N'),
-('TKEC0015', '$2a$10$MXEip4LrocoufacF4U6l/.qezxRjT7tJ9RnmSrM4rDiyY5mw824eW', '2019-11-29 14:27:00', NULL, 'Y'),
-('TKEC0017', '$2a$10$nVO1q9r/nSnqIM4pVTAkY.lYEMKHmbYnMKKnDdD2EQJ2.LI9mfXE.', '2019-12-04 16:43:44', NULL, 'N'),
-('TKEC0013', '$2a$10$pAnmNqX4lBclM/R98S7qmuKzM8srJH9iE.DLARexcS4/CnbOsUuyy', '2019-11-28 18:49:52', NULL, 'Y'),
-('TKEC0014', '$2a$10$UEkIt8EcjbAvO4eiTXkQAehl8Iy9OF8sEhotnrXne04.0ARLf/3yi', '2019-11-28 19:10:25', NULL, 'N'),
-('TKEC0014', '$2a$10$VZvmqcHDgvg2KX1HeKOJieMJj1SRcRrFVlB.9SdLFxDguEoRkAcJi', '2019-11-29 11:53:18', NULL, 'Y'),
-('TKEC0015', '$2a$10$XqAM0x0jy4uK4ZmPPV678OWx2wwQkfybVOrSdZYZiyVQVw8mg/ax2', '2019-11-29 14:12:08', NULL, 'N'),
-('TKEC0010', '$2a$10$XZFhuCvOvpyaLMVTmg8JNOyhA3mqf.XZn9F0biYIILS14fQXAPtC6', '2019-11-28 18:03:41', NULL, 'N'),
-('TKEC0011', '$2a$10$yHL7tYrpmz2zyKkbvSSLNOskyfx.ShLN71yC24Zt2nbIJwI5dh/Vu', '2019-11-28 18:08:53', NULL, 'Y'),
-('TKECU0018', '$2a$10$zZe2ozT3ASHUsVH5wMHxmOkbYyP09.6vX6lji1iXRm//vrNBCdfWi', '2019-12-10 12:54:06', NULL, 'Y');
+INSERT INTO `TKECT_USER_SESSION` (`TKECTUS_TKECMU_ID`, `TKECTUS_API_KEY`, `TKECTUS_CR_DATE`, `TKECTUS_CR_IP`, `TKECTUS_ALIVE_YN`, `TKECTUS_USER_ID`) VALUES
+('TKECU0027', '$2a$10$0m38bTKN99RFmtyFuaMgEOFlOZmjAQ9f07.8tO4kdLUuOsYoLmY9q', '2019-12-23 12:09:43', NULL, 'N', NULL),
+('TKECU0020', '$2a$10$2EX0WAC8eClCabQMNXQhouIYWrk96PR/PzNnnbgTzIFwLuB5Pc.y6', '2019-12-20 17:30:07', NULL, 'Y', NULL),
+('TKEC0017', '$2a$10$5rHjl22mAirJpo1cXeuV/uYKUdh0puwnIrIYbbOLdRvg7bAaj8oQu', '2019-12-04 17:05:33', NULL, 'Y', NULL),
+('TKEC0012', '$2a$10$7Iht98s.enmY3pRutt7mPOmhU/jGJ0SgXexML7DZbiuFUQv5.7LWm', '2019-11-28 18:37:40', NULL, 'Y', NULL),
+('TKECU0019', '$2a$10$A9hJjjOplV/Wj6u3Fmnq9u2GX9277qQhL04An5P67BzKyL74J5FeW', '2019-12-17 13:03:31', NULL, 'N', NULL),
+('TKEC0014', '$2a$10$ADKrJDn.GHV09pNCouv6duCqTWSDaRGrZi4JkUfsigbwuIzwk.mte', '2019-11-29 12:26:35', NULL, 'Y', NULL),
+('TKECU0018', '$2a$10$dskWbgU1r2QSADQDCvAvE.6vdrN7P2.Lbgjxya3sL1YImmNgv8wEy', '2019-12-10 12:53:50', NULL, 'Y', NULL),
+('TKEC0012', '$2a$10$fkUaZzxaHBH85EtHIPV3JeI8KLRE6CWp3H89sprdsRptAiyCxVDju', '2019-11-28 18:35:21', NULL, 'Y', NULL),
+('TKECU0020', '$2a$10$GnqZB.8iU7Ne7NGGBDLm/.4jW9db9JnWtYJEOBdsPcVQ5Poe5zHYC', '2019-12-20 17:25:59', NULL, 'N', NULL),
+('TKEC0015', '$2a$10$hrrXGYxOFXTKr9wU2X0jHOlTwFZoCWWr2TM3HjLZGB5HBWy9/MFgu', '2019-11-29 12:38:54', NULL, 'Y', NULL),
+('TKECU0018', '$2a$10$HwbR9SLAZaauFobH495w5eqeqbEzrmsmhKJxAyf3L/c45trZRW/LC', '2019-12-10 12:51:11', NULL, 'Y', NULL),
+('TKECU0019', '$2a$10$JEJ4eLBKMIyiuo4IRL2Gx.ohgvRDpnOhm/ZPJqaQLyqhDLm.AY5kK', '2019-12-17 12:59:30', NULL, 'N', NULL),
+('TKECU0018', '$2a$10$mtoB/ugPS8X6r4Z56PHX2OIyUjQ7DOSIxh/w6Lh45NetNiF/1dlaS', '2019-12-10 12:55:50', NULL, 'N', NULL),
+('TKEC0015', '$2a$10$MXEip4LrocoufacF4U6l/.qezxRjT7tJ9RnmSrM4rDiyY5mw824eW', '2019-11-29 14:27:00', NULL, 'Y', NULL),
+('TKEC0017', '$2a$10$nVO1q9r/nSnqIM4pVTAkY.lYEMKHmbYnMKKnDdD2EQJ2.LI9mfXE.', '2019-12-04 16:43:44', NULL, 'N', NULL),
+('TKEC0013', '$2a$10$pAnmNqX4lBclM/R98S7qmuKzM8srJH9iE.DLARexcS4/CnbOsUuyy', '2019-11-28 18:49:52', NULL, 'Y', NULL),
+('TKEC0014', '$2a$10$UEkIt8EcjbAvO4eiTXkQAehl8Iy9OF8sEhotnrXne04.0ARLf/3yi', '2019-11-28 19:10:25', NULL, 'N', NULL),
+('TKECU0028', '$2a$10$uRF10Q6hCquJNxueLn5tU.MxsBrqrI1RLqYl0EnyavPv0FU08PKv6', '2019-12-23 15:06:58', NULL, 'Y', NULL),
+('TKEC0014', '$2a$10$VZvmqcHDgvg2KX1HeKOJieMJj1SRcRrFVlB.9SdLFxDguEoRkAcJi', '2019-11-29 11:53:18', NULL, 'Y', NULL),
+('TKEC0015', '$2a$10$XqAM0x0jy4uK4ZmPPV678OWx2wwQkfybVOrSdZYZiyVQVw8mg/ax2', '2019-11-29 14:12:08', NULL, 'N', NULL),
+('TKEC0010', '$2a$10$XZFhuCvOvpyaLMVTmg8JNOyhA3mqf.XZn9F0biYIILS14fQXAPtC6', '2019-11-28 18:03:41', NULL, 'N', NULL),
+('TKEC0011', '$2a$10$yHL7tYrpmz2zyKkbvSSLNOskyfx.ShLN71yC24Zt2nbIJwI5dh/Vu', '2019-11-28 18:08:53', NULL, 'Y', NULL),
+('TKECU0027', '$2a$10$YwK/p15q8PLOqp7c5UxoMucCXS0wMqCc3n7StZa8RayJPCqdha1mG', '2019-12-23 12:05:12', NULL, 'Y', NULL),
+('TKECU0028', '$2a$10$z7sR6JJJE.LhoPN.X61e3e/oEAcqQYqkzUl1bhUBVOfGpX354skxy', '2019-12-23 15:14:16', NULL, 'N', NULL),
+('TKECU0018', '$2a$10$zZe2ozT3ASHUsVH5wMHxmOkbYyP09.6vX6lji1iXRm//vrNBCdfWi', '2019-12-10 12:54:06', NULL, 'Y', NULL);
 
 --
 -- Constraints for dumped tables
@@ -5784,91 +5819,108 @@ INSERT INTO `TKECT_USER_SESSION` (`TKECTUS_USER_ID`, `TKECTUS_API_KEY`, `TKECTUS
 -- Constraints for table `TKECM_IMAGE`
 --
 ALTER TABLE `TKECM_IMAGE`
-  ADD CONSTRAINT `FK_TKECMI_PRODUCT_ID` FOREIGN KEY (`TKECMI_PRODUCT_ID`) REFERENCES `TKECM_PRODUCT` (`TKECMP_ID`);
+  ADD CONSTRAINT `FK_TKECMI_PRODUCT_ID` FOREIGN KEY (`TKECMI_PRODUCT_ID`) REFERENCES `TKECM_PRODUCT` (`TKECMP_ID`),
+  ADD CONSTRAINT `FK_TKECMI_TKECMP_ID` FOREIGN KEY (`TKECMI_TKECMP_ID`) REFERENCES `TKECM_PRODUCT` (`TKECMP_ID`);
 
 --
 -- Constraints for table `TKECM_ORDER`
 --
 ALTER TABLE `TKECM_ORDER`
-  ADD CONSTRAINT `FK_TKECMO_USER_ID` FOREIGN KEY (`TKECMO_USER_ID`) REFERENCES `TKECM_USER` (`TKECMU_ID`);
+  ADD CONSTRAINT `FK_TKECMO_USER_ID` FOREIGN KEY (`TKECMO_TKECMU_ID`) REFERENCES `TKECM_USER` (`TKECMU_ID`);
 
 --
 -- Constraints for table `TKECM_PRODUCT`
 --
 ALTER TABLE `TKECM_PRODUCT`
-  ADD CONSTRAINT `FK_TKECMP_CATEGORY_ID` FOREIGN KEY (`TKECMP_CATEGORY_ID`) REFERENCES `TKECM_CATEGORY` (`TKECMC_CATEGORY_ID`),
-  ADD CONSTRAINT `FK_TKECMP_TYPE` FOREIGN KEY (`TKECMP_TYPE`) REFERENCES `TKECM_PRODUCT_TYPE` (`TKECMPT_AG_ID`);
+  ADD CONSTRAINT `FK_TKECMP_CATEGORY_ID` FOREIGN KEY (`TKECMP_TKECMC_CATEGORY_ID`) REFERENCES `TKECM_CATEGORY` (`TKECMC_CATEGORY_ID`),
+  ADD CONSTRAINT `FK_TKECMP_TKECMC_CATEGORY_ID` FOREIGN KEY (`TKECMP_TKECMC_CATEGORY_ID`) REFERENCES `TKECM_CATEGORY` (`TKECMC_CATEGORY_ID`),
+  ADD CONSTRAINT `FK_TKECMP_TKECMPT_AG_ID` FOREIGN KEY (`TKECMP_TKECMPT_AG_ID`) REFERENCES `TKECM_PRODUCT_TYPE` (`TKECMPT_AG_ID`),
+  ADD CONSTRAINT `FK_TKECMP_TYPE` FOREIGN KEY (`TKECMP_TKECMPT_AG_ID`) REFERENCES `TKECM_PRODUCT_TYPE` (`TKECMPT_AG_ID`);
 
 --
 -- Constraints for table `TKECM_PRODUCT_DOWNLOAD`
 --
 ALTER TABLE `TKECM_PRODUCT_DOWNLOAD`
-  ADD CONSTRAINT `FK_TKECMPD_PRODUCT_ID` FOREIGN KEY (`TKECMPD_PRODUCT_ID`) REFERENCES `TKECM_PRODUCT` (`TKECMP_ID`);
+  ADD CONSTRAINT `FK_TKECMPD_PRODUCT_ID` FOREIGN KEY (`TKECMPD_TKECMP_ID`) REFERENCES `TKECM_PRODUCT` (`TKECMP_ID`),
+  ADD CONSTRAINT `FK_TKECMPD_TKECMP_ID` FOREIGN KEY (`TKECMPD_TKECMP_ID`) REFERENCES `TKECM_PRODUCT` (`TKECMP_ID`);
 
 --
 -- Constraints for table `TKECT_CONFIGURABLE_LINK`
 --
 ALTER TABLE `TKECT_CONFIGURABLE_LINK`
   ADD CONSTRAINT `FK_TKECTCL_PARENT_ID` FOREIGN KEY (`TKECTCL_PARENT_ID`) REFERENCES `TKECM_PRODUCT` (`TKECMP_ID`),
-  ADD CONSTRAINT `FK_TKECTCL_PRODUCT_ID` FOREIGN KEY (`TKECTCL_PRODUCT_ID`) REFERENCES `TKECM_PRODUCT` (`TKECMP_ID`);
+  ADD CONSTRAINT `FK_TKECTCL_PRODUCT_ID` FOREIGN KEY (`TKECTCL_PRODUCT_ID`) REFERENCES `TKECM_PRODUCT` (`TKECMP_ID`),
+  ADD CONSTRAINT `FK_TKECTCL_TKECMP_ID` FOREIGN KEY (`TKECTCL_TKECMP_ID`) REFERENCES `TKECM_PRODUCT` (`TKECMP_ID`);
 
 --
 -- Constraints for table `TKECT_OPTION_ATTRIBUTE`
 --
 ALTER TABLE `TKECT_OPTION_ATTRIBUTE`
-  ADD CONSTRAINT `FK_TKECTOA_ATTRIBUTE_ID` FOREIGN KEY (`TKECTOA_ATTRIBUTE_ID`) REFERENCES `TKECM_ATTRIBUTE` (`TKECMA_ID`);
+  ADD CONSTRAINT `FK_TKECTOA_ATTRIBUTE_ID` FOREIGN KEY (`TKECTOA_TKECMA_ID`) REFERENCES `TKECM_ATTRIBUTE` (`TKECMA_ID`),
+  ADD CONSTRAINT `FK_TKECTOA_TKECMA_ID` FOREIGN KEY (`TKECTOA_TKECMA_ID`) REFERENCES `TKECM_ATTRIBUTE` (`TKECMA_ID`);
 
 --
 -- Constraints for table `TKECT_ORDER_ADDRESS`
 --
 ALTER TABLE `TKECT_ORDER_ADDRESS`
-  ADD CONSTRAINT `FK_TKECTOA_ORDER_ID` FOREIGN KEY (`TKECTOA_ORDER_ID`) REFERENCES `TKECM_ORDER` (`TKECMO_ID`);
+  ADD CONSTRAINT `FK_TKECTOA_ORDER_ID` FOREIGN KEY (`TKECTOA_TKECMO_ID`) REFERENCES `TKECM_ORDER` (`TKECMO_ID`);
 
 --
 -- Constraints for table `TKECT_ORDER_ITEM`
 --
 ALTER TABLE `TKECT_ORDER_ITEM`
-  ADD CONSTRAINT `FK_TKECTOI_ORDER_ID` FOREIGN KEY (`TKECTOI_ORDER_ID`) REFERENCES `TKECM_ORDER` (`TKECMO_ID`),
-  ADD CONSTRAINT `FK_TKECTOI_PRODUCT_ID` FOREIGN KEY (`TKECTOI_PRODUCT_ID`) REFERENCES `TKECM_PRODUCT` (`TKECMP_ID`);
+  ADD CONSTRAINT `FK_TKECTOI_ORDER_ID` FOREIGN KEY (`TKECTOI_TKECMO_ID`) REFERENCES `TKECM_ORDER` (`TKECMO_ID`),
+  ADD CONSTRAINT `FK_TKECTOI_PRODUCT_ID` FOREIGN KEY (`TKECTOI_TKECMP_ID`) REFERENCES `TKECM_PRODUCT` (`TKECMP_ID`);
 
 --
 -- Constraints for table `TKECT_ORDER_STATUS_HISTORY`
 --
 ALTER TABLE `TKECT_ORDER_STATUS_HISTORY`
-  ADD CONSTRAINT `FK_TKECTOSH_ORDER_ID` FOREIGN KEY (`TKECTOSH_ORDER_ID`) REFERENCES `TKECM_ORDER` (`TKECMO_ID`),
-  ADD CONSTRAINT `FK_TKECTOSH_STATUS` FOREIGN KEY (`TKECTOSH_STATUS`) REFERENCES `TKECM_ORDER_STATUS` (`TKECMOS_STATUS`);
+  ADD CONSTRAINT `FK_TKECTOSH_ORDER_ID` FOREIGN KEY (`TKECTOSH_TKECMO_ID`) REFERENCES `TKECM_ORDER` (`TKECMO_ID`),
+  ADD CONSTRAINT `FK_TKECTOSH_STATUS` FOREIGN KEY (`TKECTOSH_TKECMOS_STATUS`) REFERENCES `TKECM_ORDER_STATUS` (`TKECMOS_STATUS`);
 
 --
 -- Constraints for table `TKECT_PRODUCT_ATTRIBUTE`
 --
 ALTER TABLE `TKECT_PRODUCT_ATTRIBUTE`
-  ADD CONSTRAINT `FK_TKECTPA_OPTION_ATTRIBUTE_ID` FOREIGN KEY (`TKECTPA_OPTION_ATTRIBUTE_ID`) REFERENCES `TKECT_OPTION_ATTRIBUTE` (`TKECTOA_ID`),
-  ADD CONSTRAINT `FK_TKECTPA_OPTION_ID` FOREIGN KEY (`TKECTPA_OPTION_ATTRIBUTE_ID`) REFERENCES `TKECT_OPTION_ATTRIBUTE` (`TKECTOA_ID`);
+  ADD CONSTRAINT `FK_TKECTPA_OPTION_ATTRIBUTE_ID` FOREIGN KEY (`TKECTPA_TKECTOA_ID`) REFERENCES `TKECT_OPTION_ATTRIBUTE` (`TKECTOA_ID`),
+  ADD CONSTRAINT `FK_TKECTPA_OPTION_ID` FOREIGN KEY (`TKECTPA_OPTION_ATTRIBUTE_ID`) REFERENCES `TKECT_OPTION_ATTRIBUTE` (`TKECTOA_ID`),
+  ADD CONSTRAINT `FK_TKECTPA_TKECMP_ID` FOREIGN KEY (`TKECTPA_TKECMP_ID`) REFERENCES `TKECM_PRODUCT` (`TKECMP_ID`),
+  ADD CONSTRAINT `FK_TKECTPA_TKECTOA_ID` FOREIGN KEY (`TKECTPA_TKECTOA_ID`) REFERENCES `TKECT_OPTION_ATTRIBUTE` (`TKECTOA_ID`);
 
 --
 -- Constraints for table `TKECT_PRODUCT_DOWNLOAD_SAMPLE`
 --
 ALTER TABLE `TKECT_PRODUCT_DOWNLOAD_SAMPLE`
-  ADD CONSTRAINT `FK_TKECTPDS_PRODUCT_ID` FOREIGN KEY (`TKECTPDS_PRODUCT_ID`) REFERENCES `TKECM_PRODUCT` (`TKECMP_ID`);
+  ADD CONSTRAINT `FK_TKECTPDS_PRODUCT_ID` FOREIGN KEY (`TKECTPDS_TKECMP_ID`) REFERENCES `TKECM_PRODUCT` (`TKECMP_ID`),
+  ADD CONSTRAINT `FK_TKECTPDS_TKECMP_ID` FOREIGN KEY (`TKECTPDS_TKECMP_ID`) REFERENCES `TKECM_PRODUCT` (`TKECMP_ID`);
+
+--
+-- Constraints for table `TKECT_STATE`
+--
+ALTER TABLE `TKECT_STATE`
+  ADD CONSTRAINT `FK_TKECTS_TKECMCN_AG_ID` FOREIGN KEY (`TKECTS_TKECMCN_AG_ID`) REFERENCES `TKECM_COUNTRY` (`TKECMCN_AG_ID`);
 
 --
 -- Constraints for table `TKECT_USER_ADDRESS`
 --
 ALTER TABLE `TKECT_USER_ADDRESS`
-  ADD CONSTRAINT `FK_TKECTUAD_USER_ID` FOREIGN KEY (`TKECTUA_USER_ID`) REFERENCES `TKECM_USER` (`TKECMU_ID`);
+  ADD CONSTRAINT `FK_TKECTUAD_USER_ID` FOREIGN KEY (`TKECTUA_TKECMU_ID`) REFERENCES `TKECM_USER` (`TKECMU_ID`);
 
 --
 -- Constraints for table `TKECT_USER_AUDIT`
 --
 ALTER TABLE `TKECT_USER_AUDIT`
-  ADD CONSTRAINT `FK_TKECTUA_USER_ID` FOREIGN KEY (`TKECTUA_USER_ID`) REFERENCES `TKECM_USER` (`TKECMU_ID`),
-  ADD CONSTRAINT `FK_TKECT_USER_AUDIT` FOREIGN KEY (`TKECTUA_USER_ID`) REFERENCES `TKECM_USER` (`TKECMU_ID`);
+  ADD CONSTRAINT `FK_TKECTUA_TKECMU_ID` FOREIGN KEY (`TKECTUA_TKECMU_ID`) REFERENCES `TKECM_USER` (`TKECMU_ID`),
+  ADD CONSTRAINT `FK_TKECTUA_USER_ID` FOREIGN KEY (`TKECTUA_TKECMU_ID`) REFERENCES `TKECM_USER` (`TKECMU_ID`),
+  ADD CONSTRAINT `FK_TKECT_USER_AUDIT` FOREIGN KEY (`TKECTUA_TKECMU_ID`) REFERENCES `TKECM_USER` (`TKECMU_ID`);
 
 --
 -- Constraints for table `TKECT_USER_SESSION`
 --
 ALTER TABLE `TKECT_USER_SESSION`
-  ADD CONSTRAINT `FK_TKECTUS_USER_ID` FOREIGN KEY (`TKECTUS_USER_ID`) REFERENCES `TKECM_USER` (`TKECMU_ID`);
+  ADD CONSTRAINT `FK_TKECTUS_TKECMU_ID` FOREIGN KEY (`TKECTUS_TKECMU_ID`) REFERENCES `TKECM_USER` (`TKECMU_ID`),
+  ADD CONSTRAINT `FK_TKECTUS_USER_ID` FOREIGN KEY (`TKECTUS_TKECMU_ID`) REFERENCES `TKECM_USER` (`TKECMU_ID`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

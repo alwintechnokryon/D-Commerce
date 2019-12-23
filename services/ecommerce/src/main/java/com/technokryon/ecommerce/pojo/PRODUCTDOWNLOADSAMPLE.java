@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 public class PRODUCTDOWNLOADSAMPLE {
 
 	Integer pdsAgId;
-	String pdsProductId;
+	String pdsTkecmpId;
 	String pdsUrl;
 	String pdsTitle;
 	String pdsFile;

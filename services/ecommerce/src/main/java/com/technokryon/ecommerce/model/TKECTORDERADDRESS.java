@@ -29,8 +29,8 @@ public class TKECTORDERADDRESS {
 	private Integer oaAgId;
 
 	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	@JoinColumn(name = "TKECTOA_ORDER_ID", foreignKey = @ForeignKey(name = "FK_TKECTOA_ORDER_ID"))
-	private TKECMORDER oaOrderId;
+	@JoinColumn(name = "TKECTOA_TKECMO_ID", foreignKey = @ForeignKey(name = "FK_TKECTOA_TKECMO_ID"))
+	private TKECMORDER oaTkecmoId;
 
 	@Column(name = "TKECTOA_FIRST_NAME")
 	private String oaFirstName;

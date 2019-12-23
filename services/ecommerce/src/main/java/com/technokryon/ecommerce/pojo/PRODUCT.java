@@ -14,7 +14,7 @@ public class PRODUCT {
 	String pId;
 	String pSku;
 	String pName;
-	String pCategoryId;
+	String pTkecmcCategoryId;
 	Float pWeight;
 	Integer pQuantity;
 	String pShortDesc;
@@ -25,7 +25,7 @@ public class PRODUCT {
 	OffsetDateTime pModifiedDate;
 	String pModifiedUserId;
 	String pStatus;
-	Integer pType;
+	Integer pTkecmptAgId;
 	Double pPrice;
 	String pDefaultYN;
 	Integer pageNumber;

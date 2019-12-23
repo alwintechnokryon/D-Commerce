@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 public class USERADDRESS {
 
 	Integer uadAgId;
-	String uadUserId;
+	String uadTkecmuId;
 	String uadName;
 	BigInteger uadPhone;
 	BigInteger uadAlternativePhone;

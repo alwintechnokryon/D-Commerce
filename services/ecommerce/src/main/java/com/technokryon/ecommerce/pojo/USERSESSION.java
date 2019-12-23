@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 public class USERSESSION {
 
 	String usApiKey;
-	String usUserId;
+	String usTkecmuId;
 	String usCreatedIp;
 	OffsetDateTime usCreatedDate;
 	String usAliveYN;

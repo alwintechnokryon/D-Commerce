@@ -12,7 +12,7 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 import static springfox.documentation.builders.PathSelectors.regex;
 
 @EnableSwagger2
-@EnableCaching
+//@EnableCaching
 @SpringBootApplication
 public class EcommerceApplication {
 

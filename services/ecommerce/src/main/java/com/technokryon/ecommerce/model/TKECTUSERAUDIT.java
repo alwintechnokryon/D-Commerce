@@ -29,8 +29,8 @@ public class TKECTUSERAUDIT {
 	private Integer uaAgId;
 
 	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	@JoinColumn(name = "TKECTUA_USER_ID", foreignKey = @ForeignKey(name = "FK_TKECTUA_USER_ID"))
-	private TKECMUSER uaUserId;
+	@JoinColumn(name = "TKECTUA_TKECMU_ID", foreignKey = @ForeignKey(name = "FK_TKECTUA_TKECMU_ID"))
+	private TKECMUSER uaTkecmuId;
 
 	@Column(name = "TKECTUA_LOGIN_TIME")
 	private OffsetDateTime uaLoginTime;

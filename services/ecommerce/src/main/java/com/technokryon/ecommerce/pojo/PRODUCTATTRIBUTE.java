@@ -11,8 +11,8 @@ import lombok.NoArgsConstructor;
 
 public class PRODUCTATTRIBUTE {
 	String paAgId;
-	String paProductId;
-	String paOptionAttributeId;
+	String paTkecmpId;
+	String paTkectoaId;
 	OffsetDateTime paCreatedDate;
 	String paCreatedUserId;
 	String defaultYN;

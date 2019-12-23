@@ -16,22 +16,24 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = "TKECT_CONFIGURABLE_LINK")
+@Table(name = "TKECT_STATE")
 @Data
 @NoArgsConstructor
-public class TKECTCONFIGURABLELINK {
+public class TKECTSTATE {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "TKECTCL_AG_ID")
-	private Integer clAgId;
+	@Column(name = "TKECTS_AG_ID")
+	private Integer sAgId;
+
+	@Column(name = "TKECTS_NAME")
+	private String sName;
 
 	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	@JoinColumn(name = "TKECTCL_TKECMP_ID", foreignKey = @ForeignKey(name = "FK_TKECTCL_TKECMP_ID"))
-	private TKECMPRODUCT clTkecmpId;
+	@JoinColumn(name = "TKECTS_TKECMCN_AG_ID", foreignKey = @ForeignKey(name = "FK_TKECTS_TKECMCN_AG_ID"))
+	private TKECMPRODUCT sTkecmcnAgId;
 
-	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	@JoinColumn(name = "TKECTCL_PARENT_ID", foreignKey = @ForeignKey(name = "FK_TKECTCL_PARENT_ID"))
-	private TKECMPRODUCT clParentId;
+	@Column(name = "TKECTS_FIPS_CODE")
+	private String sFipsCode;
 
 }

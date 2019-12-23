@@ -5,11 +5,9 @@ import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
-public class IMAGE {
+public class PRODUCTPAYMENTTYPE {
 
-	Integer iAgId;
-	String iTkecmpId;
-	String iFileName;
-	String iFileType;
-	String iUrl;
+	String pptId;
+	String pptType;
+
 }

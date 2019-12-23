@@ -27,12 +27,12 @@ public class TKECTPRODUCTATTRIBUTE {
 	private String paAgId;
 
 	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	@JoinColumn(name = "TKECTPA_PRODUCT_ID", foreignKey = @ForeignKey(name = "FK_TKECMP_CATEGORY_ID"))
-	private TKECMPRODUCT paProductId;
+	@JoinColumn(name = "TKECTPA_TKECMP_ID", foreignKey = @ForeignKey(name = "FK_TKECTPA_TKECMP_ID"))
+	private TKECMPRODUCT paTkecmpId;
 
 	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	@JoinColumn(name = "TKECTPA_OPTION_ATTRIBUTE_ID", foreignKey = @ForeignKey(name = "FK_TKECTPA_OPTION_ID"))
-	private TKECTOPTIONATTRIBUTE paOptionAttributeId;
+	@JoinColumn(name = "TKECTPA_TKECTOA_ID", foreignKey = @ForeignKey(name = "FK_TKECTPA_TKECTOA_ID"))
+	private TKECTOPTIONATTRIBUTE paTkectoaId;
 
 	@Column(name = "TKECTPA_CREATED_DATE")
 	private String paCreatedDate;

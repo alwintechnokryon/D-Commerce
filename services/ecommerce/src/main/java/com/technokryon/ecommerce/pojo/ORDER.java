@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 public class ORDER {
 
 	String oId;
-	String oUserId;
+	String oTkecmuId;
 	String oCoupenCode;
 	Double oBaseAmount;
 	Double oDetectedAmount;
@@ -26,5 +26,7 @@ public class ORDER {
 	String oPaymentType;
 	OffsetDateTime oCreatedDate;
 	String oCreatedUserId;
+	OffsetDateTime oExpectedDelivery;
+	OffsetDateTime oDeliveryDate;
 
 }

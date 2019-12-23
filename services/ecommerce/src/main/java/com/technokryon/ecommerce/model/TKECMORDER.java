@@ -26,8 +26,8 @@ public class TKECMORDER {
 	private String oId;
 
 	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	@JoinColumn(name = "TKECMO_USER_ID", foreignKey = @ForeignKey(name = "FK_TKECMO_USER_ID"))
-	private TKECMUSER oUserId;
+	@JoinColumn(name = "TKECMO_TKECMU_ID", foreignKey = @ForeignKey(name = "FK_TKECMO_TKECMU_ID"))
+	private TKECMUSER oTkecmuId;
 
 	@Column(name = "TKECMO_COUPEN_CODE")
 	private String oCoupenCode;
@@ -73,5 +73,11 @@ public class TKECMORDER {
 
 	@Column(name = "TKECMO_CREATED_USER_ID")
 	private String oCreatedUserId;
+
+	@Column(name = "TKECMO_EXPECTED_DELIVERY")
+	private OffsetDateTime oExpectedDelivery;
+
+	@Column(name = "TKECMO_DELIVERY_DATE")
+	private OffsetDateTime oDeliveryDate;
 
 }
