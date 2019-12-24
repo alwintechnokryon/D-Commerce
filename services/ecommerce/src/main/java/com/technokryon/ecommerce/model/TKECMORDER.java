@@ -65,6 +65,9 @@ public class TKECMORDER {
 	@Column(name = "TKECMO_IS_SEND_EMAIL")
 	private String oIsSendEmail;
 
+	@Column(name = "TKECMO_EMAIL_ID")
+	private String oEmailId;
+
 	@Column(name = "TKECMO_PAYMENT_TYPE")
 	private String oPaymentType;
 

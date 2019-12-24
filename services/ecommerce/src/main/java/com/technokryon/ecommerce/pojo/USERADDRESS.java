@@ -19,7 +19,7 @@ public class USERADDRESS {
 	String uadStreet;
 	String uadCity;
 	String uadPostalCode;
-	String uadCountryId;
+	Integer uadTkecnAgId;
 	String uadType;
 	OffsetDateTime uadCreatedDate;
 	String uadCreatedUserId;

@@ -11,9 +11,7 @@ public class ORDERADDRESS {
 
 	Integer oaAgId;
 	String oaTkecmoId;
-	String oaFirstName;
-	String oaMiddleName;
-	String oaLastName;
+	String oaName;
 	String oaEmailId;
 	BigInteger oaPhone;
 	BigInteger oaAltenativePhone;
@@ -21,7 +19,7 @@ public class ORDERADDRESS {
 	String oaStreet;
 	String oaCity;
 	String oaPostalCode;
-	String oaCountryId;
+	Integer oaCountryId;
 	String oaFlagAddress;
 	String oaAddressType;
 

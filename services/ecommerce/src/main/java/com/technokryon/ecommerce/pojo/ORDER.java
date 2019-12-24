@@ -23,10 +23,16 @@ public class ORDER {
 	String oAmountRefundable;
 	Double oRefundAmount;
 	String oIsSendEmail;
+	String oEmailId;
 	String oPaymentType;
 	OffsetDateTime oCreatedDate;
 	String oCreatedUserId;
 	OffsetDateTime oExpectedDelivery;
 	OffsetDateTime oDeliveryDate;
+	String productId;
+	Integer proQuantity;
+	Integer userAddressId;
+	Integer billingAddress;
+	Integer shippingAddress;
 
 }

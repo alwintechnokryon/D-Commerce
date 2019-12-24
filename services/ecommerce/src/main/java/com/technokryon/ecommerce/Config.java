@@ -18,15 +18,24 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import com.technokryon.ecommerce.model.TKECMATTRIBUTE;
 import com.technokryon.ecommerce.model.TKECMCATEGORY;
+import com.technokryon.ecommerce.model.TKECMCOUNTRY;
 import com.technokryon.ecommerce.model.TKECMIMAGE;
+import com.technokryon.ecommerce.model.TKECMORDER;
+import com.technokryon.ecommerce.model.TKECMORDERSTATUS;
 import com.technokryon.ecommerce.model.TKECMPRODUCT;
 import com.technokryon.ecommerce.model.TKECMPRODUCTDOWNLOAD;
+import com.technokryon.ecommerce.model.TKECMPRODUCTPAYMENTTYPE;
 import com.technokryon.ecommerce.model.TKECMPRODUCTTYPE;
 import com.technokryon.ecommerce.model.TKECMUSER;
 import com.technokryon.ecommerce.model.TKECTCONFIGURABLELINK;
 import com.technokryon.ecommerce.model.TKECTOPTIONATTRIBUTE;
+import com.technokryon.ecommerce.model.TKECTORDERADDRESS;
+import com.technokryon.ecommerce.model.TKECTORDERITEM;
+import com.technokryon.ecommerce.model.TKECTORDERSTATUSHISTORY;
 import com.technokryon.ecommerce.model.TKECTPRODUCTATTRIBUTE;
 import com.technokryon.ecommerce.model.TKECTPRODUCTDOWNLOADSAMPLE;
+import com.technokryon.ecommerce.model.TKECTSTATE;
+import com.technokryon.ecommerce.model.TKECTUSERADDRESS;
 import com.technokryon.ecommerce.model.TKECTUSERAUDIT;
 import com.technokryon.ecommerce.model.TKECTUSERSESSION;
 
@@ -65,7 +74,9 @@ public class Config {
 		factoryBean.setAnnotatedClasses(TKECMUSER.class, TKECTUSERSESSION.class, TKECTUSERAUDIT.class,
 				TKECMCATEGORY.class, TKECMATTRIBUTE.class, TKECTOPTIONATTRIBUTE.class, TKECTPRODUCTATTRIBUTE.class,
 				TKECMIMAGE.class, TKECMPRODUCT.class, TKECMPRODUCTDOWNLOAD.class, TKECMPRODUCTTYPE.class,
-				TKECTPRODUCTDOWNLOADSAMPLE.class, TKECTCONFIGURABLELINK.class);
+				TKECTPRODUCTDOWNLOADSAMPLE.class, TKECTCONFIGURABLELINK.class, TKECTUSERADDRESS.class,
+				TKECTORDERADDRESS.class, TKECMORDER.class, TKECTORDERITEM.class, TKECMORDERSTATUS.class,
+				TKECTORDERSTATUSHISTORY.class, TKECMCOUNTRY.class, TKECMPRODUCTPAYMENTTYPE.class, TKECTSTATE.class);
 
 		return factoryBean;
 	}

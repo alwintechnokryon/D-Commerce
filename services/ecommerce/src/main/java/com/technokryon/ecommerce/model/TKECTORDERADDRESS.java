@@ -32,14 +32,8 @@ public class TKECTORDERADDRESS {
 	@JoinColumn(name = "TKECTOA_TKECMO_ID", foreignKey = @ForeignKey(name = "FK_TKECTOA_TKECMO_ID"))
 	private TKECMORDER oaTkecmoId;
 
-	@Column(name = "TKECTOA_FIRST_NAME")
-	private String oaFirstName;
-
-	@Column(name = "TKECTOA_MIDDLE_NAME")
-	private String oaMiddleName;
-
-	@Column(name = "TKECTOA_LAST_NAME")
-	private String oaLastName;
+	@Column(name = "TKECTOA_NAME")
+	private String oaName;
 
 	@Column(name = "TKECTOA_EMAIL_ID")
 	private String oaEmailId;
@@ -63,11 +57,11 @@ public class TKECTORDERADDRESS {
 	private String oaPostalCode;
 
 	@Column(name = "TKECTOA_COUNTRY_ID")
-	private String oaCountryId;
+	private Integer oaCountryId;
 
 	@Column(name = "TKECTOA_FLAG_ADDRESS")
 	private String oaFlagAddress;
-	
+
 	@Column(name = "TKECTOA_ADDRESS_TYPE")
 	private String oaAddressType;
 
