@@ -27,8 +27,9 @@ public class UserOrderController {
 	@Autowired
 	private OrderService O_OrderService;
 
-	@PostMapping("/order/single/product")
-	private ResponseEntity<?> ORDER(@RequestBody ORDER RO_ORDER, @RequestHeader(value = "apiKey") String apiKey) {
+	@PostMapping("/product")
+	private ResponseEntity<?> ORDER_PRODUCT(@RequestBody ORDER RO_ORDER,
+			@RequestHeader(value = "apiKey") String apiKey) {
 
 		RESPONSE O_RESPONSE = new RESPONSE();
 
@@ -45,11 +46,15 @@ public class UserOrderController {
 			O_RESPONSE.setMessage("Billing Address is Mandatory..!");
 			return new ResponseEntity<Object>(O_RESPONSE, HttpStatus.UNPROCESSABLE_ENTITY);
 		}
+		if (RO_ORDER.getOTkecmpptId() == null || RO_ORDER.getOTkecmpptId().trim().equals("")) {
 
-		Boolean checkProQuantity = O_OrderService.checkAvailableProductQuantity(RO_ORDER.getProductId(),
-				RO_ORDER.getProQuantity());
+			O_RESPONSE.setMessage("Payment Type Is Missing..!");
+			return new ResponseEntity<Object>(O_RESPONSE, HttpStatus.UNPROCESSABLE_ENTITY);
+		}
 
-		if (checkProQuantity == false) {
+		Boolean checkProQuantity = O_OrderService.checkAvailableProductQuantity(RO_ORDER.getLO_PRODUCT());
+
+		if (!checkProQuantity) {
 
 			O_RESPONSE.setMessage("Out Of Stock..!");
 			return new ResponseEntity<Object>(O_RESPONSE, HttpStatus.UNPROCESSABLE_ENTITY);
@@ -72,5 +77,39 @@ public class UserOrderController {
 		String orderId = O_OrderService.requestOrder(RO_ORDER);
 
 		return new ResponseEntity<Object>(orderId, HttpStatus.OK);
+	}
+
+	@PostMapping("/payment")
+	private ResponseEntity<?> ORDER_PAYMENT(@RequestBody ORDER RO_ORDER,
+			@RequestHeader(value = "apiKey") String apiKey) {
+
+		RESPONSE O_RESPONSE = new RESPONSE();
+
+		USER O_USER_DETAIL = O_UserService.getUserDetailAPIKey(apiKey);
+
+		if (O_USER_DETAIL == null) {
+
+			O_RESPONSE.setMessage("Session Expired..!");
+			return new ResponseEntity<Object>(O_RESPONSE, HttpStatus.UNPROCESSABLE_ENTITY);
+		}
+
+		if (RO_ORDER.getOId() == null || RO_ORDER.getOId().trim().equals("")) {
+
+			O_RESPONSE.setMessage("Order Id is Empty..!");
+			return new ResponseEntity<Object>(O_RESPONSE, HttpStatus.UNPROCESSABLE_ENTITY);
+		}
+
+		RO_ORDER.setUserId(O_USER_DETAIL.getUId());
+
+		String updateTransactionId = O_OrderService.updateTransactionId(RO_ORDER);
+
+		if (updateTransactionId != null) {
+
+			O_RESPONSE.setMessage(updateTransactionId);
+			return new ResponseEntity<Object>(O_RESPONSE, HttpStatus.UNPROCESSABLE_ENTITY);
+		}
+		O_RESPONSE.setMessage("Success");
+		return new ResponseEntity<Object>(O_RESPONSE, HttpStatus.OK);
+
 	}
 }

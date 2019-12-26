@@ -1,6 +1,7 @@
 package com.technokryon.ecommerce.pojo;
 
 import java.time.OffsetDateTime;
+import java.util.List;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -24,14 +25,17 @@ public class ORDER {
 	Double oRefundAmount;
 	String oIsSendEmail;
 	String oEmailId;
-	String oPaymentType;
+	String oTkecmpptId;
+	String oStatus;
+	String oTransactionId;
 	OffsetDateTime oCreatedDate;
 	String oCreatedUserId;
 	OffsetDateTime oExpectedDelivery;
 	OffsetDateTime oDeliveryDate;
-	String productId;
-	Integer proQuantity;
-	Integer userAddressId;
+	String userId;
+//	String productId;
+//	Integer proQuantity;
+	List<PRODUCT> LO_PRODUCT;
 	Integer billingAddress;
 	Integer shippingAddress;
 

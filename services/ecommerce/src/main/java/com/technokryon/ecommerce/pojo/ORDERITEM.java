@@ -13,10 +13,10 @@ public class ORDERITEM {
 	String oiSku;
 	String oiName;
 	Float oiWeight;
+	Integer oiQuantity;
 	Double oiPrice;
 	Double oiTaxPercent;
 	Double oiTaxAmount;
-	String oiPaymentType;
-	String oiTransactionId;
+	String oiStatus;
 
 }

@@ -46,16 +46,16 @@ public class TKECTORDERITEM {
 	@Column(name = "TKECTOI_PRICE")
 	private Double oiPrice;
 
+	@Column(name = "TKECTOI_QUANTITY")
+	private Integer oiQuantity;
+
 	@Column(name = "TKECTOI_TAX_PERCENT")
 	private Double oiTaxPercent;
 
 	@Column(name = "TKECTOI_TAX_AMOUNT")
 	private Double oiTaxAmount;
 
-	@Column(name = "TKECTOI_PAYMENT_TYPE")
-	private String oiPaymentType;
-
-	@Column(name = "TKECTOI_TRANSACTION_ID")
-	private String oiTransactionId;
+	@Column(name = "TKECTOI_STATUS")
+	private String oiStatus;
 
 }

@@ -1,5 +1,7 @@
 package com.technokryon.ecommerce.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -17,15 +19,21 @@ public class OrderServiceImpl implements OrderService {
 	OrderDao O_OrderDao;
 
 	@Override
-	public Boolean checkAvailableProductQuantity(String productId, Integer proQuantity) {
-		// TODO Auto-generated method stub
-		return O_OrderDao.checkAvailableProductQuantity(productId, proQuantity);
-	}
-
-	@Override
 	public String requestOrder(ORDER RO_ORDER) {
 		// TODO Auto-generated method stub
 		return O_OrderDao.requestOrder(RO_ORDER);
+	}
+
+	@Override
+	public Boolean checkAvailableProductQuantity(List<PRODUCT> LO_PRODUCT) {
+		// TODO Auto-generated method stub
+		return O_OrderDao.checkAvailableProductQuantity(LO_PRODUCT);
+	}
+
+	@Override
+	public String updateTransactionId(ORDER RO_ORDER) {
+		// TODO Auto-generated method stub
+		return O_OrderDao.updateTransactionId(RO_ORDER);
 	}
 
 }
