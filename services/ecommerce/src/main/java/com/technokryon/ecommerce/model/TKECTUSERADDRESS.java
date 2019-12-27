@@ -45,8 +45,9 @@ public class TKECTUSERADDRESS {
 	@Column(name = "TKECTUA_ADDRESS")
 	private String uadAddress;
 
-	@Column(name = "TKECTUA_STREET")
-	private String uadStreet;
+	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@JoinColumn(name = "TKECTUA_TKECTS_AG_ID", foreignKey = @ForeignKey(name = "FK_TKECTUA_TKECTS_AG_ID"))
+	private TKECTSTATE uadTkectsAgId;
 
 	@Column(name = "TKECTUA_CITY")
 	private String uadCity;
@@ -58,8 +59,11 @@ public class TKECTUSERADDRESS {
 	@JoinColumn(name = "TKECTUA_TKECMCN_AG_ID", foreignKey = @ForeignKey(name = "FK_TKECTUA_TKECMCN_AG_ID"))
 	private TKECMCOUNTRY uadTkecnAgId;
 
+	@Column(name = "TKECTUA_LANDMARK")
+	private String uadLandmark;
+
 	@Column(name = "TKECTUA_ADDRESS_TYPE")
-	private String uadType;
+	private String uadAddressType;
 
 	@Column(name = "TKECTUA_CREATED_DATE")
 	private OffsetDateTime uadCreatedDate;
@@ -72,5 +76,11 @@ public class TKECTUSERADDRESS {
 
 	@Column(name = "TKECTUA_MODIFIED_USER_ID")
 	private String uadModifiedUserId;
+
+	@Column(name = "TKECTUA_LATITUDE")
+	private Double uadLatitude;
+
+	@Column(name = "TKECTUA_LONGITUDE")
+	private Double uadLongitude;
 
 }

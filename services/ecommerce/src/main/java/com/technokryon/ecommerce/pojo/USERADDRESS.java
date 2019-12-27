@@ -16,14 +16,17 @@ public class USERADDRESS {
 	BigInteger uadPhone;
 	BigInteger uadAlternativePhone;
 	String uadAddress;
-	String uadStreet;
+	Integer uadTkectsAgId;
 	String uadCity;
 	String uadPostalCode;
 	Integer uadTkecnAgId;
-	String uadType;
+	String uadLandmark;
+	String uadAddressType;
 	OffsetDateTime uadCreatedDate;
 	String uadCreatedUserId;
 	OffsetDateTime uadModifiedDate;
 	String uadModifiedUserId;
+	Double uadLatitude;
+	Double uadLongitude;
 
 }

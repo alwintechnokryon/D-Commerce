@@ -25,7 +25,7 @@ public class PRODUCT {
 	OffsetDateTime pModifiedDate;
 	String pModifiedUserId;
 	String pStatus;
-	Integer pTkecmptAgId;
+	String pTkecmptAgId;
 	Double pPrice;
 	String pDefaultYN;
 	Integer pageNumber;

@@ -47,8 +47,9 @@ public class TKECTORDERADDRESS {
 	@Column(name = "TKECTOA_ADDRESS")
 	private String oaAddress;
 
-	@Column(name = "TKECTOA_STREET")
-	private String oaStreet;
+	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@JoinColumn(name = "TKECTOA_TKECTS_AG_ID", foreignKey = @ForeignKey(name = "FK_TKECTOA_TKECTS_AG_ID"))
+	private TKECTSTATE oaTkectsAgId;
 
 	@Column(name = "TKECTOA_CITY")
 	private String oaCity;
@@ -64,5 +65,11 @@ public class TKECTORDERADDRESS {
 
 	@Column(name = "TKECTOA_ADDRESS_TYPE")
 	private String oaAddressType;
+
+	@Column(name = "TKECTOA_LATITUDE")
+	private Double oaLatitude;
+
+	@Column(name = "TKECTOA_LONGITUDE")
+	private Double oaLongitude;
 
 }

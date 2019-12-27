@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Dec 26, 2019 at 01:33 PM
+-- Generation Time: Dec 27, 2019 at 01:40 PM
 -- Server version: 5.7.23
 -- PHP Version: 5.6.38
 
@@ -518,29 +518,30 @@ CREATE TABLE IF NOT EXISTS `TKECM_PRODUCT` (
   `TKECMP_MODIFIED_DATE` datetime DEFAULT NULL,
   `TKECMP_MODIFIED_USERID` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL,
   `TKECMP_STATUS` varchar(10) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `TKECMP_TKECMPT_AG_ID` int(11) DEFAULT NULL,
+  `TKECMP_TKECMPT_ID` varchar(20) COLLATE utf8_unicode_ci DEFAULT NULL,
   `TKECMP_PRICE` double DEFAULT NULL,
   `TKECMP_DEFAULT_YN` varchar(5) COLLATE utf8_unicode_ci NOT NULL,
+  `TKECMP_TKECMPT_AG_ID` int(11) DEFAULT NULL,
   PRIMARY KEY (`TKECMP_ID`),
   UNIQUE KEY `UNIQUESKU` (`TKECMP_SKU`),
   UNIQUE KEY `TKECMP_NAME` (`TKECMP_NAME`),
   KEY `FK_TKECMP_TKECMC_CATEGORY_ID` (`TKECMP_TKECMC_CATEGORY_ID`) USING BTREE,
-  KEY `FK_TKECMP_TKECMPT_AG_ID` (`TKECMP_TKECMPT_AG_ID`) USING BTREE
+  KEY `FK_TKECMP_TKECMPT_ID` (`TKECMP_TKECMPT_ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Dumping data for table `TKECM_PRODUCT`
 --
 
-INSERT INTO `TKECM_PRODUCT` (`TKECMP_ID`, `TKECMP_SKU`, `TKECMP_NAME`, `TKECMP_TKECMC_CATEGORY_ID`, `TKECMP_WEIGHT`, `TKECMP_QUANTITY`, `TKECMP_SHORT_DESC`, `TKECMP_LONG_DESC`, `TKECMP_COUNTRY_OF_MFG`, `TKECMP_CREATED_DATE`, `TKECMP_CREATED_USERID`, `TKECMP_MODIFIED_DATE`, `TKECMP_MODIFIED_USERID`, `TKECMP_STATUS`, `TKECMP_TKECMPT_AG_ID`, `TKECMP_PRICE`, `TKECMP_DEFAULT_YN`) VALUES
-('1', 'RN7PRO', 'Redmi Note 7 Pro', 'TKECC0016', NULL, 192, 'Redmi Note 7 Pro', 'The former is slightly faster and more efficient. The Pro model also offers more RAM and internal storage than the regular model, as well as stronger camera hardware. The Xiaomi Redmi Note 7 Pro has a 48MP + 5MP rear camera setup like the Redmi Note 7.', 'China', NULL, NULL, NULL, NULL, 'Y', 1, 17000, 'Y'),
-('2', 'LED123', 'LED', 'TKECC0018', NULL, 60, 'LED', 'A light-emitting diode (LED) is a semiconductor light source that emits light when current flows through it. Electrons in the semiconductor recombine with electron holes, releasing energy in the form of photons.', 'India', NULL, NULL, NULL, NULL, 'Y', 1, 45000, 'Y'),
-('3', 'WedSet56', 'Wedding Set', 'TKECC0023', NULL, 3, 'Wedding Set', 'A wedding set includes the engagement ring, matching band for her and a band for him. A bridal set consists of an engagement ring and matching band for the bride, leaving the groom on his own for his band.', 'India', NULL, NULL, NULL, NULL, 'Y', 1, 6000, 'Y'),
-('4', 'ShirtRed001', 'Shirt Red', 'TKECC0020', NULL, 5, 'Shirt Red', 'Casual Shirts for Men - Buy new arrivals & latest Casual Shirt for Men from Mufti, Tommy Hilfiger, Roadster, UCB & more.', 'India', NULL, NULL, NULL, NULL, 'Y', 2, 850, 'N'),
-('5', 'ShirtPink002', 'Shirt Pink', 'TKECC0020', NULL, 4, 'Shirt Pink', 'Casual Shirts for Men - Buy new arrivals & latest Casual Shirt for Men from Mufti, Tommy Hilfiger, Roadster, UCB & more.', 'India', NULL, NULL, NULL, NULL, 'Y', 4, 875, 'Y'),
-('6', 'Ebook003', 'Ebook', 'TKECC0029', NULL, 3, 'Ebooks', 'An electronic book, also known as an e-book or eBook, is a book publication made available in digital form, consisting of text, images, or both, readable ', 'India', NULL, NULL, NULL, NULL, 'Y', 3, 450, 'Y'),
-('7', 'Books004', 'Books', 'TKECC0030', NULL, 2, 'Books', 'Books Advanced Search New Releases & Pre-orders Best Sellers Browse Genres Children\'s & Young Adult Textbooks Exam Central All Indian Languages', 'India', NULL, NULL, NULL, NULL, 'Y', 3, 250, 'Y'),
-('8', 'ShirtOrange003', 'Shirt Orange', 'TKECC0020', NULL, 3, 'Shirt Orange', 'Casual Shirts for Men - Buy new arrivals & latest Casual Shirt for Men from Mufti, Tommy Hilfiger, Roadster, UCB & more.', 'India', NULL, NULL, NULL, NULL, 'Y', 4, 325, 'N');
+INSERT INTO `TKECM_PRODUCT` (`TKECMP_ID`, `TKECMP_SKU`, `TKECMP_NAME`, `TKECMP_TKECMC_CATEGORY_ID`, `TKECMP_WEIGHT`, `TKECMP_QUANTITY`, `TKECMP_SHORT_DESC`, `TKECMP_LONG_DESC`, `TKECMP_COUNTRY_OF_MFG`, `TKECMP_CREATED_DATE`, `TKECMP_CREATED_USERID`, `TKECMP_MODIFIED_DATE`, `TKECMP_MODIFIED_USERID`, `TKECMP_STATUS`, `TKECMP_TKECMPT_ID`, `TKECMP_PRICE`, `TKECMP_DEFAULT_YN`, `TKECMP_TKECMPT_AG_ID`) VALUES
+('1', 'RN7PRO', 'Redmi Note 7 Pro', 'TKECC0016', NULL, 192, 'Redmi Note 7 Pro', 'The former is slightly faster and more efficient. The Pro model also offers more RAM and internal storage than the regular model, as well as stronger camera hardware. The Xiaomi Redmi Note 7 Pro has a 48MP + 5MP rear camera setup like the Redmi Note 7.', 'China', NULL, NULL, NULL, NULL, 'Y', 'TKECMPT0001', 17000, 'Y', NULL),
+('2', 'LED123', 'LED', 'TKECC0018', NULL, 60, 'LED', 'A light-emitting diode (LED) is a semiconductor light source that emits light when current flows through it. Electrons in the semiconductor recombine with electron holes, releasing energy in the form of photons.', 'India', NULL, NULL, NULL, NULL, 'Y', 'TKECMPT0001', 45000, 'Y', NULL),
+('3', 'WedSet56', 'Wedding Set', 'TKECC0023', NULL, 3, 'Wedding Set', 'A wedding set includes the engagement ring, matching band for her and a band for him. A bridal set consists of an engagement ring and matching band for the bride, leaving the groom on his own for his band.', 'India', NULL, NULL, NULL, NULL, 'Y', 'TKECMPT0001', 6000, 'Y', NULL),
+('4', 'ShirtRed001', 'Shirt Red', 'TKECC0020', NULL, 5, 'Shirt Red', 'Casual Shirts for Men - Buy new arrivals & latest Casual Shirt for Men from Mufti, Tommy Hilfiger, Roadster, UCB & more.', 'India', NULL, NULL, NULL, NULL, 'Y', 'TKECMPT0002', 850, 'N', NULL),
+('5', 'ShirtPink002', 'Shirt Pink', 'TKECC0020', NULL, 4, 'Shirt Pink', 'Casual Shirts for Men - Buy new arrivals & latest Casual Shirt for Men from Mufti, Tommy Hilfiger, Roadster, UCB & more.', 'India', NULL, NULL, NULL, NULL, 'Y', 'TKECMPT0002', 875, 'Y', NULL),
+('6', 'Ebook003', 'Ebook', 'TKECC0029', NULL, 3, 'Ebooks', 'An electronic book, also known as an e-book or eBook, is a book publication made available in digital form, consisting of text, images, or both, readable ', 'India', NULL, NULL, NULL, NULL, 'Y', 'TKECMPT0003', 450, 'Y', NULL),
+('7', 'Books004', 'Books', 'TKECC0030', NULL, 2, 'Books', 'Books Advanced Search New Releases & Pre-orders Best Sellers Browse Genres Children\'s & Young Adult Textbooks Exam Central All Indian Languages', 'India', NULL, NULL, NULL, NULL, 'Y', 'TKECMPT0003', 250, 'Y', NULL),
+('8', 'ShirtOrange003', 'Shirt Orange', 'TKECC0020', NULL, 3, 'Shirt Orange', 'Casual Shirts for Men - Buy new arrivals & latest Casual Shirt for Men from Mufti, Tommy Hilfiger, Roadster, UCB & more.', 'India', NULL, NULL, NULL, NULL, 'Y', 'TKECMPT0002', 325, 'N', NULL);
 
 -- --------------------------------------------------------
 
@@ -597,20 +598,20 @@ INSERT INTO `TKECM_PRODUCT_PAYMENT_TYPE` (`TKECMPPT_ID`, `TKECMPPT_TYPE`) VALUES
 
 DROP TABLE IF EXISTS `TKECM_PRODUCT_TYPE`;
 CREATE TABLE IF NOT EXISTS `TKECM_PRODUCT_TYPE` (
-  `TKECMPT_AG_ID` int(11) NOT NULL AUTO_INCREMENT,
-  `TKECMPT_TYPE` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
-  PRIMARY KEY (`TKECMPT_AG_ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+  `TKECMPT_ID` varchar(20) COLLATE utf8_unicode_ci NOT NULL,
+  `TKECMPT_TYPE` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL,
+  PRIMARY KEY (`TKECMPT_ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Dumping data for table `TKECM_PRODUCT_TYPE`
 --
 
-INSERT INTO `TKECM_PRODUCT_TYPE` (`TKECMPT_AG_ID`, `TKECMPT_TYPE`) VALUES
-(1, 'Simple'),
-(2, 'Configurable'),
-(3, 'Downlodable'),
-(4, 'Virtual');
+INSERT INTO `TKECM_PRODUCT_TYPE` (`TKECMPT_ID`, `TKECMPT_TYPE`) VALUES
+('TKECMPT0001', 'Simple'),
+('TKECMPT0002', 'Configurable'),
+('TKECMPT0003', 'Downlodable'),
+('TKECMPT0004', 'Virtual');
 
 -- --------------------------------------------------------
 
@@ -745,57 +746,60 @@ CREATE TABLE IF NOT EXISTS `TKECT_ORDER_ADDRESS` (
   `TKECTOA_PHONE` bigint(20) DEFAULT NULL,
   `TKECTOA_ALTERNATIVE_PHONE` bigint(20) DEFAULT NULL,
   `TKECTOA_ADDRESS` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `TKECTOA_STREET` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `TKECTOA_CITY` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `TKECTOA_TKECTS_AG_ID` int(11) DEFAULT NULL,
   `TKECTOA_POSTAL_CODE` varchar(10) COLLATE utf8_unicode_ci DEFAULT NULL,
   `TKECTOA_COUNTRY_ID` int(11) UNSIGNED DEFAULT NULL,
   `TKECTOA_FLAG_ADDRESS` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT 'BILL,SHIP',
   `TKECTOA_ADDRESS_TYPE` varchar(10) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `TKECTOA_LATITUDE` double DEFAULT NULL,
+  `TKECTOA_LONGITUDE` double DEFAULT NULL,
   PRIMARY KEY (`TKECTOA_AG_ID`),
-  KEY `FK_TKECTOA_TKECMO_ID` (`TKECTOA_TKECMO_ID`) USING BTREE
+  KEY `FK_TKECTOA_TKECMO_ID` (`TKECTOA_TKECMO_ID`) USING BTREE,
+  KEY `FK_TKECTOA_TKECTS_AG_ID` (`TKECTOA_TKECTS_AG_ID`)
 ) ENGINE=InnoDB AUTO_INCREMENT=39 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Dumping data for table `TKECT_ORDER_ADDRESS`
 --
 
-INSERT INTO `TKECT_ORDER_ADDRESS` (`TKECTOA_AG_ID`, `TKECTOA_TKECMO_ID`, `TKECTOA_NAME`, `TKECTOA_EMAIL_ID`, `TKECTOA_PHONE`, `TKECTOA_ALTERNATIVE_PHONE`, `TKECTOA_ADDRESS`, `TKECTOA_STREET`, `TKECTOA_CITY`, `TKECTOA_POSTAL_CODE`, `TKECTOA_COUNTRY_ID`, `TKECTOA_FLAG_ADDRESS`, `TKECTOA_ADDRESS_TYPE`) VALUES
-(2, 'TKECO00001', 'Sasi Kumar.M', 'sasikumarmsk1996@gmail.com', 9710401369, 8608417989, 'No:123/12 ', 'Kumaran street, MMC', 'Anna Nagar', '600101', NULL, 'BILL', 'Home'),
-(3, 'TKECO00002', 'Dharshini', 'dharshini@gmail.com', 7894561235, NULL, 'No:104/10 ', 'Sri Nagar MMDA Colony', 'Avadi', '600054', NULL, 'BILL', 'Home'),
-(4, 'TKECO00003', 'Sasi', 'msk@gmail.com', 9874561235, 7789651235, 'No:20 ABC Nagar', 'Shoba Street', 'Ambattur', '600053', NULL, 'BILL', 'Work'),
-(5, 'TKECO00004', 'Sasi', 'msk@gmail.com', 9874561235, 7789651235, 'No:20 ABC Nagar', 'Shoba Street', 'Ambattur', '600053', NULL, 'BILL', 'Work'),
-(6, 'TKECO00005', 'mandhan', 'gdfg@gnail.com', 9843205332, NULL, 'no:3487', 'lig II', 'Avadi', '600053', NULL, 'BILL', 'home'),
-(8, 'TKECO00006', 'Sasi Kumar.M', 'msk@gmail.com', 9710401369, 8608417989, 'No:123/12 ', 'Kumaran street, MMC', 'Anna Nagar', '600101', NULL, 'BILL', 'Home'),
-(9, 'TKECO00007', 'Sasi Kumar.M', 'msk@gmail.com', 9710401369, 8608417989, 'No:123/12 ', 'Kumaran street, MMC', 'Anna Nagar', '600101', NULL, 'BILL', 'Home'),
-(10, 'TKECO00008', 'Sasi Kumar.M', 'msk@gmail.com', 9710401369, 8608417989, 'No:123/12 ', 'Kumaran street, MMC', 'Anna Nagar', '600101', NULL, 'BILL', 'Home'),
-(11, 'TKECO00009', 'Sasi Kumar.M', 'msk@gmail.com', 9710401369, 8608417989, 'No:123/12 ', 'Kumaran street, MMC', 'Anna Nagar', '600101', NULL, 'BILL', 'Home'),
-(12, 'TKECO00010', 'Sasi Kumar.M', 'msk@gmail.com', 9710401369, 8608417989, 'No:123/12 ', 'Kumaran street, MMC', 'Anna Nagar', '600101', NULL, 'BILL', 'Home'),
-(13, 'TKECO00011', 'Sasi Kumar.M', 'msk@gmail.com', 9710401369, 8608417989, 'No:123/12 ', 'Kumaran street, MMC', 'Anna Nagar', '600101', NULL, 'BILL', 'Home'),
-(14, 'TKECO00012', 'Sasi Kumar.M', 'msk@gmail.com', 9710401369, 8608417989, 'No:123/12 ', 'Kumaran street, MMC', 'Anna Nagar', '600101', NULL, 'BILL', 'Home'),
-(15, 'TKECO00013', 'Sasi Kumar.M', 'msk@gmail.com', 9710401369, 8608417989, 'No:123/12 ', 'Kumaran street, MMC', 'Anna Nagar', '600101', NULL, 'BILL', 'Home'),
-(16, 'TKECO00014', 'Sasi Kumar.M', 'msk@gmail.com', 9710401369, 8608417989, 'No:123/12 ', 'Kumaran street, MMC', 'Anna Nagar', '600101', NULL, 'BILL', 'Home'),
-(17, 'TKECO00015', 'Sasi Kumar.M', 'msk@gmail.com', 9710401369, 8608417989, 'No:123/12 ', 'Kumaran street, MMC', 'Anna Nagar', '600101', NULL, 'BILL', 'Home'),
-(18, 'TKECO00016', 'Sasi Kumar.M', 'msk@gmail.com', 9710401369, 8608417989, 'No:123/12 ', 'Kumaran street, MMC', 'Anna Nagar', '600101', NULL, 'BILL', 'Home'),
-(19, 'TKECO00017', 'Sasi Kumar.M', 'msk@gmail.com', 9710401369, 8608417989, 'No:123/12 ', 'Kumaran street, MMC', 'Anna Nagar', '600101', NULL, 'BILL', 'Home'),
-(20, 'TKECO00018', 'Sasi Kumar.M', 'msk@gmail.com', 9710401369, 8608417989, 'No:123/12 ', 'Kumaran street, MMC', 'Anna Nagar', '600101', NULL, 'BILL', 'Home'),
-(21, 'TKECO00019', 'Sasi Kumar.M', 'msk@gmail.com', 9710401369, 8608417989, 'No:123/12 ', 'Kumaran street, MMC', 'Anna Nagar', '600101', NULL, 'BILL', 'Home'),
-(22, 'TKECO00020', 'Sasi Kumar.M', 'msk@gmail.com', 9710401369, 8608417989, 'No:123/12 ', 'Kumaran street, MMC', 'Anna Nagar', '600101', NULL, 'BILL', 'Home'),
-(23, 'TKECO00021', 'Sasi Kumar.M', 'msk@gmail.com', 9710401369, 8608417989, 'No:123/12 ', 'Kumaran street, MMC', 'Anna Nagar', '600101', NULL, 'BILL', 'Home'),
-(24, 'TKECO00022', 'Sasi Kumar.M', 'msk@gmail.com', 9710401369, 8608417989, 'No:123/12 ', 'Kumaran street, MMC', 'Anna Nagar', '600101', NULL, 'BILL', 'Home'),
-(25, 'TKECO00023', 'Sasi Kumar.M', 'msk@gmail.com', 9710401369, 8608417989, 'No:123/12 ', 'Kumaran street, MMC', 'Anna Nagar', '600101', NULL, 'BILL', 'Home'),
-(26, 'TKECO00024', 'Sasi Kumar.M', 'msk@gmail.com', 9710401369, 8608417989, 'No:123/12 ', 'Kumaran street, MMC', 'Anna Nagar', '600101', NULL, 'BILL', 'Home'),
-(27, 'TKECO00025', 'Sasi Kumar.M', 'msk@gmail.com', 9710401369, 8608417989, 'No:123/12 ', 'Kumaran street, MMC', 'Anna Nagar', '600101', NULL, 'BILL', 'Home'),
-(28, 'TKECO00026', 'Sasi Kumar.M', 'msk@gmail.com', 9710401369, 8608417989, 'No:123/12 ', 'Kumaran street, MMC', 'Anna Nagar', '600101', NULL, 'BILL', 'Home'),
-(29, 'TKECO00027', 'Sasi Kumar.M', 'msk@gmail.com', 9710401369, 8608417989, 'No:123/12 ', 'Kumaran street, MMC', 'Anna Nagar', '600101', NULL, 'BILL', 'Home'),
-(30, 'TKECO00028', 'Sasi Kumar.M', 'msk@gmail.com', 9710401369, 8608417989, 'No:123/12 ', 'Kumaran street, MMC', 'Anna Nagar', '600101', NULL, 'BILL', 'Home'),
-(31, 'TKECO00029', 'Sasi Kumar.M', 'msk@gmail.com', 9710401369, 8608417989, 'No:123/12 ', 'Kumaran street, MMC', 'Anna Nagar', '600101', NULL, 'BILL', 'Home'),
-(32, 'TKECO00030', 'Sasi Kumar.M', 'msk@gmail.com', 9710401369, 8608417989, 'No:123/12 ', 'Kumaran street, MMC', 'Anna Nagar', '600101', NULL, 'BILL', 'Home'),
-(33, 'TKECO00031', 'Sasi Kumar.M', 'msk@gmail.com', 9710401369, 8608417989, 'No:123/12 ', 'Kumaran street, MMC', 'Anna Nagar', '600101', NULL, 'BILL', 'Home'),
-(34, 'TKECO00032', 'Sasi Kumar.M', 'msk@gmail.com', 9710401369, 8608417989, 'No:123/12 ', 'Kumaran street, MMC', 'Anna Nagar', '600101', NULL, 'BILL', 'Home'),
-(35, 'TKECO00033', 'Sasi Kumar.M', 'msk@gmail.com', 9710401369, 8608417989, 'No:123/12 ', 'Kumaran street, MMC', 'Anna Nagar', '600101', NULL, 'BILL', 'Home'),
-(36, 'TKECO00034', 'Sasi Kumar.M', 'msk@gmail.com', 9710401369, 8608417989, 'No:123/12 ', 'Kumaran street, MMC', 'Anna Nagar', '600101', NULL, 'BILL', 'Home'),
-(37, 'TKECO00035', 'Sasi Kumar.M', 'msk@gmail.com', 9710401369, 8608417989, 'No:123/12 ', 'Kumaran street, MMC', 'Anna Nagar', '600101', NULL, 'BILL', 'Home'),
-(38, 'TKECO00036', 'Sasi Kumar.M', 'msk@gmail.com', 9710401369, 8608417989, 'No:123/12 ', 'Kumaran street, MMC', 'Anna Nagar', '600101', NULL, 'BILL', 'Home');
+INSERT INTO `TKECT_ORDER_ADDRESS` (`TKECTOA_AG_ID`, `TKECTOA_TKECMO_ID`, `TKECTOA_NAME`, `TKECTOA_EMAIL_ID`, `TKECTOA_PHONE`, `TKECTOA_ALTERNATIVE_PHONE`, `TKECTOA_ADDRESS`, `TKECTOA_CITY`, `TKECTOA_TKECTS_AG_ID`, `TKECTOA_POSTAL_CODE`, `TKECTOA_COUNTRY_ID`, `TKECTOA_FLAG_ADDRESS`, `TKECTOA_ADDRESS_TYPE`, `TKECTOA_LATITUDE`, `TKECTOA_LONGITUDE`) VALUES
+(2, 'TKECO00001', 'Sasi Kumar.M', 'sasikumarmsk1996@gmail.com', 9710401369, 8608417989, 'No:123/12 ', 'Anna Nagar', NULL, '600101', NULL, 'BILL', 'Home', NULL, NULL),
+(3, 'TKECO00002', 'Dharshini', 'dharshini@gmail.com', 7894561235, NULL, 'No:104/10 ', 'Avadi', NULL, '600054', NULL, 'BILL', 'Home', NULL, NULL),
+(4, 'TKECO00003', 'Sasi', 'msk@gmail.com', 9874561235, 7789651235, 'No:20 ABC Nagar', 'Ambattur', NULL, '600053', NULL, 'BILL', 'Work', NULL, NULL),
+(5, 'TKECO00004', 'Sasi', 'msk@gmail.com', 9874561235, 7789651235, 'No:20 ABC Nagar', 'Ambattur', NULL, '600053', NULL, 'BILL', 'Work', NULL, NULL),
+(6, 'TKECO00005', 'mandhan', 'gdfg@gnail.com', 9843205332, NULL, 'no:3487', 'Avadi', NULL, '600053', NULL, 'BILL', 'home', NULL, NULL),
+(8, 'TKECO00006', 'Sasi Kumar.M', 'msk@gmail.com', 9710401369, 8608417989, 'No:123/12 ', 'Anna Nagar', NULL, '600101', NULL, 'BILL', 'Home', NULL, NULL),
+(9, 'TKECO00007', 'Sasi Kumar.M', 'msk@gmail.com', 9710401369, 8608417989, 'No:123/12 ', 'Anna Nagar', NULL, '600101', NULL, 'BILL', 'Home', NULL, NULL),
+(10, 'TKECO00008', 'Sasi Kumar.M', 'msk@gmail.com', 9710401369, 8608417989, 'No:123/12 ', 'Anna Nagar', NULL, '600101', NULL, 'BILL', 'Home', NULL, NULL),
+(11, 'TKECO00009', 'Sasi Kumar.M', 'msk@gmail.com', 9710401369, 8608417989, 'No:123/12 ', 'Anna Nagar', NULL, '600101', NULL, 'BILL', 'Home', NULL, NULL),
+(12, 'TKECO00010', 'Sasi Kumar.M', 'msk@gmail.com', 9710401369, 8608417989, 'No:123/12 ', 'Anna Nagar', NULL, '600101', NULL, 'BILL', 'Home', NULL, NULL),
+(13, 'TKECO00011', 'Sasi Kumar.M', 'msk@gmail.com', 9710401369, 8608417989, 'No:123/12 ', 'Anna Nagar', NULL, '600101', NULL, 'BILL', 'Home', NULL, NULL),
+(14, 'TKECO00012', 'Sasi Kumar.M', 'msk@gmail.com', 9710401369, 8608417989, 'No:123/12 ', 'Anna Nagar', NULL, '600101', NULL, 'BILL', 'Home', NULL, NULL),
+(15, 'TKECO00013', 'Sasi Kumar.M', 'msk@gmail.com', 9710401369, 8608417989, 'No:123/12 ', 'Anna Nagar', NULL, '600101', NULL, 'BILL', 'Home', NULL, NULL),
+(16, 'TKECO00014', 'Sasi Kumar.M', 'msk@gmail.com', 9710401369, 8608417989, 'No:123/12 ', 'Anna Nagar', NULL, '600101', NULL, 'BILL', 'Home', NULL, NULL),
+(17, 'TKECO00015', 'Sasi Kumar.M', 'msk@gmail.com', 9710401369, 8608417989, 'No:123/12 ', 'Anna Nagar', NULL, '600101', NULL, 'BILL', 'Home', NULL, NULL),
+(18, 'TKECO00016', 'Sasi Kumar.M', 'msk@gmail.com', 9710401369, 8608417989, 'No:123/12 ', 'Anna Nagar', NULL, '600101', NULL, 'BILL', 'Home', NULL, NULL),
+(19, 'TKECO00017', 'Sasi Kumar.M', 'msk@gmail.com', 9710401369, 8608417989, 'No:123/12 ', 'Anna Nagar', NULL, '600101', NULL, 'BILL', 'Home', NULL, NULL),
+(20, 'TKECO00018', 'Sasi Kumar.M', 'msk@gmail.com', 9710401369, 8608417989, 'No:123/12 ', 'Anna Nagar', NULL, '600101', NULL, 'BILL', 'Home', NULL, NULL),
+(21, 'TKECO00019', 'Sasi Kumar.M', 'msk@gmail.com', 9710401369, 8608417989, 'No:123/12 ', 'Anna Nagar', NULL, '600101', NULL, 'BILL', 'Home', NULL, NULL),
+(22, 'TKECO00020', 'Sasi Kumar.M', 'msk@gmail.com', 9710401369, 8608417989, 'No:123/12 ', 'Anna Nagar', NULL, '600101', NULL, 'BILL', 'Home', NULL, NULL),
+(23, 'TKECO00021', 'Sasi Kumar.M', 'msk@gmail.com', 9710401369, 8608417989, 'No:123/12 ', 'Anna Nagar', NULL, '600101', NULL, 'BILL', 'Home', NULL, NULL),
+(24, 'TKECO00022', 'Sasi Kumar.M', 'msk@gmail.com', 9710401369, 8608417989, 'No:123/12 ', 'Anna Nagar', NULL, '600101', NULL, 'BILL', 'Home', NULL, NULL),
+(25, 'TKECO00023', 'Sasi Kumar.M', 'msk@gmail.com', 9710401369, 8608417989, 'No:123/12 ', 'Anna Nagar', NULL, '600101', NULL, 'BILL', 'Home', NULL, NULL),
+(26, 'TKECO00024', 'Sasi Kumar.M', 'msk@gmail.com', 9710401369, 8608417989, 'No:123/12 ', 'Anna Nagar', NULL, '600101', NULL, 'BILL', 'Home', NULL, NULL),
+(27, 'TKECO00025', 'Sasi Kumar.M', 'msk@gmail.com', 9710401369, 8608417989, 'No:123/12 ', 'Anna Nagar', NULL, '600101', NULL, 'BILL', 'Home', NULL, NULL),
+(28, 'TKECO00026', 'Sasi Kumar.M', 'msk@gmail.com', 9710401369, 8608417989, 'No:123/12 ', 'Anna Nagar', NULL, '600101', NULL, 'BILL', 'Home', NULL, NULL),
+(29, 'TKECO00027', 'Sasi Kumar.M', 'msk@gmail.com', 9710401369, 8608417989, 'No:123/12 ', 'Anna Nagar', NULL, '600101', NULL, 'BILL', 'Home', NULL, NULL),
+(30, 'TKECO00028', 'Sasi Kumar.M', 'msk@gmail.com', 9710401369, 8608417989, 'No:123/12 ', 'Anna Nagar', NULL, '600101', NULL, 'BILL', 'Home', NULL, NULL),
+(31, 'TKECO00029', 'Sasi Kumar.M', 'msk@gmail.com', 9710401369, 8608417989, 'No:123/12 ', 'Anna Nagar', NULL, '600101', NULL, 'BILL', 'Home', NULL, NULL),
+(32, 'TKECO00030', 'Sasi Kumar.M', 'msk@gmail.com', 9710401369, 8608417989, 'No:123/12 ', 'Anna Nagar', NULL, '600101', NULL, 'BILL', 'Home', NULL, NULL),
+(33, 'TKECO00031', 'Sasi Kumar.M', 'msk@gmail.com', 9710401369, 8608417989, 'No:123/12 ', 'Anna Nagar', NULL, '600101', NULL, 'BILL', 'Home', NULL, NULL),
+(34, 'TKECO00032', 'Sasi Kumar.M', 'msk@gmail.com', 9710401369, 8608417989, 'No:123/12 ', 'Anna Nagar', NULL, '600101', NULL, 'BILL', 'Home', NULL, NULL),
+(35, 'TKECO00033', 'Sasi Kumar.M', 'msk@gmail.com', 9710401369, 8608417989, 'No:123/12 ', 'Anna Nagar', NULL, '600101', NULL, 'BILL', 'Home', NULL, NULL),
+(36, 'TKECO00034', 'Sasi Kumar.M', 'msk@gmail.com', 9710401369, 8608417989, 'No:123/12 ', 'Anna Nagar', NULL, '600101', NULL, 'BILL', 'Home', NULL, NULL),
+(37, 'TKECO00035', 'Sasi Kumar.M', 'msk@gmail.com', 9710401369, 8608417989, 'No:123/12 ', 'Anna Nagar', NULL, '600101', NULL, 'BILL', 'Home', NULL, NULL),
+(38, 'TKECO00036', 'Sasi Kumar.M', 'msk@gmail.com', 9710401369, 8608417989, 'No:123/12 ', 'Anna Nagar', NULL, '600101', NULL, 'BILL', 'Home', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -5865,30 +5869,39 @@ CREATE TABLE IF NOT EXISTS `TKECT_USER_ADDRESS` (
   `TKECTUA_PHONE` bigint(20) DEFAULT NULL,
   `TKECTUA_ALTERNATIVE_PHONE` bigint(20) DEFAULT NULL,
   `TKECTUA_ADDRESS` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `TKECTUA_STREET` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `TKECTUA_TKECTS_AG_ID` int(11) DEFAULT NULL,
   `TKECTUA_CITY` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `TKECTUA_POSTAL_CODE` varchar(10) COLLATE utf8_unicode_ci DEFAULT NULL,
   `TKECTUA_TKECMCN_AG_ID` int(10) UNSIGNED DEFAULT NULL,
+  `TKECTUA_LANDMARK` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `TKECTUA_ADDRESS_TYPE` varchar(20) COLLATE utf8_unicode_ci DEFAULT NULL,
   `TKECTUA_CREATED_DATE` datetime DEFAULT NULL,
   `TKECTUA_CREATED_USER_ID` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `TKECTUA_MODIFIED_DATE` datetime DEFAULT NULL,
   `TKECTUA_MODIFIED_USER_ID` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `TKECTUA_LATITUDE` double DEFAULT NULL,
+  `TKECTUA_LONGITUDE` double DEFAULT NULL,
   PRIMARY KEY (`TKECTUA_AG_ID`),
   KEY `FK_TKECTUAD_TKECMU_ID` (`TKECTUA_TKECMU_ID`) USING BTREE,
-  KEY `FK_TKECTUA_TKECMCN_AG_ID` (`TKECTUA_TKECMCN_AG_ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+  KEY `FK_TKECTUA_TKECMCN_AG_ID` (`TKECTUA_TKECMCN_AG_ID`),
+  KEY `FK_TKECTUA_TKECTS_AG_ID` (`TKECTUA_TKECTS_AG_ID`)
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Dumping data for table `TKECT_USER_ADDRESS`
 --
 
-INSERT INTO `TKECT_USER_ADDRESS` (`TKECTUA_AG_ID`, `TKECTUA_TKECMU_ID`, `TKECTUA_NAME`, `TKECTUA_PHONE`, `TKECTUA_ALTERNATIVE_PHONE`, `TKECTUA_ADDRESS`, `TKECTUA_STREET`, `TKECTUA_CITY`, `TKECTUA_POSTAL_CODE`, `TKECTUA_TKECMCN_AG_ID`, `TKECTUA_ADDRESS_TYPE`, `TKECTUA_CREATED_DATE`, `TKECTUA_CREATED_USER_ID`, `TKECTUA_MODIFIED_DATE`, `TKECTUA_MODIFIED_USER_ID`) VALUES
-(1, 'TKEC0013', 'Sasi Kumar.M', 9710401369, 8608417989, 'No:14 ADV Nagar', 'Kumaran Street , MMC', 'Chennai', '600051', NULL, 'Home', NULL, NULL, NULL, NULL),
-(2, 'TKEC0014', 'Sasi', 9874561235, 7789651235, 'No:20 ABC Nagar', 'Shoba Street', 'Ambattur', '600053', NULL, 'Work', NULL, NULL, NULL, NULL),
-(3, 'TKECU0018', 'Dharshini', 7894561235, NULL, 'No:104/10 ', 'Sri Nagar MMDA Colony', 'Avadi', '600054', NULL, 'Home', NULL, NULL, NULL, NULL),
-(4, 'TKECU0028', 'Sasi Kumar.M', 9710401369, 8608417989, 'No:123/12 ', 'Kumaran street, MMC', 'Anna Nagar', '600101', NULL, 'Home', NULL, NULL, NULL, NULL),
-(5, 'TKECU0030', 'mandhan', 9843205332, NULL, 'no:3487', 'lig II', 'Avadi', '600053', NULL, 'home', NULL, NULL, NULL, NULL);
+INSERT INTO `TKECT_USER_ADDRESS` (`TKECTUA_AG_ID`, `TKECTUA_TKECMU_ID`, `TKECTUA_NAME`, `TKECTUA_PHONE`, `TKECTUA_ALTERNATIVE_PHONE`, `TKECTUA_ADDRESS`, `TKECTUA_TKECTS_AG_ID`, `TKECTUA_CITY`, `TKECTUA_POSTAL_CODE`, `TKECTUA_TKECMCN_AG_ID`, `TKECTUA_LANDMARK`, `TKECTUA_ADDRESS_TYPE`, `TKECTUA_CREATED_DATE`, `TKECTUA_CREATED_USER_ID`, `TKECTUA_MODIFIED_DATE`, `TKECTUA_MODIFIED_USER_ID`, `TKECTUA_LATITUDE`, `TKECTUA_LONGITUDE`) VALUES
+(1, 'TKEC0013', 'Sasi Kumar.M', 9710401369, 8608417989, 'No:14 ADV Nagar', NULL, 'Chennai', '600051', NULL, NULL, 'Home', NULL, NULL, NULL, NULL, NULL, NULL),
+(3, 'TKECU0018', 'Dharshini', 7894561235, NULL, 'No:104/10 ', NULL, 'Avadi', '600054', NULL, NULL, 'Home', NULL, NULL, NULL, NULL, NULL, NULL),
+(4, 'TKECU0028', 'Sasi Kumar.M', 9710401369, 8608417989, 'No:123/12 ', NULL, 'Anna Nagar', '600101', NULL, NULL, 'Home', NULL, NULL, NULL, NULL, NULL, NULL),
+(8, 'TKECU0030', 'Nandhan1', 8608417989, 7894561235, 'No:ab/456 Kuamran Street, Manali', NULL, 'Chennai', '600051', NULL, 'opposite to peumal kovil', 'Work', '2019-12-27 12:02:17', 'TKECU0030', NULL, NULL, 0, 0),
+(10, 'TKECU0018', 'tharun', 7984563214, 0, 'No:12, abc Nagar', NULL, 'chennai', '600051', NULL, 'string', 'dhdgh', '2019-12-27 16:40:51', 'TKECU0018', NULL, NULL, 0, 0),
+(11, 'TKECU0018', 'tharun', 7984563214, 0, 'No:12, abc Nagar', NULL, 'chennai', '600051', NULL, 'string', 'dhdgh', '2019-12-27 16:41:32', 'TKECU0018', NULL, NULL, 0, 0),
+(12, 'TKECU0018', 'tharun', 7984563214, 0, 'No:12, abc Nagar', NULL, 'chennai', '600051', NULL, 'string', 'String', '2019-12-27 16:44:52', 'TKECU0018', NULL, NULL, 0, 0),
+(13, 'TKECU0018', 'tharun', 7984563214, 0, 'No:12, abc Nagar', NULL, 'chennai', '600051', NULL, 'string', 'jfj', '2019-12-27 16:45:05', 'TKECU0018', NULL, NULL, 0, 0),
+(14, 'TKECU0018', 'tharun', 7984563214, 0, 'No:12, abc Nagar', NULL, 'chennai', '600051', NULL, 'string', 'Home', '2019-12-27 16:47:32', 'TKECU0018', NULL, NULL, 0, 0),
+(15, 'TKECU0018', 'tharun', 7984563214, 0, 'No:12, abc Nagar', NULL, 'chennai', '600051', NULL, 'string', 'Work', '2019-12-27 16:47:47', 'TKECU0018', NULL, NULL, 0, 0);
 
 -- --------------------------------------------------------
 
@@ -6015,7 +6028,7 @@ ALTER TABLE `TKECM_ORDER`
 --
 ALTER TABLE `TKECM_PRODUCT`
   ADD CONSTRAINT `FK_TKECMP_TKECMC_CATEGORY_ID` FOREIGN KEY (`TKECMP_TKECMC_CATEGORY_ID`) REFERENCES `TKECM_CATEGORY` (`TKECMC_CATEGORY_ID`),
-  ADD CONSTRAINT `FK_TKECMP_TKECMPT_AG_ID` FOREIGN KEY (`TKECMP_TKECMPT_AG_ID`) REFERENCES `TKECM_PRODUCT_TYPE` (`TKECMPT_AG_ID`);
+  ADD CONSTRAINT `FK_TKECMP_TKECMPT_ID` FOREIGN KEY (`TKECMP_TKECMPT_ID`) REFERENCES `TKECM_PRODUCT_TYPE` (`TKECMPT_ID`);
 
 --
 -- Constraints for table `TKECM_PRODUCT_DOWNLOAD`
@@ -6040,7 +6053,8 @@ ALTER TABLE `TKECT_OPTION_ATTRIBUTE`
 -- Constraints for table `TKECT_ORDER_ADDRESS`
 --
 ALTER TABLE `TKECT_ORDER_ADDRESS`
-  ADD CONSTRAINT `FK_TKECTOA_TKECMO_ID` FOREIGN KEY (`TKECTOA_TKECMO_ID`) REFERENCES `TKECM_ORDER` (`TKECMO_ID`);
+  ADD CONSTRAINT `FK_TKECTOA_TKECMO_ID` FOREIGN KEY (`TKECTOA_TKECMO_ID`) REFERENCES `TKECM_ORDER` (`TKECMO_ID`),
+  ADD CONSTRAINT `FK_TKECTOA_TKECTS_AG_ID` FOREIGN KEY (`TKECTOA_TKECTS_AG_ID`) REFERENCES `TKECT_STATE` (`TKECTS_AG_ID`);
 
 --
 -- Constraints for table `TKECT_ORDER_ITEM`
@@ -6084,7 +6098,8 @@ ALTER TABLE `TKECT_STATE`
 --
 ALTER TABLE `TKECT_USER_ADDRESS`
   ADD CONSTRAINT `FK_TKECTUAD_TKECMU_ID` FOREIGN KEY (`TKECTUA_TKECMU_ID`) REFERENCES `TKECM_USER` (`TKECMU_ID`),
-  ADD CONSTRAINT `FK_TKECTUA_TKECMCN_AG_ID` FOREIGN KEY (`TKECTUA_TKECMCN_AG_ID`) REFERENCES `TKECM_COUNTRY` (`TKECMCN_AG_ID`);
+  ADD CONSTRAINT `FK_TKECTUA_TKECMCN_AG_ID` FOREIGN KEY (`TKECTUA_TKECMCN_AG_ID`) REFERENCES `TKECM_COUNTRY` (`TKECMCN_AG_ID`),
+  ADD CONSTRAINT `FK_TKECTUA_TKECTS_AG_ID` FOREIGN KEY (`TKECTUA_TKECTS_AG_ID`) REFERENCES `TKECT_STATE` (`TKECTS_AG_ID`);
 
 --
 -- Constraints for table `TKECT_USER_AUDIT`

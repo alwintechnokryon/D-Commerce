@@ -31,7 +31,7 @@ public class TKECTSTATE {
 
 	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	@JoinColumn(name = "TKECTS_TKECMCN_AG_ID", foreignKey = @ForeignKey(name = "FK_TKECTS_TKECMCN_AG_ID"))
-	private TKECMPRODUCT sTkecmcnAgId;
+	private TKECMCOUNTRY sTkecmcnAgId;
 
 	@Column(name = "TKECTS_FIPS_CODE")
 	private String sFipsCode;

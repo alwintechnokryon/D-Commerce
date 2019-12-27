@@ -16,11 +16,13 @@ public class ORDERADDRESS {
 	BigInteger oaPhone;
 	BigInteger oaAltenativePhone;
 	String oaAddress;
-	String oaStreet;
+	Integer oaTkectsAgId;
 	String oaCity;
 	String oaPostalCode;
 	Integer oaCountryId;
 	String oaFlagAddress;
 	String oaAddressType;
+	Double oaLatitude;
+	Double oaLongitude;
 
 }

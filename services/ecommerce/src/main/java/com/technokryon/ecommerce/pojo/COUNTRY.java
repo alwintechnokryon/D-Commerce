@@ -14,6 +14,7 @@ public class COUNTRY {
 	@JsonIgnore
 	String cnIso3;
 	String cnIso2;
+	@JsonIgnore
 	String cnPhoneCode;
 	@JsonIgnore
 	String cnCapital;

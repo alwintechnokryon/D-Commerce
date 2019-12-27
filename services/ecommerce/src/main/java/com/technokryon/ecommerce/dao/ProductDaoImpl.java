@@ -143,7 +143,7 @@ public class ProductDaoImpl implements ProductDao {
 			O_PRODUCT.setPWeight(O_TKECTCONFIGURABLELINK.getClTkecmpId().getPWeight());
 			O_PRODUCT.setPQuantity(O_TKECTCONFIGURABLELINK.getClTkecmpId().getPQuantity());
 			O_PRODUCT.setPCountryOfMfg(O_TKECTCONFIGURABLELINK.getClTkecmpId().getPCountryOfMfg());
-			O_PRODUCT.setPTkecmptAgId(O_TKECTCONFIGURABLELINK.getClTkecmpId().getPTkecmptAgId().getPtAgId());
+			O_PRODUCT.setPTkecmptAgId(O_TKECTCONFIGURABLELINK.getClTkecmpId().getPTkecmptAgId().getPtId());
 
 			O_PRODUCT.setLO_CATEGORY(
 					getCategory(O_TKECTCONFIGURABLELINK.getClTkecmpId().getPTkecmcCategoryId().getCCategoryId()));
@@ -253,10 +253,10 @@ public class ProductDaoImpl implements ProductDao {
 			O_PRODUCT.setPShortDesc(O_TKECMPRODUCT.getPShortDesc());
 			O_PRODUCT.setPCountryOfMfg(O_TKECMPRODUCT.getPCountryOfMfg());
 			O_PRODUCT.setPQuantity(O_TKECMPRODUCT.getPQuantity());
-			O_PRODUCT.setPTkecmptAgId(O_TKECMPRODUCT.getPTkecmptAgId().getPtAgId());
+			O_PRODUCT.setPTkecmptAgId(O_TKECMPRODUCT.getPTkecmptAgId().getPtId());
 			O_PRODUCT.setPPrice(O_TKECMPRODUCT.getPPrice());
 			O_PRODUCT.setLO_CATEGORY(getCategory(O_TKECMPRODUCT.getPTkecmcCategoryId().getCCategoryId()));
-			if (O_TKECMPRODUCT.getPTkecmptAgId().getPtAgId().equals(3)) {
+			if (O_TKECMPRODUCT.getPTkecmptAgId().getPtId().equals("TKECMPT0003")) {
 
 				Query downloadableProductQuery = O_SessionFactory.getCurrentSession().createQuery(downloadableProduct);
 
