@@ -83,4 +83,7 @@ public class TKECTUSERADDRESS {
 	@Column(name = "TKECTUA_LONGITUDE")
 	private Double uadLongitude;
 
+	@Column(name = "TKECTUA_DEFAULT_YN")
+	private String uadDefaultYN;
+
 }

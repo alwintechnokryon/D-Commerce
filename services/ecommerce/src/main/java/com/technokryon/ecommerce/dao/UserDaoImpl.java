@@ -37,7 +37,7 @@ public class UserDaoImpl implements UserDao {
 	@Override
 	public USER isUserEmailAvailable(String mail) {
 
-		String getUserByEmail = "FROM TKECMUSER WHERE uMail= :email";
+		String getUserByEmail = "FROM TKECMUSER WHERE uMail =:email";
 
 		Query getUserByEmailQry = O_SessionFactory.getCurrentSession().createQuery(getUserByEmail);
 		getUserByEmailQry.setParameter("email", mail);
@@ -63,8 +63,8 @@ public class UserDaoImpl implements UserDao {
 
 	@Override
 	public String createNewUserByEmail(USER RO_UserPojo) {
-		Session session = O_SessionFactory.openSession();
-		Transaction tx = session.beginTransaction();
+		Session O_Session = O_SessionFactory.openSession();
+		Transaction O_Transaction = O_Session.beginTransaction();
 
 		String getUserId = "FROM TKECMUSER ORDER BY uId DESC";
 
@@ -96,19 +96,19 @@ public class UserDaoImpl implements UserDao {
 			O_TKECM_USER.setURegType("E");
 			O_TKECM_USER.setUStatus("N");
 			O_TKECM_USER.setUOtpStatus("N");
-			session.save(O_TKECM_USER);
-			tx.commit();
-			session.close();
+			O_Session.save(O_TKECM_USER);
+			O_Transaction.commit();
+			O_Session.close();
 
 			System.out.println("New User Created By EmailId");
 			return O_TKECM_USER.getUId();
 
 		} catch (Exception e) {
 			e.printStackTrace();
-			if (tx.isActive()) {
-				tx.rollback();
+			if (O_Transaction.isActive()) {
+				O_Transaction.rollback();
 			}
-			session.close();
+			O_Session.close();
 
 			return null;
 
@@ -117,17 +117,17 @@ public class UserDaoImpl implements UserDao {
 
 	@Override
 	public String saveOTPDetails(Integer oTP, String userId) {
-		Session session = O_SessionFactory.getCurrentSession();
+		Session O_Session = O_SessionFactory.getCurrentSession();
 
 		String hash = new BCryptPasswordEncoder().encode(OffsetDateTime.now().toString());
 
-		TKECMUSER O_TKECMUSER = session.get(TKECMUSER.class, userId);
+		TKECMUSER O_TKECMUSER = O_Session.get(TKECMUSER.class, userId);
 
 		O_TKECMUSER.setUOtp(oTP);
 		O_TKECMUSER.setUHashKey(hash);
 		O_TKECMUSER.setUOtpExp((OffsetDateTime.now().plusMinutes(5)));
 
-		session.save(O_TKECMUSER);
+		O_Session.save(O_TKECMUSER);
 
 		return hash;
 	}
@@ -135,7 +135,7 @@ public class UserDaoImpl implements UserDao {
 	@Override
 	public USER isUserPhoneNoAvailable(BigInteger phoneNo) {
 
-		String getUserByPhone = "FROM TKECMUSER  WHERE uPhone= :phoneNo";
+		String getUserByPhone = "FROM TKECMUSER WHERE uPhone =:phoneNo";
 
 		Query getUserByPhoneQry = O_SessionFactory.getCurrentSession().createQuery(getUserByPhone);
 		getUserByPhoneQry.setParameter("phoneNo", phoneNo);
@@ -161,8 +161,8 @@ public class UserDaoImpl implements UserDao {
 
 	@Override
 	public String createNewUserByPhoneNo(USER RO_UserPojo) {
-		Session session = O_SessionFactory.openSession();
-		Transaction tx = session.beginTransaction();
+		Session O_Session = O_SessionFactory.openSession();
+		Transaction O_Transaction = O_Session.beginTransaction();
 
 		String getUserId = "FROM TKECMUSER ORDER BY uId DESC";
 
@@ -196,19 +196,19 @@ public class UserDaoImpl implements UserDao {
 			O_TKECM_USER.setUCountryCode(RO_UserPojo.getUCountryCode());
 			O_TKECM_USER.setUOtpStatus("N");
 			O_TKECM_USER.setUStatus("N");
-			session.save(O_TKECM_USER);
-			tx.commit();
-			session.close();
+			O_Session.save(O_TKECM_USER);
+			O_Transaction.commit();
+			O_Session.close();
 
 			System.out.println("New User Created By PhoneNo");
 			return O_TKECM_USER.getUId();
 
 		} catch (Exception e) {
 			e.printStackTrace();
-			if (tx.isActive()) {
-				tx.rollback();
+			if (O_Transaction.isActive()) {
+				O_Transaction.rollback();
 			}
-			session.close();
+			O_Session.close();
 
 			return null;
 
@@ -260,18 +260,18 @@ public class UserDaoImpl implements UserDao {
 
 		TKECMUSER O_TKECMUSER = O_SessionFactory.getCurrentSession().get(TKECMUSER.class, userId);
 
-		Session session = O_SessionFactory.openSession();
-		Transaction tx = session.beginTransaction();
+		Session O_Session = O_SessionFactory.openSession();
+		Transaction O_Transaction = O_Session.beginTransaction();
 
 		TKECTUSERSESSION O_TKECTUSERSESSION = new TKECTUSERSESSION();
 		O_TKECTUSERSESSION.setUsTkecmuId(O_TKECMUSER);
 		O_TKECTUSERSESSION.setUsApiKey(apisecret);
 		O_TKECTUSERSESSION.setUsCreatedDate(OffsetDateTime.now());
 		O_TKECTUSERSESSION.setUsAliveYN("Y");
-		session.save(O_TKECTUSERSESSION);
+		O_Session.save(O_TKECTUSERSESSION);
 
-		tx.commit();
-		session.close();
+		O_Transaction.commit();
+		O_Session.close();
 
 		USERSESSION O_USERSESSION = new USERSESSION();
 
@@ -326,41 +326,41 @@ public class UserDaoImpl implements UserDao {
 
 	@Override
 	public Boolean userLogout(String apiKey) {
-		Session session = O_SessionFactory.openSession();
-		Transaction tx = session.beginTransaction();
+		Session O_Session = O_SessionFactory.openSession();
+		Transaction O_Transaction = O_Session.beginTransaction();
 
 		String getApiKey = "FROM TKECTUSERSESSION WHERE usApiKey =:apiKey";
 
 		try {
 
-			Query getApiKeyQuery = session.createQuery(getApiKey);
+			Query getApiKeyQuery = O_Session.createQuery(getApiKey);
 			getApiKeyQuery.setParameter("apiKey", apiKey);
 			TKECTUSERSESSION O_TKECTUSERSESSION = (TKECTUSERSESSION) getApiKeyQuery.uniqueResult();
 
 			O_TKECTUSERSESSION.setUsAliveYN("N");
 
-			session.update(O_TKECTUSERSESSION);
+			O_Session.update(O_TKECTUSERSESSION);
 
 			String getUserId1 = "FROM TKECTUSERAUDIT WHERE uaApiKey =:apikey ";
 
-			Query query1 = session.createQuery(getUserId1);
+			Query query1 = O_Session.createQuery(getUserId1);
 			query1.setParameter("apikey", apiKey);
 
 			TKECTUSERAUDIT O_TKECTUSERAUDIT = (TKECTUSERAUDIT) query1.uniqueResult();
 			O_TKECTUSERAUDIT.setUaLogoutTime((OffsetDateTime.now()));
-			session.update(O_TKECTUSERAUDIT);
+			O_Session.update(O_TKECTUSERAUDIT);
 
-			tx.commit();
-			session.close();
+			O_Transaction.commit();
+			O_Session.close();
 
 		}
 
 		catch (Exception e) {
 
 			e.printStackTrace();
-			if (tx.isActive()) {
-				tx.rollback();
-				session.close();
+			if (O_Transaction.isActive()) {
+				O_Transaction.rollback();
+				O_Session.close();
 			}
 			return false;
 		}

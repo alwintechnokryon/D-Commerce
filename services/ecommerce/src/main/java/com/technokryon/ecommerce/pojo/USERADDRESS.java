@@ -28,5 +28,6 @@ public class USERADDRESS {
 	String uadModifiedUserId;
 	Double uadLatitude;
 	Double uadLongitude;
+	String uadDefaultYN;
 
 }
