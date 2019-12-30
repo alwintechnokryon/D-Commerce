@@ -7,10 +7,10 @@ import com.technokryon.ecommerce.pojo.CATEGORY;
 
 public interface CategoryDao {
 
-	String addCategory(CATEGORY rO_CATEGORY);
+	String addCategory(CATEGORY RO_CATEGORY);
 
 	List<CATEGORY> categoryList();
 
-	List<CATEGORY> categoryListById(CATEGORY rO_CATEGORY);
+	List<CATEGORY> categoryListById(CATEGORY RO_CATEGORY);
 
 }

@@ -91,9 +91,8 @@ public class UserCartController {
 		Boolean addQuantity = O_UserCartService.addQuantity(RO_PRODUCTCART);
 
 		if (!addQuantity) {
-
-			O_RESPONSE.setMessage(totalQuantity + " Quantity Only Available In this Product");
-			return new ResponseEntity<Object>(O_RESPONSE, HttpStatus.UNPROCESSABLE_ENTITY);
+			
+			return new ResponseEntity<Object>(totalQuantity, HttpStatus.UNPROCESSABLE_ENTITY);
 		} else {
 
 			O_RESPONSE.setMessage("Quantity Added SuccessFully");

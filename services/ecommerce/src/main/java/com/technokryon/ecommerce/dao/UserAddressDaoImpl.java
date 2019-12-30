@@ -145,19 +145,13 @@ public class UserAddressDaoImpl implements UserAddressDao {
 	@Override
 	public void deleteUserAddress(USERADDRESS RO_USERADDRESS) {
 
-		Session O_Session = O_SessionFactory.openSession();
-		Transaction O_Transaction = O_Session.beginTransaction();
-
 		String deleteAgId = " DELETE FROM TKECTUSERADDRESS WHERE uadAgId =:agId AND uadTkecmuId.uId =:userId";
 
-		Query deleteAgIdQuery = O_Session.createQuery(deleteAgId);
+		Query deleteAgIdQuery = O_SessionFactory.getCurrentSession().createQuery(deleteAgId);
 
 		deleteAgIdQuery.setParameter("agId", RO_USERADDRESS.getUadAgId());
 		deleteAgIdQuery.setParameter("userId", RO_USERADDRESS.getUadTkecmuId());
 		deleteAgIdQuery.executeUpdate();
-
-		O_Transaction.commit();
-		O_Session.close();
 
 	}
 }

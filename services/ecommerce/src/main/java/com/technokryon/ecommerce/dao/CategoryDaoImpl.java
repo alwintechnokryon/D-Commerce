@@ -25,10 +25,10 @@ public class CategoryDaoImpl implements CategoryDao {
 	private SessionFactory O_SessionFactory;
 
 	@Override
-	public String addCategory(CATEGORY rO_CATEGORY) {
+	public String addCategory(CATEGORY RO_CATEGORY) {
 
-		Session session = O_SessionFactory.openSession();
-		Transaction tx = session.beginTransaction();
+		Session O_Session = O_SessionFactory.openSession();
+		Transaction O_Transaction = O_Session.beginTransaction();
 
 		String getCategory = "FROM TKECMCATEGORY ORDER BY cCategoryId DESC";
 
@@ -53,20 +53,20 @@ public class CategoryDaoImpl implements CategoryDao {
 
 		try {
 
-			O_TKECMCATEGORY.setCCategoryName(rO_CATEGORY.getCCategoryName());
-			O_TKECMCATEGORY.setCParentId(rO_CATEGORY.getCParentId());
-			O_TKECMCATEGORY.setCCategoryLevel(rO_CATEGORY.getCCategoryLevel());
-			session.save(O_TKECMCATEGORY);
-			tx.commit();
-			session.close();
+			O_TKECMCATEGORY.setCCategoryName(RO_CATEGORY.getCCategoryName());
+			O_TKECMCATEGORY.setCParentId(RO_CATEGORY.getCParentId());
+			O_TKECMCATEGORY.setCCategoryLevel(RO_CATEGORY.getCCategoryLevel());
+			O_Session.save(O_TKECMCATEGORY);
+			O_Transaction.commit();
+			O_Session.close();
 
 			return O_TKECMCATEGORY.getCCategoryId();
 		} catch (Exception e) {
 			e.printStackTrace();
-			if (tx.isActive()) {
-				tx.rollback();
+			if (O_Transaction.isActive()) {
+				O_Transaction.rollback();
 			}
-			session.close();
+			O_Session.close();
 
 			return null;
 		}

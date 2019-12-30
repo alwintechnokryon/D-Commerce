@@ -300,7 +300,6 @@ public class UserDaoImpl implements UserDao {
 	@Override
 	public USER getUserDetailAPIKey(String apiKey) {
 
-		ModelMapper O_ModelMapper = new ModelMapper();
 		String apiQuery = "FROM TKECTUSERSESSION WHERE usApiKey =:apikey";
 
 		Query query = O_SessionFactory.getCurrentSession().createQuery(apiQuery);

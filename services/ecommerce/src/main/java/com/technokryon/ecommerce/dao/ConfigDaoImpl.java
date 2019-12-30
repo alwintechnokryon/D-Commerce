@@ -94,6 +94,9 @@ public class ConfigDaoImpl implements ConfigDao {
 		}
 		return LO_PRODUCTPAYMENTTYPE;
 	}
+	
+	
+	
 
 	@Override
 	public List<STATE> stateListById(Integer sTkecmcnAgId) {

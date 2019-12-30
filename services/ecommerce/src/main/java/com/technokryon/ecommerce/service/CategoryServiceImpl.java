@@ -20,9 +20,9 @@ public class CategoryServiceImpl implements CategoryService {
 	private CategoryDao O_CategoryDao;
 
 	@Override
-	public String addCategory(CATEGORY rO_CATEGORY) {
+	public String addCategory(CATEGORY RO_CATEGORY) {
 		// TODO Auto-generated method stub
-		return O_CategoryDao.addCategory(rO_CATEGORY);
+		return O_CategoryDao.addCategory(RO_CATEGORY);
 	}
 
 	@Override
@@ -32,8 +32,8 @@ public class CategoryServiceImpl implements CategoryService {
 	}
 
 	@Override
-	public List<CATEGORY> categoryListById(CATEGORY rO_CATEGORY) {
+	public List<CATEGORY> categoryListById(CATEGORY RO_CATEGORY) {
 		// TODO Auto-generated method stub
-		return O_CategoryDao.categoryListById(rO_CATEGORY);
+		return O_CategoryDao.categoryListById(RO_CATEGORY);
 	}
 }
