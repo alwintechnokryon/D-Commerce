@@ -2,13 +2,14 @@ package com.technokryon.ecommerce.dao;
 
 import java.util.List;
 
-import com.technokryon.ecommerce.pojo.PRODUCT;
+import com.technokryon.ecommerce.pojo.Product;
+
 
 public interface ProductDao {
 
-	List<PRODUCT> getListByCategory(String categoryId, Integer pageNumber);
+	List<Product> getListByCategory(String categoryId, Integer pageNumber);
 
-	PRODUCT getDetailById(String id);
+	Product getDetailById(String id);
 
 
 }

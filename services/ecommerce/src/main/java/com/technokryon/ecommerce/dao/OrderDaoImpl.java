@@ -18,8 +18,9 @@ import com.technokryon.ecommerce.model.TKECMUSER;
 import com.technokryon.ecommerce.model.TKECTORDERADDRESS;
 import com.technokryon.ecommerce.model.TKECTORDERITEM;
 import com.technokryon.ecommerce.model.TKECTUSERADDRESS;
-import com.technokryon.ecommerce.pojo.ORDER;
-import com.technokryon.ecommerce.pojo.PRODUCT;
+import com.technokryon.ecommerce.pojo.Order;
+import com.technokryon.ecommerce.pojo.Product;
+
 
 @Repository("OrderDao")
 @Transactional
@@ -30,14 +31,14 @@ public class OrderDaoImpl implements OrderDao {
 	private SessionFactory O_SessionFactory;
 
 	@Override
-	public Boolean checkAvailableProductQuantity(List<PRODUCT> LO_PRODUCT) {
+	public Boolean checkAvailableProductQuantity(List<Product> LO_PRODUCT) {
 
-		for (PRODUCT O_PRODUCT : LO_PRODUCT) {
+		for (Product O_Product : LO_PRODUCT) {
 
 			TKECMPRODUCT O_TKECMPRODUCT = O_SessionFactory.getCurrentSession().get(TKECMPRODUCT.class,
-					O_PRODUCT.getPId());
+					O_Product.getPId());
 
-			if (O_PRODUCT.getPQuantity() > O_TKECMPRODUCT.getPQuantity()) {
+			if (O_Product.getPQuantity() > O_TKECMPRODUCT.getPQuantity()) {
 
 				return false;
 			}
@@ -47,7 +48,7 @@ public class OrderDaoImpl implements OrderDao {
 	}
 
 	@Override
-	public String requestOrder(ORDER RO_ORDER) {
+	public String requestOrder(Order RO_Order) {
 
 		Session O_Session = O_SessionFactory.openSession();
 		Transaction O_Transaction = O_Session.beginTransaction();
@@ -75,21 +76,21 @@ public class OrderDaoImpl implements OrderDao {
 				O_TKECMORDER.setOId("TKECO" + String.format("%05d", Ag));
 			}
 
-			O_TKECMORDER.setOBaseAmount(RO_ORDER.getOBaseAmount());
-			O_TKECMORDER.setODetectedAmount(RO_ORDER.getODetectedAmount());
-			O_TKECMORDER.setOGrandTotal(RO_ORDER.getOGrandTotal());
-			O_TKECMORDER.setOShippingAmount(RO_ORDER.getOShippingAmount());
-			O_TKECMORDER.setODetectedShippingAmount(RO_ORDER.getODetectedShippingAmount());
-			O_TKECMORDER.setOIsSendEmail(RO_ORDER.getOIsSendEmail());
-			O_TKECMORDER.setOEmailId(RO_ORDER.getOEmailId());
-			O_TKECMORDER.setOExpectedDelivery(RO_ORDER.getOExpectedDelivery());
-			O_TKECMORDER.setOTkecmuId(O_Session.get(TKECMUSER.class, RO_ORDER.getOTkecmuId()));
-			O_TKECMORDER.setOCreatedUserId(RO_ORDER.getOCreatedUserId());
-			O_TKECMORDER.setOTaxAmount(RO_ORDER.getOTaxAmount());
-			O_TKECMORDER.setOCurrencyCode(RO_ORDER.getOCurrencyCode());
-			O_TKECMORDER.setOTkecmpptId(O_Session.get(TKECMPRODUCTPAYMENTTYPE.class, RO_ORDER.getOTkecmpptId()));
+			O_TKECMORDER.setOBaseAmount(RO_Order.getOBaseAmount());
+			O_TKECMORDER.setODetectedAmount(RO_Order.getODetectedAmount());
+			O_TKECMORDER.setOGrandTotal(RO_Order.getOGrandTotal());
+			O_TKECMORDER.setOShippingAmount(RO_Order.getOShippingAmount());
+			O_TKECMORDER.setODetectedShippingAmount(RO_Order.getODetectedShippingAmount());
+			O_TKECMORDER.setOIsSendEmail(RO_Order.getOIsSendEmail());
+			O_TKECMORDER.setOEmailId(RO_Order.getOEmailId());
+			O_TKECMORDER.setOExpectedDelivery(RO_Order.getOExpectedDelivery());
+			O_TKECMORDER.setOTkecmuId(O_Session.get(TKECMUSER.class, RO_Order.getOTkecmuId()));
+			O_TKECMORDER.setOCreatedUserId(RO_Order.getOCreatedUserId());
+			O_TKECMORDER.setOTaxAmount(RO_Order.getOTaxAmount());
+			O_TKECMORDER.setOCurrencyCode(RO_Order.getOCurrencyCode());
+			O_TKECMORDER.setOTkecmpptId(O_Session.get(TKECMPRODUCTPAYMENTTYPE.class, RO_Order.getOTkecmpptId()));
 
-			if (RO_ORDER.getOTkecmpptId().trim().equals("TKECMPPT0001")) {
+			if (RO_Order.getOTkecmpptId().trim().equals("TKECMPPT0001")) {
 				O_TKECMORDER.setOStatus("Processing");
 			} else {
 				O_TKECMORDER.setOStatus("Pending Payment");
@@ -97,13 +98,13 @@ public class OrderDaoImpl implements OrderDao {
 			O_Session.save(O_TKECMORDER);
 
 			TKECTUSERADDRESS O_TKECTUSERADDRESS_BILL = O_Session.get(TKECTUSERADDRESS.class,
-					RO_ORDER.getBillingAddress());
+					RO_Order.getBillingAddress());
 
 			TKECTORDERADDRESS O_TKECTORDERADDRESS_BILL = new TKECTORDERADDRESS();
 
 			O_TKECTORDERADDRESS_BILL.setOaTkecmoId(O_Session.get(TKECMORDER.class, O_TKECMORDER.getOId()));
 			O_TKECTORDERADDRESS_BILL.setOaName(O_TKECTUSERADDRESS_BILL.getUadName());
-			O_TKECTORDERADDRESS_BILL.setOaEmailId(RO_ORDER.getOEmailId());
+			O_TKECTORDERADDRESS_BILL.setOaEmailId(RO_Order.getOEmailId());
 			O_TKECTORDERADDRESS_BILL.setOaPhone(O_TKECTUSERADDRESS_BILL.getUadPhone());
 			O_TKECTORDERADDRESS_BILL.setOaAltenativePhone(O_TKECTUSERADDRESS_BILL.getUadAlternativePhone());
 			O_TKECTORDERADDRESS_BILL.setOaAddress(O_TKECTUSERADDRESS_BILL.getUadAddress());
@@ -115,16 +116,16 @@ public class OrderDaoImpl implements OrderDao {
 
 			O_Session.save(O_TKECTORDERADDRESS_BILL);
 
-			if (RO_ORDER.getShippingAddress() == null) {
+			if (RO_Order.getShippingAddress() == null) {
 
 				TKECTUSERADDRESS O_TKECTUSERADDRESS_SHIP = O_Session.get(TKECTUSERADDRESS.class,
-						RO_ORDER.getShippingAddress());
+						RO_Order.getShippingAddress());
 
 				TKECTORDERADDRESS O_TKECTORDERADDRESS_SHIP = new TKECTORDERADDRESS();
 
 				O_TKECTORDERADDRESS_SHIP.setOaTkecmoId(O_Session.get(TKECMORDER.class, O_TKECMORDER.getOId()));
 				O_TKECTORDERADDRESS_SHIP.setOaName(O_TKECTUSERADDRESS_SHIP.getUadName());
-				O_TKECTORDERADDRESS_SHIP.setOaEmailId(RO_ORDER.getOEmailId());
+				O_TKECTORDERADDRESS_SHIP.setOaEmailId(RO_Order.getOEmailId());
 				O_TKECTORDERADDRESS_SHIP.setOaPhone(O_TKECTUSERADDRESS_SHIP.getUadPhone());
 				O_TKECTORDERADDRESS_SHIP.setOaAltenativePhone(O_TKECTUSERADDRESS_SHIP.getUadAlternativePhone());
 				O_TKECTORDERADDRESS_SHIP.setOaAddress(O_TKECTUSERADDRESS_SHIP.getUadAddress());
@@ -137,9 +138,9 @@ public class OrderDaoImpl implements OrderDao {
 				O_Session.save(O_TKECTORDERADDRESS_SHIP);
 			}
 
-			for (PRODUCT O_PRODUCT : RO_ORDER.getLO_PRODUCT()) {
+			for (Product O_Product : RO_Order.getLO_PRODUCT()) {
 
-				TKECMPRODUCT O_TKECMPRODUCT = O_Session.get(TKECMPRODUCT.class, O_PRODUCT.getPId());
+				TKECMPRODUCT O_TKECMPRODUCT = O_Session.get(TKECMPRODUCT.class, O_Product.getPId());
 
 				TKECTORDERITEM O_TKECTORDERITEM = new TKECTORDERITEM();
 
@@ -148,16 +149,16 @@ public class OrderDaoImpl implements OrderDao {
 				O_TKECTORDERITEM.setOiSku(O_TKECMPRODUCT.getPSku());
 				O_TKECTORDERITEM.setOiName(O_TKECMPRODUCT.getPName());
 				O_TKECTORDERITEM.setOiWeight(O_TKECMPRODUCT.getPWeight());
-				O_TKECTORDERITEM.setOiQuantity(O_PRODUCT.getPQuantity());
+				O_TKECTORDERITEM.setOiQuantity(O_Product.getPQuantity());
 				O_TKECTORDERITEM.setOiPrice(O_TKECMPRODUCT.getPPrice());
 				O_Session.save(O_TKECTORDERITEM);
 
 			}
-			for (PRODUCT O_PRODUCT : RO_ORDER.getLO_PRODUCT()) {
+			for (Product O_Product : RO_Order.getLO_PRODUCT()) {
 
-				TKECMPRODUCT O_TKECMPRODUCT = O_Session.get(TKECMPRODUCT.class, O_PRODUCT.getPId());
+				TKECMPRODUCT O_TKECMPRODUCT = O_Session.get(TKECMPRODUCT.class, O_Product.getPId());
 
-				O_TKECMPRODUCT.setPQuantity(O_TKECMPRODUCT.getPQuantity() - O_PRODUCT.getPQuantity());
+				O_TKECMPRODUCT.setPQuantity(O_TKECMPRODUCT.getPQuantity() - O_Product.getPQuantity());
 				O_Session.update(O_TKECMPRODUCT);
 			}
 			O_Transaction.commit();
@@ -178,7 +179,7 @@ public class OrderDaoImpl implements OrderDao {
 	}
 
 	@Override
-	public String updateTransactionId(ORDER RO_ORDER) {
+	public String updateTransactionId(Order RO_Order) {
 
 		Session O_Session = O_SessionFactory.openSession();
 		Transaction O_Transaction = O_Session.beginTransaction();
@@ -188,8 +189,8 @@ public class OrderDaoImpl implements OrderDao {
 
 			Query orderIdQuery = O_Session.createQuery(orderId);
 
-			orderIdQuery.setParameter("orderId", RO_ORDER.getOId());
-			orderIdQuery.setParameter("userId", RO_ORDER.getUserId());
+			orderIdQuery.setParameter("orderId", RO_Order.getOId());
+			orderIdQuery.setParameter("userId", RO_Order.getUserId());
 
 			TKECMORDER O_TKECMORDER = (TKECMORDER) orderIdQuery.uniqueResult();
 
@@ -211,7 +212,7 @@ public class OrderDaoImpl implements OrderDao {
 				}
 
 				O_TKECMORDER.setOStatus("Processing");
-				O_TKECMORDER.setOTransactionId(RO_ORDER.getOTransactionId());
+				O_TKECMORDER.setOTransactionId(RO_Order.getOTransactionId());
 				O_Session.update(O_TKECMORDER);
 				O_Transaction.commit();
 				O_Session.close();

@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
-public class PRODUCTCART {
+public class ProductCart {
 
 	Integer pcAgId;
 	String pcTkecmuId;

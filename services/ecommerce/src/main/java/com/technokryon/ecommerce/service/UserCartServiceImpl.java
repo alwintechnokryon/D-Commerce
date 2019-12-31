@@ -8,7 +8,7 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.technokryon.ecommerce.dao.UserCartDao;
-import com.technokryon.ecommerce.pojo.PRODUCTCART;
+import com.technokryon.ecommerce.pojo.ProductCart;
 
 @Service("UserCartService")
 @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -19,14 +19,14 @@ public class UserCartServiceImpl implements UserCartService {
 	private UserCartDao O_UserCartDao;
 
 	@Override
-	public void addToCart(PRODUCTCART RO_PRODUCTCART) {
+	public void addToCart(ProductCart RO_ProductCart) {
 
-		O_UserCartDao.addToCart(RO_PRODUCTCART);
+		O_UserCartDao.addToCart(RO_ProductCart);
 
 	}
 
 	@Override
-	public List<PRODUCTCART> listCart(String uId) {
+	public List<ProductCart> listCart(String uId) {
 
 		return O_UserCartDao.listCart(uId);
 	}
@@ -38,22 +38,22 @@ public class UserCartServiceImpl implements UserCartService {
 	}
 
 	@Override
-	public Boolean addQuantity(PRODUCTCART RO_PRODUCTCART) {
+	public Boolean addQuantity(ProductCart RO_ProductCart) {
 
-		return O_UserCartDao.addQuantity(RO_PRODUCTCART);
+		return O_UserCartDao.addQuantity(RO_ProductCart);
 	}
 
 	@Override
-	public void saveLater(PRODUCTCART RO_PRODUCTCART) {
+	public void saveLater(ProductCart RO_ProductCart) {
 
-		O_UserCartDao.saveLater(RO_PRODUCTCART);
+		O_UserCartDao.saveLater(RO_ProductCart);
 
 	}
 
 	@Override
-	public void deleteCart(PRODUCTCART RO_PRODUCTCART) {
+	public void deleteCart(ProductCart RO_ProductCart) {
 
-		O_UserCartDao.deleteCart(RO_PRODUCTCART);
+		O_UserCartDao.deleteCart(RO_ProductCart);
 
 	}
 

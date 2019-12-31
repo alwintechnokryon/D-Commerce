@@ -2,15 +2,14 @@ package com.technokryon.ecommerce.service;
 
 import java.util.List;
 
-import com.technokryon.ecommerce.model.TKECMCATEGORY;
-import com.technokryon.ecommerce.pojo.CATEGORY;
+import com.technokryon.ecommerce.pojo.Category;
 
 public interface CategoryService {
 
-	String addCategory(CATEGORY RO_CATEGORY);
+	String addCategory(Category RO_Category);
 
-	List<CATEGORY> categoryList();
+	List<Category> categoryList();
 
-	List<CATEGORY> categoryListById(CATEGORY RO_CATEGORY);
+	List<Category> categoryListById(Category RO_Category);
 
 }

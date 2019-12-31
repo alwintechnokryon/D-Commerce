@@ -23,8 +23,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-
-
 @Service("MailService")
 @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 public class MailerServiceImpl implements MailService {
@@ -70,8 +68,7 @@ public class MailerServiceImpl implements MailService {
 
 			Message message = new MimeMessage(session);
 			message.setFrom(new InternetAddress(username));
-			message.setRecipients(Message.RecipientType.TO,
-					InternetAddress.parse(toaddress));
+			message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(toaddress));
 			message.setSubject(subject);
 			message.setText(body);
 
@@ -82,65 +79,59 @@ public class MailerServiceImpl implements MailService {
 		} catch (MessagingException e) {
 			throw new RuntimeException(e);
 		}
-		
+
 	}
 
 	@Override
 	public void sendSMS(BigInteger phone, Integer country, String contentText) {
 
-System.err.println(phone);
-System.err.println(country);
-		
+		System.err.println(phone);
+		System.err.println(country);
+
 //		  String url = "http://api.msg91.com/api/sendhttp.php?mobiles=" + phone
 //	                + "&authkey=274821AJjnkrCUfiJK5ccae9a7&message=" + contentText + "&sender=TEXTVO&country="+country;
 //		  
-		
-		
-		  String url=null;
+
+		String url = null;
 		try {
-			url = "http://api.smsala.com/api/SendSMS?api_id=&api_password=5463h2nwGG&sms_type=T&encoding=T&sender_id=TSTALA&phonenumber="+country+phone+"&textmessage="+URLEncoder.encode(contentText, "UTF-8");
+			url = "http://api.smsala.com/api/SendSMS?api_id=&api_password=5463h2nwGG&sms_type=T&encoding=T&sender_id=TSTALA&phonenumber="
+					+ country + phone + "&textmessage=" + URLEncoder.encode(contentText, "UTF-8");
 		} catch (UnsupportedEncodingException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
 
+		System.out.println(url);
 
-	        System.out.println(url);
+		try {
 
-	        try {
+			URL myurl = new URL(url);
 
-	            URL myurl = new URL(url);
-	            
-	            HttpURLConnection con = (HttpURLConnection) myurl.openConnection();
+			HttpURLConnection con = (HttpURLConnection) myurl.openConnection();
 
-	            con.setRequestMethod("GET");
-	            con.setRequestProperty("Content-Type", "text/plain");
-	            con.setRequestProperty("Content-Language", "en-US");
+			con.setRequestMethod("GET");
+			con.setRequestProperty("Content-Type", "text/plain");
+			con.setRequestProperty("Content-Language", "en-US");
 
-	            con.setUseCaches(false);
-	            con.setDoOutput(true);
+			con.setUseCaches(false);
+			con.setDoOutput(true);
 
-	            StringBuilder content;
-	            System.out.println(con.getURL());
+			StringBuilder content;
+			System.out.println(con.getURL());
 
-	            BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
+			BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
 
-	            String line;
-	            content = new StringBuilder();
+			String line;
+			content = new StringBuilder();
 
-	            while ((line = in.readLine()) != null) {
-	                content.append(line);
-	                content.append(System.lineSeparator());
-	            }
+			while ((line = in.readLine()) != null) {
+				content.append(line);
+				content.append(System.lineSeparator());
+			}
 
-	        } catch (Exception e) {
-	            e.printStackTrace();
-	        }
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
-	
-	
-	
-	
-	
 }

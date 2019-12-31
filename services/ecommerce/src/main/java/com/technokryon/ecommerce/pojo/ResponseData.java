@@ -5,9 +5,7 @@ import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
+public class ResponseData {
 
-public class ATTRIBUTE {
-
-	String aId;
-	String aName;
+	Integer totalQuantity;
 }

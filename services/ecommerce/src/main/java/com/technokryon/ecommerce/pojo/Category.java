@@ -9,15 +9,15 @@ import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
-public class CATEGORY {
+public class Category {
 
 	String cCategoryId;
 	String cParentId;
 	String cCategoryName;
 	Integer cCategoryLevel;
-	List<CATEGORY> childCategory;
+	List<Category> childCategory;
 
-	public CATEGORY(TKECMCATEGORY child_O_TKECMCATEGORY, List<CATEGORY> childCategories) {
+	public Category(TKECMCATEGORY child_O_TKECMCATEGORY, List<Category> childCategories) {
 		this.cCategoryId = child_O_TKECMCATEGORY.getCCategoryId();
 		this.cParentId = child_O_TKECMCATEGORY.getCParentId();
 		this.cCategoryName = child_O_TKECMCATEGORY.getCCategoryName();

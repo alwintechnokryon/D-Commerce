@@ -10,15 +10,17 @@ import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.PropertyMap;
+import org.modelmapper.TypeMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.technokryon.ecommerce.model.TKECMCOUNTRY;
 import com.technokryon.ecommerce.model.TKECMUSER;
 import com.technokryon.ecommerce.model.TKECTSTATE;
 import com.technokryon.ecommerce.model.TKECTUSERADDRESS;
-import com.technokryon.ecommerce.pojo.USERADDRESS;
+import com.technokryon.ecommerce.pojo.UserAddress;
 
 @Repository("UserAddressDao")
 @Transactional
@@ -32,7 +34,7 @@ public class UserAddressDaoImpl implements UserAddressDao {
 	private ModelMapper O_ModelMapper;
 
 	@Override
-	public void addUserAddress(USERADDRESS RO_USERADDRESS) {
+	public void addUserAddress(UserAddress RO_UserAddress) {
 
 		Session O_Session = O_SessionFactory.openSession();
 		Transaction O_Transaction = O_Session.beginTransaction();
@@ -40,20 +42,22 @@ public class UserAddressDaoImpl implements UserAddressDao {
 		try {
 			TKECTUSERADDRESS O_TKECTUSERADDRESS = new TKECTUSERADDRESS();
 
-			O_TKECTUSERADDRESS.setUadTkecmuId(O_Session.get(TKECMUSER.class, RO_USERADDRESS.getUadTkecmuId()));
-			O_TKECTUSERADDRESS.setUadName(RO_USERADDRESS.getUadName());
-			O_TKECTUSERADDRESS.setUadPhone(RO_USERADDRESS.getUadPhone());
-			O_TKECTUSERADDRESS.setUadAlternativePhone(RO_USERADDRESS.getUadAlternativePhone());
-			O_TKECTUSERADDRESS.setUadAddress(RO_USERADDRESS.getUadAddress());
-			O_TKECTUSERADDRESS.setUadCity(RO_USERADDRESS.getUadCity());
-			O_TKECTUSERADDRESS.setUadTkectsAgId(O_Session.get(TKECTSTATE.class, RO_USERADDRESS.getUadTkectsAgId()));
-			O_TKECTUSERADDRESS.setUadPostalCode(RO_USERADDRESS.getUadPostalCode());
-			O_TKECTUSERADDRESS.setUadAddressType(RO_USERADDRESS.getUadAddressType());
-			O_TKECTUSERADDRESS.setUadLandmark(RO_USERADDRESS.getUadLandmark());
+			O_TKECTUSERADDRESS.setUadTkecmuId(O_Session.get(TKECMUSER.class, RO_UserAddress.getUadTkecmuId()));
+			O_TKECTUSERADDRESS.setUadName(RO_UserAddress.getUadName());
+			O_TKECTUSERADDRESS.setUadPhone(RO_UserAddress.getUadPhone());
+			O_TKECTUSERADDRESS.setUadAlternativePhone(RO_UserAddress.getUadAlternativePhone());
+			O_TKECTUSERADDRESS.setUadAddress(RO_UserAddress.getUadAddress());
+			O_TKECTUSERADDRESS.setUadCity(RO_UserAddress.getUadCity());
+			O_TKECTUSERADDRESS.setUadTkectsAgId(O_Session.get(TKECTSTATE.class, RO_UserAddress.getUadTkectsAgId()));
+			O_TKECTUSERADDRESS.setUadPostalCode(RO_UserAddress.getUadPostalCode());
+			O_TKECTUSERADDRESS.setUadAddressType(RO_UserAddress.getUadAddressType());
+			O_TKECTUSERADDRESS.setUadLandmark(RO_UserAddress.getUadLandmark());
 			O_TKECTUSERADDRESS.setUadCreatedDate(OffsetDateTime.now());
-			O_TKECTUSERADDRESS.setUadCreatedUserId(RO_USERADDRESS.getUadTkecmuId());
-			O_TKECTUSERADDRESS.setUadLatitude(RO_USERADDRESS.getUadLatitude());
-			O_TKECTUSERADDRESS.setUadLongitude(RO_USERADDRESS.getUadLongitude());
+			O_TKECTUSERADDRESS.setUadCreatedUserId(RO_UserAddress.getUadTkecmuId());
+			O_TKECTUSERADDRESS.setUadLatitude(RO_UserAddress.getUadLatitude());
+			O_TKECTUSERADDRESS.setUadLongitude(RO_UserAddress.getUadLongitude());
+			O_TKECTUSERADDRESS.setUadTkecnAgId(O_Session.get(TKECMCOUNTRY.class, RO_UserAddress.getUadTkecnAgId()));
+			O_TKECTUSERADDRESS.setUadTkectsAgId(O_Session.get(TKECTSTATE.class, RO_UserAddress.getUadTkectsAgId()));
 			O_Session.save(O_TKECTUSERADDRESS);
 
 			O_Transaction.commit();
@@ -70,7 +74,7 @@ public class UserAddressDaoImpl implements UserAddressDao {
 	}
 
 	@Override
-	public List<USERADDRESS> listUserAddress(String uId) {
+	public List<UserAddress> listUserAddress(String uId) {
 
 		String userId = "FROM TKECTUSERADDRESS WHERE uadTkecmuId.uId =:userId";
 
@@ -80,9 +84,9 @@ public class UserAddressDaoImpl implements UserAddressDao {
 
 		List<TKECTUSERADDRESS> LO_TKECTUSERADDRESS = userIdQuery.getResultList();
 
-		List<USERADDRESS> LO_USERADDRESS = new ArrayList<>();
+		List<UserAddress> LO_UserAddress = new ArrayList<>();
 
-		PropertyMap<TKECTUSERADDRESS, USERADDRESS> skipFieldAddress = new PropertyMap<TKECTUSERADDRESS, USERADDRESS>() {
+		PropertyMap<TKECTUSERADDRESS, UserAddress> O_PropertyMap = new PropertyMap<TKECTUSERADDRESS, UserAddress>() {
 			protected void configure() {
 
 				skip().setUadCreatedUserId(null);
@@ -91,42 +95,47 @@ public class UserAddressDaoImpl implements UserAddressDao {
 				skip().setUadModifiedUserId(null);
 			}
 		};
-		O_ModelMapper.addMappings(skipFieldAddress);
+		TypeMap<TKECTUSERADDRESS, UserAddress> O_TypeMap = O_ModelMapper.getTypeMap(TKECTUSERADDRESS.class,
+				UserAddress.class);
+
+		if (O_TypeMap == null) {
+			O_ModelMapper.addMappings(O_PropertyMap);
+		}
 
 		for (TKECTUSERADDRESS O_TKECTUSERADDRESS : LO_TKECTUSERADDRESS) {
 
-			USERADDRESS O_USERADDRESS = O_ModelMapper.map(O_TKECTUSERADDRESS, USERADDRESS.class);
+			UserAddress O_UserAddress = O_ModelMapper.map(O_TKECTUSERADDRESS, UserAddress.class);
 
-			LO_USERADDRESS.add(O_USERADDRESS);
+			LO_UserAddress.add(O_UserAddress);
 		}
 
-		return LO_USERADDRESS;
+		return LO_UserAddress;
 	}
 
 	@Override
-	public void updateUserAddress(USERADDRESS RO_USERADDRESS) {
+	public void updateUserAddress(UserAddress RO_UserAddress) {
 
 		Session O_Session = O_SessionFactory.openSession();
 		Transaction O_Transaction = O_Session.beginTransaction();
 
 		try {
 
-			TKECTUSERADDRESS O_TKECTUSERADDRESS = O_Session.get(TKECTUSERADDRESS.class, RO_USERADDRESS.getUadAgId());
+			TKECTUSERADDRESS O_TKECTUSERADDRESS = O_Session.get(TKECTUSERADDRESS.class, RO_UserAddress.getUadAgId());
 
-			O_TKECTUSERADDRESS.setUadTkecmuId(O_Session.get(TKECMUSER.class, RO_USERADDRESS.getUadTkecmuId()));
-			O_TKECTUSERADDRESS.setUadName(RO_USERADDRESS.getUadName());
-			O_TKECTUSERADDRESS.setUadPhone(RO_USERADDRESS.getUadPhone());
-			O_TKECTUSERADDRESS.setUadAlternativePhone(RO_USERADDRESS.getUadAlternativePhone());
-			O_TKECTUSERADDRESS.setUadAddress(RO_USERADDRESS.getUadAddress());
-			O_TKECTUSERADDRESS.setUadCity(RO_USERADDRESS.getUadCity());
-			O_TKECTUSERADDRESS.setUadTkectsAgId(O_Session.get(TKECTSTATE.class, RO_USERADDRESS.getUadTkectsAgId()));
-			O_TKECTUSERADDRESS.setUadPostalCode(RO_USERADDRESS.getUadPostalCode());
-			O_TKECTUSERADDRESS.setUadAddressType(RO_USERADDRESS.getUadAddressType());
-			O_TKECTUSERADDRESS.setUadLandmark(RO_USERADDRESS.getUadLandmark());
-			O_TKECTUSERADDRESS.setUadLatitude(RO_USERADDRESS.getUadLatitude());
-			O_TKECTUSERADDRESS.setUadLongitude(RO_USERADDRESS.getUadLongitude());
+			O_TKECTUSERADDRESS.setUadTkecmuId(O_Session.get(TKECMUSER.class, RO_UserAddress.getUadTkecmuId()));
+			O_TKECTUSERADDRESS.setUadName(RO_UserAddress.getUadName());
+			O_TKECTUSERADDRESS.setUadPhone(RO_UserAddress.getUadPhone());
+			O_TKECTUSERADDRESS.setUadAlternativePhone(RO_UserAddress.getUadAlternativePhone());
+			O_TKECTUSERADDRESS.setUadAddress(RO_UserAddress.getUadAddress());
+			O_TKECTUSERADDRESS.setUadCity(RO_UserAddress.getUadCity());
+			O_TKECTUSERADDRESS.setUadTkectsAgId(O_Session.get(TKECTSTATE.class, RO_UserAddress.getUadTkectsAgId()));
+			O_TKECTUSERADDRESS.setUadPostalCode(RO_UserAddress.getUadPostalCode());
+			O_TKECTUSERADDRESS.setUadAddressType(RO_UserAddress.getUadAddressType());
+			O_TKECTUSERADDRESS.setUadLandmark(RO_UserAddress.getUadLandmark());
+			O_TKECTUSERADDRESS.setUadLatitude(RO_UserAddress.getUadLatitude());
+			O_TKECTUSERADDRESS.setUadLongitude(RO_UserAddress.getUadLongitude());
 			O_TKECTUSERADDRESS.setUadModifiedDate(OffsetDateTime.now());
-			O_TKECTUSERADDRESS.setUadModifiedUserId(RO_USERADDRESS.getUadTkecmuId());
+			O_TKECTUSERADDRESS.setUadModifiedUserId(RO_UserAddress.getUadTkecmuId());
 			O_Session.update(O_TKECTUSERADDRESS);
 
 			O_Transaction.commit();
@@ -143,14 +152,14 @@ public class UserAddressDaoImpl implements UserAddressDao {
 	}
 
 	@Override
-	public void deleteUserAddress(USERADDRESS RO_USERADDRESS) {
+	public void deleteUserAddress(UserAddress RO_UserAddress) {
 
 		String deleteAgId = " DELETE FROM TKECTUSERADDRESS WHERE uadAgId =:agId AND uadTkecmuId.uId =:userId";
 
 		Query deleteAgIdQuery = O_SessionFactory.getCurrentSession().createQuery(deleteAgId);
 
-		deleteAgIdQuery.setParameter("agId", RO_USERADDRESS.getUadAgId());
-		deleteAgIdQuery.setParameter("userId", RO_USERADDRESS.getUadTkecmuId());
+		deleteAgIdQuery.setParameter("agId", RO_UserAddress.getUadAgId());
+		deleteAgIdQuery.setParameter("userId", RO_UserAddress.getUadTkecmuId());
 		deleteAgIdQuery.executeUpdate();
 
 	}

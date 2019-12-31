@@ -1,6 +1,5 @@
 package com.technokryon.ecommerce.model;
 
-import java.math.BigInteger;
 import java.time.OffsetDateTime;
 
 import javax.persistence.CascadeType;

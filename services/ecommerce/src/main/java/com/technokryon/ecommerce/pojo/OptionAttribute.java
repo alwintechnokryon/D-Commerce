@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 
-public class OPTIONATTRIBUTE {
+public class OptionAttribute {
 
 	String oaId;
 	//String aId;

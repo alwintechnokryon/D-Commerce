@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
-public class COUNTRY {
+public class Country {
 
 	Integer cnAgId;
 	String cnName;

@@ -5,10 +5,11 @@ import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
-public class CONFIGURABLELINK {
+public class Image {
 
-	Integer clAgId;
-	String clTkecmpId;
-	String clParentId;
-
+	Integer iAgId;
+	String iTkecmpId;
+	String iFileName;
+	String iFileType;
+	String iUrl;
 }

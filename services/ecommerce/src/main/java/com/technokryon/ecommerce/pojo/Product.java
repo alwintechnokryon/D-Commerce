@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 
-public class PRODUCT {
+public class Product {
 
 	String pId;
 	String pSku;
@@ -35,9 +35,9 @@ public class PRODUCT {
 	String pdUrl;
 	String pdFile;
 	String pdTitle;
-	List<CATEGORY> LO_CATEGORY;
-	List<PRODUCTATTRIBUTE> LO_PRODUCTATTRIBUTE;
-	List<OPTIONATTRIBUTE> LO_OPTIONATTRIBUTE;
-	List<IMAGE> LO_IMAGE;
+	List<Category> LO_CATEGORY;
+	List<ProductAttribute> LO_PRODUCTATTRIBUTE;
+	List<OptionAttribute> LO_OPTIONATTRIBUTE;
+	List<Image> LO_IMAGE;
 
 }

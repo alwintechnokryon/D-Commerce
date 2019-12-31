@@ -8,14 +8,14 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.technokryon.ecommerce.pojo.PRODUCTCART;
-import com.technokryon.ecommerce.pojo.RESPONSE;
-import com.technokryon.ecommerce.pojo.USER;
+import com.technokryon.ecommerce.pojo.ProductCart;
+import com.technokryon.ecommerce.pojo.Response;
+import com.technokryon.ecommerce.pojo.ResponseData;
+import com.technokryon.ecommerce.pojo.User;
 import com.technokryon.ecommerce.service.UserCartService;
 import com.technokryon.ecommerce.service.UserService;
 
@@ -32,117 +32,87 @@ public class UserCartController {
 
 	@PostMapping("/add")
 	private ResponseEntity<?> ADD_CART(@RequestHeader(value = "apikey") String apiKey,
-			@RequestBody PRODUCTCART RO_PRODUCTCART) {
+			@RequestBody ProductCart RO_ProductCart) {
 
-		RESPONSE O_RESPONSE = new RESPONSE();
+		Response O_Response = new Response();
 
-		USER O_USER_DETAIL = O_UserService.getUserDetailAPIKey(apiKey);
+		User O_User_Detail = O_UserService.getUserDetailAPIKey(apiKey);
 
-		if (O_USER_DETAIL == null) {
+		RO_ProductCart.setPcTkecmuId(O_User_Detail.getUId());
 
-			O_RESPONSE.setMessage("Session Expired..!");
-			return new ResponseEntity<Object>(O_RESPONSE, HttpStatus.UNPROCESSABLE_ENTITY);
-		}
+		O_UserCartService.addToCart(RO_ProductCart);
 
-		RO_PRODUCTCART.setPcTkecmuId(O_USER_DETAIL.getUId());
+		O_Response.setMessage("Product Added To Cart SuccessFully..");
 
-		O_UserCartService.addToCart(RO_PRODUCTCART);
-
-		O_RESPONSE.setMessage("Product Added To Cart SuccessFully..");
-
-		return new ResponseEntity<Object>(O_RESPONSE, HttpStatus.OK);
+		return new ResponseEntity<Object>(O_Response, HttpStatus.OK);
 	}
 
 	@PostMapping("/list")
 	private ResponseEntity<?> LIST_CART(@RequestHeader(value = "apikey") String apiKey) {
 
-		RESPONSE O_RESPONSE = new RESPONSE();
+		User O_User_Detail = O_UserService.getUserDetailAPIKey(apiKey);
 
-		USER O_USER_DETAIL = O_UserService.getUserDetailAPIKey(apiKey);
+		List<ProductCart> LO_ProductCart = O_UserCartService.listCart(O_User_Detail.getUId());
 
-		if (O_USER_DETAIL == null) {
-
-			O_RESPONSE.setMessage("Session Expired..!");
-			return new ResponseEntity<Object>(O_RESPONSE, HttpStatus.UNPROCESSABLE_ENTITY);
-		}
-
-		List<PRODUCTCART> LO_PRODUCTCART = O_UserCartService.listCart(O_USER_DETAIL.getUId());
-
-		return new ResponseEntity<Object>(LO_PRODUCTCART, HttpStatus.OK);
+		return new ResponseEntity<Object>(LO_ProductCart, HttpStatus.OK);
 
 	}
 
 	@PostMapping("/add/quantity")
 	private ResponseEntity<?> ADD_QUANTITY(@RequestHeader(value = "apikey") String apiKey,
-			@RequestBody PRODUCTCART RO_PRODUCTCART) {
+			@RequestBody ProductCart RO_ProductCart) {
 
-		RESPONSE O_RESPONSE = new RESPONSE();
+		Response O_Response = new Response();
+		
+		ResponseData O_ResponseData = new ResponseData();
 
-		USER O_USER_DETAIL = O_UserService.getUserDetailAPIKey(apiKey);
+		// User O_USER_DETAIL = O_UserService.getUserDetailAPIKey(apiKey);
 
-		if (O_USER_DETAIL == null) {
+		Integer totalQuantity = O_UserCartService.checkTotalQuantity(RO_ProductCart.getPcTkecmpId());
 
-			O_RESPONSE.setMessage("Session Expired..!");
-			return new ResponseEntity<Object>(O_RESPONSE, HttpStatus.UNPROCESSABLE_ENTITY);
-		}
-
-		Integer totalQuantity = O_UserCartService.checkTotalQuantity(RO_PRODUCTCART.getPcTkecmpId());
-
-		Boolean addQuantity = O_UserCartService.addQuantity(RO_PRODUCTCART);
+		Boolean addQuantity = O_UserCartService.addQuantity(RO_ProductCart);
 
 		if (!addQuantity) {
-			
-			return new ResponseEntity<Object>(totalQuantity, HttpStatus.UNPROCESSABLE_ENTITY);
+
+			O_ResponseData.setTotalQuantity(totalQuantity);
+			return new ResponseEntity<Object>(O_ResponseData,HttpStatus.UNPROCESSABLE_ENTITY);
 		} else {
 
-			O_RESPONSE.setMessage("Quantity Added SuccessFully");
-			return new ResponseEntity<Object>(O_RESPONSE, HttpStatus.OK);
+			O_Response.setMessage("Quantity Added SuccessFully");
+			return new ResponseEntity<Object>(O_Response, HttpStatus.OK);
 		}
 	}
 
 	@PostMapping("/save/later")
 	private ResponseEntity<?> UPDATE_CART(@RequestHeader(value = "apikey") String apiKey,
-			@RequestBody PRODUCTCART RO_PRODUCTCART) {
+			@RequestBody ProductCart RO_ProductCart) {
 
-		RESPONSE O_RESPONSE = new RESPONSE();
+		Response O_Response = new Response();
 
-		USER O_USER_DETAIL = O_UserService.getUserDetailAPIKey(apiKey);
+//		User O_USER_DETAIL = O_UserService.getUserDetailAPIKey(apiKey);
 
-		if (O_USER_DETAIL == null) {
+		O_UserCartService.saveLater(RO_ProductCart);
 
-			O_RESPONSE.setMessage("Session Expired..!");
-			return new ResponseEntity<Object>(O_RESPONSE, HttpStatus.UNPROCESSABLE_ENTITY);
-
-		}
-
-		O_UserCartService.saveLater(RO_PRODUCTCART);
-
-		O_RESPONSE.setMessage("SuccessFully Product Save For Later ");
-		return new ResponseEntity<Object>(O_RESPONSE, HttpStatus.OK);
+		O_Response.setMessage("SuccessFully Product Save For Later ");
+		return new ResponseEntity<Object>(O_Response, HttpStatus.OK);
 
 	}
 
 	@PostMapping("/delete")
 	private ResponseEntity<?> DELETE_CART(@RequestHeader(value = "apikey") String apiKey,
-			@RequestBody PRODUCTCART RO_PRODUCTCART) {
+			@RequestBody ProductCart RO_ProductCart) {
 
-		RESPONSE O_RESPONSE = new RESPONSE();
+		Response O_Response = new Response();
 
-		USER O_USER_DETAIL = O_UserService.getUserDetailAPIKey(apiKey);
+		User O_User_Detail = O_UserService.getUserDetailAPIKey(apiKey);
 
-		if (O_USER_DETAIL == null) {
+		RO_ProductCart.setPcTkecmuId(O_User_Detail.getUId());
 
-			O_RESPONSE.setMessage("Session Expired..!");
-			return new ResponseEntity<Object>(O_RESPONSE, HttpStatus.UNPROCESSABLE_ENTITY);
-		}
+		O_UserCartService.deleteCart(RO_ProductCart);
 
-		RO_PRODUCTCART.setPcTkecmuId(O_USER_DETAIL.getUId());
+		O_Response.setMessage("Cart Deleted SuccessFully");
 
-		O_UserCartService.deleteCart(RO_PRODUCTCART);
-
-		O_RESPONSE.setMessage("Cart Deleted SuccessFully");
-
-		return new ResponseEntity<Object>(O_RESPONSE, HttpStatus.OK);
+		return new ResponseEntity<Object>(O_Response, HttpStatus.OK);
 
 	}
 

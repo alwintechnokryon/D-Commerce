@@ -10,8 +10,8 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.technokryon.ecommerce.dao.UserDao;
-import com.technokryon.ecommerce.pojo.USER;
-import com.technokryon.ecommerce.pojo.USERSESSION;
+import com.technokryon.ecommerce.pojo.User;
+import com.technokryon.ecommerce.pojo.UserSession;
 
 @Service("UserService")
 @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -22,39 +22,39 @@ public class UserServiceImpl implements UserService {
 	private UserDao O_UserDao;
 
 	@Override
-	public USER isUserEmailAvailable(String mail) {
-		// TODO Auto-generated method stub
+	public User isUserEmailAvailable(String mail) {
+
 		return O_UserDao.isUserEmailAvailable(mail);
 	}
 
 	@Override
-	public String createNewUserByEmail(USER RO_UserPojo) {
-		// TODO Auto-generated method stub
-		return O_UserDao.createNewUserByEmail(RO_UserPojo);
+	public String createNewUserByEmail(User RO_User) {
+
+		return O_UserDao.createNewUserByEmail(RO_User);
 	}
 
 	@Override
 	public String saveOTPDetails(Integer oTP, String userId) {
-		// TODO Auto-generated method stub
+
 		return O_UserDao.saveOTPDetails(oTP, userId);
 	}
 
 	@Override
-	public USER isUserPhoneNoAvailable(BigInteger phoneNo) {
-		// TODO Auto-generated method stub
+	public User isUserPhoneNoAvailable(BigInteger phoneNo) {
+
 		return O_UserDao.isUserPhoneNoAvailable(phoneNo);
 	}
 
 	@Override
-	public String createNewUserByPhoneNo(USER RO_UserPojo) {
-		// TODO Auto-generated method stub
-		return O_UserDao.createNewUserByPhoneNo(RO_UserPojo);
+	public String createNewUserByPhoneNo(User RO_User) {
+
+		return O_UserDao.createNewUserByPhoneNo(RO_User);
 	}
 
 	@Override
-	public USER getUserDetailHash(USER RO_UserPojo) {
+	public User getUserDetailHash(User RO_User) {
 
-		return O_UserDao.getUserDetailHash(RO_UserPojo);
+		return O_UserDao.getUserDetailHash(RO_User);
 	}
 
 	@Override
@@ -64,33 +64,33 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public void updatePassword(USER o_USER_DETAIL) {
+	public void updatePassword(User O_User_Detail) {
 
-		O_UserDao.updatePassword(o_USER_DETAIL);
+		O_UserDao.updatePassword(O_User_Detail);
 
 	}
 
 	@Override
-	public USERSESSION getApiSecretDataByNewSecret(String apisecret, String userId) {
-		// TODO Auto-generated method stub
+	public UserSession getApiSecretDataByNewSecret(String apisecret, String userId) {
+
 		return O_UserDao.getApiSecretDataByNewSecret(apisecret, userId);
 	}
 
 	@Override
-	public Boolean addAuditDetail(USER O_USER_DETAIL, HttpServletRequest httpServletRequest) {
-		// TODO Auto-generated method stub
-		return O_UserDao.addAuditDetail(O_USER_DETAIL, httpServletRequest);
+	public void addAuditDetail(User O_USER_DETAIL, HttpServletRequest httpServletRequest) {
+
+		O_UserDao.addAuditDetail(O_USER_DETAIL, httpServletRequest);
 	}
 
 	@Override
-	public USER getUserDetailAPIKey(String apiKey) {
-		// TODO Auto-generated method stub
+	public User getUserDetailAPIKey(String apiKey) {
+
 		return O_UserDao.getUserDetailAPIKey(apiKey);
 	}
 
 	@Override
 	public Boolean userLogout(String apiKey) {
-		// TODO Auto-generated method stub
+
 		return O_UserDao.userLogout(apiKey);
 	}
 

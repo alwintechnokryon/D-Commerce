@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
-public class USERADDRESS {
+public class UserAddress {
 
 	Integer uadAgId;
 	String uadTkecmuId;

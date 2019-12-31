@@ -7,6 +7,7 @@ import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.PropertyMap;
+import org.modelmapper.TypeMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
@@ -18,12 +19,12 @@ import com.technokryon.ecommerce.model.TKECMPRODUCTPAYMENTTYPE;
 import com.technokryon.ecommerce.model.TKECMPRODUCTTYPE;
 import com.technokryon.ecommerce.model.TKECTSTATE;
 import com.technokryon.ecommerce.model.TKECTUSERADDRESS;
-import com.technokryon.ecommerce.pojo.ATTRIBUTE;
-import com.technokryon.ecommerce.pojo.COUNTRY;
-import com.technokryon.ecommerce.pojo.PRODUCTPAYMENTTYPE;
-import com.technokryon.ecommerce.pojo.PRODUCTTYPE;
-import com.technokryon.ecommerce.pojo.STATE;
-import com.technokryon.ecommerce.pojo.USERADDRESS;
+import com.technokryon.ecommerce.pojo.Attribute;
+import com.technokryon.ecommerce.pojo.Country;
+import com.technokryon.ecommerce.pojo.ProductPaymentType;
+import com.technokryon.ecommerce.pojo.ProductType;
+import com.technokryon.ecommerce.pojo.State;
+import com.technokryon.ecommerce.pojo.UserAddress;
 
 @Repository("ConfigDao")
 @Transactional
@@ -37,9 +38,9 @@ public class ConfigDaoImpl implements ConfigDao {
 	private ModelMapper O_ModelMapper;
 
 	@Override
-	public List<COUNTRY> countryList() {
+	public List<Country> countryList() {
 
-		List<COUNTRY> LO_COUNTRY = new ArrayList<COUNTRY>();
+		List<Country> LO_Country = new ArrayList<Country>();
 
 		String countryList = "FROM TKECMCOUNTRY";
 
@@ -49,16 +50,16 @@ public class ConfigDaoImpl implements ConfigDao {
 
 		for (TKECMCOUNTRY O_TKECMCOUNTRY : LO_TKECMCOUNTRY) {
 
-			COUNTRY O_COUNTRY = O_ModelMapper.map(O_TKECMCOUNTRY, COUNTRY.class);
-			LO_COUNTRY.add(O_COUNTRY);
+			Country O_Country = O_ModelMapper.map(O_TKECMCOUNTRY, Country.class);
+			LO_Country.add(O_Country);
 		}
-		return LO_COUNTRY;
+		return LO_Country;
 	}
 
 	@Override
-	public List<PRODUCTTYPE> productTypeList() {
+	public List<ProductType> productTypeList() {
 
-		List<PRODUCTTYPE> LO_PRODUCTTYPE = new ArrayList<PRODUCTTYPE>();
+		List<ProductType> LO_ProductType = new ArrayList<ProductType>();
 
 		String productTypeList = "FROM TKECMPRODUCTTYPE";
 
@@ -68,16 +69,16 @@ public class ConfigDaoImpl implements ConfigDao {
 
 		for (TKECMPRODUCTTYPE O_TKECMPRODUCTTYPE : LO_TKECMPRODUCTTYPE) {
 
-			PRODUCTTYPE O_PRODUCTTYPE = O_ModelMapper.map(O_TKECMPRODUCTTYPE, PRODUCTTYPE.class);
-			LO_PRODUCTTYPE.add(O_PRODUCTTYPE);
+			ProductType O_ProductType = O_ModelMapper.map(O_TKECMPRODUCTTYPE, ProductType.class);
+			LO_ProductType.add(O_ProductType);
 		}
-		return LO_PRODUCTTYPE;
+		return LO_ProductType;
 	}
 
 	@Override
-	public List<PRODUCTPAYMENTTYPE> productPaymentTypeList() {
+	public List<ProductPaymentType> productPaymentTypeList() {
 
-		List<PRODUCTPAYMENTTYPE> LO_PRODUCTPAYMENTTYPE = new ArrayList<PRODUCTPAYMENTTYPE>();
+		List<ProductPaymentType> LO_ProductPaymentType = new ArrayList<ProductPaymentType>();
 
 		String productPaymentTypeList = "FROM TKECMPRODUCTPAYMENTTYPE";
 
@@ -88,20 +89,17 @@ public class ConfigDaoImpl implements ConfigDao {
 
 		for (TKECMPRODUCTPAYMENTTYPE O_TKECMPRODUCTPAYMENTTYPE : LO_TKECMPRODUCTPAYMENTTYPE) {
 
-			PRODUCTPAYMENTTYPE O_PRODUCTPAYMENTTYPE = O_ModelMapper.map(O_TKECMPRODUCTPAYMENTTYPE,
-					PRODUCTPAYMENTTYPE.class);
-			LO_PRODUCTPAYMENTTYPE.add(O_PRODUCTPAYMENTTYPE);
+			ProductPaymentType O_ProductPaymentType = O_ModelMapper.map(O_TKECMPRODUCTPAYMENTTYPE,
+					ProductPaymentType.class);
+			LO_ProductPaymentType.add(O_ProductPaymentType);
 		}
-		return LO_PRODUCTPAYMENTTYPE;
+		return LO_ProductPaymentType;
 	}
-	
-	
-	
 
 	@Override
-	public List<STATE> stateListById(Integer sTkecmcnAgId) {
+	public List<State> stateListById(Integer sTkecmcnAgId) {
 
-		List<STATE> LO_STATE = new ArrayList<STATE>();
+		List<State> LO_State = new ArrayList<State>();
 
 		String stateListById = "FROM TKECTSTATE WHERE sTkecmcnAgId.cnAgId =:countryAgId";
 
@@ -111,29 +109,33 @@ public class ConfigDaoImpl implements ConfigDao {
 
 		List<TKECTSTATE> LO_TKECTSTATE = stateListByIdQuery.getResultList();
 
-		PropertyMap<TKECTSTATE, STATE> skipFieldState = new PropertyMap<TKECTSTATE, STATE>() {
+		PropertyMap<TKECTSTATE, State> O_PropertyMap = new PropertyMap<TKECTSTATE, State>() {
 			protected void configure() {
 
 				skip().setSFipsCode(null);
 				skip().setSTkecmcnAgId(null);
 			}
 		};
-		O_ModelMapper.addMappings(skipFieldState);
+		TypeMap<TKECTSTATE, State> O_TypeMap = O_ModelMapper.getTypeMap(TKECTSTATE.class, State.class);
+
+		if (O_TypeMap == null) {
+			O_ModelMapper.addMappings(O_PropertyMap);
+		}
 
 		for (TKECTSTATE O_TKECTSTATE : LO_TKECTSTATE) {
 
-			STATE O_STATE = O_ModelMapper.map(O_TKECTSTATE, STATE.class);
+			State O_State = O_ModelMapper.map(O_TKECTSTATE, State.class);
 
-			LO_STATE.add(O_STATE);
+			LO_State.add(O_State);
 		}
 
-		return LO_STATE;
+		return LO_State;
 	}
 
 	@Override
-	public List<ATTRIBUTE> attributeList() {
+	public List<Attribute> attributeList() {
 
-		List<ATTRIBUTE> LO_ATTRIBUTE = new ArrayList<ATTRIBUTE>();
+		List<Attribute> LO_Attribute = new ArrayList<Attribute>();
 
 		String attributeList = "FROM TKECMATTRIBUTE";
 
@@ -143,10 +145,10 @@ public class ConfigDaoImpl implements ConfigDao {
 
 		for (TKECMATTRIBUTE O_TKECMATTRIBUTE : LO_TKECMATTRIBUTE) {
 
-			ATTRIBUTE O_ATTRIBUTE = O_ModelMapper.map(O_TKECMATTRIBUTE, ATTRIBUTE.class);
-			LO_ATTRIBUTE.add(O_ATTRIBUTE);
+			Attribute O_Attribute = O_ModelMapper.map(O_TKECMATTRIBUTE, Attribute.class);
+			LO_Attribute.add(O_Attribute);
 		}
-		return LO_ATTRIBUTE;
+		return LO_Attribute;
 	}
 
 }

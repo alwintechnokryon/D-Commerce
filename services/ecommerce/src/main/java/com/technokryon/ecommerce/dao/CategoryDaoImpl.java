@@ -14,7 +14,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.technokryon.ecommerce.model.TKECMCATEGORY;
-import com.technokryon.ecommerce.pojo.CATEGORY;
+import com.technokryon.ecommerce.pojo.Category;
 
 @Repository("CategoryDao")
 @Transactional
@@ -25,7 +25,7 @@ public class CategoryDaoImpl implements CategoryDao {
 	private SessionFactory O_SessionFactory;
 
 	@Override
-	public String addCategory(CATEGORY RO_CATEGORY) {
+	public String addCategory(Category RO_Category) {
 
 		Session O_Session = O_SessionFactory.openSession();
 		Transaction O_Transaction = O_Session.beginTransaction();
@@ -53,9 +53,9 @@ public class CategoryDaoImpl implements CategoryDao {
 
 		try {
 
-			O_TKECMCATEGORY.setCCategoryName(RO_CATEGORY.getCCategoryName());
-			O_TKECMCATEGORY.setCParentId(RO_CATEGORY.getCParentId());
-			O_TKECMCATEGORY.setCCategoryLevel(RO_CATEGORY.getCCategoryLevel());
+			O_TKECMCATEGORY.setCCategoryName(RO_Category.getCCategoryName());
+			O_TKECMCATEGORY.setCParentId(RO_Category.getCParentId());
+			O_TKECMCATEGORY.setCCategoryLevel(RO_Category.getCCategoryLevel());
 			O_Session.save(O_TKECMCATEGORY);
 			O_Transaction.commit();
 			O_Session.close();
@@ -75,29 +75,28 @@ public class CategoryDaoImpl implements CategoryDao {
 	@Override
 	// @Cacheable("CATEGORY")
 	// @CacheEvict(value="CATEGORY", allEntries=true)
-	public List<CATEGORY> categoryList() {
+	public List<Category> categoryList() {
 
-		List<CATEGORY> LO_CATEGORY = new ArrayList<CATEGORY>();
+		List<Category> LO_Category = new ArrayList<Category>();
 
 		String parentCategory = "FROM TKECMCATEGORY WHERE cParentId IS NULL";
 
 		Query parentCategoryQry = O_SessionFactory.getCurrentSession().createQuery(parentCategory);
 
 		List<TKECMCATEGORY> LO_TKECMCATEGORY = (List<TKECMCATEGORY>) parentCategoryQry.list();
-
-//		System.out.println("Root Category size.." + LO_TKECMCATEGORY.size());
+		
 		for (TKECMCATEGORY O_TKECMCATEGORY : LO_TKECMCATEGORY) {
 
-			LO_CATEGORY.add(new CATEGORY(O_TKECMCATEGORY, getChildCategories(O_TKECMCATEGORY.getCCategoryId())));
+			LO_Category.add(new Category(O_TKECMCATEGORY, getChildCategories(O_TKECMCATEGORY.getCCategoryId())));
 
 		}
 
-		return LO_CATEGORY;
+		return LO_Category;
 	}
 
-	public List<CATEGORY> getChildCategories(String parentId) {
+	public List<Category> getChildCategories(String parentId) {
 
-		List<CATEGORY> LO_CATEGORY = new ArrayList<CATEGORY>();
+		List<Category> LO_Category = new ArrayList<Category>();
 
 		String childCategory = "FROM TKECMCATEGORY WHERE cParentId =: parentId";
 
@@ -109,28 +108,19 @@ public class CategoryDaoImpl implements CategoryDao {
 
 		for (TKECMCATEGORY child_O_TKECMCATEGORY : child_LO_TKECMCATEGORY) {
 
-			LO_CATEGORY.add(
-					new CATEGORY(child_O_TKECMCATEGORY, getChildCategories(child_O_TKECMCATEGORY.getCCategoryId())));
+			LO_Category.add(
+					new Category(child_O_TKECMCATEGORY, getChildCategories(child_O_TKECMCATEGORY.getCCategoryId())));
 		}
 
-		return LO_CATEGORY;
+		return LO_Category;
 	}
 
 	@Override
-	public List<CATEGORY> categoryListById(CATEGORY rO_CATEGORY) {
+	public List<Category> categoryListById(Category RO_Category) {
 
-		List<CATEGORY> LO_CATEGORY = new ArrayList<>();
+		List<Category> LO_Category = new ArrayList<>();
 
 		ModelMapper O_ModelMapper = new ModelMapper();
-
-//		PropertyMap<TKECMCATEGORY, CATEGORY> skipModifiedFieldsMap = new PropertyMap<TKECMCATEGORY, CATEGORY>() {
-//			protected void configure() {
-//
-//				skip().setCategoryLevel(null);
-//				skip().setCategoryName(null);
-//			}
-//		};
-//		O_ModelMapper.addMappings(skipModifiedFieldsMap);
 
 		String categoryListById = "FROM TKECMCATEGORY WHERE cParentId =:parentid";
 
@@ -138,26 +128,25 @@ public class CategoryDaoImpl implements CategoryDao {
 
 		Query categoryListByIdQry;
 
-
-		if (rO_CATEGORY.getCCategoryId() == null) {
+		if (RO_Category.getCCategoryId() == null) {
 
 			categoryListByIdQry = O_SessionFactory.getCurrentSession().createQuery(parentId);
 
 		}else {
 			categoryListByIdQry = O_SessionFactory.getCurrentSession().createQuery(categoryListById);
-			categoryListByIdQry.setParameter("parentid", rO_CATEGORY.getCCategoryId());
+			categoryListByIdQry.setParameter("parentid", RO_Category.getCCategoryId());
 		}
 
 		List<TKECMCATEGORY> LO_TKECMCATEGORY = categoryListByIdQry.getResultList();
 
 		for (TKECMCATEGORY O_TKECMCATEGORY : LO_TKECMCATEGORY) {
 
-			CATEGORY O_CATEGORY = O_ModelMapper.map(O_TKECMCATEGORY, CATEGORY.class);
-			O_CATEGORY.setChildCategory(getChildCategories(O_TKECMCATEGORY.getCCategoryId()));
+			Category O_Category = O_ModelMapper.map(O_TKECMCATEGORY, Category.class);
+			O_Category.setChildCategory(getChildCategories(O_TKECMCATEGORY.getCCategoryId()));
 
-			LO_CATEGORY.add(O_CATEGORY);
+			LO_Category.add(O_Category);
 
 		}
-		return LO_CATEGORY;
+		return LO_Category;
 	}
 }

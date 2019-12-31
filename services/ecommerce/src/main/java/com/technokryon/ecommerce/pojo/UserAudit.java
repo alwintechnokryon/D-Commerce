@@ -6,7 +6,7 @@ import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
-public class USERAUDIT {
+public class UserAudit {
 
 	Integer uaAgId;
 	String uaTkecmuId;

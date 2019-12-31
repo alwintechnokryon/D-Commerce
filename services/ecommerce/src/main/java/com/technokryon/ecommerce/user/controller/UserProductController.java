@@ -11,7 +11,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-import com.technokryon.ecommerce.pojo.PRODUCT;
+
+import com.technokryon.ecommerce.pojo.Product;
 import com.technokryon.ecommerce.service.ProductService;
 
 @Controller
@@ -24,21 +25,21 @@ public class UserProductController {
 	
 	@ResponseBody
 	@PostMapping("/list/category")
-	private ResponseEntity<?> PRODUCT_LIST_BY_CATEGORY(@RequestBody PRODUCT RO_PRODUCT){
+	private ResponseEntity<?> PRODUCT_LIST_BY_CATEGORY(@RequestBody Product RO_Product){
 		
-	List<PRODUCT> LO_PRODUCT =	O_ProductService.getListByCategory(RO_PRODUCT.getPTkecmcCategoryId(),RO_PRODUCT.getPageNumber());
+	List<Product> LO_Product =	O_ProductService.getListByCategory(RO_Product.getPTkecmcCategoryId(),RO_Product.getPageNumber());
 		
-	return new ResponseEntity<Object>(LO_PRODUCT, HttpStatus.OK);
+	return new ResponseEntity<Object>(LO_Product, HttpStatus.OK);
 	}
 	
 	
 	@ResponseBody
 	@PostMapping("/detail/id")
-	private ResponseEntity<?> PRODUCT_DETAIL_BY_ID(@RequestBody PRODUCT RO_PRODUCT){
+	private ResponseEntity<?> PRODUCT_DETAIL_BY_ID(@RequestBody Product RO_Product){
 		
-	PRODUCT O_PRODUCT = O_ProductService.getDetailById(RO_PRODUCT.getPId());
+	Product O_Product = O_ProductService.getDetailById(RO_Product.getPId());
 		
-	return new ResponseEntity<Object>(O_PRODUCT, HttpStatus.OK);
+	return new ResponseEntity<Object>(O_Product, HttpStatus.OK);
 	}
 	
 }

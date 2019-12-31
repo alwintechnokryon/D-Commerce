@@ -13,8 +13,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.technokryon.ecommerce.pojo.RESPONSE;
-import com.technokryon.ecommerce.pojo.CATEGORY;
+import com.technokryon.ecommerce.pojo.Category;
+import com.technokryon.ecommerce.pojo.Response;
 import com.technokryon.ecommerce.service.CategoryService;
 
 @Controller
@@ -27,11 +27,11 @@ public class CategoryController {
 
 	@ResponseBody
 	@PostMapping("/add")
-	private ResponseEntity<?> ADD_CATEGORY(@RequestBody CATEGORY RO_CATEGORY) {
+	private ResponseEntity<?> ADD_CATEGORY(@RequestBody Category RO_Category) {
 
-		RESPONSE O_Response = new RESPONSE();
+		Response O_Response = new Response();
 
-		String addCategory = O_CategoryService.addCategory(RO_CATEGORY);
+		O_CategoryService.addCategory(RO_Category);
 
 		O_Response.setMessage("Success");
 		return new ResponseEntity<Object>(O_Response, HttpStatus.OK);
@@ -42,18 +42,18 @@ public class CategoryController {
 	@GetMapping("/list")
 	private ResponseEntity<?> LIST() {
 
-		List<CATEGORY> LO_CATEGORY = O_CategoryService.categoryList();
+		List<Category> LO_Category = O_CategoryService.categoryList();
 
-		return new ResponseEntity<Object>(LO_CATEGORY, HttpStatus.OK);
+		return new ResponseEntity<Object>(LO_Category, HttpStatus.OK);
 
 	}
 
 	@ResponseBody
 	@PostMapping("/list/id") 
-	private ResponseEntity<?> LIST_BY_ID(@RequestBody CATEGORY RO_CATEGORY){
+	private ResponseEntity<?> LIST_BY_ID(@RequestBody Category RO_Category){
 		
 
-		List<CATEGORY> LO_CATEGORY = O_CategoryService.categoryListById(RO_CATEGORY);
+		List<Category> LO_Category = O_CategoryService.categoryListById(RO_Category);
 		
-		return new ResponseEntity<Object>(LO_CATEGORY, HttpStatus.OK);	}
+		return new ResponseEntity<Object>(LO_Category, HttpStatus.OK);	}
 }

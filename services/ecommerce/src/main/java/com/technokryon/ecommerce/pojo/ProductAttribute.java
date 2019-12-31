@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 
-public class PRODUCTATTRIBUTE {
+public class ProductAttribute {
 	String paAgId;
 	String paTkecmpId;
 	String paTkectoaId;
@@ -17,6 +17,6 @@ public class PRODUCTATTRIBUTE {
 	String paCreatedUserId;
 	String defaultYN;
 	String SubProductId;
-	List<OPTIONATTRIBUTE> LO_OPTIONATTRIBUTE;
+	List<OptionAttribute> LO_OPTIONATTRIBUTE;
 
 }

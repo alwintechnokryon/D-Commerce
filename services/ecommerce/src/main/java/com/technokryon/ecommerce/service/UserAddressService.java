@@ -2,16 +2,16 @@ package com.technokryon.ecommerce.service;
 
 import java.util.List;
 
-import com.technokryon.ecommerce.pojo.USERADDRESS;
+import com.technokryon.ecommerce.pojo.UserAddress;
 
 public interface UserAddressService {
 
-	List<USERADDRESS> listUserAddress(String uId);
+	List<UserAddress> listUserAddress(String uId);
 
-	void updateUserAddress(USERADDRESS RO_USERADDRESS);
+	void updateUserAddress(UserAddress RO_UserAddress);
 
-	void deleteUserAddress(USERADDRESS RO_USERADDRESS);
+	void deleteUserAddress(UserAddress RO_UserAddress);
 
-	void addUserAddress(USERADDRESS rO_USERADDRESS);
+	void addUserAddress(UserAddress RO_UserAddress);
 
 }

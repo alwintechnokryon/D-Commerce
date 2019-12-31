@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
-public class ORDERSTATUSHISTORY {
+public class OrderStatusHistory {
 
 	Integer oshAgId;
 	String oshTkecmoId;

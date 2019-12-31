@@ -5,7 +5,7 @@ import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
-public class PRODUCTPAYMENTTYPE {
+public class ProductPaymentType {
 
 	String pptId;
 	String pptType;

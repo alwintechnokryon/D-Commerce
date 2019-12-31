@@ -5,7 +5,7 @@ import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
-public class PRODUCTDOWNLOADSAMPLE {
+public class ProductDownloadSample {
 
 	Integer pdsAgId;
 	String pdsTkecmpId;

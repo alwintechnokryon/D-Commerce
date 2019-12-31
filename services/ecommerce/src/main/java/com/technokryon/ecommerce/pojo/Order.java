@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
-public class ORDER {
+public class Order {
 
 	String oId;
 	String oTkecmuId;
@@ -35,7 +35,7 @@ public class ORDER {
 	String userId;
 //	String productId;
 //	Integer proQuantity;
-	List<PRODUCT> LO_PRODUCT;
+	List<Product> LO_PRODUCT;
 	Integer billingAddress;
 	Integer shippingAddress;
 

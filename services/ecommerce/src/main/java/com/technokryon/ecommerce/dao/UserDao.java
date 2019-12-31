@@ -4,32 +4,33 @@ import java.math.BigInteger;
 
 import javax.servlet.http.HttpServletRequest;
 
-import com.technokryon.ecommerce.pojo.USER;
-import com.technokryon.ecommerce.pojo.USERSESSION;
+import com.technokryon.ecommerce.pojo.User;
+import com.technokryon.ecommerce.pojo.UserSession;
+
 
 public interface UserDao {
 
-	USER getUserDetailHash(USER RO_UserPojo);
+	User getUserDetailHash(User RO_User);
 
 	void changeOTPStatus(String userId);
 
-	USER isUserEmailAvailable(String mail);
+	User isUserEmailAvailable(String mail);
 
-	String createNewUserByEmail(USER RO_UserPojo);
+	String createNewUserByEmail(User RO_User);
 
 	String saveOTPDetails(Integer oTP, String userId);
 
-	USER isUserPhoneNoAvailable(BigInteger phoneNo);
+	User isUserPhoneNoAvailable(BigInteger phoneNo);
 
-	String createNewUserByPhoneNo(USER RO_UserPojo);
+	String createNewUserByPhoneNo(User RO_User);
 
-	void updatePassword(USER o_USER_DETAIL);
+	void updatePassword(User O_USER_DETAIL);
 
-	USERSESSION getApiSecretDataByNewSecret(String apisecret, String userId);
+	UserSession getApiSecretDataByNewSecret(String apisecret, String userId);
 
-	Boolean addAuditDetail(USER O_USER_DETAIL, HttpServletRequest httpServletRequest);
+	void addAuditDetail(User O_USER_DETAIL, HttpServletRequest httpServletRequest);
 
-	USER getUserDetailAPIKey(String apiKey);
+	User getUserDetailAPIKey(String apiKey);
 
 	Boolean userLogout(String apiKey);
 

@@ -8,7 +8,7 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.technokryon.ecommerce.dao.UserAddressDao;
-import com.technokryon.ecommerce.pojo.USERADDRESS;
+import com.technokryon.ecommerce.pojo.UserAddress;
 
 @Service("UserAddressService")
 @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -18,27 +18,27 @@ public class UserAddressServiceImpl implements UserAddressService {
 	private UserAddressDao O_UserAddressDao;
 
 	@Override
-	public void addUserAddress(USERADDRESS RO_USERADDRESS) {
-		// TODO Auto-generated method stub
-		O_UserAddressDao.addUserAddress(RO_USERADDRESS);
+	public void addUserAddress(UserAddress RO_UserAddress) {
+		
+		O_UserAddressDao.addUserAddress(RO_UserAddress);
 	}
 
 	@Override
-	public List<USERADDRESS> listUserAddress(String uId) {
-		// TODO Auto-generated method stub
+	public List<UserAddress> listUserAddress(String uId) {
+		
 		return O_UserAddressDao.listUserAddress(uId);
 	}
 
 	@Override
-	public void updateUserAddress(USERADDRESS RO_USERADDRESS) {
-		// TODO Auto-generated method stub
-		O_UserAddressDao.updateUserAddress(RO_USERADDRESS);
+	public void updateUserAddress(UserAddress RO_UserAddress) {
+		
+		O_UserAddressDao.updateUserAddress(RO_UserAddress);
 	}
 
 	@Override
-	public void deleteUserAddress(USERADDRESS RO_USERADDRESS) {
-		// TODO Auto-generated method stub
-		O_UserAddressDao.deleteUserAddress(RO_USERADDRESS);
+	public void deleteUserAddress(UserAddress RO_UserAddress) {
+		
+		O_UserAddressDao.deleteUserAddress(RO_UserAddress);
 	}
 
 }

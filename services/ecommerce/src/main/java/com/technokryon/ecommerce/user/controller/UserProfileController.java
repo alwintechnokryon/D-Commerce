@@ -10,8 +10,8 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.technokryon.ecommerce.pojo.RESPONSE;
-import com.technokryon.ecommerce.pojo.USER;
+import com.technokryon.ecommerce.pojo.Response;
+import com.technokryon.ecommerce.pojo.User;
 import com.technokryon.ecommerce.service.UserService;
 
 @Controller
@@ -26,21 +26,20 @@ public class UserProfileController {
 	@GetMapping(value = { "/detail" })
 	ResponseEntity<?> USER_DETAIL(@RequestHeader(value = "X-Auth-Token") String apiKey) {
 
-		RESPONSE O_Response = new RESPONSE();
+		Response O_Response = new Response();
 
-		USER O_USER_DETAIL = O_UserService.getUserDetailAPIKey(apiKey);
+		User O_User_Detail = O_UserService.getUserDetailAPIKey(apiKey);
 
-		if (O_USER_DETAIL == null) {
+//		if (O_USER_DETAIL == null) {
+//
+//			O_Response.setMessage("Session Expired..!");
+//			return new ResponseEntity<Object>(O_Response, HttpStatus.UNPROCESSABLE_ENTITY);
+//		}
 
-			O_Response.setMessage("Session Expired..!");
-			return new ResponseEntity<Object>(O_Response, HttpStatus.UNPROCESSABLE_ENTITY);
-		}
-
-		O_USER_DETAIL.setUPassword(null);
-		O_USER_DETAIL.setUId(null);
-		
+		O_User_Detail.setUPassword(null);
+		O_User_Detail.setUId(null);
 
 		O_Response.setMessage("Success!");
-		return new ResponseEntity<Object>(O_USER_DETAIL, HttpStatus.UNPROCESSABLE_ENTITY);
+		return new ResponseEntity<Object>(O_User_Detail, HttpStatus.UNPROCESSABLE_ENTITY);
 	}
 }

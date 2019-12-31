@@ -2,17 +2,17 @@ package com.technokryon.ecommerce.dao;
 
 import java.util.List;
 
-import com.technokryon.ecommerce.pojo.ORDER;
-import com.technokryon.ecommerce.pojo.PRODUCT;
+import com.technokryon.ecommerce.pojo.Order;
+import com.technokryon.ecommerce.pojo.Product;
+
+
 
 public interface OrderDao {
 
-	// Boolean checkAvailableProductQuantity(String productId, Integer proQuantity);
+	String requestOrder(Order RO_Order);
 
-	String requestOrder(ORDER RO_ORDER);
+	Boolean checkAvailableProductQuantity(List<Product> LO_PRODUCT);
 
-	Boolean checkAvailableProductQuantity(List<PRODUCT> LO_PRODUCT);
-
-	String updateTransactionId(ORDER RO_ORDER);
+	String updateTransactionId(Order RO_Order);
 
 }

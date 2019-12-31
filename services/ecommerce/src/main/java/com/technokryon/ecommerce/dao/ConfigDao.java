@@ -2,22 +2,23 @@ package com.technokryon.ecommerce.dao;
 
 import java.util.List;
 
-import com.technokryon.ecommerce.pojo.ATTRIBUTE;
-import com.technokryon.ecommerce.pojo.COUNTRY;
-import com.technokryon.ecommerce.pojo.PRODUCTPAYMENTTYPE;
-import com.technokryon.ecommerce.pojo.PRODUCTTYPE;
-import com.technokryon.ecommerce.pojo.STATE;
+
+import com.technokryon.ecommerce.pojo.Attribute;
+import com.technokryon.ecommerce.pojo.Country;
+import com.technokryon.ecommerce.pojo.ProductPaymentType;
+import com.technokryon.ecommerce.pojo.ProductType;
+import com.technokryon.ecommerce.pojo.State;
 
 public interface ConfigDao {
 
-	List<COUNTRY> countryList();
+	List<Country> countryList();
 
-	List<PRODUCTTYPE> productTypeList();
+	List<ProductType> productTypeList();
 
-	List<PRODUCTPAYMENTTYPE> productPaymentTypeList();
+	List<ProductPaymentType> productPaymentTypeList();
 
-	List<STATE> stateListById(Integer sTkecmcnAgId);
+	List<State> stateListById(Integer sTkecmcnAgId);
 
-	List<ATTRIBUTE> attributeList();
+	List<Attribute> attributeList();
 
 }

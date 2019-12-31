@@ -5,7 +5,7 @@ import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
-public class PRODUCTTYPE {
+public class ProductType {
 
 	String ptId;
 	String ptType;

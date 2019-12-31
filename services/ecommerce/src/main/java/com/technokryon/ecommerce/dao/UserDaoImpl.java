@@ -19,8 +19,8 @@ import org.springframework.transaction.annotation.Transactional;
 import com.technokryon.ecommerce.model.TKECMUSER;
 import com.technokryon.ecommerce.model.TKECTUSERAUDIT;
 import com.technokryon.ecommerce.model.TKECTUSERSESSION;
-import com.technokryon.ecommerce.pojo.USER;
-import com.technokryon.ecommerce.pojo.USERSESSION;
+import com.technokryon.ecommerce.pojo.User;
+import com.technokryon.ecommerce.pojo.UserSession;
 
 @Repository("UserDao")
 @Transactional
@@ -35,7 +35,7 @@ public class UserDaoImpl implements UserDao {
 	private ModelMapper O_ModelMapper;
 
 	@Override
-	public USER isUserEmailAvailable(String mail) {
+	public User isUserEmailAvailable(String mail) {
 
 		String getUserByEmail = "FROM TKECMUSER WHERE uMail =:email";
 
@@ -50,19 +50,19 @@ public class UserDaoImpl implements UserDao {
 
 		}
 
-		USER O_PJ_TKECMUSER = O_ModelMapper.map(O_TKECMUSER, USER.class);
+		User O_User = O_ModelMapper.map(O_TKECMUSER, User.class);
 
 //		O_PJ_TKECMUSER.setTkecmuPassword(O_TKECMUSER.getTkecmuPassword());
 //		O_PJ_TKECMUSER.setTkecmuId(O_TKECMUSER.getTkecmuId());
 //		O_PJ_TKECMUSER.setTkecmuStatus(O_TKECMUSER.getTkecmuStatus());
 //		O_PJ_TKECMUSER.setTkecmuOtpStatus(O_TKECMUSER.getTkecmuOtpStatus());
 
-		return O_PJ_TKECMUSER;
+		return O_User;
 
 	}
 
 	@Override
-	public String createNewUserByEmail(USER RO_UserPojo) {
+	public String createNewUserByEmail(User RO_User) {
 		Session O_Session = O_SessionFactory.openSession();
 		Transaction O_Transaction = O_Session.beginTransaction();
 
@@ -89,9 +89,9 @@ public class UserDaoImpl implements UserDao {
 
 		try {
 
-			O_TKECM_USER.setUName(RO_UserPojo.getUName());
-			O_TKECM_USER.setUMail(RO_UserPojo.getUMail());
-			O_TKECM_USER.setUPassword(RO_UserPojo.getUPassword());
+			O_TKECM_USER.setUName(RO_User.getUName());
+			O_TKECM_USER.setUMail(RO_User.getUMail());
+			O_TKECM_USER.setUPassword(RO_User.getUPassword());
 			O_TKECM_USER.setUCreatedDate(OffsetDateTime.now());
 			O_TKECM_USER.setURegType("E");
 			O_TKECM_USER.setUStatus("N");
@@ -117,23 +117,22 @@ public class UserDaoImpl implements UserDao {
 
 	@Override
 	public String saveOTPDetails(Integer oTP, String userId) {
-		Session O_Session = O_SessionFactory.getCurrentSession();
 
 		String hash = new BCryptPasswordEncoder().encode(OffsetDateTime.now().toString());
 
-		TKECMUSER O_TKECMUSER = O_Session.get(TKECMUSER.class, userId);
+		TKECMUSER O_TKECMUSER = O_SessionFactory.getCurrentSession().get(TKECMUSER.class, userId);
 
 		O_TKECMUSER.setUOtp(oTP);
 		O_TKECMUSER.setUHashKey(hash);
 		O_TKECMUSER.setUOtpExp((OffsetDateTime.now().plusMinutes(5)));
 
-		O_Session.save(O_TKECMUSER);
+		O_SessionFactory.getCurrentSession().save(O_TKECMUSER);
 
 		return hash;
 	}
 
 	@Override
-	public USER isUserPhoneNoAvailable(BigInteger phoneNo) {
+	public User isUserPhoneNoAvailable(BigInteger phoneNo) {
 
 		String getUserByPhone = "FROM TKECMUSER WHERE uPhone =:phoneNo";
 
@@ -148,19 +147,19 @@ public class UserDaoImpl implements UserDao {
 
 		}
 
-		USER O_USER = O_ModelMapper.map(O_TKECMUSER, USER.class);
+		User O_User = O_ModelMapper.map(O_TKECMUSER, User.class);
 
 //		O_PJ_TKECMUSER.setTkecmuPassword(O_TKECMUSER.getTkecmuPassword());
 //		O_PJ_TKECMUSER.setTkecmuId(O_TKECMUSER.getTkecmuId());
 //		O_PJ_TKECMUSER.setTkecmuStatus(O_TKECMUSER.getTkecmuStatus());
 //		O_PJ_TKECMUSER.setTkecmuOtpStatus(O_TKECMUSER.getTkecmuOtpStatus());
 
-		return O_USER;
+		return O_User;
 
 	}
 
 	@Override
-	public String createNewUserByPhoneNo(USER RO_UserPojo) {
+	public String createNewUserByPhoneNo(User RO_User) {
 		Session O_Session = O_SessionFactory.openSession();
 		Transaction O_Transaction = O_Session.beginTransaction();
 
@@ -187,13 +186,13 @@ public class UserDaoImpl implements UserDao {
 
 		try {
 
-			O_TKECM_USER.setUName(RO_UserPojo.getUName());
-			O_TKECM_USER.setUOtp(RO_UserPojo.getUOtp());
-			O_TKECM_USER.setUPhone(RO_UserPojo.getUPhone());
-			O_TKECM_USER.setUPassword(RO_UserPojo.getUPassword());
+			O_TKECM_USER.setUName(RO_User.getUName());
+			O_TKECM_USER.setUOtp(RO_User.getUOtp());
+			O_TKECM_USER.setUPhone(RO_User.getUPhone());
+			O_TKECM_USER.setUPassword(RO_User.getUPassword());
 			O_TKECM_USER.setUCreatedDate(OffsetDateTime.now());
 			O_TKECM_USER.setURegType("M");
-			O_TKECM_USER.setUCountryCode(RO_UserPojo.getUCountryCode());
+			O_TKECM_USER.setUCountryCode(RO_User.getUCountryCode());
 			O_TKECM_USER.setUOtpStatus("N");
 			O_TKECM_USER.setUStatus("N");
 			O_Session.save(O_TKECM_USER);
@@ -216,24 +215,24 @@ public class UserDaoImpl implements UserDao {
 	}
 
 	@Override
-	public USER getUserDetailHash(USER RO_UserPojo) {
+	public User getUserDetailHash(User RO_User) {
 
 		String getUserDetail = "FROM TKECMUSER WHERE uHashKey =:hashKey";
 
 		Query query = O_SessionFactory.getCurrentSession().createQuery(getUserDetail);
-		query.setParameter("hashKey", RO_UserPojo.getUHashKey());
+		query.setParameter("hashKey", RO_User.getUHashKey());
 		TKECMUSER O_TKECMUSER = (TKECMUSER) query.uniqueResult();
 
 		if (O_TKECMUSER == null) {
 			return null;
 		}
-		USER O_USER = O_ModelMapper.map(O_TKECMUSER, USER.class);
+		User O_User = O_ModelMapper.map(O_TKECMUSER, User.class);
 
 //		O_PJ_TKECMUSER.setTkecmuOtp(O_TKECMUSER.getTkecmuOtp());
 //		O_PJ_TKECMUSER.setTkecmuOtpExp(O_TKECMUSER.getTkecmuOtpExp());
 //		O_PJ_TKECMUSER.setTkecmuId(O_TKECMUSER.getTkecmuId());
 
-		return O_USER;
+		return O_User;
 	}
 
 	@Override
@@ -246,17 +245,17 @@ public class UserDaoImpl implements UserDao {
 	}
 
 	@Override
-	public void updatePassword(USER o_USER_DETAIL) {
+	public void updatePassword(User O_User_Detail) {
 
-		TKECMUSER O_TKECMUSER = O_SessionFactory.getCurrentSession().get(TKECMUSER.class, o_USER_DETAIL.getUId());
-		O_TKECMUSER.setUPassword(o_USER_DETAIL.getUPassword());
+		TKECMUSER O_TKECMUSER = O_SessionFactory.getCurrentSession().get(TKECMUSER.class, O_User_Detail.getUId());
+		O_TKECMUSER.setUPassword(O_User_Detail.getUPassword());
 		O_TKECMUSER.setUModifideDate(OffsetDateTime.now());
 		O_SessionFactory.getCurrentSession().update(O_TKECMUSER);
 
 	}
 
 	@Override
-	public USERSESSION getApiSecretDataByNewSecret(String apisecret, String userId) {
+	public UserSession getApiSecretDataByNewSecret(String apisecret, String userId) {
 
 		TKECMUSER O_TKECMUSER = O_SessionFactory.getCurrentSession().get(TKECMUSER.class, userId);
 
@@ -273,15 +272,15 @@ public class UserDaoImpl implements UserDao {
 		O_Transaction.commit();
 		O_Session.close();
 
-		USERSESSION O_USERSESSION = new USERSESSION();
+		UserSession O_UserSession = new UserSession();
 
-		O_USERSESSION.setUsApiKey(O_TKECTUSERSESSION.getUsApiKey());
+		O_UserSession.setUsApiKey(O_TKECTUSERSESSION.getUsApiKey());
 
-		return O_USERSESSION;
+		return O_UserSession;
 	}
 
 	@Override
-	public Boolean addAuditDetail(USER O_USER_DETAIL, HttpServletRequest httpServletRequest) {
+	public void addAuditDetail(User O_USER_DETAIL, HttpServletRequest httpServletRequest) {
 
 		TKECTUSERAUDIT O_TKECTUSERAUDIT = new TKECTUSERAUDIT();
 
@@ -294,11 +293,10 @@ public class UserDaoImpl implements UserDao {
 
 		O_SessionFactory.getCurrentSession().save(O_TKECTUSERAUDIT);
 
-		return true;
 	}
 
 	@Override
-	public USER getUserDetailAPIKey(String apiKey) {
+	public User getUserDetailAPIKey(String apiKey) {
 
 		String apiQuery = "FROM TKECTUSERSESSION WHERE usApiKey =:apikey";
 
@@ -313,14 +311,14 @@ public class UserDaoImpl implements UserDao {
 		// PJ_TKECMUSER O_PJ_TKECMUSER = O_ModelMapper.map(O_TKECMUSER,
 		// PJ_TKECMUSER.class);
 
-		USER O_USER = new USER();
+		User O_User = new User();
 
-		O_USER.setUName(O_TKECTUSERSESSION.getUsTkecmuId().getUName());
-		O_USER.setUMail(O_TKECTUSERSESSION.getUsTkecmuId().getUMail());
-		O_USER.setUPhone(O_TKECTUSERSESSION.getUsTkecmuId().getUPhone());
-		O_USER.setUPassword(O_TKECTUSERSESSION.getUsTkecmuId().getUPassword());
-		O_USER.setUId(O_TKECTUSERSESSION.getUsTkecmuId().getUId());
-		return O_USER;
+		O_User.setUName(O_TKECTUSERSESSION.getUsTkecmuId().getUName());
+		O_User.setUMail(O_TKECTUSERSESSION.getUsTkecmuId().getUMail());
+		O_User.setUPhone(O_TKECTUSERSESSION.getUsTkecmuId().getUPhone());
+		O_User.setUPassword(O_TKECTUSERSESSION.getUsTkecmuId().getUPassword());
+		O_User.setUId(O_TKECTUSERSESSION.getUsTkecmuId().getUId());
+		return O_User;
 	}
 
 	@Override

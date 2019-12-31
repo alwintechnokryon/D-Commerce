@@ -4,8 +4,6 @@ import java.util.HashMap;
 import java.util.Random;
 import java.util.regex.Pattern;
 
-import org.springframework.http.HttpStatus;
-
 public class SingleTon {
 
 	public static final String PASSWORD_RESET_MAIL_HEADER = "Ecommerce - OTP Verification";

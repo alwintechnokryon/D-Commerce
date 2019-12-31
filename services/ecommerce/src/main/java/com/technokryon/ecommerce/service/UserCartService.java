@@ -2,20 +2,21 @@ package com.technokryon.ecommerce.service;
 
 import java.util.List;
 
-import com.technokryon.ecommerce.pojo.PRODUCTCART;
+import com.technokryon.ecommerce.pojo.ProductCart;
+
 
 public interface UserCartService {
 
-	void addToCart(PRODUCTCART RO_PRODUCTCART);
+	void addToCart(ProductCart RO_ProductCart);
 
-	List<PRODUCTCART> listCart(String uId);
+	List<ProductCart> listCart(String uId);
 
 	Integer checkTotalQuantity(String pcTkecmpId);
 
-	Boolean addQuantity(PRODUCTCART RO_PRODUCTCART);
+	Boolean addQuantity(ProductCart RO_ProductCart);
 
-	void saveLater(PRODUCTCART RO_PRODUCTCART);
+	void saveLater(ProductCart RO_ProductCart);
 
-	void deleteCart(PRODUCTCART RO_PRODUCTCART);
+	void deleteCart(ProductCart RO_ProductCart);
 
 }

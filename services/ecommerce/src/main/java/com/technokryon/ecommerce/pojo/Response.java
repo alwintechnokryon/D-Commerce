@@ -5,9 +5,8 @@ import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
-public class ORDERSTATUS {
+public class Response {
 
-	String osStatus;
-	String osLabel;
+	String message;
 
 }
