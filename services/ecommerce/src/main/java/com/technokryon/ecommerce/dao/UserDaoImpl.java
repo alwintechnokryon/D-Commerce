@@ -192,7 +192,7 @@ public class UserDaoImpl implements UserDao {
 			O_TKECM_USER.setUPassword(RO_User.getUPassword());
 			O_TKECM_USER.setUCreatedDate(OffsetDateTime.now());
 			O_TKECM_USER.setURegType("M");
-			O_TKECM_USER.setUCountryCode(RO_User.getUCountryCode());
+			O_TKECM_USER.setUPhoneCode(RO_User.getUPhoneCode());
 			O_TKECM_USER.setUOtpStatus("N");
 			O_TKECM_USER.setUStatus("N");
 			O_Session.save(O_TKECM_USER);

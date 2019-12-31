@@ -20,7 +20,7 @@ public class User {
 	String uPassword;
 	OffsetDateTime uCreatedDate;
 	BigInteger uPhone;
-	Integer uCountryCode;
+	Integer uPhoneCode;
 	String uOtpStatus;
 	String uStatus;
 	OffsetDateTime uModifideDate;

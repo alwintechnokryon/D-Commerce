@@ -48,8 +48,8 @@ public class TKECMUSER {
 	@Column(name = "TKECMU_PHONE")
 	private BigInteger uPhone;
 
-	@Column(name = "TKECMU_COUNTRY_CODE")
-	private Integer uCountryCode;
+	@Column(name = "TKECMU_PHONE_CODE")
+	private Integer uPhoneCode;
 
 	@Column(name = "TKECMU_OTP_STATUS")
 	private String uOtpStatus;

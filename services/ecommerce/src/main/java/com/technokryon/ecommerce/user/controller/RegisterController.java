@@ -107,7 +107,7 @@ public class RegisterController {
 				return new ResponseEntity<Object>(O_Response, HttpStatus.UNPROCESSABLE_ENTITY);
 			}
 
-			if (RO_User.getUCountryCode() == null) {
+			if (RO_User.getUPhoneCode() == null) {
 
 				O_Response.setMessage("Country Code Is Empty..!");
 				return new ResponseEntity<Object>(O_Response, HttpStatus.UNPROCESSABLE_ENTITY);
@@ -129,7 +129,7 @@ public class RegisterController {
 
 			String userId = O_UserService.createNewUserByPhoneNo(RO_User);
 
-			O_MailService.sendSMS(RO_User.getUPhone(), RO_User.getUCountryCode(), "Your OTP is " + OTP);
+			O_MailService.sendSMS(RO_User.getUPhone(), RO_User.getUPhoneCode(), "Your OTP is " + OTP);
 
 			System.err.println("OTP---->" + OTP);
 
@@ -287,7 +287,7 @@ public class RegisterController {
 			// OTP STATUS
 			if (O_User_Detail.getUOtpStatus().equals("N")) {
 
-				O_MailService.sendSMS(RO_User.getUPhone(), RO_User.getUCountryCode(), "Your OTP is " + OTP);
+				O_MailService.sendSMS(RO_User.getUPhone(), RO_User.getUPhoneCode(), "Your OTP is " + OTP);
 
 				User O_User1 = new User();
 
@@ -387,7 +387,7 @@ public class RegisterController {
 				return new ResponseEntity<Object>(O_Response, HttpStatus.UNPROCESSABLE_ENTITY);
 			}
 
-			O_MailService.sendSMS(RO_User.getUPhone(), RO_User.getUCountryCode(), "Your OTP is " + OTP);
+			O_MailService.sendSMS(RO_User.getUPhone(), RO_User.getUPhoneCode(), "Your OTP is " + OTP);
 
 			User O_User1 = new User();
 
