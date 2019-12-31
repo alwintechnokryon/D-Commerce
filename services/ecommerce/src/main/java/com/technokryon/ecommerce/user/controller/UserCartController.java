@@ -64,8 +64,6 @@ public class UserCartController {
 
 		Response O_Response = new Response();
 		
-		ResponseData O_ResponseData = new ResponseData();
-
 		// User O_USER_DETAIL = O_UserService.getUserDetailAPIKey(apiKey);
 
 		Integer totalQuantity = O_UserCartService.checkTotalQuantity(RO_ProductCart.getPcTkecmpId());
@@ -74,8 +72,8 @@ public class UserCartController {
 
 		if (!addQuantity) {
 
-			O_ResponseData.setTotalQuantity(totalQuantity);
-			return new ResponseEntity<Object>(O_ResponseData,HttpStatus.UNPROCESSABLE_ENTITY);
+			O_Response.setMessage("Only " + totalQuantity + " Product Available");
+			return new ResponseEntity<Object>(O_Response,HttpStatus.UNPROCESSABLE_ENTITY);
 		} else {
 
 			O_Response.setMessage("Quantity Added SuccessFully");
