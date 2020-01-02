@@ -1,4 +1,4 @@
-package com.technokryon.ecommerce.model;
+ package com.technokryon.ecommerce.model;
 
 import java.time.OffsetDateTime;
 
@@ -66,8 +66,8 @@ public class TKECMPRODUCT {
 	private String pStatus;
 
 	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	@JoinColumn(name = "TKECMP_TKECMPT_AG_ID", foreignKey = @ForeignKey(name = "FK_TKECMP_TKECMPT_AG_ID"))
-	private TKECMPRODUCTTYPE pTkecmptAgId;
+	@JoinColumn(name = "TKECMP_TKECMPT_ID", foreignKey = @ForeignKey(name = "FK_TKECMP_TKECMPT_ID"))
+	private TKECMPRODUCTTYPE pTkecmptId;
 
 	@Column(name = "TKECMP_PRICE")
 	private Double pPrice;
