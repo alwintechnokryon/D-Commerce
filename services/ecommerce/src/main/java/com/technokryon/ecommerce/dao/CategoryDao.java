@@ -4,10 +4,7 @@ import java.util.List;
 
 import com.technokryon.ecommerce.pojo.Category;
 
-
 public interface CategoryDao {
-
-	String addCategory(Category RO_Category);
 
 	List<Category> categoryList();
 

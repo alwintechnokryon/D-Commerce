@@ -10,9 +10,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.technokryon.ecommerce.admin.service.AdminCategoryService;
 import com.technokryon.ecommerce.pojo.Category;
 import com.technokryon.ecommerce.pojo.Response;
-import com.technokryon.ecommerce.service.CategoryService;
 
 @Controller
 @CrossOrigin
@@ -20,7 +20,7 @@ import com.technokryon.ecommerce.service.CategoryService;
 public class AdminCategoryController {
 
 	@Autowired
-	private CategoryService O_CategoryService;
+	private AdminCategoryService O_AdminCategoryService;
 
 	@ResponseBody
 	@PostMapping("/add")
@@ -28,7 +28,7 @@ public class AdminCategoryController {
 
 		Response O_Response = new Response();
 
-		O_CategoryService.addCategory(RO_Category);
+		O_AdminCategoryService.addCategory(RO_Category);
 
 		O_Response.setMessage("Success");
 		return new ResponseEntity<Object>(O_Response, HttpStatus.OK);

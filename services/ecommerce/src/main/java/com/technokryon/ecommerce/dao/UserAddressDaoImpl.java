@@ -75,6 +75,8 @@ public class UserAddressDaoImpl implements UserAddressDao {
 
 	@Override
 	public List<UserAddress> listUserAddress(String uId) {
+		
+		List<UserAddress> LO_UserAddress = new ArrayList<>();
 
 		String userId = "FROM TKECTUSERADDRESS WHERE uadTkecmuId.uId =:userId";
 
@@ -83,8 +85,6 @@ public class UserAddressDaoImpl implements UserAddressDao {
 		userIdQuery.setParameter("userId", uId);
 
 		List<TKECTUSERADDRESS> LO_TKECTUSERADDRESS = userIdQuery.getResultList();
-
-		List<UserAddress> LO_UserAddress = new ArrayList<>();
 
 		PropertyMap<TKECTUSERADDRESS, UserAddress> O_PropertyMap = new PropertyMap<TKECTUSERADDRESS, UserAddress>() {
 			protected void configure() {

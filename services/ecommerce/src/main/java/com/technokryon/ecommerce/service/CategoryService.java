@@ -6,8 +6,6 @@ import com.technokryon.ecommerce.pojo.Category;
 
 public interface CategoryService {
 
-	String addCategory(Category RO_Category);
-
 	List<Category> categoryList();
 
 	List<Category> categoryListById(Category RO_Category);

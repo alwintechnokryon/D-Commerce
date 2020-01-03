@@ -3,9 +3,7 @@ package com.technokryon.ecommerce.dao;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,54 +23,6 @@ public class CategoryDaoImpl implements CategoryDao {
 	private SessionFactory O_SessionFactory;
 
 	@Override
-	public String addCategory(Category RO_Category) {
-
-		Session O_Session = O_SessionFactory.openSession();
-		Transaction O_Transaction = O_Session.beginTransaction();
-
-		String getCategory = "FROM TKECMCATEGORY ORDER BY cCategoryId DESC";
-
-		Query categoryQuery = O_SessionFactory.getCurrentSession().createQuery(getCategory);
-		categoryQuery.setMaxResults(1);
-		TKECMCATEGORY O_TKECMCATEGORY1 = (TKECMCATEGORY) categoryQuery.uniqueResult();
-
-		TKECMCATEGORY O_TKECMCATEGORY = new TKECMCATEGORY();
-
-		if (O_TKECMCATEGORY1 == null) {
-
-			O_TKECMCATEGORY.setCCategoryId("TKECC0001");
-		} else {
-
-			String categoryId = O_TKECMCATEGORY1.getCCategoryId();
-			Integer Ag = Integer.valueOf(categoryId.substring(5));
-			Ag++;
-
-			System.err.println(Ag);
-			O_TKECMCATEGORY.setCCategoryId("TKECC" + String.format("%04d", Ag));
-		}
-
-		try {
-
-			O_TKECMCATEGORY.setCCategoryName(RO_Category.getCCategoryName());
-			O_TKECMCATEGORY.setCParentId(RO_Category.getCParentId());
-			O_TKECMCATEGORY.setCCategoryLevel(RO_Category.getCCategoryLevel());
-			O_Session.save(O_TKECMCATEGORY);
-			O_Transaction.commit();
-			O_Session.close();
-
-			return O_TKECMCATEGORY.getCCategoryId();
-		} catch (Exception e) {
-			e.printStackTrace();
-			if (O_Transaction.isActive()) {
-				O_Transaction.rollback();
-			}
-			O_Session.close();
-
-			return null;
-		}
-	}
-
-	@Override
 	// @Cacheable("CATEGORY")
 	// @CacheEvict(value="CATEGORY", allEntries=true)
 	public List<Category> categoryList() {
@@ -84,7 +34,7 @@ public class CategoryDaoImpl implements CategoryDao {
 		Query parentCategoryQry = O_SessionFactory.getCurrentSession().createQuery(parentCategory);
 
 		List<TKECMCATEGORY> LO_TKECMCATEGORY = (List<TKECMCATEGORY>) parentCategoryQry.list();
-		
+
 		for (TKECMCATEGORY O_TKECMCATEGORY : LO_TKECMCATEGORY) {
 
 			LO_Category.add(new Category(O_TKECMCATEGORY, getChildCategories(O_TKECMCATEGORY.getCCategoryId())));
@@ -132,7 +82,7 @@ public class CategoryDaoImpl implements CategoryDao {
 
 			categoryListByIdQry = O_SessionFactory.getCurrentSession().createQuery(parentId);
 
-		}else {
+		} else {
 			categoryListByIdQry = O_SessionFactory.getCurrentSession().createQuery(categoryListById);
 			categoryListByIdQry.setParameter("parentid", RO_Category.getCCategoryId());
 		}

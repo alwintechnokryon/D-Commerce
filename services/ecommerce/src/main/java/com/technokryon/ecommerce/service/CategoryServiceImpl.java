@@ -18,20 +18,14 @@ public class CategoryServiceImpl implements CategoryService {
 	private CategoryDao O_CategoryDao;
 
 	@Override
-	public String addCategory(Category RO_Category) {
-		
-		return O_CategoryDao.addCategory(RO_Category);
-	}
-
-	@Override
 	public List<Category> categoryList() {
-		
+
 		return O_CategoryDao.categoryList();
 	}
 
 	@Override
 	public List<Category> categoryListById(Category RO_Category) {
-		
+
 		return O_CategoryDao.categoryListById(RO_Category);
 	}
 }

@@ -193,6 +193,50 @@ public class RegisterController {
 	}
 
 	@ResponseBody
+	@PostMapping("/forgot/otp/verify")
+
+	private ResponseEntity<?> FORGOT_OTP_VERIFY(@RequestBody User RO_User) {
+
+		Response O_Response = new Response();
+
+		if (RO_User.getUOtp() == 0) {
+
+			O_Response.setMessage("Invalid OTP..!");
+			return new ResponseEntity<Object>(O_Response, HttpStatus.UNPROCESSABLE_ENTITY);
+		}
+
+		if (RO_User.getUHashKey().isEmpty()) {
+
+			O_Response.setMessage("Hash Key Is Empty..!");
+			return new ResponseEntity<Object>(O_Response, HttpStatus.UNPROCESSABLE_ENTITY);
+		}
+
+		User O_User_Detail = O_UserService.getUserDetailHash(RO_User);
+
+		if (O_User_Detail == null) {
+
+			O_Response.setMessage("Not Registered..!");
+			return new ResponseEntity<Object>(O_Response, HttpStatus.UNPROCESSABLE_ENTITY);
+		}
+
+		if (O_User_Detail.getUOtpExp().isBefore(OffsetDateTime.now())) {
+
+			O_Response.setMessage("OTP Expired..!");
+			return new ResponseEntity<Object>(O_Response, HttpStatus.UNPROCESSABLE_ENTITY);
+		}
+
+		if (RO_User.getUOtp() != O_User_Detail.getUOtp()) {
+
+			O_Response.setMessage("Invalid OTP..!");
+			return new ResponseEntity<Object>(O_Response, HttpStatus.UNPROCESSABLE_ENTITY);
+		}
+
+		O_Response.setMessage("Success..!");
+		return new ResponseEntity<Object>(O_Response, HttpStatus.OK);
+	}
+
+	
+	@ResponseBody
 	@PostMapping("/login")
 	private ResponseEntity<?> LOGIN(@RequestBody User RO_User, HttpServletRequest httpServletRequest) {
 
@@ -327,8 +371,8 @@ public class RegisterController {
 	}
 
 	@ResponseBody
-	@PostMapping("/forget/password")
-	private ResponseEntity<?> FORGET_PASSWORD(@RequestBody User RO_User) {
+	@PostMapping("/forgot")
+	private ResponseEntity<?> FORGOT(@RequestBody User RO_User) {
 
 		Integer OTP = SingleTon.getRandomUserId();
 
@@ -465,7 +509,7 @@ public class RegisterController {
 	}
 
 	@ResponseBody
-	@GetMapping(value = { "/logout" })
+	@GetMapping(value ="/logout")
 	ResponseEntity<?> LOGOUT(@RequestHeader(value = "X-Auth-Token") String apiKey) {
 
 		Response O_Response = new Response();

@@ -64,6 +64,8 @@ public class UserCartDaoImpl implements UserCartDao {
 
 	@Override
 	public List<ProductCart> listCart(String uId) {
+		
+		List<ProductCart> LO_PRODUCTCART = new ArrayList<>();
 
 		String userId = "FROM TKECTPRODUCTCART WHERE pcTkecmuId.uId =:userId";
 
@@ -72,8 +74,6 @@ public class UserCartDaoImpl implements UserCartDao {
 		userIdQuery.setParameter("userId", uId);
 
 		List<TKECTPRODUCTCART> LO_TKECTPRODUCTCART = userIdQuery.getResultList();
-
-		List<ProductCart> LO_PRODUCTCART = new ArrayList<>();
 
 		PropertyMap<TKECTPRODUCTCART, ProductCart> O_PropertyMap = new PropertyMap<TKECTPRODUCTCART, ProductCart>() {
 			protected void configure() {
