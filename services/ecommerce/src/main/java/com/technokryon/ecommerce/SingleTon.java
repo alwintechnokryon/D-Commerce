@@ -1,8 +1,15 @@
 package com.technokryon.ecommerce;
 
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Random;
 import java.util.regex.Pattern;
+
+import org.apache.commons.io.FilenameUtils;
+import org.springframework.web.multipart.MultipartFile;
 
 public class SingleTon {
 
@@ -27,6 +34,59 @@ public class SingleTon {
 		// this will convert any number sequence into 6 character.
 		return number;
 
+	}
+
+	public static String getFilenamebyfile(MultipartFile file) {
+
+		String rootPath = "D:\\";
+		// String rootPath = BASE_PATH;
+		rootPath = rootPath + "/Ecommerce_IMG";
+		if (!file.isEmpty()) {
+
+			// Create the file on server
+			Calendar cal = Calendar.getInstance();
+
+			String name = stripExtension(file.getOriginalFilename()) + "-" + cal.getTimeInMillis() + "."
+					+ FilenameUtils.getExtension(file.getOriginalFilename());
+
+			// System.err.println(name);
+
+			// String name = file.getOriginalFilename();
+
+			try {
+
+				byte[] bytes = file.getBytes();
+
+				File dir = new File(rootPath);
+
+				if (!dir.exists())
+
+					dir.mkdirs();
+
+				File serverFile = new File(dir.getAbsolutePath() + File.separator + name);
+
+				// String path = "C:/Users/CVAR/Downloads/"+name;
+
+				BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(serverFile));
+
+				stream.write(bytes);
+
+				stream.close();
+
+				System.out.println("You successfully uploaded file=" + name + " on " + serverFile);
+
+				return name;
+
+			} catch (Exception e) {
+
+				// System.out.println("You failed to upload " + name + " => " + e.getMessage());
+
+				return null;
+
+			}
+
+		}
+		return null;
 	}
 
 	public static HashMap<String, Object> returnInfo(String message) {

@@ -21,6 +21,25 @@ public class AdminCategoryDaoImpl implements AdminCategoryDao {
 	private SessionFactory O_SessionFactory;
 
 	@Override
+	public Boolean checkCategoryName(String cCategoryName) {
+
+		String getCategoryName = "FROM TKECMCATEGORY WHERE cCategoryName =:categoryName";
+
+		Query getCategoryNameQuery = O_SessionFactory.getCurrentSession().createQuery(getCategoryName);
+
+		getCategoryNameQuery.setParameter("categoryName", cCategoryName);
+
+		TKECMCATEGORY O_TKECMCATEGORY = (TKECMCATEGORY) getCategoryNameQuery.uniqueResult();
+
+		if (O_TKECMCATEGORY == null) {
+
+			return true;
+		}
+
+		return false;
+	}
+
+	@Override
 	public String addCategory(Category RO_Category) {
 
 		Session O_Session = O_SessionFactory.openSession();
@@ -67,4 +86,5 @@ public class AdminCategoryDaoImpl implements AdminCategoryDao {
 			return null;
 		}
 	}
+
 }

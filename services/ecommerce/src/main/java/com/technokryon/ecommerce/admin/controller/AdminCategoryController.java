@@ -28,6 +28,15 @@ public class AdminCategoryController {
 
 		Response O_Response = new Response();
 
+		Boolean checkCategoryName = O_AdminCategoryService.checkCategoryName(RO_Category.getCCategoryName());
+
+		if (!checkCategoryName) {
+
+			O_Response.setMessage("Category Name Already Exist..!");
+			return new ResponseEntity<Object>(O_Response, HttpStatus.UNPROCESSABLE_ENTITY);
+
+		}
+
 		O_AdminCategoryService.addCategory(RO_Category);
 
 		O_Response.setMessage("Success");

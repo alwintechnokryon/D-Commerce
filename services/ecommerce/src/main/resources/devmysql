@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Jan 03, 2020 at 01:31 PM
+-- Generation Time: Jan 04, 2020 at 01:29 PM
 -- Server version: 5.7.23
 -- PHP Version: 5.6.38
 
@@ -636,6 +636,20 @@ INSERT INTO `TKECM_ROLE` (`TKECMR_ID`, `TKECMR_ROLE`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `TKECM_STORE`
+--
+
+DROP TABLE IF EXISTS `TKECM_STORE`;
+CREATE TABLE IF NOT EXISTS `TKECM_STORE` (
+  `TKECMS_ID` varchar(20) COLLATE utf8_unicode_ci NOT NULL,
+  `TKECMS_NAME` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `TKECMS_ACTIVE_YN` varchar(1) COLLATE utf8_unicode_ci DEFAULT NULL,
+  PRIMARY KEY (`TKECMS_ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `TKECM_USER`
 --
 
@@ -1032,6 +1046,22 @@ CREATE TABLE IF NOT EXISTS `TKECT_PRODUCT_DOWNLOAD_SAMPLE` (
 INSERT INTO `TKECT_PRODUCT_DOWNLOAD_SAMPLE` (`TKECTPDS_AG_ID`, `TKECTPDS_TKECMP_ID`, `TKECTPDS_URL`, `TKECTPDS_TITLE`, `TKECTPDS_FILE`) VALUES
 (1, '6', 'https://www.gutenberg.org/ebooks/60879', 'Leibniz by Wilhelm Max Wundt', ''),
 (2, '7', 'https://www.bookrix.com/_ebook-jingjing-zhu-the-lost-hero/', 'The Lost Hero', NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `TKECT_PRODUCT_STORE`
+--
+
+DROP TABLE IF EXISTS `TKECT_PRODUCT_STORE`;
+CREATE TABLE IF NOT EXISTS `TKECT_PRODUCT_STORE` (
+  `TKECTPS_AG_ID` int(11) NOT NULL AUTO_INCREMENT,
+  `TKECTPS_TKECMP_ID` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `TKECTPS_TKECMS_ID` varchar(20) COLLATE utf8_unicode_ci DEFAULT NULL,
+  PRIMARY KEY (`TKECTPS_AG_ID`),
+  KEY `FK_TKECTPS_TKECMP_ID` (`TKECTPS_TKECMP_ID`),
+  KEY `FK_TKECTPS_TKECMS_ID` (`TKECTPS_TKECMS_ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -6196,6 +6226,13 @@ ALTER TABLE `TKECT_PRODUCT_CART`
 --
 ALTER TABLE `TKECT_PRODUCT_DOWNLOAD_SAMPLE`
   ADD CONSTRAINT `FK_TKECTPDS_TKECMP_ID` FOREIGN KEY (`TKECTPDS_TKECMP_ID`) REFERENCES `TKECM_PRODUCT` (`TKECMP_ID`);
+
+--
+-- Constraints for table `TKECT_PRODUCT_STORE`
+--
+ALTER TABLE `TKECT_PRODUCT_STORE`
+  ADD CONSTRAINT `FK_TKECTPS_TKECMP_ID` FOREIGN KEY (`TKECTPS_TKECMP_ID`) REFERENCES `TKECM_PRODUCT` (`TKECMP_ID`),
+  ADD CONSTRAINT `FK_TKECTPS_TKECMS_ID` FOREIGN KEY (`TKECTPS_TKECMS_ID`) REFERENCES `TKECM_STORE` (`TKECMS_ID`);
 
 --
 -- Constraints for table `TKECT_STATE`

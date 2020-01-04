@@ -17,6 +17,12 @@ public class AdminCategoryServiceImpl implements AdminCategoryService {
 	private AdminCategoryDao O_AdminCategoryDao;
 
 	@Override
+	public Boolean checkCategoryName(String cCategoryName) {
+		// TODO Auto-generated method stub
+		return O_AdminCategoryDao.checkCategoryName(cCategoryName);
+	}
+
+	@Override
 	public String addCategory(Category RO_Category) {
 		// TODO Auto-generated method stub
 		return O_AdminCategoryDao.addCategory(RO_Category);
