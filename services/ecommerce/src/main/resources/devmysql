@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Jan 04, 2020 at 01:29 PM
+-- Generation Time: Jan 06, 2020 at 06:38 PM
 -- Server version: 5.7.23
 -- PHP Version: 5.6.38
 
@@ -383,7 +383,7 @@ CREATE TABLE IF NOT EXISTS `TKECM_IMAGE` (
   `TKECMI_URL` text COLLATE utf8_unicode_ci,
   PRIMARY KEY (`TKECMI_AG_ID`),
   KEY `FK_TKECMI_TKECMP_ID` (`TKECMI_TKECMP_ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Dumping data for table `TKECM_IMAGE`
@@ -395,7 +395,22 @@ INSERT INTO `TKECM_IMAGE` (`TKECMI_AG_ID`, `TKECMI_TKECMP_ID`, `TKECMI_FILE_NAME
 (3, '3', NULL, 'Image', 'https://www.gutenberg.org/ebooks/60879'),
 (4, '4', 'Shirt', 'Image', NULL),
 (5, '5', NULL, 'Image', 'https://www.gutenberg.org/ebooks/60879'),
-(6, '6', NULL, 'Image', 'https://www.gutenberg.org/ebooks/60879');
+(6, '6', NULL, 'Image', 'https://www.gutenberg.org/ebooks/60879'),
+(10, 'redmi-note-8-pro', 'Screenshot (6)-1578315034350.png', 'Image', NULL),
+(11, 'redmi-note-8+-pro', 'Screenshot (6)-1578315755354.png', 'Image', NULL),
+(12, 'redmi-note-6-pro', 'Screenshot (7)-1578318656414.png', 'Image', NULL),
+(13, 'redmi-note-6-pro', 'Screenshot (6)-1578318656416.png', 'Image', NULL),
+(14, 'redmi-6-pro', 'vector-download-icon-png_302638-1578375876841.jpg', 'Image', NULL),
+(15, 'redmi-6-pro', 'vector-download-icon-png_302638-1578375876841.jpg', 'Image', NULL),
+(16, 'redmi-5-pro', 'vector-download-icon-png_302638-1578376439055.jpg', 'Image', NULL),
+(17, 'redmi-5-pro', 'vector-download-icon-png_302638-1578376439055.jpg', 'Image', NULL),
+(18, 'redmi-4-pro', 'file_example_MP4_480_1_5MG-1578376578046.mp4', 'Video', NULL),
+(19, 'redmi-3-pro', 'tearsheet2_example-1578377694507.png', 'Image', NULL),
+(20, 'redmi-3-pro', 'tearsheet2_example-1578377694507.png', 'Image', NULL),
+(21, 'redmi-2-pro', 'file_example_MP4_480_1_5MG-1578378812383.mp4', 'Video', NULL),
+(22, 'redmi-2-pro', 'tearsheet2_example-1578378812396.png', 'Image', NULL),
+(23, 'redmi-note-10-pro', 'pexels-photo-414612-1578380026721.jpeg', 'Image', NULL),
+(24, 'redmi-note-10-pro', 'file_example_MP4_480_1_5MG-1578380026726.mp4', 'Video', NULL);
 
 -- --------------------------------------------------------
 
@@ -522,7 +537,9 @@ CREATE TABLE IF NOT EXISTS `TKECM_PRODUCT` (
   `TKECMP_DEFAULT_YN` varchar(5) COLLATE utf8_unicode_ci NOT NULL,
   PRIMARY KEY (`TKECMP_ID`),
   UNIQUE KEY `UNIQUESKU` (`TKECMP_SKU`),
+  UNIQUE KEY `UK_nfs06d9ee18md5t2hj4cm5clk` (`TKECMP_SKU`),
   UNIQUE KEY `TKECMP_NAME` (`TKECMP_NAME`),
+  UNIQUE KEY `UK_lb0hxh4uu9wt66cyhun8sboth` (`TKECMP_NAME`),
   KEY `FK_TKECMP_TKECMC_CATEGORY_ID` (`TKECMP_TKECMC_CATEGORY_ID`) USING BTREE,
   KEY `FK_TKECMP_TKECMPT_ID` (`TKECMP_TKECMPT_ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
@@ -539,7 +556,16 @@ INSERT INTO `TKECM_PRODUCT` (`TKECMP_ID`, `TKECMP_SKU`, `TKECMP_NAME`, `TKECMP_T
 ('5', 'ShirtPink002', 'Shirt Pink', 'TKECC0020', NULL, 4, 'Shirt Pink', 'Casual Shirts for Men - Buy new arrivals & latest Casual Shirt for Men from Mufti, Tommy Hilfiger, Roadster, UCB & more.', 'India', NULL, NULL, NULL, NULL, 'Y', 'TKECMPT0002', 875, 'Y'),
 ('6', 'Ebook003', 'Ebook', 'TKECC0029', NULL, 3, 'Ebooks', 'An electronic book, also known as an e-book or eBook, is a book publication made available in digital form, consisting of text, images, or both, readable ', 'India', NULL, NULL, NULL, NULL, 'Y', 'TKECMPT0003', 450, 'Y'),
 ('7', 'Books004', 'Books', 'TKECC0030', NULL, 2, 'Books', 'Books Advanced Search New Releases & Pre-orders Best Sellers Browse Genres Children\'s & Young Adult Textbooks Exam Central All Indian Languages', 'India', NULL, NULL, NULL, NULL, 'Y', 'TKECMPT0003', 250, 'Y'),
-('8', 'ShirtOrange003', 'Shirt Orange', 'TKECC0020', NULL, 3, 'Shirt Orange', 'Casual Shirts for Men - Buy new arrivals & latest Casual Shirt for Men from Mufti, Tommy Hilfiger, Roadster, UCB & more.', 'India', NULL, NULL, NULL, NULL, 'Y', 'TKECMPT0002', 325, 'N');
+('8', 'ShirtOrange003', 'Shirt Orange', 'TKECC0020', NULL, 3, 'Shirt Orange', 'Casual Shirts for Men - Buy new arrivals & latest Casual Shirt for Men from Mufti, Tommy Hilfiger, Roadster, UCB & more.', 'India', NULL, NULL, NULL, NULL, 'Y', 'TKECMPT0002', 325, 'N'),
+('redmi-2-pro', 'RED2PRO', 'Redmi 2 pro', 'TKECC0016', 50, 50, 'Redmi 3 Pro', 'The former is slightly faster and more efficient. The Pro model also offers more RAM and internal storage than the regular model, as well as stronger camera hardware. The Xiaomi Redmi Note 7 Pro has a 48MP + 5MP rear camera setup like the Redmi Note 7.', 'IND', '2020-01-07 12:03:32', 'TKECU0033', NULL, NULL, 'N', 'TKECMPT0001', 15999, 'Y'),
+('redmi-3-pro', 'RED3PRO', 'Redmi 3 pro', 'TKECC0016', 50, 50, 'Redmi 3 Pro', 'The former is slightly faster and more efficient. The Pro model also offers more RAM and internal storage than the regular model, as well as stronger camera hardware. The Xiaomi Redmi Note 7 Pro has a 48MP + 5MP rear camera setup like the Redmi Note 7.', 'IND', '2020-01-07 11:44:55', 'TKECU0033', NULL, NULL, 'N', 'TKECMPT0001', 15999, 'Y'),
+('redmi-4-pro', 'RED4PRO', 'Redmi 4 pro', 'TKECC0016', 50, 50, 'Redmi 4 Pro', 'The former is slightly faster and more efficient. The Pro model also offers more RAM and internal storage than the regular model, as well as stronger camera hardware. The Xiaomi Redmi Note 7 Pro has a 48MP + 5MP rear camera setup like the Redmi Note 7.', 'IND', '2020-01-07 11:26:18', 'TKECU0033', NULL, NULL, 'N', 'TKECMPT0001', 15999, 'Y'),
+('redmi-5-pro', 'RED5PRO', 'Redmi 5 pro', 'TKECC0016', 50, 50, 'Redmi 5 Pro', 'The former is slightly faster and more efficient. The Pro model also offers more RAM and internal storage than the regular model, as well as stronger camera hardware. The Xiaomi Redmi Note 7 Pro has a 48MP + 5MP rear camera setup like the Redmi Note 7.', 'IND', '2020-01-07 11:23:59', 'TKECU0033', NULL, NULL, 'N', 'TKECMPT0001', 15999, 'Y'),
+('redmi-6-pro', 'RED6PRO', 'Redmi 6 pro', 'TKECC0016', 50, 50, 'Redmi 6 Pro', 'The former is slightly faster and more efficient. The Pro model also offers more RAM and internal storage than the regular model, as well as stronger camera hardware. The Xiaomi Redmi Note 7 Pro has a 48MP + 5MP rear camera setup like the Redmi Note 7.', 'IND', '2020-01-07 11:14:37', 'TKECU0033', NULL, NULL, 'N', 'TKECMPT0001', 15999, 'Y'),
+('redmi-note-10-pro', 'RED8', 'RedMi note 10 pro', 'TKECC0016', NULL, 5, 'RedMi note 8 pro', 'The former is slightly faster and more efficient. The Pro model also offers more RAM and internal storage than the regular model, as well as stronger camera hardware. The Xiaomi Redmi Note 7 Pro has a 48MP + 5MP rear camera setup like the Redmi Note 7.', '', '2020-01-07 12:23:47', 'TKECU0033', NULL, NULL, 'N', 'TKECMPT0001', 15999, 'Y'),
+('redmi-note-6-pro', 'REDNOT6', 'Redmi note 6 pro', 'TKECC0016', 50, 5, 'Redmi Note 6 Pro', 'The former is slightly faster and more efficient. The Pro model also offers more RAM and internal storage than the regular model, as well as stronger camera hardware. The Xiaomi Redmi Note 7 Pro has a 48MP + 5MP rear camera setup like the Redmi Note 7.', 'IND', '2020-01-06 19:20:56', 'TKECU0033', NULL, NULL, 'N', 'TKECMPT0001', 15999, 'Y'),
+('redmi-note-8-pro', 'reDmiNote8', 'Redmi note 8 pro', 'TKECC0016', 50, 5, 'Redmi Note 7 Pro', 'The former is slightly faster and more efficient. The Pro model also offers more RAM and internal storage than the regular model, as well as stronger camera hardware. The Xiaomi Redmi Note 7 Pro has a 48MP + 5MP rear camera setup like the Redmi Note 7.', 'IND', '2020-01-06 18:20:34', 'TKECU0033', NULL, NULL, 'N', 'TKECMPT0001', 15999, 'Y'),
+('redmi-note-8+-pro', 'REDNOT8', 'Redmi note 8+ pro', 'TKECC0016', 50, 5, 'Redmi Note 8 Pro', 'The former is slightly faster and more efficient. The Pro model also offers more RAM and internal storage than the regular model, as well as stronger camera hardware. The Xiaomi Redmi Note 7 Pro has a 48MP + 5MP rear camera setup like the Redmi Note 7.', 'IND', '2020-01-06 18:32:35', 'TKECU0033', NULL, NULL, 'N', 'TKECMPT0001', 15999, 'Y');
 
 -- --------------------------------------------------------
 
@@ -704,7 +730,8 @@ INSERT INTO `TKECM_USER` (`TKECMU_ID`, `TKECMU_NAME`, `TKECMU_REG_TYPE`, `TKECMU
 ('TKECU0030', 'nandhan', 'M', NULL, 132514, '2019-12-25 18:12:08', '$2a$10$/MbfxpaDSmxT0bm6kzJELevS0idGreQzbLEooRSsqFcaIkEe2TW2W', '$2a$10$MpXi9tv2jXF5kO3duqvdTOhRHgSr7zwHei4ETeMLjmxGTlrx3pcEu', '2019-12-25 18:03:21', 9843205332, 91, 'Y', 'Y', '2019-12-25 18:09:27'),
 ('TKECU0031', 'sri', 'E', 'sri11@gmail.com', 179804, '2019-12-30 16:29:45', '$2a$10$OehzJMwljo1gktjxhzH5Yepg3NMuPoC34zUAMGH/zfXK1JsUHQKY2', '$2a$10$VmIRfb3.PV/WgGHHruecvewJFC3knL8OAzw7bykPII/R7dj.KRxgu', '2019-12-30 16:19:47', NULL, NULL, 'Y', 'Y', '2019-12-30 16:33:01'),
 ('TKECU0032', 'sangeee', 'M', NULL, 142460, '2019-12-31 19:08:43', '$2a$10$lKmDqT6t8zS2ebazKL2hYOzXM9o9zyH1JIQLzdFZtGVSAl/Nf0Nla', '$2a$10$S97X99G82P2ZC9zhnO.npOBFdD2aUII2I8yIjbcAhEDHPa9YyF5n2', '2019-12-31 19:03:42', 9633692588, 91, 'N', 'N', NULL),
-('TKECU0033', 'Sasi Kumar', 'E', 'sasi.admin@gmail.com', 121156, '2020-01-03 18:54:48', '$2a$10$zmSD2BHdW/dSipAMLV0aPOyGwOX4iYor6QytLVMcg62h0ak8rnmXC', '$2a$10$M8MStfv609Uu5RpkWCo6P.T7dRkSSgfw1PkY4H7BeJdZV9/L6MHH2', '2020-01-03 15:02:52', NULL, NULL, 'Y', 'Y', '2020-01-03 18:52:13');
+('TKECU0033', 'Sasi Kumar', 'E', 'sasi.admin@gmail.com', 121156, '2020-01-03 18:54:48', '$2a$10$zmSD2BHdW/dSipAMLV0aPOyGwOX4iYor6QytLVMcg62h0ak8rnmXC', '$2a$10$M8MStfv609Uu5RpkWCo6P.T7dRkSSgfw1PkY4H7BeJdZV9/L6MHH2', '2020-01-03 15:02:52', NULL, NULL, 'Y', 'Y', '2020-01-03 18:52:13'),
+('TKECU0034', 'string', 'E', 'fadfad@gmail.com', 157775, '2020-01-07 14:27:28', '$2a$10$mFVbrcQnci.pZDbdYgHNv.So0WWQhou1z0Jq/goAe7YY0Agkt3xBO', '$2a$10$rU8wX6CS3KFqlsPur0lFQ.0jb3Yr2m31U7u7ZA9Wzs1h8sgKWG15C', '2020-01-07 14:22:24', NULL, NULL, 'N', 'N', NULL);
 
 -- --------------------------------------------------------
 

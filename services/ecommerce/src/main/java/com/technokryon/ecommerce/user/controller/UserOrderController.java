@@ -40,7 +40,7 @@ public class UserOrderController {
 			O_Response.setMessage("Billing Address is Mandatory..!");
 			return new ResponseEntity<Object>(O_Response, HttpStatus.UNPROCESSABLE_ENTITY);
 		}
-		if (RO_Order.getOTkecmpptId() == null || RO_Order.getOTkecmpptId().trim().equals("")) {
+		if (RO_Order.getOTkecmpptId() == null || RO_Order.getOTkecmpptId().isEmpty()) {
 
 			O_Response.setMessage("Payment Type Is Missing..!");
 			return new ResponseEntity<Object>(O_Response, HttpStatus.UNPROCESSABLE_ENTITY);
@@ -82,7 +82,7 @@ public class UserOrderController {
 
 		User O_User_Detail = O_UserService.getUserDetailAPIKey(apiKey);
 
-		if (RO_Order.getOId() == null || RO_Order.getOId().trim().equals("")) {
+		if (RO_Order.getOId() == null || RO_Order.getOId().isEmpty()) {
 
 			O_Response.setMessage("Order Id is Empty..!");
 			return new ResponseEntity<Object>(O_Response, HttpStatus.UNPROCESSABLE_ENTITY);

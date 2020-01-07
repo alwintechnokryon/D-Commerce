@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.technokryon.ecommerce.pojo.ProductCart;
 import com.technokryon.ecommerce.pojo.Response;
-import com.technokryon.ecommerce.pojo.ResponseData;
 import com.technokryon.ecommerce.pojo.User;
 import com.technokryon.ecommerce.service.UserCartService;
 import com.technokryon.ecommerce.service.UserService;
@@ -63,7 +62,7 @@ public class UserCartController {
 			@RequestBody ProductCart RO_ProductCart) {
 
 		Response O_Response = new Response();
-		
+
 		// User O_USER_DETAIL = O_UserService.getUserDetailAPIKey(apiKey);
 
 		Integer totalQuantity = O_UserCartService.checkTotalQuantity(RO_ProductCart.getPcTkecmpId());
@@ -73,7 +72,7 @@ public class UserCartController {
 		if (!addQuantity) {
 
 			O_Response.setMessage("Only " + totalQuantity + " Product Available");
-			return new ResponseEntity<Object>(O_Response,HttpStatus.UNPROCESSABLE_ENTITY);
+			return new ResponseEntity<Object>(O_Response, HttpStatus.UNPROCESSABLE_ENTITY);
 		} else {
 
 			O_Response.setMessage("Quantity Added SuccessFully");

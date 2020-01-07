@@ -38,7 +38,7 @@ public class UserAddressController {
 
 		User O_User_Detail = O_UserService.getUserDetailAPIKey(apiKey);
 
-		if (RO_UserAddress.getUadName() == null || RO_UserAddress.getUadName().trim().equals("")) {
+		if (RO_UserAddress.getUadName() == null || RO_UserAddress.getUadName().isEmpty()) {
 
 			O_Response.setMessage("Name is Empty..!");
 			return new ResponseEntity<Object>(O_Response, HttpStatus.UNPROCESSABLE_ENTITY);
@@ -52,21 +52,21 @@ public class UserAddressController {
 
 		}
 
-		if (RO_UserAddress.getUadPostalCode() == null || RO_UserAddress.getUadPostalCode().trim().equals("")) {
+		if (RO_UserAddress.getUadPostalCode() == null || RO_UserAddress.getUadPostalCode().isEmpty()) {
 
 			O_Response.setMessage("PostalCode Is Empty..!");
 			return new ResponseEntity<Object>(O_Response, HttpStatus.UNPROCESSABLE_ENTITY);
 
 		}
 
-		if (RO_UserAddress.getUadAddress() == null || RO_UserAddress.getUadAddress().trim().equals("")) {
+		if (RO_UserAddress.getUadAddress() == null || RO_UserAddress.getUadAddress().isEmpty()) {
 
 			O_Response.setMessage("Address Is Empty..!");
 			return new ResponseEntity<Object>(O_Response, HttpStatus.UNPROCESSABLE_ENTITY);
 
 		}
 
-		if (RO_UserAddress.getUadCity() == null || RO_UserAddress.getUadCity().trim().equals("")) {
+		if (RO_UserAddress.getUadCity() == null || RO_UserAddress.getUadCity().isEmpty()) {
 
 			O_Response.setMessage("City Is Empty..!");
 			return new ResponseEntity<Object>(O_Response, HttpStatus.UNPROCESSABLE_ENTITY);
@@ -80,7 +80,7 @@ public class UserAddressController {
 
 		}
 
-		if (RO_UserAddress.getUadAddressType() == null || RO_UserAddress.getUadAddressType().trim().equals("")) {
+		if (RO_UserAddress.getUadAddressType() == null || RO_UserAddress.getUadAddressType().isEmpty()) {
 
 			O_Response.setMessage("Address Type Is Empty..!");
 			return new ResponseEntity<Object>(O_Response, HttpStatus.UNPROCESSABLE_ENTITY);
@@ -134,21 +134,21 @@ public class UserAddressController {
 
 		}
 
-		if (RO_UserAddress.getUadPostalCode() == null || RO_UserAddress.getUadPostalCode().trim().equals("")) {
+		if (RO_UserAddress.getUadPostalCode() == null || RO_UserAddress.getUadPostalCode().isEmpty()) {
 
 			O_Response.setMessage("PostalCode Is Empty..!");
 			return new ResponseEntity<Object>(O_Response, HttpStatus.UNPROCESSABLE_ENTITY);
 
 		}
 
-		if (RO_UserAddress.getUadAddress() == null || RO_UserAddress.getUadAddress().trim().equals("")) {
+		if (RO_UserAddress.getUadAddress() == null || RO_UserAddress.getUadAddress().isEmpty()) {
 
 			O_Response.setMessage("Address Is Empty..!");
 			return new ResponseEntity<Object>(O_Response, HttpStatus.UNPROCESSABLE_ENTITY);
 
 		}
 
-		if (RO_UserAddress.getUadCity() == null || RO_UserAddress.getUadCity().trim().equals("")) {
+		if (RO_UserAddress.getUadCity() == null || RO_UserAddress.getUadCity().isEmpty()) {
 
 			O_Response.setMessage("City Is Empty..!");
 			return new ResponseEntity<Object>(O_Response, HttpStatus.UNPROCESSABLE_ENTITY);
@@ -162,7 +162,7 @@ public class UserAddressController {
 
 		}
 
-		if (RO_UserAddress.getUadAddressType() == null || RO_UserAddress.getUadAddressType().trim().equals("")) {
+		if (RO_UserAddress.getUadAddressType() == null || RO_UserAddress.getUadAddressType().isEmpty()) {
 
 			O_Response.setMessage("Address Type Is Empty..!");
 			return new ResponseEntity<Object>(O_Response, HttpStatus.UNPROCESSABLE_ENTITY);
