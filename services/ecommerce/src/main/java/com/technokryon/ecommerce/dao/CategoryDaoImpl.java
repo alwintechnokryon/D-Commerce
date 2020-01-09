@@ -33,7 +33,7 @@ public class CategoryDaoImpl implements CategoryDao {
 
 		Query parentCategoryQry = O_SessionFactory.getCurrentSession().createQuery(parentCategory);
 
-		List<TKECMCATEGORY> LO_TKECMCATEGORY = (List<TKECMCATEGORY>) parentCategoryQry.list();
+		List<TKECMCATEGORY> LO_TKECMCATEGORY = (List<TKECMCATEGORY>) parentCategoryQry.getResultList();
 
 		for (TKECMCATEGORY O_TKECMCATEGORY : LO_TKECMCATEGORY) {
 
@@ -54,7 +54,7 @@ public class CategoryDaoImpl implements CategoryDao {
 
 		childCategoryQry.setParameter("parentId", parentId);
 
-		List<TKECMCATEGORY> child_LO_TKECMCATEGORY = (List<TKECMCATEGORY>) childCategoryQry.list();
+		List<TKECMCATEGORY> child_LO_TKECMCATEGORY = (List<TKECMCATEGORY>) childCategoryQry.getResultList();
 
 		for (TKECMCATEGORY child_O_TKECMCATEGORY : child_LO_TKECMCATEGORY) {
 

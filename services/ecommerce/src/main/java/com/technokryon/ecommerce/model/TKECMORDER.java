@@ -68,15 +68,16 @@ public class TKECMORDER {
 	@Column(name = "TKECMO_EMAIL_ID")
 	private String oEmailId;
 
-	@Column(name = "TKECMO_STATUS")
-	private String oStatus;
-
 	@Column(name = "TKECMO_TRANSACTION_ID")
 	private String oTransactionId;
 
 	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	@JoinColumn(name = "TKECMO_TKECMPPT_ID", foreignKey = @ForeignKey(name = "FK_TKECMO_TKECMPPT_ID"))
 	private TKECMPRODUCTPAYMENTTYPE oTkecmpptId;
+
+	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@JoinColumn(name = "TKECMO_TKECMOS_ID", foreignKey = @ForeignKey(name = "FK_TKECMO_TKECMOS_ID"))
+	private TKECMORDERSTATUS oTkecmosId;
 
 	@Column(name = "TKECMO_CREATED_DATE")
 	private OffsetDateTime oCreatedDate;

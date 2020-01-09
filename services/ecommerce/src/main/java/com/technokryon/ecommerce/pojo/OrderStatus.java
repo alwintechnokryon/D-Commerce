@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class OrderStatus {
 
-	String osStatus;
+	String osId;
 	String osLabel;
 
 }

@@ -15,6 +15,18 @@ public class SingleTon {
 
 	public static final String PASSWORD_RESET_MAIL_HEADER = "Ecommerce - OTP Verification";
 
+	private static SingleTon singleTon = null;
+
+	private SingleTon() {
+	}; // private constructor
+
+	public static SingleTon getInstance() {
+		if (null == singleTon) {
+			singleTon = new SingleTon();
+		}
+		return singleTon;
+	}
+
 	public static Boolean isEmailValid(String email) {
 
 		String emailRegex = "^[a-zA-Z0-9_+&*-]+(?:\\." + "[a-zA-Z0-9_+&*-]+)*@" + "(?:[a-zA-Z0-9-]+\\.)+[a-z"

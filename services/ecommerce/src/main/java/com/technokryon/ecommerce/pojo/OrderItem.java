@@ -1,5 +1,7 @@
 package com.technokryon.ecommerce.pojo;
 
+import java.util.List;
+
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -17,6 +19,8 @@ public class OrderItem {
 	Double oiPrice;
 	Double oiTaxPercent;
 	Double oiTaxAmount;
-	String oiStatus;
+	String oiTkecmosId;
+	List<ProductAttribute> O_ProductAttribute;
+	List<OrderAddress> O_OrderAddress;
 
 }

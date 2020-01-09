@@ -55,7 +55,7 @@ public class ProductDaoImpl implements ProductDao {
 		query.setParameter("categoryId", categoryId);
 		query.setParameter("default", "Y");
 
-		List<TKECMPRODUCT> LO_TKECMPRODUCT = query.list();
+		List<TKECMPRODUCT> LO_TKECMPRODUCT = query.getResultList();
 
 		for (TKECMPRODUCT O_TKECMPRODUCT : LO_TKECMPRODUCT) {
 
@@ -71,7 +71,7 @@ public class ProductDaoImpl implements ProductDao {
 
 			queryProductAttribute.setParameter("productId", O_TKECMPRODUCT.getPId());
 
-			List<TKECTPRODUCTATTRIBUTE> LO_TKECTPRODUCTATTRIBUTE = queryProductAttribute.list();
+			List<TKECTPRODUCTATTRIBUTE> LO_TKECTPRODUCTATTRIBUTE = queryProductAttribute.getResultList();
 
 			for (TKECTPRODUCTATTRIBUTE O_TKECTPRODUCTATTRIBUTE : LO_TKECTPRODUCTATTRIBUTE) {
 
@@ -91,7 +91,7 @@ public class ProductDaoImpl implements ProductDao {
 
 			query1.setParameter("productId", O_TKECMPRODUCT.getPId());
 
-			List<TKECMIMAGE> LO_TKECMIMAGE = query1.list();
+			List<TKECMIMAGE> LO_TKECMIMAGE = query1.getResultList();
 
 			for (TKECMIMAGE O_TKECMIMAGE : LO_TKECMIMAGE) {
 
@@ -150,7 +150,7 @@ public class ProductDaoImpl implements ProductDao {
 
 			configurableParentQuery.setParameter("parentId", O_TKECTCONFIGURABLELINK.getClParentId().getPId());
 
-			List<TKECTCONFIGURABLELINK> LO_TKECTCONFIGURABLELINK = configurableParentQuery.list();
+			List<TKECTCONFIGURABLELINK> LO_TKECTCONFIGURABLELINK = configurableParentQuery.getResultList();
 
 			List<ProductAttribute> LO_ProductAttribute = new ArrayList<ProductAttribute>();
 
@@ -165,7 +165,7 @@ public class ProductDaoImpl implements ProductDao {
 
 				ProductAttribute O_ProductAttribute = new ProductAttribute();
 
-				List<TKECTPRODUCTATTRIBUTE> LO_TKECTPRODUCTATTRIBUTE = productAttributeQuery.list();
+				List<TKECTPRODUCTATTRIBUTE> LO_TKECTPRODUCTATTRIBUTE = productAttributeQuery.getResultList();
 
 //				System.err.println("ReqId" + tkecmpId);
 
@@ -252,7 +252,7 @@ public class ProductDaoImpl implements ProductDao {
 
 			queryProductAttribute.setParameter("productId", O_TKECMPRODUCT.getPId());
 
-			List<TKECTPRODUCTATTRIBUTE> LO_TKECTPRODUCTATTRIBUTE = queryProductAttribute.list();
+			List<TKECTPRODUCTATTRIBUTE> LO_TKECTPRODUCTATTRIBUTE = queryProductAttribute.getResultList();
 
 			for (TKECTPRODUCTATTRIBUTE O_TKECTPRODUCTATTRIBUTE : LO_TKECTPRODUCTATTRIBUTE) {
 
@@ -273,7 +273,7 @@ public class ProductDaoImpl implements ProductDao {
 
 		imageQuery.setParameter("productId", tkecmpId);
 
-		List<TKECMIMAGE> LO_TKECMIMAGE = imageQuery.list();
+		List<TKECMIMAGE> LO_TKECMIMAGE = imageQuery.getResultList();
 
 		for (TKECMIMAGE O_TKECMIMAGE : LO_TKECMIMAGE) {
 

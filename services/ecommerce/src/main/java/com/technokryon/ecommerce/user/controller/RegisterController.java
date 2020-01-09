@@ -52,7 +52,7 @@ public class RegisterController {
 
 		}
 
-		if (RO_User.getUName() == null || RO_User.getUName().isEmpty()) {
+		if (RO_User.getUName() == null || RO_User.getUName().isBlank()) {
 			O_Response.setMessage("User Name is Empty..!");
 			return new ResponseEntity<Object>(O_Response, HttpStatus.UNPROCESSABLE_ENTITY);
 		}
@@ -60,7 +60,7 @@ public class RegisterController {
 		if (RO_User.getURegType().equals("E")) {
 
 			// Null-check for user name
-			if (RO_User.getUMail() == null || RO_User.getUMail().isEmpty()) {
+			if (RO_User.getUMail() == null || RO_User.getUMail().isBlank()) {
 
 				O_Response.setMessage("Email Id is Empty..!");
 				return new ResponseEntity<Object>(O_Response, HttpStatus.UNPROCESSABLE_ENTITY);
@@ -160,7 +160,7 @@ public class RegisterController {
 			return new ResponseEntity<Object>(O_Response, HttpStatus.UNPROCESSABLE_ENTITY);
 		}
 
-		if (RO_User.getUHashKey().isEmpty()) {
+		if (RO_User.getUHashKey().isBlank()) {
 
 			O_Response.setMessage("Hash Key Is Empty..!");
 			return new ResponseEntity<Object>(O_Response, HttpStatus.UNPROCESSABLE_ENTITY);
@@ -205,7 +205,7 @@ public class RegisterController {
 			return new ResponseEntity<Object>(O_Response, HttpStatus.UNPROCESSABLE_ENTITY);
 		}
 
-		if (RO_User.getUHashKey().isEmpty()) {
+		if (RO_User.getUHashKey().isBlank()) {
 
 			O_Response.setMessage("Hash Key Is Empty..!");
 			return new ResponseEntity<Object>(O_Response, HttpStatus.UNPROCESSABLE_ENTITY);
@@ -235,7 +235,6 @@ public class RegisterController {
 		return new ResponseEntity<Object>(O_Response, HttpStatus.OK);
 	}
 
-	
 	@ResponseBody
 	@PostMapping("/login")
 	private ResponseEntity<?> LOGIN(@RequestBody User RO_User, HttpServletRequest httpServletRequest) {
@@ -254,7 +253,7 @@ public class RegisterController {
 		if (RO_User.getURegType().equals("E")) {
 
 			// Null-check for Email Id
-			if (RO_User.getUMail() == null || RO_User.getUMail().isEmpty()) {
+			if (RO_User.getUMail() == null || RO_User.getUMail().isBlank()) {
 
 				O_Response.setMessage("Email Id is Empty..!");
 				return new ResponseEntity<Object>(O_Response, HttpStatus.UNPROCESSABLE_ENTITY);
@@ -387,7 +386,7 @@ public class RegisterController {
 
 		if (RO_User.getURegType().equals("E")) {
 
-			if (RO_User.getUMail() == null || RO_User.getUMail().isEmpty()) {
+			if (RO_User.getUMail() == null || RO_User.getUMail().isBlank()) {
 
 				O_Response.setMessage("Email Id Is Empty..!");
 
@@ -460,7 +459,7 @@ public class RegisterController {
 			return new ResponseEntity<Object>(O_Response, HttpStatus.UNPROCESSABLE_ENTITY);
 		}
 
-		if (RO_User.getUHashKey().isEmpty()) {
+		if (RO_User.getUHashKey().isBlank()) {
 
 			O_Response.setMessage("Hash Key Is Empty..!");
 			return new ResponseEntity<Object>(O_Response, HttpStatus.UNPROCESSABLE_ENTITY);
@@ -509,7 +508,7 @@ public class RegisterController {
 	}
 
 	@ResponseBody
-	@GetMapping(value ="/logout")
+	@GetMapping(value = "/logout")
 	ResponseEntity<?> LOGOUT(@RequestHeader(value = "X-Auth-Token") String apiKey) {
 
 		Response O_Response = new Response();

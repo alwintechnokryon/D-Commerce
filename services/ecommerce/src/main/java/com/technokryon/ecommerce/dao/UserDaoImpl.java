@@ -257,26 +257,36 @@ public class UserDaoImpl implements UserDao {
 	@Override
 	public UserSession getApiSecretDataByNewSecret(String apisecret, String userId) {
 
-		TKECMUSER O_TKECMUSER = O_SessionFactory.getCurrentSession().get(TKECMUSER.class, userId);
-
 		Session O_Session = O_SessionFactory.openSession();
 		Transaction O_Transaction = O_Session.beginTransaction();
 
-		TKECTUSERSESSION O_TKECTUSERSESSION = new TKECTUSERSESSION();
-		O_TKECTUSERSESSION.setUsTkecmuId(O_TKECMUSER);
-		O_TKECTUSERSESSION.setUsApiKey(apisecret);
-		O_TKECTUSERSESSION.setUsCreatedDate(OffsetDateTime.now());
-		O_TKECTUSERSESSION.setUsAliveYN("Y");
-		O_Session.save(O_TKECTUSERSESSION);
+		TKECMUSER O_TKECMUSER = O_SessionFactory.getCurrentSession().get(TKECMUSER.class, userId);
 
-		O_Transaction.commit();
-		O_Session.close();
+		try {
+			TKECTUSERSESSION O_TKECTUSERSESSION = new TKECTUSERSESSION();
+			O_TKECTUSERSESSION.setUsTkecmuId(O_TKECMUSER);
+			O_TKECTUSERSESSION.setUsApiKey(apisecret);
+			O_TKECTUSERSESSION.setUsCreatedDate(OffsetDateTime.now());
+			O_TKECTUSERSESSION.setUsAliveYN("Y");
+			O_Session.save(O_TKECTUSERSESSION);
 
-		UserSession O_UserSession = new UserSession();
+			O_Transaction.commit();
+			O_Session.close();
 
-		O_UserSession.setUsApiKey(O_TKECTUSERSESSION.getUsApiKey());
+			UserSession O_UserSession = new UserSession();
 
-		return O_UserSession;
+			O_UserSession.setUsApiKey(O_TKECTUSERSESSION.getUsApiKey());
+
+			return O_UserSession;
+		} catch (Exception e) {
+			e.printStackTrace();
+			if (O_Transaction.isActive()) {
+				O_Transaction.rollback();
+			}
+			O_Session.close();
+
+			return null;
+		}
 	}
 
 	@Override

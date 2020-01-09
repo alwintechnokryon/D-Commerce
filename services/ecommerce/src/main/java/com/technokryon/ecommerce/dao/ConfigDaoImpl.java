@@ -18,13 +18,11 @@ import com.technokryon.ecommerce.model.TKECMCOUNTRY;
 import com.technokryon.ecommerce.model.TKECMPRODUCTPAYMENTTYPE;
 import com.technokryon.ecommerce.model.TKECMPRODUCTTYPE;
 import com.technokryon.ecommerce.model.TKECTSTATE;
-import com.technokryon.ecommerce.model.TKECTUSERADDRESS;
 import com.technokryon.ecommerce.pojo.Attribute;
 import com.technokryon.ecommerce.pojo.Country;
 import com.technokryon.ecommerce.pojo.ProductPaymentType;
 import com.technokryon.ecommerce.pojo.ProductType;
 import com.technokryon.ecommerce.pojo.State;
-import com.technokryon.ecommerce.pojo.UserAddress;
 
 @Repository("ConfigDao")
 @Transactional
@@ -46,7 +44,7 @@ public class ConfigDaoImpl implements ConfigDao {
 
 		Query countryListQuery = O_SessionFactory.getCurrentSession().createQuery(countryList);
 
-		List<TKECMCOUNTRY> LO_TKECMCOUNTRY = (List<TKECMCOUNTRY>) countryListQuery.list();
+		List<TKECMCOUNTRY> LO_TKECMCOUNTRY = (List<TKECMCOUNTRY>) countryListQuery.getResultList();
 
 		for (TKECMCOUNTRY O_TKECMCOUNTRY : LO_TKECMCOUNTRY) {
 
@@ -65,7 +63,7 @@ public class ConfigDaoImpl implements ConfigDao {
 
 		Query productTypeListQuery = O_SessionFactory.getCurrentSession().createQuery(productTypeList);
 
-		List<TKECMPRODUCTTYPE> LO_TKECMPRODUCTTYPE = (List<TKECMPRODUCTTYPE>) productTypeListQuery.list();
+		List<TKECMPRODUCTTYPE> LO_TKECMPRODUCTTYPE = (List<TKECMPRODUCTTYPE>) productTypeListQuery.getResultList();
 
 		for (TKECMPRODUCTTYPE O_TKECMPRODUCTTYPE : LO_TKECMPRODUCTTYPE) {
 
@@ -85,7 +83,7 @@ public class ConfigDaoImpl implements ConfigDao {
 		Query productPaymentTypeListQuery = O_SessionFactory.getCurrentSession().createQuery(productPaymentTypeList);
 
 		List<TKECMPRODUCTPAYMENTTYPE> LO_TKECMPRODUCTPAYMENTTYPE = (List<TKECMPRODUCTPAYMENTTYPE>) productPaymentTypeListQuery
-				.list();
+				.getResultList();
 
 		for (TKECMPRODUCTPAYMENTTYPE O_TKECMPRODUCTPAYMENTTYPE : LO_TKECMPRODUCTPAYMENTTYPE) {
 
@@ -141,7 +139,7 @@ public class ConfigDaoImpl implements ConfigDao {
 
 		Query attributeListQuery = O_SessionFactory.getCurrentSession().createQuery(attributeList);
 
-		List<TKECMATTRIBUTE> LO_TKECMATTRIBUTE = (List<TKECMATTRIBUTE>) attributeListQuery.list();
+		List<TKECMATTRIBUTE> LO_TKECMATTRIBUTE = (List<TKECMATTRIBUTE>) attributeListQuery.getResultList();
 
 		for (TKECMATTRIBUTE O_TKECMATTRIBUTE : LO_TKECMATTRIBUTE) {
 

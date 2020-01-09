@@ -15,8 +15,8 @@ import lombok.NoArgsConstructor;
 public class TKECMORDERSTATUS {
 
 	@Id
-	@Column(name = "TKECMOS_STATUS	")
-	private String osStatus;
+	@Column(name = "TKECMOS_ID	")
+	private String osId;
 
 	@Column(name = "TKECMOS_LABEL")
 	private String osLabel;

@@ -29,12 +29,12 @@ public class TKECTORDERSTATUSHISTORY {
 	private Integer oshAgId;
 
 	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	@JoinColumn(name = "TKECTOSH_TKECMO_ID", foreignKey = @ForeignKey(name = "FK_TKECTOSH_TKECMO_ID"))
-	private TKECMORDER oshTkecmoId;
+	@JoinColumn(name = "TKECTOSH_TKECTOI_AG_ID", foreignKey = @ForeignKey(name = "FK_TKECTOSH_TKECTOI_AG_ID"))
+	private TKECTORDERITEM oshTkectAgId;
 
 	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	@JoinColumn(name = "TKECTOSH_TKECMOS_STATUS", foreignKey = @ForeignKey(name = "FK_TKECTOSH_TKECMOS_STATUS"))
-	private TKECMORDERSTATUS oshTkecmosStatus;
+	@JoinColumn(name = "TKECTOSH_TKECMOS_ID", foreignKey = @ForeignKey(name = "FK_TKECTOSH_TKECMOS_ID"))
+	private TKECMORDERSTATUS oshTkecmosId;
 
 	@Column(name = "TKECTOSH_COMMENT")
 	private String oshComment;

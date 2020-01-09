@@ -34,6 +34,10 @@ public class TKECTORDERITEM {
 	@JoinColumn(name = "TKECTOI_TKECMP_ID", foreignKey = @ForeignKey(name = "FK_TKECTOI_TKECMP_ID"))
 	private TKECMPRODUCT oiTkecmpId;
 
+	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@JoinColumn(name = "TKECTOI_TKECMOS_ID", foreignKey = @ForeignKey(name = "FK_TKECTOI_TKECMOS_ID"))
+	private TKECMORDERSTATUS oiTkecmosId;
+
 	@Column(name = "TKECTOI_SKU")
 	private String oiSku;
 
@@ -54,8 +58,5 @@ public class TKECTORDERITEM {
 
 	@Column(name = "TKECTOI_TAX_AMOUNT")
 	private Double oiTaxAmount;
-
-	@Column(name = "TKECTOI_STATUS")
-	private String oiStatus;
 
 }

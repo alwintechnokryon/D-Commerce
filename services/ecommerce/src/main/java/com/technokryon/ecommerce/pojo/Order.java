@@ -26,7 +26,7 @@ public class Order {
 	String oIsSendEmail;
 	String oEmailId;
 	String oTkecmpptId;
-	String oStatus;
+	String oTkecmosId;
 	String oTransactionId;
 	OffsetDateTime oCreatedDate;
 	String oCreatedUserId;

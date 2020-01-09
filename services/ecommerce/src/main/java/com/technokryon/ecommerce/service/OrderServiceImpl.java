@@ -9,8 +9,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.technokryon.ecommerce.dao.OrderDao;
 import com.technokryon.ecommerce.pojo.Order;
+import com.technokryon.ecommerce.pojo.OrderItem;
 import com.technokryon.ecommerce.pojo.Product;
-
 
 @Service("OrderService")
 @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -35,6 +35,24 @@ public class OrderServiceImpl implements OrderService {
 	public String updateTransactionId(Order RO_Order) {
 
 		return O_OrderDao.updateTransactionId(RO_Order);
+	}
+
+	@Override
+	public List<OrderItem> orderList(String uId) {
+		// TODO Auto-generated method stub
+		return O_OrderDao.orderList(uId);
+	}
+
+	@Override
+	public OrderItem orderItemById(Integer oiAgId) {
+		// TODO Auto-generated method stub
+		return O_OrderDao.orderItemById(oiAgId);
+	}
+
+	@Override
+	public void orderCancel(Integer oshAgId, String uId) {
+		// TODO Auto-generated method stub
+		O_OrderDao.orderCancel(oshAgId, uId);
 	}
 
 }
