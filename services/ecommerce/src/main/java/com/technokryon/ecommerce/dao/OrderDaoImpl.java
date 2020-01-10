@@ -403,31 +403,27 @@ public class OrderDaoImpl implements OrderDao {
 		Session O_Session = O_SessionFactory.openSession();
 		Transaction O_Transaction = O_Session.beginTransaction();
 		try {
-			TKECTORDERITEM O_TKECTORDERITEM4 = O_Session.get(TKECTORDERITEM.class, oshAgId);
+			TKECTORDERITEM O_TKECTORDERITEM1 = O_Session.get(TKECTORDERITEM.class, oshAgId);
 
-			if (O_TKECTORDERITEM4.getOiTkecmoId().getOTkecmuId().getUId().equals(uId)) {
+			if (O_TKECTORDERITEM1.getOiTkecmoId().getOTkecmuId().getUId().equals(uId)) {
 
-				TKECMORDER O_TKECMORDER6 = O_Session.get(TKECMORDER.class, O_TKECTORDERITEM4.getOiTkecmoId().getOId());
+				TKECMORDER O_TKECMORDER = O_Session.get(TKECMORDER.class, O_TKECTORDERITEM1.getOiTkecmoId().getOId());
 
-				if (O_TKECMORDER6.getOTkecmpptId().equals("TKECMPPT0001")) {
-//			String orderId = "FROM TKECMORDER WHERE oId =:orderId";
-//
-//			Query orderIdQuery = O_Session.createQuery(orderId);
-//			orderIdQuery.setParameter("orderId", O_TKECTORDERITEM4.getOiTkecmoId().getOId());
-					// try {
+				if (O_TKECMORDER.getOTkecmpptId().getPptId().equals("TKECMPPT0001")) {
+
 					String deleteOrderStatusHistory = "DELETE FROM TKECTORDERSTATUSHISTORY WHERE oshTkectAgId.oiAgId =:orderItemAgId";
 					Query deleteOrderStatusHistoryQuery = O_Session.createQuery(deleteOrderStatusHistory);
 					deleteOrderStatusHistoryQuery.setParameter("orderItemAgId", oshAgId);
 					deleteOrderStatusHistoryQuery.executeUpdate();
 
-					TKECTORDERITEM O_TKECTORDERITEM = O_Session.get(TKECTORDERITEM.class, oshAgId);
+					TKECTORDERITEM O_TKECTORDERITEM2 = O_Session.get(TKECTORDERITEM.class, oshAgId);
 
-					String orderId = O_TKECTORDERITEM.getOiTkecmoId().getOId();
+					String orderId = O_TKECTORDERITEM2.getOiTkecmoId().getOId();
 
-					O_TKECTORDERITEM.setOiTkecmpId(null);
-					O_TKECTORDERITEM.setOiTkecmoId(null);
-					O_TKECTORDERITEM.setOiTkecmosId(null);
-					O_Session.delete(O_TKECTORDERITEM);
+					O_TKECTORDERITEM2.setOiTkecmpId(null);
+					O_TKECTORDERITEM2.setOiTkecmoId(null);
+					O_TKECTORDERITEM2.setOiTkecmosId(null);
+					O_Session.delete(O_TKECTORDERITEM2);
 
 					String orderItemId = "FROM TKECTORDERITEM WHERE oiTkecmoId.oId =:orderItemId";
 					Query orderItemIdQuery = O_Session.createQuery(orderItemId);
@@ -435,11 +431,11 @@ public class OrderDaoImpl implements OrderDao {
 
 					List<TKECTORDERITEM> LO_TKECTORDERITEM = orderItemIdQuery.getResultList();
 
-					for (TKECTORDERITEM O_TKECTORDERITEM1 : LO_TKECTORDERITEM) {
+					for (TKECTORDERITEM O_TKECTORDERITEM3 : LO_TKECTORDERITEM) {
 
 						String deleteOrderStatusHistory1 = "FROM TKECTORDERSTATUSHISTORY WHERE oshTkectAgId.oiAgId =:orderItemAgId";
 						Query deleteOrderStatusHistoryQuery1 = O_Session.createQuery(deleteOrderStatusHistory1);
-						deleteOrderStatusHistoryQuery1.setParameter("orderItemAgId", O_TKECTORDERITEM1.getOiAgId());
+						deleteOrderStatusHistoryQuery1.setParameter("orderItemAgId", O_TKECTORDERITEM3.getOiAgId());
 
 						List<TKECTORDERSTATUSHISTORY> LO_TKECTORDERSTATUSHISTORY = deleteOrderStatusHistoryQuery1
 								.getResultList();
@@ -451,10 +447,10 @@ public class OrderDaoImpl implements OrderDao {
 							O_Session.delete(O_TKECTORDERSTATUSHISTORY);
 
 						}
-						O_TKECTORDERITEM1.setOiTkecmpId(null);
-						O_TKECTORDERITEM1.setOiTkecmoId(null);
-						O_TKECTORDERITEM1.setOiTkecmosId(null);
-						O_Session.delete(O_TKECTORDERITEM1);
+						O_TKECTORDERITEM3.setOiTkecmpId(null);
+						O_TKECTORDERITEM3.setOiTkecmoId(null);
+						O_TKECTORDERITEM3.setOiTkecmosId(null);
+						O_Session.delete(O_TKECTORDERITEM3);
 
 					}
 
@@ -475,11 +471,11 @@ public class OrderDaoImpl implements OrderDao {
 					Query deleteOrderQuery = O_Session.createQuery(deleteOrder);
 					deleteOrderQuery.setParameter("orderId", orderId);
 
-					TKECMORDER O_TKECMORDER = (TKECMORDER) deleteOrderQuery.uniqueResult();
-					O_TKECMORDER.setOTkecmosId(null);
-					O_TKECMORDER.setOTkecmpptId(null);
-					O_TKECMORDER.setOTkecmuId(null);
-					O_Session.delete(O_TKECMORDER);
+					TKECMORDER O_TKECMORDER1 = (TKECMORDER) deleteOrderQuery.uniqueResult();
+					O_TKECMORDER1.setOTkecmosId(null);
+					O_TKECMORDER1.setOTkecmpptId(null);
+					O_TKECMORDER1.setOTkecmuId(null);
+					O_Session.delete(O_TKECMORDER1);
 
 					O_Transaction.commit();
 					O_Session.close();
