@@ -22,14 +22,13 @@ import com.technokryon.ecommerce.admin.model.TKECMIMAGE;
 import com.technokryon.ecommerce.admin.model.TKECMPRODUCT;
 import com.technokryon.ecommerce.admin.model.TKECMPRODUCTTYPE;
 import com.technokryon.ecommerce.admin.model.TKECMROLE;
+import com.technokryon.ecommerce.admin.model.TKECMSHIPPINGCOST;
 import com.technokryon.ecommerce.admin.model.TKECMUSER;
 import com.technokryon.ecommerce.admin.model.TKECTOPTIONATTRIBUTE;
 import com.technokryon.ecommerce.admin.model.TKECTPRODUCTATTRIBUTE;
 import com.technokryon.ecommerce.admin.model.TKECTUSERAPPLYROLE;
 import com.technokryon.ecommerce.admin.model.TKECTUSERAUDIT;
 import com.technokryon.ecommerce.admin.model.TKECTUSERSESSION;
-
-
 
 @EnableAutoConfiguration(exclude = HibernateJpaAutoConfiguration.class)
 @Configuration
@@ -65,8 +64,8 @@ public class Config {
 		// factoryBean.setHibernateProperties(props);
 		factoryBean.setAnnotatedClasses(TKECMUSER.class, TKECTUSERSESSION.class, TKECTUSERAUDIT.class,
 				TKECMCATEGORY.class, TKECMATTRIBUTE.class, TKECTOPTIONATTRIBUTE.class, TKECTPRODUCTATTRIBUTE.class,
-				TKECMIMAGE.class, TKECMPRODUCT.class, TKECMPRODUCTTYPE.class,
-				TKECMROLE.class, TKECTUSERAPPLYROLE.class);
+				TKECMIMAGE.class, TKECMPRODUCT.class, TKECMPRODUCTTYPE.class, TKECMROLE.class, TKECTUSERAPPLYROLE.class,
+				TKECMSHIPPINGCOST.class);
 
 		return factoryBean;
 	}

@@ -12,6 +12,7 @@ public class Order {
 
 	String oId;
 	String oTkecmuId;
+	String oTkecmsId;
 	String oCoupenCode;
 	Double oBaseAmount;
 	Double oDetectedAmount;

@@ -487,16 +487,28 @@ public class RegisterController {
 
 		Response O_Response = new Response();
 
-		User O_User_Detail = O_UserService.getUserDetailAPIKey(apiKey);
-
 		if (RO_User.getUPassword().length() > 14 || RO_User.getUPassword().length() < 4) {
 
 			O_Response.setMessage("Password Shoud be 4 to 14 Charaters ..!");
 			return new ResponseEntity<Object>(O_Response, HttpStatus.UNPROCESSABLE_ENTITY);
 		}
+
+		if (RO_User.getOldPassword().isBlank()) {
+
+			O_Response.setMessage("Old Password Is Empty ..!");
+			return new ResponseEntity<Object>(O_Response, HttpStatus.UNPROCESSABLE_ENTITY);
+		}
+
+		User O_User_Detail = O_UserService.getUserDetailAPIKey(apiKey);
+
 		if (!new BCryptPasswordEncoder().matches(RO_User.getOldPassword(), O_User_Detail.getUPassword())) {
 
 			O_Response.setMessage("Invalid Old Password..!");
+			return new ResponseEntity<Object>(O_Response, HttpStatus.UNPROCESSABLE_ENTITY);
+		}
+		if (RO_User.getOldPassword().equals(RO_User.getUPassword())) {
+
+			O_Response.setMessage("New Password Is Same As Above..!");
 			return new ResponseEntity<Object>(O_Response, HttpStatus.UNPROCESSABLE_ENTITY);
 		}
 		RO_User.setUId(O_User_Detail.getUId());

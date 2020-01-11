@@ -12,6 +12,7 @@ public class OrderItem {
 	Integer oiAgId;
 	String oiTkecmoId;
 	String oiTkecmpId;
+	String oiTkecmsId;
 	String oiSku;
 	String oiName;
 	Float oiWeight;

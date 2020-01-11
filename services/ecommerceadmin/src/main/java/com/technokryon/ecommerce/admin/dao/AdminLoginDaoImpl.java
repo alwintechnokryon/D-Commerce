@@ -22,7 +22,6 @@ import com.technokryon.ecommerce.admin.model.TKECTUSERSESSION;
 import com.technokryon.ecommerce.admin.pojo.User;
 import com.technokryon.ecommerce.admin.pojo.UserSession;
 
-
 @Repository("AdminLoginDao")
 @Transactional
 @Component

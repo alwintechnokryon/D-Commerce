@@ -29,6 +29,10 @@ public class TKECMORDER {
 	@JoinColumn(name = "TKECMO_TKECMU_ID", foreignKey = @ForeignKey(name = "FK_TKECMO_TKECMU_ID"))
 	private TKECMUSER oTkecmuId;
 
+	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@JoinColumn(name = "TKECMO_TKECMS_ID", foreignKey = @ForeignKey(name = "FK_TKECMO_TKECMS_ID"))
+	private TKECMSTORE oTkecmsId;
+
 	@Column(name = "TKECMO_COUPEN_CODE")
 	private String oCoupenCode;
 

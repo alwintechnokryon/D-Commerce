@@ -227,6 +227,11 @@ public class AdminLoginController {
 			O_Response.setMessage("Invalid Old Password..!");
 			return new ResponseEntity<Object>(O_Response, HttpStatus.UNPROCESSABLE_ENTITY);
 		}
+		if (RO_User.getOldPassword().equals(RO_User.getUPassword())) {
+
+			O_Response.setMessage("New Password Is Same As Old Password..!");
+			return new ResponseEntity<Object>(O_Response, HttpStatus.UNPROCESSABLE_ENTITY);
+		}
 		RO_User.setUId(O_User_Detail.getUId());
 		RO_User.setUPassword(new BCryptPasswordEncoder().encode(RO_User.getUPassword()));
 

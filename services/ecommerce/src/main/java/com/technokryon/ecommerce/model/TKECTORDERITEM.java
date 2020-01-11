@@ -35,6 +35,10 @@ public class TKECTORDERITEM {
 	private TKECMPRODUCT oiTkecmpId;
 
 	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@JoinColumn(name = "TKECTOI_TKECMS_ID", foreignKey = @ForeignKey(name = "FK_TKECTOI_TKECMS_ID"))
+	private TKECMSTORE oiTkecmsId;
+
+	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	@JoinColumn(name = "TKECTOI_TKECMOS_ID", foreignKey = @ForeignKey(name = "FK_TKECTOI_TKECMOS_ID"))
 	private TKECMORDERSTATUS oiTkecmosId;
 
