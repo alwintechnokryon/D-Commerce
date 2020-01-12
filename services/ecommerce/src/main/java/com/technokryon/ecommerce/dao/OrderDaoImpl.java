@@ -18,6 +18,8 @@ import com.technokryon.ecommerce.model.TKECMORDER;
 import com.technokryon.ecommerce.model.TKECMORDERSTATUS;
 import com.technokryon.ecommerce.model.TKECMPRODUCT;
 import com.technokryon.ecommerce.model.TKECMPRODUCTPAYMENTTYPE;
+import com.technokryon.ecommerce.model.TKECMPRODUCTSHIPMENT;
+import com.technokryon.ecommerce.model.TKECMSTORE;
 import com.technokryon.ecommerce.model.TKECMUSER;
 import com.technokryon.ecommerce.model.TKECTORDERADDRESS;
 import com.technokryon.ecommerce.model.TKECTORDERITEM;
@@ -69,6 +71,8 @@ public class OrderDaoImpl implements OrderDao {
 
 			String getOrderId = "FROM TKECMORDER ORDER BY oId DESC";
 
+			String getProductShipmentId = "FROM TKECMPRODUCTSHIPMENT ORDER BY psmId DESC";
+
 			Query orderIdQuery = O_Session.createQuery(getOrderId);
 			orderIdQuery.setMaxResults(1);
 			TKECMORDER O_TKECMORDER1 = (TKECMORDER) orderIdQuery.uniqueResult();
@@ -101,6 +105,7 @@ public class OrderDaoImpl implements OrderDao {
 			O_TKECMORDER.setOTaxAmount(RO_Order.getOTaxAmount());
 			O_TKECMORDER.setOCurrencyCode(RO_Order.getOCurrencyCode());
 			O_TKECMORDER.setOTkecmpptId(O_Session.get(TKECMPRODUCTPAYMENTTYPE.class, RO_Order.getOTkecmpptId()));
+			O_TKECMORDER.setOTkecmsId(O_Session.get(TKECMSTORE.class, RO_Order.getOTkecmsId()));
 
 			if (RO_Order.getOTkecmpptId().trim().equals("TKECMPPT0001")) {
 				O_TKECMORDER.setOTkecmosId(O_Session.get(TKECMORDERSTATUS.class, "TKECMOS0002"));
@@ -165,8 +170,10 @@ public class OrderDaoImpl implements OrderDao {
 				O_TKECTORDERITEM.setOiPrice(O_TKECMPRODUCT.getPPrice());
 				O_TKECTORDERITEM
 						.setOiTkecmosId(O_Session.get(TKECMORDERSTATUS.class, O_TKECMORDER.getOTkecmosId().getOsId()));
+				O_TKECTORDERITEM.setOiTkecmsId(O_Session.get(TKECMSTORE.class, RO_Order.getOTkecmsId()));
 				O_Session.save(O_TKECTORDERITEM);
 
+				if(RO_Order.getOTkecmpptId().trim().equals("TKECMPPT0001")) {
 				TKECTORDERSTATUSHISTORY O_TKECTORDERSTATUSHISTORY = new TKECTORDERSTATUSHISTORY();
 
 				O_TKECTORDERSTATUSHISTORY.setOshTkectAgId(O_TKECTORDERITEM);
@@ -175,6 +182,37 @@ public class OrderDaoImpl implements OrderDao {
 				O_TKECTORDERSTATUSHISTORY.setOshCreatedDate(OffsetDateTime.now());
 				O_TKECTORDERSTATUSHISTORY.setOshCreatedUserId(RO_Order.getOTkecmuId());
 				O_Session.save(O_TKECTORDERSTATUSHISTORY);
+
+				Query getProductShipmentIdQuery = O_Session.createQuery(getProductShipmentId);
+				getProductShipmentIdQuery.setMaxResults(1);
+				TKECMPRODUCTSHIPMENT O_TKECMPRODUCTSHIPMENT1 = (TKECMPRODUCTSHIPMENT) getProductShipmentIdQuery
+						.uniqueResult();
+
+				TKECMPRODUCTSHIPMENT O_TKECMPRODUCTSHIPMENT = new TKECMPRODUCTSHIPMENT();
+
+				if (O_TKECMPRODUCTSHIPMENT1 == null) {
+
+					O_TKECMPRODUCTSHIPMENT.setPsmId("TKECPSM00001");
+				} else {
+
+					String shipmentId = O_TKECMPRODUCTSHIPMENT1.getPsmId();
+					Integer Ag = Integer.valueOf(shipmentId.substring(7));
+					Ag++;
+
+					// System.err.println(Ag);
+					O_TKECMPRODUCTSHIPMENT.setPsmId("TKECPSM" + String.format("%05d", Ag));
+				}
+
+				O_TKECMPRODUCTSHIPMENT.setPsmTkectoiAgId(O_TKECTORDERITEM);
+				O_TKECMPRODUCTSHIPMENT.setPsmTkecmsId(O_Session.get(TKECMSTORE.class, RO_Order.getOTkecmsId()));
+				O_TKECMPRODUCTSHIPMENT.setPsmWeight(O_TKECTORDERITEM.getOiWeight());
+				O_TKECMPRODUCTSHIPMENT.setPsmQuantity(O_TKECTORDERITEM.getOiQuantity());
+				O_TKECMPRODUCTSHIPMENT.setPsmBillingAddress(RO_Order.getBillingAddress());
+				O_TKECMPRODUCTSHIPMENT.setPsmShippingAddress(RO_Order.getShippingAddress());
+				O_TKECMPRODUCTSHIPMENT.setPsmCreatedDate(OffsetDateTime.now());
+				O_TKECMPRODUCTSHIPMENT.setPsmStatus(O_TKECTORDERITEM.getOiTkecmosId().getOsId());
+				O_Session.save(O_TKECMPRODUCTSHIPMENT);
+				}
 			}
 
 			for (Product O_Product : RO_Order.getLO_PRODUCT()) {
@@ -242,6 +280,9 @@ public class OrderDaoImpl implements OrderDao {
 
 				String orderItemAgId = "FROM TKECTORDERSTATUSHISTORY WHERE oshTkectAgId.oiAgId =:orderItemAgId";
 
+				String getProductShipmentId = "FROM TKECMPRODUCTSHIPMENT ORDER BY psmId DESC";
+
+				
 				Query orderItemIdQuery = O_Session.createQuery(orderItemId);
 
 				orderItemIdQuery.setParameter("orderId", O_TKECMORDER.getOId());
@@ -265,11 +306,42 @@ public class OrderDaoImpl implements OrderDao {
 						O_TKECTORDERSTATUSHISTORY.setOshTkecmosId(O_Session.get(TKECMORDERSTATUS.class, "TKECMOS0002"));
 						O_Session.update(O_TKECTORDERSTATUSHISTORY);
 					}
-				}
+					
+					Query getProductShipmentIdQuery = O_Session.createQuery(getProductShipmentId);
+					getProductShipmentIdQuery.setMaxResults(1);
+					TKECMPRODUCTSHIPMENT O_TKECMPRODUCTSHIPMENT1 = (TKECMPRODUCTSHIPMENT) getProductShipmentIdQuery
+							.uniqueResult();
+
+					TKECMPRODUCTSHIPMENT O_TKECMPRODUCTSHIPMENT = new TKECMPRODUCTSHIPMENT();
+
+					if (O_TKECMPRODUCTSHIPMENT1 == null) {
+
+						O_TKECMPRODUCTSHIPMENT.setPsmId("TKECPSM00001");
+					} else {
+
+						String shipmentId = O_TKECMPRODUCTSHIPMENT1.getPsmId();
+						Integer Ag = Integer.valueOf(shipmentId.substring(7));
+						Ag++;
+
+						// System.err.println(Ag);
+						O_TKECMPRODUCTSHIPMENT.setPsmId("TKECPSM" + String.format("%05d", Ag));
+					}
+
+					O_TKECMPRODUCTSHIPMENT.setPsmTkectoiAgId(O_TKECTORDERITEM);
+					O_TKECMPRODUCTSHIPMENT.setPsmTkecmsId(O_Session.get(TKECMSTORE.class, RO_Order.getOTkecmsId()));
+					O_TKECMPRODUCTSHIPMENT.setPsmWeight(O_TKECTORDERITEM.getOiWeight());
+					O_TKECMPRODUCTSHIPMENT.setPsmQuantity(O_TKECTORDERITEM.getOiQuantity());
+					O_TKECMPRODUCTSHIPMENT.setPsmBillingAddress(RO_Order.getBillingAddress());
+					O_TKECMPRODUCTSHIPMENT.setPsmShippingAddress(RO_Order.getShippingAddress());
+					O_TKECMPRODUCTSHIPMENT.setPsmCreatedDate(OffsetDateTime.now());
+					O_TKECMPRODUCTSHIPMENT.setPsmStatus(O_TKECTORDERITEM.getOiTkecmosId().getOsId());
+					O_Session.save(O_TKECMPRODUCTSHIPMENT);
+					}
+				
 				O_Transaction.commit();
 				O_Session.close();
 
-			} else {
+			}else {
 				O_Transaction.commit();
 				O_Session.close();
 

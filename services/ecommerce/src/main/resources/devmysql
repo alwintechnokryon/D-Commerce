@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Jan 11, 2020 at 12:54 PM
+-- Generation Time: Jan 12, 2020 at 01:32 PM
 -- Server version: 5.7.23
 -- PHP Version: 5.6.38
 
@@ -500,7 +500,13 @@ INSERT INTO `TKECM_ORDER` (`TKECMO_ID`, `TKECMO_TKECMU_ID`, `TKECMO_TKECMS_ID`, 
 ('TKECO00043', 'TKECU0035', NULL, NULL, 2500, 500, 2000, 40, 40, 200, 'INR', NULL, NULL, NULL, 'Y', 'sasimsk6@gmail.com', 'TKECMPPT0002', 'TKECMOS0002', 'IOB99898', NULL, 'TKECU0035', '2019-12-26 11:13:08', NULL),
 ('TKECO00044', 'TKECU0035', NULL, NULL, 2500, 500, 2000, 40, 40, 200, 'INR', NULL, NULL, NULL, 'Y', 'sasimsk6@gmail.com', 'TKECMPPT0002', 'TKECMOS0002', 'IOB9999', NULL, 'TKECU0035', '2019-12-26 11:13:08', NULL),
 ('TKECO00045', 'TKECU0037', NULL, NULL, 2500, 500, 2000, 40, 40, 200, 'INR', NULL, NULL, NULL, 'Y', 'sasimsk6@gmail.com', 'TKECMPPT0002', 'TKECMOS0001', NULL, NULL, 'TKECU0037', '2019-12-26 11:13:08', NULL),
-('TKECO00046', 'TKECU0037', NULL, NULL, 2500, 500, 2000, 40, 40, 200, 'INR', NULL, NULL, NULL, 'Y', 'sasimsk6@gmail.com', 'TKECMPPT0001', 'TKECMOS0002', NULL, NULL, 'TKECU0037', '2019-12-26 11:13:08', NULL);
+('TKECO00046', 'TKECU0037', NULL, NULL, 2500, 500, 2000, 40, 40, 200, 'INR', NULL, NULL, NULL, 'Y', 'sasimsk6@gmail.com', 'TKECMPPT0001', 'TKECMOS0002', NULL, NULL, 'TKECU0037', '2019-12-26 11:13:08', NULL),
+('TKECO00047', 'TKECU0037', NULL, NULL, 2500, 500, 2000, 40, 40, 200, 'INR', NULL, NULL, NULL, 'Y', 'sasimsk6@gmail.com', 'TKECMPPT0002', 'TKECMOS0001', NULL, NULL, 'TKECU0037', '2019-12-26 11:13:08', NULL),
+('TKECO00048', 'TKECU0037', NULL, NULL, 2500, 500, 2000, 40, 40, 200, 'INR', NULL, NULL, NULL, 'Y', 'sasimsk6@gmail.com', 'TKECMPPT0002', 'TKECMOS0001', NULL, NULL, 'TKECU0037', '2019-12-26 11:13:08', NULL),
+('TKECO00049', 'TKECU0037', 'Store', NULL, 2500, 500, 2000, 40, 40, 200, 'INR', NULL, NULL, NULL, 'Y', 'sasimsk6@gmail.com', 'TKECMPPT0002', 'TKECMOS0001', NULL, NULL, 'TKECU0037', '2019-12-26 11:13:08', NULL),
+('TKECO00050', 'TKECU0037', 'Store', NULL, 2500, 500, 2000, 40, 40, 200, 'INR', NULL, NULL, NULL, 'Y', 'sasimsk6@gmail.com', 'TKECMPPT0002', 'TKECMOS0001', NULL, NULL, 'TKECU0037', '2019-12-26 11:13:08', NULL),
+('TKECO00051', 'TKECU0037', 'Store', NULL, 2500, 500, 2000, 40, 40, 200, 'INR', NULL, NULL, NULL, 'Y', 'sasimsk6@gmail.com', 'TKECMPPT0001', 'TKECMOS0002', NULL, NULL, 'TKECU0037', '2019-12-26 11:13:08', NULL),
+('TKECO00052', 'TKECU0037', 'Store', NULL, 2500, 500, 2000, 40, 40, 200, 'INR', NULL, NULL, NULL, 'Y', 'sasimsk6@gmail.com', 'TKECMPPT0002', 'TKECMOS0002', 'IOBDD', NULL, 'TKECU0037', '2019-12-26 11:13:08', NULL);
 
 -- --------------------------------------------------------
 
@@ -566,8 +572,8 @@ INSERT INTO `TKECM_PRODUCT` (`TKECMP_ID`, `TKECMP_SKU`, `TKECMP_NAME`, `TKECMP_T
 ('2', 'LED123', 'LED', 'TKECC0018', NULL, 230, 'LED', 'A light-emitting diode (LED) is a semiconductor light source that emits light when current flows through it. Electrons in the semiconductor recombine with electron holes, releasing energy in the form of photons.', 'India', NULL, NULL, NULL, NULL, 'Y', 'TKECMPT0001', 45000, 'Y'),
 ('3', 'WedSet56', 'Wedding Set', 'TKECC0023', NULL, 3, 'Wedding Set', 'A wedding set includes the engagement ring, matching band for her and a band for him. A bridal set consists of an engagement ring and matching band for the bride, leaving the groom on his own for his band.', 'India', NULL, NULL, NULL, NULL, 'Y', 'TKECMPT0001', 6000, 'Y'),
 ('4', 'ShirtRed001', 'Shirt Red', 'TKECC0020', NULL, 5, 'Shirt Red', 'Casual Shirts for Men - Buy new arrivals & latest Casual Shirt for Men from Mufti, Tommy Hilfiger, Roadster, UCB & more.', 'India', NULL, NULL, NULL, NULL, 'Y', 'TKECMPT0002', 850, 'N'),
-('5', 'ShirtPink002', 'Shirt Pink', 'TKECC0020', NULL, 238, 'Shirt Pink', 'Casual Shirts for Men - Buy new arrivals & latest Casual Shirt for Men from Mufti, Tommy Hilfiger, Roadster, UCB & more.', 'India', NULL, NULL, NULL, NULL, 'Y', 'TKECMPT0002', 875, 'Y'),
-('6', 'Ebook003', 'Ebook', 'TKECC0029', NULL, 240, 'Ebooks', 'An electronic book, also known as an e-book or eBook, is a book publication made available in digital form, consisting of text, images, or both, readable ', 'India', NULL, NULL, NULL, NULL, 'Y', 'TKECMPT0003', 450, 'Y'),
+('5', 'ShirtPink002', 'Shirt Pink', 'TKECC0020', NULL, 76, 'Shirt Pink', 'Casual Shirts for Men - Buy new arrivals & latest Casual Shirt for Men from Mufti, Tommy Hilfiger, Roadster, UCB & more.', 'India', NULL, NULL, NULL, NULL, 'Y', 'TKECMPT0002', 875, 'Y'),
+('6', 'Ebook003', 'Ebook', 'TKECC0029', NULL, 180, 'Ebooks', 'An electronic book, also known as an e-book or eBook, is a book publication made available in digital form, consisting of text, images, or both, readable ', 'India', NULL, NULL, NULL, NULL, 'Y', 'TKECMPT0003', 450, 'Y'),
 ('7', 'Books004', 'Books', 'TKECC0030', NULL, 2, 'Books', 'Books Advanced Search New Releases & Pre-orders Best Sellers Browse Genres Children\'s & Young Adult Textbooks Exam Central All Indian Languages', 'India', NULL, NULL, NULL, NULL, 'Y', 'TKECMPT0003', 250, 'Y'),
 ('8', 'ShirtOrange003', 'Shirt Orange', 'TKECC0020', NULL, 3, 'Shirt Orange', 'Casual Shirts for Men - Buy new arrivals & latest Casual Shirt for Men from Mufti, Tommy Hilfiger, Roadster, UCB & more.', 'India', NULL, NULL, NULL, NULL, 'Y', 'TKECMPT0002', 325, 'N'),
 ('redmi-2-pro', 'RED2PRO', 'Redmi 2 pro', 'TKECC0016', 50, 50, 'Redmi 3 Pro', 'The former is slightly faster and more efficient. The Pro model also offers more RAM and internal storage than the regular model, as well as stronger camera hardware. The Xiaomi Redmi Note 7 Pro has a 48MP + 5MP rear camera setup like the Redmi Note 7.', 'IND', '2020-01-07 12:03:32', 'TKECU0033', NULL, NULL, 'N', 'TKECMPT0001', 15999, 'Y'),
@@ -626,6 +632,44 @@ CREATE TABLE IF NOT EXISTS `TKECM_PRODUCT_PAYMENT_TYPE` (
 INSERT INTO `TKECM_PRODUCT_PAYMENT_TYPE` (`TKECMPPT_ID`, `TKECMPPT_TYPE`) VALUES
 ('TKECMPPT0001', 'Cash On Delivery'),
 ('TKECMPPT0002', 'Online Banking');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `TKECM_PRODUCT_SHIPMENT`
+--
+
+DROP TABLE IF EXISTS `TKECM_PRODUCT_SHIPMENT`;
+CREATE TABLE IF NOT EXISTS `TKECM_PRODUCT_SHIPMENT` (
+  `TKECMPSM_ID` varchar(20) COLLATE utf8_unicode_ci NOT NULL,
+  `TKECMPSM_TKECTOI_AG_ID` int(11) DEFAULT NULL,
+  `TKECMPSM_TKECMS_ID` varchar(20) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `TKECMPSM_WEIGHT` float DEFAULT NULL,
+  `TKECMPSM_QUANTITY` int(11) DEFAULT NULL,
+  `TKECMPSM_SHIPPING_ADDRESS` int(11) DEFAULT NULL,
+  `TKECMPSM_BILLING_ADDRESS` int(11) DEFAULT NULL,
+  `TKECMPSM_CREATED_DATE` datetime DEFAULT NULL,
+  `TKECMPSM_MODIFIED_DATE` datetime DEFAULT NULL,
+  `TKECMPSM_STATUS` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL,
+  PRIMARY KEY (`TKECMPSM_ID`),
+  KEY `FK_TKECMPSM_TKECTOI_AG_ID` (`TKECMPSM_TKECTOI_AG_ID`),
+  KEY `FK_TKECMPSM_TKECMS_ID` (`TKECMPSM_TKECMS_ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Dumping data for table `TKECM_PRODUCT_SHIPMENT`
+--
+
+INSERT INTO `TKECM_PRODUCT_SHIPMENT` (`TKECMPSM_ID`, `TKECMPSM_TKECTOI_AG_ID`, `TKECMPSM_TKECMS_ID`, `TKECMPSM_WEIGHT`, `TKECMPSM_QUANTITY`, `TKECMPSM_SHIPPING_ADDRESS`, `TKECMPSM_BILLING_ADDRESS`, `TKECMPSM_CREATED_DATE`, `TKECMPSM_MODIFIED_DATE`, `TKECMPSM_STATUS`) VALUES
+('TKECPSM00001', 107, NULL, NULL, 27, 22, 21, '2020-01-12 17:52:09', NULL, 'TKECMOS0001'),
+('TKECPSM00002', 113, NULL, NULL, 27, 22, 21, '2020-01-12 18:25:42', NULL, 'TKECMOS0001'),
+('TKECPSM00003', 114, NULL, NULL, 10, 22, 21, '2020-01-12 18:25:42', NULL, 'TKECMOS0001'),
+('TKECPSM00004', 115, 'Store', NULL, 27, 22, 21, '2020-01-12 18:36:23', NULL, 'TKECMOS0001'),
+('TKECPSM00005', 116, 'Store', NULL, 10, 22, 21, '2020-01-12 18:36:23', NULL, 'TKECMOS0001'),
+('TKECPSM00006', 119, 'Store', NULL, 27, 22, 21, '2020-01-12 18:46:18', NULL, 'TKECMOS0002'),
+('TKECPSM00007', 120, 'Store', NULL, 10, 22, 21, '2020-01-12 18:46:18', NULL, 'TKECMOS0002'),
+('TKECPSM00008', 121, NULL, NULL, 27, 0, 0, '2020-01-12 18:55:39', NULL, 'TKECMOS0002'),
+('TKECPSM00009', 122, NULL, NULL, 10, 0, 0, '2020-01-12 18:55:40', NULL, 'TKECMOS0002');
 
 -- --------------------------------------------------------
 
@@ -715,7 +759,7 @@ CREATE TABLE IF NOT EXISTS `TKECM_STORE` (
 --
 
 INSERT INTO `TKECM_STORE` (`TKECMS_ID`, `TKECMS_NAME`, `TKECMS_ACTIVE_YN`) VALUES
-('1', 'Store 1', 'Y');
+('Store', 'Store 1', 'Y');
 
 -- --------------------------------------------------------
 
@@ -868,7 +912,7 @@ CREATE TABLE IF NOT EXISTS `TKECT_ORDER_ADDRESS` (
   PRIMARY KEY (`TKECTOA_AG_ID`),
   KEY `FK_TKECTOA_TKECMO_ID` (`TKECTOA_TKECMO_ID`) USING BTREE,
   KEY `FK_TKECTOA_TKECTS_AG_ID` (`TKECTOA_TKECTS_AG_ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=56 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=90 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Dumping data for table `TKECT_ORDER_ADDRESS`
@@ -921,7 +965,19 @@ INSERT INTO `TKECT_ORDER_ADDRESS` (`TKECTOA_AG_ID`, `TKECTOA_TKECMO_ID`, `TKECTO
 (46, 'TKECO00044', 'SasiMsk', 'sasimsk6@gmail.com', 9710401369, 0, 'No:05 ADV nagar', 'Chennai', 4005, '600051', NULL, 'BILL', 'Home', NULL, NULL),
 (49, 'TKECO00045', 'Sasi', 'sasimsk6@gmail.com', 9876543234, 8765432987, 'No: 10 adv nagar', 'Chennai', 4005, '600051', NULL, 'BILL', 'Home', NULL, NULL),
 (52, 'TKECO00046', 'Sasi', 'sasimsk6@gmail.com', 9876543234, 8765432987, 'No: 10 adv nagar', 'Chennai', 4005, '600051', NULL, 'BILL', 'Home', NULL, NULL),
-(53, 'TKECO00046', 'Sasi', 'sasimsk6@gmail.com', 9876543234, 8765432987, 'No: 5 adv nagar', 'Chennai', 4005, '600051', NULL, 'SHIP', 'Work', NULL, NULL);
+(53, 'TKECO00046', 'Sasi', 'sasimsk6@gmail.com', 9876543234, 8765432987, 'No: 5 adv nagar', 'Chennai', 4005, '600051', NULL, 'SHIP', 'Work', NULL, NULL),
+(70, 'TKECO00047', 'Sasi', 'sasimsk6@gmail.com', 9876543234, 8765432987, 'No: 10 adv nagar', 'Chennai', 4005, '600051', NULL, 'BILL', 'Home', NULL, NULL),
+(71, 'TKECO00047', 'Sasi', 'sasimsk6@gmail.com', 9876543234, 8765432987, 'No: 5 adv nagar', 'Chennai', 4005, '600051', NULL, 'SHIP', 'Work', NULL, NULL),
+(80, 'TKECO00048', 'Sasi', 'sasimsk6@gmail.com', 9876543234, 8765432987, 'No: 10 adv nagar', 'Chennai', 4005, '600051', NULL, 'BILL', 'Home', NULL, NULL),
+(81, 'TKECO00048', 'Sasi', 'sasimsk6@gmail.com', 9876543234, 8765432987, 'No: 5 adv nagar', 'Chennai', 4005, '600051', NULL, 'SHIP', 'Work', NULL, NULL),
+(82, 'TKECO00049', 'Sasi', 'sasimsk6@gmail.com', 9876543234, 8765432987, 'No: 10 adv nagar', 'Chennai', 4005, '600051', NULL, 'BILL', 'Home', NULL, NULL),
+(83, 'TKECO00049', 'Sasi', 'sasimsk6@gmail.com', 9876543234, 8765432987, 'No: 5 adv nagar', 'Chennai', 4005, '600051', NULL, 'SHIP', 'Work', NULL, NULL),
+(84, 'TKECO00050', 'Sasi', 'sasimsk6@gmail.com', 9876543234, 8765432987, 'No: 10 adv nagar', 'Chennai', 4005, '600051', NULL, 'BILL', 'Home', NULL, NULL),
+(85, 'TKECO00050', 'Sasi', 'sasimsk6@gmail.com', 9876543234, 8765432987, 'No: 5 adv nagar', 'Chennai', 4005, '600051', NULL, 'SHIP', 'Work', NULL, NULL),
+(86, 'TKECO00051', 'Sasi', 'sasimsk6@gmail.com', 9876543234, 8765432987, 'No: 10 adv nagar', 'Chennai', 4005, '600051', NULL, 'BILL', 'Home', NULL, NULL),
+(87, 'TKECO00051', 'Sasi', 'sasimsk6@gmail.com', 9876543234, 8765432987, 'No: 5 adv nagar', 'Chennai', 4005, '600051', NULL, 'SHIP', 'Work', NULL, NULL),
+(88, 'TKECO00052', 'Sasi', 'sasimsk6@gmail.com', 9876543234, 8765432987, 'No: 10 adv nagar', 'Chennai', 4005, '600051', NULL, 'BILL', 'Home', NULL, NULL),
+(89, 'TKECO00052', 'Sasi', 'sasimsk6@gmail.com', 9876543234, 8765432987, 'No: 5 adv nagar', 'Chennai', 4005, '600051', NULL, 'SHIP', 'Work', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -948,7 +1004,7 @@ CREATE TABLE IF NOT EXISTS `TKECT_ORDER_ITEM` (
   KEY `FK_TKECTOI_TKECMO_ID` (`TKECTOI_TKECMO_ID`) USING BTREE,
   KEY `FK_TKECTOI_TKECMOS_ID` (`TKECTOI_TKECMOS_ID`),
   KEY `FK_TKECTOI_TKECMS_ID` (`TKECTOI_TKECMS_ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=101 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=123 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Dumping data for table `TKECT_ORDER_ITEM`
@@ -1045,7 +1101,19 @@ INSERT INTO `TKECT_ORDER_ITEM` (`TKECTOI_AG_ID`, `TKECTOI_TKECMO_ID`, `TKECTOI_T
 (93, 'TKECO00045', '5', NULL, 'ShirtPink002', 'Shirt Pink', NULL, 875, 27, NULL, NULL, 'TKECMOS0001'),
 (94, 'TKECO00045', '6', NULL, 'Ebook003', 'Ebook', NULL, 450, 10, NULL, NULL, 'TKECMOS0001'),
 (97, 'TKECO00046', '5', NULL, 'ShirtPink002', 'Shirt Pink', NULL, 875, 27, NULL, NULL, 'TKECMOS0002'),
-(98, 'TKECO00046', '6', NULL, 'Ebook003', 'Ebook', NULL, 450, 10, NULL, NULL, 'TKECMOS0002');
+(98, 'TKECO00046', '6', NULL, 'Ebook003', 'Ebook', NULL, 450, 10, NULL, NULL, 'TKECMOS0002'),
+(107, 'TKECO00047', '5', NULL, 'ShirtPink002', 'Shirt Pink', NULL, 875, 27, NULL, NULL, 'TKECMOS0001'),
+(108, 'TKECO00047', '6', NULL, 'Ebook003', 'Ebook', NULL, 450, 10, NULL, NULL, 'TKECMOS0001'),
+(113, 'TKECO00048', '5', NULL, 'ShirtPink002', 'Shirt Pink', NULL, 875, 27, NULL, NULL, 'TKECMOS0001'),
+(114, 'TKECO00048', '6', NULL, 'Ebook003', 'Ebook', NULL, 450, 10, NULL, NULL, 'TKECMOS0001'),
+(115, 'TKECO00049', '5', 'Store', 'ShirtPink002', 'Shirt Pink', NULL, 875, 27, NULL, NULL, 'TKECMOS0001'),
+(116, 'TKECO00049', '6', 'Store', 'Ebook003', 'Ebook', NULL, 450, 10, NULL, NULL, 'TKECMOS0001'),
+(117, 'TKECO00050', '5', 'Store', 'ShirtPink002', 'Shirt Pink', NULL, 875, 27, NULL, NULL, 'TKECMOS0001'),
+(118, 'TKECO00050', '6', 'Store', 'Ebook003', 'Ebook', NULL, 450, 10, NULL, NULL, 'TKECMOS0001'),
+(119, 'TKECO00051', '5', 'Store', 'ShirtPink002', 'Shirt Pink', NULL, 875, 27, NULL, NULL, 'TKECMOS0002'),
+(120, 'TKECO00051', '6', 'Store', 'Ebook003', 'Ebook', NULL, 450, 10, NULL, NULL, 'TKECMOS0002'),
+(121, 'TKECO00052', '5', 'Store', 'ShirtPink002', 'Shirt Pink', NULL, 875, 27, NULL, NULL, 'TKECMOS0002'),
+(122, 'TKECO00052', '6', 'Store', 'Ebook003', 'Ebook', NULL, 450, 10, NULL, NULL, 'TKECMOS0002');
 
 -- --------------------------------------------------------
 
@@ -1064,7 +1132,7 @@ CREATE TABLE IF NOT EXISTS `TKECT_ORDER_STATUS_HISTORY` (
   PRIMARY KEY (`TKECTOSH_AG_ID`),
   KEY `FK_TKECTOSH_TKECTOI_AG_ID` (`TKECTOSH_TKECTOI_AG_ID`),
   KEY `FK_TKECTOSH_TKECMOS_ID` (`TKECTOSH_TKECMOS_ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=43 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Dumping data for table `TKECT_ORDER_STATUS_HISTORY`
@@ -1086,7 +1154,15 @@ INSERT INTO `TKECT_ORDER_STATUS_HISTORY` (`TKECTOSH_AG_ID`, `TKECTOSH_TKECTOI_AG
 (17, 93, 'TKECMOS0001', NULL, '2020-01-09 17:41:25', 'TKECU0037'),
 (18, 94, 'TKECMOS0001', NULL, '2020-01-09 17:41:26', 'TKECU0037'),
 (21, 97, 'TKECMOS0002', NULL, '2020-01-09 19:17:29', 'TKECU0037'),
-(22, 98, 'TKECMOS0002', NULL, '2020-01-09 19:17:29', 'TKECU0037');
+(22, 98, 'TKECMOS0002', NULL, '2020-01-09 19:17:29', 'TKECU0037'),
+(31, 107, 'TKECMOS0001', NULL, '2020-01-12 17:52:09', 'TKECU0037'),
+(32, 108, 'TKECMOS0001', NULL, '2020-01-12 17:52:09', 'TKECU0037'),
+(37, 113, 'TKECMOS0001', NULL, '2020-01-12 18:25:42', 'TKECU0037'),
+(38, 114, 'TKECMOS0001', NULL, '2020-01-12 18:25:42', 'TKECU0037'),
+(39, 115, 'TKECMOS0001', NULL, '2020-01-12 18:36:23', 'TKECU0037'),
+(40, 116, 'TKECMOS0001', NULL, '2020-01-12 18:36:23', 'TKECU0037'),
+(41, 119, 'TKECMOS0002', NULL, '2020-01-12 18:46:18', 'TKECU0037'),
+(42, 120, 'TKECMOS0002', NULL, '2020-01-12 18:46:18', 'TKECU0037');
 
 -- --------------------------------------------------------
 
@@ -6307,6 +6383,13 @@ ALTER TABLE `TKECM_PRODUCT`
 --
 ALTER TABLE `TKECM_PRODUCT_DOWNLOAD`
   ADD CONSTRAINT `FK_TKECMPD_TKECMP_ID` FOREIGN KEY (`TKECMPD_TKECMP_ID`) REFERENCES `TKECM_PRODUCT` (`TKECMP_ID`);
+
+--
+-- Constraints for table `TKECM_PRODUCT_SHIPMENT`
+--
+ALTER TABLE `TKECM_PRODUCT_SHIPMENT`
+  ADD CONSTRAINT `FK_TKECMPSM_TKECMS_ID` FOREIGN KEY (`TKECMPSM_TKECMS_ID`) REFERENCES `TKECM_STORE` (`TKECMS_ID`),
+  ADD CONSTRAINT `FK_TKECMPSM_TKECTOI_AG_ID` FOREIGN KEY (`TKECMPSM_TKECTOI_AG_ID`) REFERENCES `TKECT_ORDER_ITEM` (`TKECTOI_AG_ID`);
 
 --
 -- Constraints for table `TKECT_CONFIGURABLE_LINK`

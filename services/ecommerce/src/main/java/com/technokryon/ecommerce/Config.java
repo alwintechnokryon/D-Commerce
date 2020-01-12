@@ -25,6 +25,7 @@ import com.technokryon.ecommerce.model.TKECMORDERSTATUS;
 import com.technokryon.ecommerce.model.TKECMPRODUCT;
 import com.technokryon.ecommerce.model.TKECMPRODUCTDOWNLOAD;
 import com.technokryon.ecommerce.model.TKECMPRODUCTPAYMENTTYPE;
+import com.technokryon.ecommerce.model.TKECMPRODUCTSHIPMENT;
 import com.technokryon.ecommerce.model.TKECMPRODUCTTYPE;
 import com.technokryon.ecommerce.model.TKECMROLE;
 import com.technokryon.ecommerce.model.TKECMSTORE;
@@ -83,7 +84,7 @@ public class Config {
 				TKECTORDERADDRESS.class, TKECMORDER.class, TKECTORDERITEM.class, TKECMORDERSTATUS.class,
 				TKECTORDERSTATUSHISTORY.class, TKECMCOUNTRY.class, TKECMPRODUCTPAYMENTTYPE.class, TKECTSTATE.class,
 				TKECTPRODUCTCART.class, TKECMROLE.class, TKECTUSERAPPLYROLE.class, TKECTPRODUCTSTORE.class,
-				TKECMSTORE.class);
+				TKECMSTORE.class, TKECMPRODUCTSHIPMENT.class);
 
 		return factoryBean;
 	}
