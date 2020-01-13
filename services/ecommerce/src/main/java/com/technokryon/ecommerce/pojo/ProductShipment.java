@@ -15,8 +15,6 @@ public class ProductShipment {
 	String psmTkecmsId;
 	Float psmWeight;
 	Integer psmQuantity;
-	Integer psmShippingAddress;
-	Integer psmBillingAddress;
 	OffsetDateTime psmCreatedDate;
 	OffsetDateTime psmModifiedDate;
 	String psmStatus;

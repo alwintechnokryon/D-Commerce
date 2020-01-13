@@ -79,6 +79,10 @@ public class OrderDaoImpl implements OrderDao {
 
 			TKECMORDER O_TKECMORDER = new TKECMORDER();
 
+			TKECTORDERADDRESS O_TKECTORDERADDRESS_BILL = new TKECTORDERADDRESS();
+
+			TKECTORDERADDRESS O_TKECTORDERADDRESS_SHIP = new TKECTORDERADDRESS();
+
 			if (O_TKECMORDER1 == null) {
 
 				O_TKECMORDER.setOId("TKECO00001");
@@ -117,8 +121,6 @@ public class OrderDaoImpl implements OrderDao {
 			TKECTUSERADDRESS O_TKECTUSERADDRESS_BILL = O_Session.get(TKECTUSERADDRESS.class,
 					RO_Order.getBillingAddress());
 
-			TKECTORDERADDRESS O_TKECTORDERADDRESS_BILL = new TKECTORDERADDRESS();
-
 			O_TKECTORDERADDRESS_BILL.setOaTkecmoId(O_Session.get(TKECMORDER.class, O_TKECMORDER.getOId()));
 			O_TKECTORDERADDRESS_BILL.setOaName(O_TKECTUSERADDRESS_BILL.getUadName());
 			O_TKECTORDERADDRESS_BILL.setOaEmailId(RO_Order.getOEmailId());
@@ -137,8 +139,6 @@ public class OrderDaoImpl implements OrderDao {
 
 				TKECTUSERADDRESS O_TKECTUSERADDRESS_SHIP = O_Session.get(TKECTUSERADDRESS.class,
 						RO_Order.getShippingAddress());
-
-				TKECTORDERADDRESS O_TKECTORDERADDRESS_SHIP = new TKECTORDERADDRESS();
 
 				O_TKECTORDERADDRESS_SHIP.setOaTkecmoId(O_Session.get(TKECMORDER.class, O_TKECMORDER.getOId()));
 				O_TKECTORDERADDRESS_SHIP.setOaName(O_TKECTUSERADDRESS_SHIP.getUadName());
@@ -173,45 +173,43 @@ public class OrderDaoImpl implements OrderDao {
 				O_TKECTORDERITEM.setOiTkecmsId(O_Session.get(TKECMSTORE.class, RO_Order.getOTkecmsId()));
 				O_Session.save(O_TKECTORDERITEM);
 
-				if(RO_Order.getOTkecmpptId().trim().equals("TKECMPPT0001")) {
-				TKECTORDERSTATUSHISTORY O_TKECTORDERSTATUSHISTORY = new TKECTORDERSTATUSHISTORY();
+				if (RO_Order.getOTkecmpptId().trim().equals("TKECMPPT0001")) {
+					TKECTORDERSTATUSHISTORY O_TKECTORDERSTATUSHISTORY = new TKECTORDERSTATUSHISTORY();
 
-				O_TKECTORDERSTATUSHISTORY.setOshTkectAgId(O_TKECTORDERITEM);
-				O_TKECTORDERSTATUSHISTORY
-						.setOshTkecmosId(O_Session.get(TKECMORDERSTATUS.class, O_TKECMORDER.getOTkecmosId().getOsId()));
-				O_TKECTORDERSTATUSHISTORY.setOshCreatedDate(OffsetDateTime.now());
-				O_TKECTORDERSTATUSHISTORY.setOshCreatedUserId(RO_Order.getOTkecmuId());
-				O_Session.save(O_TKECTORDERSTATUSHISTORY);
+					O_TKECTORDERSTATUSHISTORY.setOshTkectAgId(O_TKECTORDERITEM);
+					O_TKECTORDERSTATUSHISTORY.setOshTkecmosId(
+							O_Session.get(TKECMORDERSTATUS.class, O_TKECMORDER.getOTkecmosId().getOsId()));
+					O_TKECTORDERSTATUSHISTORY.setOshCreatedDate(OffsetDateTime.now());
+					O_TKECTORDERSTATUSHISTORY.setOshCreatedUserId(RO_Order.getOTkecmuId());
+					O_Session.save(O_TKECTORDERSTATUSHISTORY);
 
-				Query getProductShipmentIdQuery = O_Session.createQuery(getProductShipmentId);
-				getProductShipmentIdQuery.setMaxResults(1);
-				TKECMPRODUCTSHIPMENT O_TKECMPRODUCTSHIPMENT1 = (TKECMPRODUCTSHIPMENT) getProductShipmentIdQuery
-						.uniqueResult();
+					Query getProductShipmentIdQuery = O_Session.createQuery(getProductShipmentId);
+					getProductShipmentIdQuery.setMaxResults(1);
+					TKECMPRODUCTSHIPMENT O_TKECMPRODUCTSHIPMENT1 = (TKECMPRODUCTSHIPMENT) getProductShipmentIdQuery
+							.uniqueResult();
 
-				TKECMPRODUCTSHIPMENT O_TKECMPRODUCTSHIPMENT = new TKECMPRODUCTSHIPMENT();
+					TKECMPRODUCTSHIPMENT O_TKECMPRODUCTSHIPMENT = new TKECMPRODUCTSHIPMENT();
 
-				if (O_TKECMPRODUCTSHIPMENT1 == null) {
+					if (O_TKECMPRODUCTSHIPMENT1 == null) {
 
-					O_TKECMPRODUCTSHIPMENT.setPsmId("TKECPSM00001");
-				} else {
+						O_TKECMPRODUCTSHIPMENT.setPsmId("TKECPSM00001");
+					} else {
 
-					String shipmentId = O_TKECMPRODUCTSHIPMENT1.getPsmId();
-					Integer Ag = Integer.valueOf(shipmentId.substring(7));
-					Ag++;
+						String shipmentId = O_TKECMPRODUCTSHIPMENT1.getPsmId();
+						Integer Ag = Integer.valueOf(shipmentId.substring(7));
+						Ag++;
 
-					// System.err.println(Ag);
-					O_TKECMPRODUCTSHIPMENT.setPsmId("TKECPSM" + String.format("%05d", Ag));
-				}
+						// System.err.println(Ag);
+						O_TKECMPRODUCTSHIPMENT.setPsmId("TKECPSM" + String.format("%05d", Ag));
+					}
 
-				O_TKECMPRODUCTSHIPMENT.setPsmTkectoiAgId(O_TKECTORDERITEM);
-				O_TKECMPRODUCTSHIPMENT.setPsmTkecmsId(O_Session.get(TKECMSTORE.class, RO_Order.getOTkecmsId()));
-				O_TKECMPRODUCTSHIPMENT.setPsmWeight(O_TKECTORDERITEM.getOiWeight());
-				O_TKECMPRODUCTSHIPMENT.setPsmQuantity(O_TKECTORDERITEM.getOiQuantity());
-				O_TKECMPRODUCTSHIPMENT.setPsmBillingAddress(RO_Order.getBillingAddress());
-				O_TKECMPRODUCTSHIPMENT.setPsmShippingAddress(RO_Order.getShippingAddress());
-				O_TKECMPRODUCTSHIPMENT.setPsmCreatedDate(OffsetDateTime.now());
-				O_TKECMPRODUCTSHIPMENT.setPsmStatus(O_TKECTORDERITEM.getOiTkecmosId().getOsId());
-				O_Session.save(O_TKECMPRODUCTSHIPMENT);
+					O_TKECMPRODUCTSHIPMENT.setPsmTkectoiAgId(O_TKECTORDERITEM);
+					O_TKECMPRODUCTSHIPMENT.setPsmTkecmsId(O_Session.get(TKECMSTORE.class, RO_Order.getOTkecmsId()));
+					O_TKECMPRODUCTSHIPMENT.setPsmWeight(O_TKECTORDERITEM.getOiWeight());
+					O_TKECMPRODUCTSHIPMENT.setPsmQuantity(O_TKECTORDERITEM.getOiQuantity());
+					O_TKECMPRODUCTSHIPMENT.setPsmCreatedDate(OffsetDateTime.now());
+					O_TKECMPRODUCTSHIPMENT.setPsmStatus(O_TKECTORDERITEM.getOiTkecmosId().getOsId());
+					O_Session.save(O_TKECMPRODUCTSHIPMENT);
 				}
 			}
 
@@ -282,7 +280,6 @@ public class OrderDaoImpl implements OrderDao {
 
 				String getProductShipmentId = "FROM TKECMPRODUCTSHIPMENT ORDER BY psmId DESC";
 
-				
 				Query orderItemIdQuery = O_Session.createQuery(orderItemId);
 
 				orderItemIdQuery.setParameter("orderId", O_TKECMORDER.getOId());
@@ -306,7 +303,7 @@ public class OrderDaoImpl implements OrderDao {
 						O_TKECTORDERSTATUSHISTORY.setOshTkecmosId(O_Session.get(TKECMORDERSTATUS.class, "TKECMOS0002"));
 						O_Session.update(O_TKECTORDERSTATUSHISTORY);
 					}
-					
+
 					Query getProductShipmentIdQuery = O_Session.createQuery(getProductShipmentId);
 					getProductShipmentIdQuery.setMaxResults(1);
 					TKECMPRODUCTSHIPMENT O_TKECMPRODUCTSHIPMENT1 = (TKECMPRODUCTSHIPMENT) getProductShipmentIdQuery
@@ -328,20 +325,19 @@ public class OrderDaoImpl implements OrderDao {
 					}
 
 					O_TKECMPRODUCTSHIPMENT.setPsmTkectoiAgId(O_TKECTORDERITEM);
-					O_TKECMPRODUCTSHIPMENT.setPsmTkecmsId(O_Session.get(TKECMSTORE.class, RO_Order.getOTkecmsId()));
+					O_TKECMPRODUCTSHIPMENT
+							.setPsmTkecmsId(O_Session.get(TKECMSTORE.class, O_TKECTORDERITEM.getOiTkecmsId().getSId()));
 					O_TKECMPRODUCTSHIPMENT.setPsmWeight(O_TKECTORDERITEM.getOiWeight());
 					O_TKECMPRODUCTSHIPMENT.setPsmQuantity(O_TKECTORDERITEM.getOiQuantity());
-					O_TKECMPRODUCTSHIPMENT.setPsmBillingAddress(RO_Order.getBillingAddress());
-					O_TKECMPRODUCTSHIPMENT.setPsmShippingAddress(RO_Order.getShippingAddress());
 					O_TKECMPRODUCTSHIPMENT.setPsmCreatedDate(OffsetDateTime.now());
 					O_TKECMPRODUCTSHIPMENT.setPsmStatus(O_TKECTORDERITEM.getOiTkecmosId().getOsId());
 					O_Session.save(O_TKECMPRODUCTSHIPMENT);
-					}
-				
+				}
+
 				O_Transaction.commit();
 				O_Session.close();
 
-			}else {
+			} else {
 				O_Transaction.commit();
 				O_Session.close();
 

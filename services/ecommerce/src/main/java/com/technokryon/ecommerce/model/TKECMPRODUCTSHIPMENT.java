@@ -39,12 +39,6 @@ public class TKECMPRODUCTSHIPMENT {
 	@Column(name = "TKECMPSM_QUANTITY")
 	private Integer psmQuantity;
 
-	@Column(name = "TKECMPSM_SHIPPING_ADDRESS")
-	private Integer psmShippingAddress;
-
-	@Column(name = "TKECMPSM_BILLING_ADDRESS")
-	private Integer psmBillingAddress;
-
 	@Column(name = "TKECMPSM_CREATED_DATE")
 	private OffsetDateTime psmCreatedDate;
 
