@@ -15,6 +15,8 @@ import org.springframework.core.env.Environment;
 import org.springframework.orm.hibernate5.HibernateTransactionManager;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import com.technokryon.ecommerce.admin.model.TKECMATTRIBUTE;
 import com.technokryon.ecommerce.admin.model.TKECMCATEGORY;
@@ -35,10 +37,13 @@ import com.technokryon.ecommerce.admin.model.TKECTUSERSESSION;
 @PropertySource("classpath:db.properties")
 @PropertySource("classpath:mail.properties")
 @EnableTransactionManagement
-public class Config {
+public class Config implements WebMvcConfigurer {
 
 	@Autowired
 	private Environment env;
+
+	@Autowired
+	private Interceptor O_Interceptor;
 
 	@Bean
 	public DataSource getECommerceDataSource() {
@@ -85,4 +90,11 @@ public class Config {
 		return O_ModelMapper;
 	}
 
+	@Override
+	public void addInterceptors(InterceptorRegistry registry) {
+
+		registry.addInterceptor(O_Interceptor).addPathPatterns("/api/v1/admin/auth/**", "/api/v1/admin/change/password",
+				"/api/v1/admin/logout");
+
+	}
 }

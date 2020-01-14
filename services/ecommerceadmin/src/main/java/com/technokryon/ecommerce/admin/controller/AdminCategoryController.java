@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.technokryon.ecommerce.admin.pojo.Category;
@@ -18,14 +19,15 @@ import com.technokryon.ecommerce.admin.service.AdminCategoryService;
 
 @Controller
 @CrossOrigin
-@RequestMapping("/api/v1/admin/category")
+@RequestMapping("/api/v1/admin/auth/category")
 public class AdminCategoryController {
 
 	@Autowired
 	private AdminCategoryService O_AdminCategoryService;
 
 	@PostMapping("/add")
-	private ResponseEntity<?> ADD_CATEGORY(@RequestBody Category RO_Category) {
+	private ResponseEntity<?> ADD_CATEGORY(@RequestHeader(value = "X-Auth-Token") String apiKey,
+			@RequestBody Category RO_Category) {
 
 		Response O_Response = new Response();
 
@@ -46,7 +48,7 @@ public class AdminCategoryController {
 	}
 
 	@GetMapping("/list")
-	private ResponseEntity<?> LIST() {
+	private ResponseEntity<?> LIST(@RequestHeader(value = "X-Auth-Token") String apiKey) {
 
 		List<Category> LO_Category = O_AdminCategoryService.categoryList();
 
@@ -55,7 +57,8 @@ public class AdminCategoryController {
 	}
 
 	@PostMapping("/list/id")
-	private ResponseEntity<?> LIST_BY_ID(@RequestBody Category RO_Category) {
+	private ResponseEntity<?> LIST_BY_ID(@RequestHeader(value = "X-Auth-Token") String apiKey,
+			@RequestBody Category RO_Category) {
 
 		List<Category> LO_Category = O_AdminCategoryService.categoryListById(RO_Category);
 
@@ -63,7 +66,8 @@ public class AdminCategoryController {
 	}
 
 	@PostMapping("/update")
-	private ResponseEntity<?> UPDATE(@RequestBody Category RO_Category) {
+	private ResponseEntity<?> UPDATE(@RequestHeader(value = "X-Auth-Token") String apiKey,
+			@RequestBody Category RO_Category) {
 
 		Response O_Response = new Response();
 

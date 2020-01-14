@@ -210,8 +210,8 @@ public class AdminLoginController {
 
 	@ResponseBody
 	@PostMapping("/change/password")
-	private ResponseEntity<?> CHANGE_PASSWORD(@RequestBody User RO_User,
-			@RequestHeader(value = "apiKey") String apiKey) {
+	private ResponseEntity<?> CHANGE_PASSWORD(@RequestHeader(value = "X-Auth-Token") String apiKey,
+			@RequestBody User RO_User) {
 
 		Response O_Response = new Response();
 

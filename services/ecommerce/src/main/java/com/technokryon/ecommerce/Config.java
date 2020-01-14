@@ -8,14 +8,18 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaAutoConfiguration;
+import org.springframework.boot.autoconfigure.web.servlet.WebMvcAutoConfiguration.WebMvcAutoConfigurationAdapter;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
 import org.springframework.orm.hibernate5.HibernateTransactionManager;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
-
+import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 import com.technokryon.ecommerce.model.TKECMATTRIBUTE;
 import com.technokryon.ecommerce.model.TKECMCATEGORY;
 import com.technokryon.ecommerce.model.TKECMCOUNTRY;
@@ -50,10 +54,18 @@ import com.technokryon.ecommerce.model.TKECTUSERSESSION;
 @PropertySource("classpath:db.properties")
 @PropertySource("classpath:mail.properties")
 @EnableTransactionManagement
-public class Config {
+@ComponentScan(basePackages = { "com.*" })
+
+public class Config implements WebMvcConfigurer
+
+
+{
 
 	@Autowired
 	private Environment env;
+
+	@Autowired
+	private Interceptor O_Interceptor;
 
 	@Bean
 	public DataSource getECommerceDataSource() {
@@ -103,5 +115,14 @@ public class Config {
 
 		return O_ModelMapper;
 	}
+
+
+//	@Override
+//	public void addInterceptors(InterceptorRegistry registry) {
+//
+//		registry.addInterceptor(O_Interceptor).addPathPatterns("/api/v1/**");
+//				
+//
+//	}
 
 }

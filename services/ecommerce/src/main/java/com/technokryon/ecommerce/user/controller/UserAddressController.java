@@ -2,6 +2,8 @@ package com.technokryon.ecommerce.user.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -31,8 +33,8 @@ public class UserAddressController {
 	private UserService O_UserService;
 
 	@PostMapping("/add")
-	private ResponseEntity<?> ADD_ADDRESS(@RequestHeader(value = "apikey") String apiKey,
-			@RequestBody UserAddress RO_UserAddress) {
+	private ResponseEntity<?> ADD_ADDRESS(@RequestHeader(value = "X-Auth-Token") String apiKey,
+			@RequestBody UserAddress RO_UserAddress,HttpServletRequest O_HttpServletRequest) {
 
 		Response O_Response = new Response();
 
@@ -92,7 +94,8 @@ public class UserAddressController {
 			return new ResponseEntity<Object>(O_Response, HttpStatus.UNPROCESSABLE_ENTITY);
 
 		}
-		RO_UserAddress.setUadTkecmuId(O_User_Detail.getUId());
+		System.err.println( O_HttpServletRequest.getAttribute("userId"));
+		RO_UserAddress.setUadTkecmuId((String) O_HttpServletRequest.getAttribute("userId"));
 
 		O_UserAddressService.addUserAddress(RO_UserAddress);
 

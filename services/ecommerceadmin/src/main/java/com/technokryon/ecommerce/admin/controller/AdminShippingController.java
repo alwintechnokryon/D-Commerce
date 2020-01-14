@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -16,7 +17,7 @@ import com.technokryon.ecommerce.admin.service.AdminShippingService;
 
 @Controller
 @CrossOrigin
-@RequestMapping("/api/v1/admin/shipping")
+@RequestMapping("/api/v1/admin/auth/shipping")
 public class AdminShippingController {
 
 	@Autowired
@@ -24,7 +25,8 @@ public class AdminShippingController {
 
 	@ResponseBody
 	@PostMapping("/add/cost")
-	private ResponseEntity<?> ADD_COST(@RequestBody ShippingCost RO_ShippingCost) {
+	private ResponseEntity<?> ADD_COST(@RequestHeader(value = "X-Auth-Token") String apiKey,
+			@RequestBody ShippingCost RO_ShippingCost) {
 
 		Response O_Response = new Response();
 

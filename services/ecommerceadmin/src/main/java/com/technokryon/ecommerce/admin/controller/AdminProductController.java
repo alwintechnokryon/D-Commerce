@@ -3,6 +3,8 @@ package com.technokryon.ecommerce.admin.controller;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,7 +26,7 @@ import com.technokryon.ecommerce.admin.service.AdminProductService;
 
 @Controller
 @CrossOrigin
-@RequestMapping("/api/v1/admin/product")
+@RequestMapping("/api/v1/admin/auth/product")
 
 public class AdminProductController {
 
@@ -35,7 +37,7 @@ public class AdminProductController {
 	private AdminLoginService O_AdminLoginService;
 
 	@PostMapping("/add")
-	private ResponseEntity<?> ADD_PRODUCT(@RequestHeader(value = "apiKey") String apiKey,
+	private ResponseEntity<?> ADD_PRODUCT(@RequestHeader(value = "X-Auth-Token") String apiKey,
 			@RequestParam(value = "pName", required = true) String productName,
 			@RequestParam(value = "pSku", required = true) String sku,
 			@RequestParam(value = "pTkecmcCategoryId", required = true) String categoryId,
@@ -45,7 +47,8 @@ public class AdminProductController {
 			@RequestParam(value = "pLongDesc", required = true) String longDesc,
 			@RequestParam(value = "pCountryOfMfg", required = false) String countryOfMfg,
 			@RequestParam(value = "pTkecmptId", required = true) String productTypeId,
-			@RequestParam(value = "pPrice", required = true) Double price, @RequestParam MultipartFile[] files) {
+			@RequestParam(value = "pPrice", required = true) Double price, @RequestParam MultipartFile[] files,
+			HttpServletRequest O_HttpServletRequest) {
 
 		Response O_Response = new Response();
 
