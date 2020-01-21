@@ -18,15 +18,15 @@ public class ProductServiceImpl implements ProductService {
 	private ProductDao O_ProductDao;
 
 	@Override
-	public List<Product> getListByCategory(String categoryId, Integer PageNumber) {
+	public List<Product> getListByCategory(String categoryId, Integer PageNumber, String uId) {
 
-		return O_ProductDao.getListByCategory(categoryId, PageNumber);
+		return O_ProductDao.getListByCategory(categoryId, PageNumber, uId);
 	}
 
 	@Override
-	public Product getDetailById(String id) {
+	public Product getDetailById(String tkecmpId, String uId) {
 
-		return O_ProductDao.getDetailById(id);
+		return O_ProductDao.getDetailById(tkecmpId, uId);
 	}
 
 }

@@ -18,6 +18,7 @@ import com.technokryon.ecommerce.model.TKECMPRODUCT;
 import com.technokryon.ecommerce.model.TKECMPRODUCTDOWNLOAD;
 import com.technokryon.ecommerce.model.TKECTCONFIGURABLELINK;
 import com.technokryon.ecommerce.model.TKECTPRODUCTATTRIBUTE;
+import com.technokryon.ecommerce.model.TKECTWISHLIST;
 import com.technokryon.ecommerce.pojo.Category;
 import com.technokryon.ecommerce.pojo.Image;
 import com.technokryon.ecommerce.pojo.OptionAttribute;
@@ -36,7 +37,7 @@ public class ProductDaoImpl implements ProductDao {
 	private ModelMapper O_ModelMapper;
 
 	@Override
-	public List<Product> getListByCategory(String categoryId, Integer PageNumber) {
+	public List<Product> getListByCategory(String categoryId, Integer PageNumber, String uId) {
 
 		List<Product> LO_Product = new ArrayList<>();
 
@@ -45,6 +46,8 @@ public class ProductDaoImpl implements ProductDao {
 		String proAttrQuery = "FROM TKECTPRODUCTATTRIBUTE WHERE paTkecmpId.pId =:productId";
 
 		String imageQuery = "FROM TKECMIMAGE WHERE iTkecmpId.pId =:productId";
+
+		String productWishList = "FROM TKECTWISHLIST WHERE wlUserId =:userId AND wlTkecmpId.pId =:productId";
 
 		Query query = O_SessionFactory.getCurrentSession().createQuery(productQuery);
 
@@ -105,13 +108,28 @@ public class ProductDaoImpl implements ProductDao {
 			}
 
 			O_Product.setLO_IMAGE(LO_Image);
+
+			if (uId != null) {
+
+				Query productWishListQuery = O_SessionFactory.getCurrentSession().createQuery(productWishList);
+
+				productWishListQuery.setParameter("productId", O_TKECMPRODUCT.getPId());
+				productWishListQuery.setParameter("userId", uId);
+				TKECTWISHLIST O_TKECTWISHLIST = (TKECTWISHLIST) productWishListQuery.uniqueResult();
+
+				if (O_TKECTWISHLIST != null) {
+
+					O_Product.setWlAgId(O_TKECTWISHLIST.getWlAgId());
+				}
+
+			}
 			LO_Product.add(O_Product);
 		}
 		return LO_Product;
 	}
 
 	@Override
-	public Product getDetailById(String tkecmpId) {
+	public Product getDetailById(String tkecmpId, String uId) {
 
 		// ModelMapper O_ModelMapper = new ModelMapper();
 
@@ -124,6 +142,8 @@ public class ProductDaoImpl implements ProductDao {
 		String productAttribute = "FROM TKECTPRODUCTATTRIBUTE WHERE paTkecmpId.pId =:proAttrProductId ";
 
 		String image = "FROM TKECMIMAGE WHERE iTkecmpId.pId =:productId";
+
+		String productWishList = "FROM TKECTWISHLIST WHERE wlUserId =:userId AND wlTkecmpId.pId =:productId";
 
 		Query configurableProductQuery = O_SessionFactory.getCurrentSession().createQuery(configurableProduct);
 
@@ -288,6 +308,20 @@ public class ProductDaoImpl implements ProductDao {
 
 		O_Product.setLO_IMAGE(LO_Image);
 
+		if (uId != null) {
+
+			Query productWishListQuery = O_SessionFactory.getCurrentSession().createQuery(productWishList);
+
+			productWishListQuery.setParameter("productId", tkecmpId);
+			productWishListQuery.setParameter("userId", uId);
+			TKECTWISHLIST O_TKECTWISHLIST = (TKECTWISHLIST) productWishListQuery.uniqueResult();
+
+			if (O_TKECTWISHLIST != null) {
+
+				O_Product.setWlAgId(O_TKECTWISHLIST.getWlAgId());
+			}
+
+		}
 		return O_Product;
 	}
 

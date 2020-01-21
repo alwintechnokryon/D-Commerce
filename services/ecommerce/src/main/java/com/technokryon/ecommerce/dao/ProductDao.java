@@ -4,12 +4,10 @@ import java.util.List;
 
 import com.technokryon.ecommerce.pojo.Product;
 
-
 public interface ProductDao {
 
-	List<Product> getListByCategory(String categoryId, Integer pageNumber);
+	List<Product> getListByCategory(String categoryId, Integer pageNumber, String uId);
 
-	Product getDetailById(String id);
-
+	Product getDetailById(String tkecmpId, String uId);
 
 }

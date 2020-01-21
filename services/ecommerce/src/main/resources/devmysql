@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Jan 20, 2020 at 01:43 PM
+-- Generation Time: Jan 21, 2020 at 08:51 AM
 -- Server version: 5.7.23
 -- PHP Version: 5.6.38
 
@@ -6430,7 +6430,7 @@ CREATE TABLE IF NOT EXISTS `TKECT_WISH_LIST` (
   `TKECTWL_CREATED_DATE` datetime DEFAULT NULL,
   PRIMARY KEY (`TKECTWL_AG_ID`),
   KEY `FK_TKECTWL_TKECMP_ID` (`TKECTWL_TKECMP_ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Dumping data for table `TKECT_WISH_LIST`
@@ -6438,7 +6438,10 @@ CREATE TABLE IF NOT EXISTS `TKECT_WISH_LIST` (
 
 INSERT INTO `TKECT_WISH_LIST` (`TKECTWL_AG_ID`, `TKECTWL_USER_ID`, `TKECTWL_TKECMP_ID`, `TKECTWL_CREATED_DATE`) VALUES
 (1, 'TKECU0037', 'redmi-note-8+-pro', '2020-01-20 18:05:33'),
-(3, 'TKECU0037', 'redmi-5-pro', '2020-01-20 18:22:18');
+(3, 'TKECU0037', 'redmi-5-pro', '2020-01-20 18:22:18'),
+(4, 'TKECU0037', '1', '2020-01-21 11:03:36'),
+(5, 'TKECU0037', '2', '2020-01-21 12:04:13'),
+(6, 'TKECU0037', 'redmi-2-pro', '2020-01-21 12:05:11');
 
 --
 -- Constraints for dumped tables

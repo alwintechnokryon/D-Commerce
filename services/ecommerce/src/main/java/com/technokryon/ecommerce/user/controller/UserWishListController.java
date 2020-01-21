@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.technokryon.ecommerce.pojo.ProductCart;
 import com.technokryon.ecommerce.pojo.Response;
 import com.technokryon.ecommerce.pojo.User;
 import com.technokryon.ecommerce.pojo.WishList;

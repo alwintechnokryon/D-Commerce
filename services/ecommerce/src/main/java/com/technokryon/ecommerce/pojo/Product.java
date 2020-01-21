@@ -36,6 +36,7 @@ public class Product {
 	String pdFile;
 	String pdTitle;
 	String oTkecmsId;
+	Integer wlAgId;
 	List<Category> LO_CATEGORY;
 	List<ProductAttribute> LO_PRODUCTATTRIBUTE;
 	List<OptionAttribute> LO_OPTIONATTRIBUTE;
