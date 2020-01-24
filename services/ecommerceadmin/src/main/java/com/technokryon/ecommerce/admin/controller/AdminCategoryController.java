@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -65,7 +66,7 @@ public class AdminCategoryController {
 		return new ResponseEntity<Object>(LO_Category, HttpStatus.OK);
 	}
 
-	@PostMapping("/update")
+	@PutMapping("/update")
 	private ResponseEntity<?> UPDATE(@RequestHeader(value = "X-Auth-Token") String apiKey,
 			@RequestBody Category RO_Category) {
 

@@ -83,7 +83,7 @@ public class UserDaoImpl implements UserDao {
 			Integer Ag = Integer.valueOf(userId.substring(5));
 			Ag++;
 
-			System.err.println(Ag);
+			//System.err.println(Ag);
 			O_TKECM_USER.setUId("TKECU" + String.format("%04d", Ag));
 		}
 
@@ -180,7 +180,7 @@ public class UserDaoImpl implements UserDao {
 			Integer Ag = Integer.valueOf(userId.substring(5));
 			Ag++;
 
-			System.err.println(Ag);
+			//System.err.println(Ag);
 			O_TKECM_USER.setUId("TKECU" + String.format("%04d", Ag));
 		}
 

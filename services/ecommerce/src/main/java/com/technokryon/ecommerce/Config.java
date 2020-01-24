@@ -63,9 +63,6 @@ public class Config implements WebMvcConfigurer
 	@Autowired
 	private Environment env;
 
-	@Autowired
-	private Interceptor O_Interceptor;
-
 	@Bean
 	public DataSource getECommerceDataSource() {
 		BasicDataSource dataSource = new BasicDataSource();
@@ -114,13 +111,5 @@ public class Config implements WebMvcConfigurer
 
 		return O_ModelMapper;
 	}
-
-//	@Override
-//	public void addInterceptors(InterceptorRegistry registry) {
-//
-//		registry.addInterceptor(O_Interceptor).addPathPatterns("/api/v1/**");
-//				
-//
-//	}
 
 }
