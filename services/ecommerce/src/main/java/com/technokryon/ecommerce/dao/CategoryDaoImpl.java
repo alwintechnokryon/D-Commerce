@@ -20,57 +20,57 @@ import com.technokryon.ecommerce.pojo.Category;
 public class CategoryDaoImpl implements CategoryDao {
 
 	@Autowired
-	private SessionFactory O_SessionFactory;
+	private SessionFactory sessionFactory;
 
 	@Override
 	// @Cacheable("CATEGORY")
 	// @CacheEvict(value="CATEGORY", allEntries=true)
 	public List<Category> categoryList() {
 
-		List<Category> LO_Category = new ArrayList<Category>();
+		List<Category> category = new ArrayList<Category>();
 
 		String parentCategory = "FROM TKECMCATEGORY WHERE cParentId IS NULL";
 
-		Query parentCategoryQry = O_SessionFactory.getCurrentSession().createQuery(parentCategory);
+		Query parentCategoryQry = sessionFactory.getCurrentSession().createQuery(parentCategory);
 
-		List<TKECMCATEGORY> LO_TKECMCATEGORY = (List<TKECMCATEGORY>) parentCategoryQry.getResultList();
+		List<TKECMCATEGORY> tKECMCATEGORY = (List<TKECMCATEGORY>) parentCategoryQry.getResultList();
 
-		for (TKECMCATEGORY O_TKECMCATEGORY : LO_TKECMCATEGORY) {
+		for (TKECMCATEGORY tKECMCATEGORY1 : tKECMCATEGORY) {
 
-			LO_Category.add(new Category(O_TKECMCATEGORY, getChildCategories(O_TKECMCATEGORY.getCCategoryId())));
+			category.add(new Category(tKECMCATEGORY1, getChildCategories(tKECMCATEGORY1.getCCategoryId())));
 
 		}
 
-		return LO_Category;
+		return category;
 	}
 
 	public List<Category> getChildCategories(String parentId) {
 
-		List<Category> LO_Category = new ArrayList<Category>();
+		List<Category> category = new ArrayList<Category>();
 
 		String childCategory = "FROM TKECMCATEGORY WHERE cParentId =: parentId";
 
-		Query childCategoryQry = O_SessionFactory.getCurrentSession().createQuery(childCategory);
+		Query childCategoryQry = sessionFactory.getCurrentSession().createQuery(childCategory);
 
 		childCategoryQry.setParameter("parentId", parentId);
 
-		List<TKECMCATEGORY> child_LO_TKECMCATEGORY = (List<TKECMCATEGORY>) childCategoryQry.getResultList();
+		List<TKECMCATEGORY> tKECMCATEGORYchild = (List<TKECMCATEGORY>) childCategoryQry.getResultList();
 
-		for (TKECMCATEGORY child_O_TKECMCATEGORY : child_LO_TKECMCATEGORY) {
+		for (TKECMCATEGORY tKECMCATEGORYchild1 : tKECMCATEGORYchild) {
 
-			LO_Category.add(
-					new Category(child_O_TKECMCATEGORY, getChildCategories(child_O_TKECMCATEGORY.getCCategoryId())));
+			category.add(
+					new Category(tKECMCATEGORYchild1, getChildCategories(tKECMCATEGORYchild1.getCCategoryId())));
 		}
 
-		return LO_Category;
+		return category;
 	}
 
 	@Override
-	public List<Category> categoryListById(Category RO_Category) {
+	public List<Category> categoryListById(Category category) {
 
-		List<Category> LO_Category = new ArrayList<>();
+		List<Category> category1 = new ArrayList<>();
 
-		ModelMapper O_ModelMapper = new ModelMapper();
+		ModelMapper modelMapper = new ModelMapper();
 
 		String categoryListById = "FROM TKECMCATEGORY WHERE cParentId =:parentid";
 
@@ -78,25 +78,25 @@ public class CategoryDaoImpl implements CategoryDao {
 
 		Query categoryListByIdQry;
 
-		if (RO_Category.getCCategoryId() == null) {
+		if (category.getCCategoryId() == null) {
 
-			categoryListByIdQry = O_SessionFactory.getCurrentSession().createQuery(parentId);
+			categoryListByIdQry = sessionFactory.getCurrentSession().createQuery(parentId);
 
 		} else {
-			categoryListByIdQry = O_SessionFactory.getCurrentSession().createQuery(categoryListById);
-			categoryListByIdQry.setParameter("parentid", RO_Category.getCCategoryId());
+			categoryListByIdQry = sessionFactory.getCurrentSession().createQuery(categoryListById);
+			categoryListByIdQry.setParameter("parentid", category.getCCategoryId());
 		}
 
-		List<TKECMCATEGORY> LO_TKECMCATEGORY = categoryListByIdQry.getResultList();
+		List<TKECMCATEGORY> tKECMCATEGORY = categoryListByIdQry.getResultList();
 
-		for (TKECMCATEGORY O_TKECMCATEGORY : LO_TKECMCATEGORY) {
+		for (TKECMCATEGORY tKECMCATEGORY1 : tKECMCATEGORY) {
 
-			Category O_Category = O_ModelMapper.map(O_TKECMCATEGORY, Category.class);
-			O_Category.setChildCategory(getChildCategories(O_TKECMCATEGORY.getCCategoryId()));
+			Category category2 = modelMapper.map(tKECMCATEGORY1, Category.class);
+			category2.setChildCategory(getChildCategories(tKECMCATEGORY1.getCCategoryId()));
 
-			LO_Category.add(O_Category);
+			category1.add(category2);
 
 		}
-		return LO_Category;
+		return category1;
 	}
 }

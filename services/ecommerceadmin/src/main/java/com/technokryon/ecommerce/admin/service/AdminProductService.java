@@ -6,6 +6,6 @@ public interface AdminProductService {
 
 	Boolean checkSkuAvailable(String sku);
 
-	String addProduct(Product O_Product);
+	String addProduct(Product product);
 
 }

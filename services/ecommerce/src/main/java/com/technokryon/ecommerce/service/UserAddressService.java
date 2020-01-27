@@ -8,10 +8,10 @@ public interface UserAddressService {
 
 	List<UserAddress> listUserAddress(String uId);
 
-	void updateUserAddress(UserAddress RO_UserAddress);
+	void updateUserAddress(UserAddress userAddress);
 
-	void deleteUserAddress(UserAddress RO_UserAddress);
+	void deleteUserAddress(UserAddress userAddress);
 
-	void addUserAddress(UserAddress RO_UserAddress);
+	void addUserAddress(UserAddress userAddress);
 
 }

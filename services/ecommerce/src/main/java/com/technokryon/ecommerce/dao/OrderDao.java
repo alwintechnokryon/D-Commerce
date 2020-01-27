@@ -8,11 +8,11 @@ import com.technokryon.ecommerce.pojo.Product;
 
 public interface OrderDao {
 
-	String requestOrder(Order RO_Order);
+	String requestOrder(Order order);
 
-	Boolean checkAvailableProductQuantity(List<Product> LO_PRODUCT);
+	Boolean checkAvailableProductQuantity(List<Product> product);
 
-	String updateTransactionId(Order RO_Order);
+	String updateTransactionId(Order order);
 
 	List<OrderItem> orderList(String uId);
 

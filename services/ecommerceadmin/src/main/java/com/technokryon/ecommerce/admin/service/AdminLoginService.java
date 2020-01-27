@@ -13,13 +13,13 @@ public interface AdminLoginService {
 
 	String saveOTPDetails(Integer oTP, String userId);
 
-	User getUserDetailHash(User RO_User);
+	User getUserDetailHash(User user);
 
-	void updatePassword(User O_User_Detail);
+	void updatePassword(User userDetail);
 
 	UserSession getApiSecretDataByNewSecret(String apisecret, String userId);
 
-	void addAuditDetail(User O_USER_DETAIL, HttpServletRequest httpServletRequest);
+	void addAuditDetail(User userDetail, HttpServletRequest httpServletRequest);
 
 	User getUserDetailAPIKey(String apiKey);
 

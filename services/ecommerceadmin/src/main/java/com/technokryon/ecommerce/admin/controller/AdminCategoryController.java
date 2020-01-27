@@ -2,6 +2,8 @@ package com.technokryon.ecommerce.admin.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,74 +26,75 @@ import com.technokryon.ecommerce.admin.service.AdminCategoryService;
 public class AdminCategoryController {
 
 	@Autowired
-	private AdminCategoryService O_AdminCategoryService;
+	private AdminCategoryService adminCategoryService;
 
 	@PostMapping("/add")
 	private ResponseEntity<?> ADD_CATEGORY(@RequestHeader(value = "X-Auth-Token") String apiKey,
-			@RequestBody Category RO_Category) {
+			@RequestBody Category category, HttpServletRequest httpServletRequest) {
 
-		Response O_Response = new Response();
+		Response response = new Response();
 
-		Boolean checkCategoryName = O_AdminCategoryService.checkCategoryName(RO_Category.getCCategoryName());
+		Boolean checkCategoryName = adminCategoryService.checkCategoryName(category.getCCategoryName());
 
 		if (checkCategoryName) {
 
-			O_Response.setMessage("Category Name Already Exist..!");
-			return new ResponseEntity<Object>(O_Response, HttpStatus.UNPROCESSABLE_ENTITY);
+			response.setMessage("Category Name Already Exist..!");
+			return new ResponseEntity<Object>(response, HttpStatus.UNPROCESSABLE_ENTITY);
 
 		}
+		category.setCCreatedUserId(httpServletRequest.getAttribute("uId").toString());
 
-		O_AdminCategoryService.addCategory(RO_Category);
+		adminCategoryService.addCategory(category);
 
-		O_Response.setMessage("Success");
-		return new ResponseEntity<Object>(O_Response, HttpStatus.OK);
+		response.setMessage("Success");
+		return new ResponseEntity<Object>(response, HttpStatus.OK);
 
 	}
 
 	@GetMapping("/list")
 	private ResponseEntity<?> LIST(@RequestHeader(value = "X-Auth-Token") String apiKey) {
 
-		List<Category> LO_Category = O_AdminCategoryService.categoryList();
+		List<Category> category = adminCategoryService.categoryList();
 
-		return new ResponseEntity<Object>(LO_Category, HttpStatus.OK);
+		return new ResponseEntity<Object>(category, HttpStatus.OK);
 
 	}
 
 	@PostMapping("/list/id")
 	private ResponseEntity<?> LIST_BY_ID(@RequestHeader(value = "X-Auth-Token") String apiKey,
-			@RequestBody Category RO_Category) {
+			@RequestBody Category category) {
 
-		List<Category> LO_Category = O_AdminCategoryService.categoryListById(RO_Category);
+		List<Category> category1 = adminCategoryService.categoryListById(category);
 
-		return new ResponseEntity<Object>(LO_Category, HttpStatus.OK);
+		return new ResponseEntity<Object>(category1, HttpStatus.OK);
 	}
 
 	@PutMapping("/update")
 	private ResponseEntity<?> UPDATE(@RequestHeader(value = "X-Auth-Token") String apiKey,
-			@RequestBody Category RO_Category) {
+			@RequestBody Category category) {
 
-		Response O_Response = new Response();
+		Response response = new Response();
 
-		if (RO_Category.getCCategoryId().isBlank()) {
-			O_Response.setMessage("category Id Is Empty");
-			return new ResponseEntity<Object>(O_Response, HttpStatus.UNPROCESSABLE_ENTITY);
+		if (category.getCCategoryId().isBlank()) {
+			response.setMessage("category Id Is Empty");
+			return new ResponseEntity<Object>(response, HttpStatus.UNPROCESSABLE_ENTITY);
 		}
-		if (RO_Category.getCCategoryName().isBlank()) {
+		if (category.getCCategoryName().isBlank()) {
 
-			O_Response.setMessage("category Name Is Empty");
-			return new ResponseEntity<Object>(O_Response, HttpStatus.UNPROCESSABLE_ENTITY);
+			response.setMessage("category Name Is Empty");
+			return new ResponseEntity<Object>(response, HttpStatus.UNPROCESSABLE_ENTITY);
 		}
 
-		Boolean updateCategory = O_AdminCategoryService.updateCategory(RO_Category);
+		Boolean updateCategory = adminCategoryService.updateCategory(category);
 
 		if (!updateCategory) {
 
-			O_Response.setMessage("category Id Is Not Matched");
-			return new ResponseEntity<Object>(O_Response, HttpStatus.UNPROCESSABLE_ENTITY);
+			response.setMessage("category Id Is Not Matched");
+			return new ResponseEntity<Object>(response, HttpStatus.UNPROCESSABLE_ENTITY);
 		}
 
-		O_Response.setMessage("category Name Is Changed SuccessFully");
-		return new ResponseEntity<Object>(O_Response, HttpStatus.UNPROCESSABLE_ENTITY);
+		response.setMessage("category Name Is Changed SuccessFully");
+		return new ResponseEntity<Object>(response, HttpStatus.OK);
 	}
 
 }

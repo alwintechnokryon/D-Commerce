@@ -1,5 +1,7 @@
 package com.technokryon.ecommerce.model;
 
+import java.time.OffsetDateTime;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -26,5 +28,11 @@ public class TKECMCATEGORY {
 
 	@Column(name = "TKECMC_CATEGORY_LEVEL")
 	private Integer cCategoryLevel;
+
+	@Column(name = "TKECMC_CREATED_DATE")
+	private OffsetDateTime cCreatedDate;
+
+	@Column(name = "TKECMC_CREATED_USERID")
+	private String cCreatedUserId;
 
 }

@@ -24,49 +24,49 @@ import com.technokryon.ecommerce.service.UserService;
 public class UserProductController {
 
 	@Autowired
-	private ProductService O_ProductService;
+	private ProductService productService;
 
 	@Autowired
-	private UserService O_UserService;
+	private UserService userService;
 
 	@ResponseBody
 	@PostMapping("/list/category")
 	private ResponseEntity<?> PRODUCT_LIST_BY_CATEGORY(@RequestHeader(value = "apikey") String apiKey,
-			@RequestBody Product RO_Product) {
+			@RequestBody Product product) {
 
-		User O_User_Detail = O_UserService.getUserDetailAPIKey(apiKey);
+		User userDetail = userService.getUserDetailAPIKey(apiKey);
 
-		List<Product> LO_Product;
+		List<Product> product1;
 
-		if (O_User_Detail == null) {
+		if (userDetail == null) {
 
-			LO_Product = O_ProductService.getListByCategory(RO_Product.getPTkecmcCategoryId(),
-					RO_Product.getPageNumber(), null);
+			product1 = productService.getListByCategory(product.getPTkecmcCategoryId(),
+					product.getPageNumber(), null);
 		} else {
 
-			LO_Product = O_ProductService.getListByCategory(RO_Product.getPTkecmcCategoryId(),
-					RO_Product.getPageNumber(), O_User_Detail.getUId());
+			product1 = productService.getListByCategory(product.getPTkecmcCategoryId(),
+					product.getPageNumber(), userDetail.getUId());
 		}
-		return new ResponseEntity<Object>(LO_Product, HttpStatus.OK);
+		return new ResponseEntity<Object>(product1, HttpStatus.OK);
 	}
 
 	@ResponseBody
 	@PostMapping("/detail/id")
 	private ResponseEntity<?> PRODUCT_DETAIL_BY_ID(@RequestHeader(value = "apikey") String apiKey,
-			@RequestBody Product RO_Product) {
+			@RequestBody Product product) {
 
-		User O_User_Detail = O_UserService.getUserDetailAPIKey(apiKey);
+		User userDetail = userService.getUserDetailAPIKey(apiKey);
 
-		Product O_Product;
+		Product product1;
 
-		if (O_User_Detail == null) {
+		if (userDetail == null) {
 
-			O_Product = O_ProductService.getDetailById(RO_Product.getPId(), null);
+			product1 = productService.getDetailById(product.getPId(), null);
 		} else {
 
-			O_Product = O_ProductService.getDetailById(RO_Product.getPId(), O_User_Detail.getUId());
+			product1 = productService.getDetailById(product.getPId(), userDetail.getUId());
 		}
-		return new ResponseEntity<Object>(O_Product, HttpStatus.OK);
+		return new ResponseEntity<Object>(product1, HttpStatus.OK);
 	}
 
 }

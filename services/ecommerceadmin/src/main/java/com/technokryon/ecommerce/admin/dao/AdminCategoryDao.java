@@ -8,12 +8,12 @@ public interface AdminCategoryDao {
 
 	Boolean checkCategoryName(String cCategoryName);
 
-	String addCategory(Category RO_Category);
+	String addCategory(Category category);
 
 	List<Category> categoryList();
 
-	List<Category> categoryListById(Category RO_Category);
+	List<Category> categoryListById(Category category);
 
-	Boolean updateCategory(Category RO_Category);
+	Boolean updateCategory(Category category);
 
 }

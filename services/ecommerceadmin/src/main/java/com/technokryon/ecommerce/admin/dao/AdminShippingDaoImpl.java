@@ -1,6 +1,5 @@
 package com.technokryon.ecommerce.admin.dao;
 
-import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -16,20 +15,19 @@ import com.technokryon.ecommerce.admin.pojo.ShippingCost;
 public class AdminShippingDaoImpl implements AdminShippingDao {
 
 	@Autowired
-	SessionFactory O_SessionFactory;
+	SessionFactory sessionFactory;
 
 	@Override
-	public void addShippingCost(ShippingCost RO_ShippingCost) {
+	public void addShippingCost(ShippingCost shippingCost) {
 
-		Session O_Session = O_SessionFactory.getCurrentSession();
-		TKECMSHIPPINGCOST O_TKECMSHIPPINGCOST = new TKECMSHIPPINGCOST();
+		TKECMSHIPPINGCOST tKECMSHIPPINGCOST = new TKECMSHIPPINGCOST();
 
-		O_TKECMSHIPPINGCOST.setScDestPincode(RO_ShippingCost.getScDestPincode());
-		O_TKECMSHIPPINGCOST.setScDestPincodeTo(RO_ShippingCost.getScDestPincodeTo());
-		O_TKECMSHIPPINGCOST.setScPrice(RO_ShippingCost.getScPrice());
-		O_TKECMSHIPPINGCOST.setScWeightFrom(RO_ShippingCost.getScWeightFrom());
-		O_TKECMSHIPPINGCOST.setScWeightTo(RO_ShippingCost.getScWeightTo());
-		O_Session.save(O_TKECMSHIPPINGCOST);
+		tKECMSHIPPINGCOST.setScDestPincode(shippingCost.getScDestPincode());
+		tKECMSHIPPINGCOST.setScDestPincodeTo(shippingCost.getScDestPincodeTo());
+		tKECMSHIPPINGCOST.setScPrice(shippingCost.getScPrice());
+		tKECMSHIPPINGCOST.setScWeightFrom(shippingCost.getScWeightFrom());
+		tKECMSHIPPINGCOST.setScWeightTo(shippingCost.getScWeightTo());
+		sessionFactory.getCurrentSession().save(tKECMSHIPPINGCOST);
 	}
 
 }

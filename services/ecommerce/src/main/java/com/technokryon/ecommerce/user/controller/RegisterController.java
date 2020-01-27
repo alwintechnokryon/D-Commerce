@@ -32,118 +32,118 @@ import com.technokryon.ecommerce.service.UserService;
 public class RegisterController {
 
 	@Autowired
-	private UserService O_UserService;
+	private UserService userService;
 
 	@Autowired
-	private MailService O_MailService;
+	private MailService mailService;
 
 	@ResponseBody
 	@PostMapping("/register")
 
-	private ResponseEntity<?> USER_REGISTER(@RequestBody User RO_User) {
+	private ResponseEntity<?> USER_REGISTER(@RequestBody User user) {
 
 		Integer OTP = SingleTon.getRandomUserId();
 
-		Response O_Response = new Response();
+		Response response = new Response();
 
-		if (RO_User.getURegType() == null) {
+		if (user.getURegType() == null) {
 
-			O_Response.setMessage("Registration Type is Missing..!");
-			return new ResponseEntity<Object>(O_Response, HttpStatus.UNPROCESSABLE_ENTITY);
+			response.setMessage("Registration Type is Missing..!");
+			return new ResponseEntity<Object>(response, HttpStatus.UNPROCESSABLE_ENTITY);
 
 		}
 
-		if (RO_User.getUName() == null || RO_User.getUName().isBlank()) {
-			O_Response.setMessage("User Name is Empty..!");
-			return new ResponseEntity<Object>(O_Response, HttpStatus.UNPROCESSABLE_ENTITY);
+		if (user.getUName() == null || user.getUName().isBlank()) {
+			response.setMessage("User Name is Empty..!");
+			return new ResponseEntity<Object>(response, HttpStatus.UNPROCESSABLE_ENTITY);
 		}
 
-		if (RO_User.getURegType().equals("E")) {
+		if (user.getURegType().equals("E")) {
 
 			// Null-check for user name
-			if (RO_User.getUMail() == null || RO_User.getUMail().isBlank()) {
+			if (user.getUMail() == null || user.getUMail().isBlank()) {
 
-				O_Response.setMessage("Email Id is Empty..!");
-				return new ResponseEntity<Object>(O_Response, HttpStatus.UNPROCESSABLE_ENTITY);
+				response.setMessage("Email Id is Empty..!");
+				return new ResponseEntity<Object>(response, HttpStatus.UNPROCESSABLE_ENTITY);
 			}
 			// Email Validation
-			if (!SingleTon.isEmailValid(RO_User.getUMail())) {
+			if (!SingleTon.isEmailValid(user.getUMail())) {
 
-				O_Response.setMessage("Invalid Email Id..!");
-				return new ResponseEntity<Object>(O_Response, HttpStatus.UNPROCESSABLE_ENTITY);
+				response.setMessage("Invalid Email Id..!");
+				return new ResponseEntity<Object>(response, HttpStatus.UNPROCESSABLE_ENTITY);
 			}
 
-			User O_User_Detail = O_UserService.isUserEmailAvailable(RO_User.getUMail());
-			if (O_User_Detail != null) {
+			User userDetail = userService.isUserEmailAvailable(user.getUMail());
+			if (userDetail != null) {
 
-				O_Response.setMessage("Email Already Exist..!");
-				return new ResponseEntity<Object>(O_Response, HttpStatus.UNPROCESSABLE_ENTITY);
+				response.setMessage("Email Already Exist..!");
+				return new ResponseEntity<Object>(response, HttpStatus.UNPROCESSABLE_ENTITY);
 			}
 			// Password Validation
-			if (RO_User.getUPassword().length() > 14 || RO_User.getUPassword().length() < 4) {
+			if (user.getUPassword().length() > 14 || user.getUPassword().length() < 4) {
 
-				O_Response.setMessage("Password Shoud be 4 to 14 Charaters ..!");
-				return new ResponseEntity<Object>(O_Response, HttpStatus.UNPROCESSABLE_ENTITY);
+				response.setMessage("Password Shoud be 4 to 14 Charaters ..!");
+				return new ResponseEntity<Object>(response, HttpStatus.UNPROCESSABLE_ENTITY);
 			}
 
-			RO_User.setUPassword(new BCryptPasswordEncoder().encode(RO_User.getUPassword()));
+			user.setUPassword(new BCryptPasswordEncoder().encode(user.getUPassword()));
 
-			String userId = O_UserService.createNewUserByEmail(RO_User);
+			String userId = userService.createNewUserByEmail(user);
 
-			O_MailService.sendMail(RO_User.getUMail(), SingleTon.PASSWORD_RESET_MAIL_HEADER,
+			mailService.sendMail(user.getUMail(), SingleTon.PASSWORD_RESET_MAIL_HEADER,
 
 					"Your OTP is " + OTP);
 
-			User O_User1 = new User();
+			User user1 = new User();
 
-			O_User1.setUHashKey(O_UserService.saveOTPDetails(OTP, userId));
+			user1.setUHashKey(userService.saveOTPDetails(OTP, userId));
 
-			return new ResponseEntity<Object>(O_User1, HttpStatus.OK);
+			return new ResponseEntity<Object>(user1, HttpStatus.OK);
 
-		} else if (RO_User.getURegType().equals("M")) {
+		} else if (user.getURegType().equals("M")) {
 
-			if (RO_User.getUPhone() == null) {
+			if (user.getUPhone() == null) {
 
-				O_Response.setMessage("Mobile Number Is Empty..!");
-				return new ResponseEntity<Object>(O_Response, HttpStatus.UNPROCESSABLE_ENTITY);
+				response.setMessage("Mobile Number Is Empty..!");
+				return new ResponseEntity<Object>(response, HttpStatus.UNPROCESSABLE_ENTITY);
 			}
 
-			if (RO_User.getUPhoneCode() == null) {
+			if (user.getUPhoneCode() == null) {
 
-				O_Response.setMessage("Country Code Is Empty..!");
-				return new ResponseEntity<Object>(O_Response, HttpStatus.UNPROCESSABLE_ENTITY);
+				response.setMessage("Country Code Is Empty..!");
+				return new ResponseEntity<Object>(response, HttpStatus.UNPROCESSABLE_ENTITY);
 			}
 
-			User O_User_Detail = O_UserService.isUserPhoneNoAvailable(RO_User.getUPhone());
-			if (O_User_Detail != null) {
+			User userDetail = userService.isUserPhoneNoAvailable(user.getUPhone());
+			if (userDetail != null) {
 
-				O_Response.setMessage("Mobile Number Already Exist..!");
-				return new ResponseEntity<Object>(O_Response, HttpStatus.UNPROCESSABLE_ENTITY);
+				response.setMessage("Mobile Number Already Exist..!");
+				return new ResponseEntity<Object>(response, HttpStatus.UNPROCESSABLE_ENTITY);
 			}
 			// Password Validation
-			if (RO_User.getUPassword().length() > 14 || RO_User.getUPassword().length() < 4) {
+			if (user.getUPassword().length() > 14 || user.getUPassword().length() < 4) {
 
-				O_Response.setMessage("Password Shoud be 4 to 14 Charaters ..!");
-				return new ResponseEntity<Object>(O_Response, HttpStatus.UNPROCESSABLE_ENTITY);
+				response.setMessage("Password Shoud be 4 to 14 Charaters ..!");
+				return new ResponseEntity<Object>(response, HttpStatus.UNPROCESSABLE_ENTITY);
 			}
-			RO_User.setUPassword(new BCryptPasswordEncoder().encode(RO_User.getUPassword()));
+			user.setUPassword(new BCryptPasswordEncoder().encode(user.getUPassword()));
 
-			String userId = O_UserService.createNewUserByPhoneNo(RO_User);
+			String userId = userService.createNewUserByPhoneNo(user);
 
-			O_MailService.sendSMS(RO_User.getUPhone(), RO_User.getUPhoneCode(), "Your OTP is " + OTP);
+			mailService.sendSMS(user.getUPhone(), user.getUPhoneCode(), "Your OTP is " + OTP);
 
 			System.err.println("OTP---->" + OTP);
 
-			User O_User1 = new User();
+			User user1 = new User();
 
-			O_User1.setUHashKey(O_UserService.saveOTPDetails(OTP, userId));
+			user1.setUHashKey(userService.saveOTPDetails(OTP, userId));
 
-			return new ResponseEntity<Object>(O_User1, HttpStatus.OK);
+			return new ResponseEntity<Object>(user1, HttpStatus.OK);
 
 		} else {
 
-			O_Response.setMessage("Registration Type is Missing..!");
-			return new ResponseEntity<Object>(O_Response, HttpStatus.UNPROCESSABLE_ENTITY);
+			response.setMessage("Registration Type is Missing..!");
+			return new ResponseEntity<Object>(response, HttpStatus.UNPROCESSABLE_ENTITY);
 		}
 
 	}
@@ -151,298 +151,298 @@ public class RegisterController {
 	@ResponseBody
 	@PostMapping("/otp/verify")
 
-	private ResponseEntity<?> OTP_VERIFY(@RequestBody User RO_User) {
+	private ResponseEntity<?> OTP_VERIFY(@RequestBody User user) {
 
-		Response O_Response = new Response();
+		Response response = new Response();
 
-		if (RO_User.getUOtp() == 0) {
+		if (user.getUOtp() == 0) {
 
-			O_Response.setMessage("Invalid OTP..!");
-			return new ResponseEntity<Object>(O_Response, HttpStatus.UNPROCESSABLE_ENTITY);
+			response.setMessage("Invalid OTP..!");
+			return new ResponseEntity<Object>(response, HttpStatus.UNPROCESSABLE_ENTITY);
 		}
 
-		if (RO_User.getUHashKey().isBlank()) {
+		if (user.getUHashKey().isBlank()) {
 
-			O_Response.setMessage("Hash Key Is Empty..!");
-			return new ResponseEntity<Object>(O_Response, HttpStatus.UNPROCESSABLE_ENTITY);
+			response.setMessage("Hash Key Is Empty..!");
+			return new ResponseEntity<Object>(response, HttpStatus.UNPROCESSABLE_ENTITY);
 		}
 
-		User O_User_Detail = O_UserService.getUserDetailHash(RO_User);
+		User userDetail = userService.getUserDetailHash(user);
 
-		if (O_User_Detail == null) {
+		if (userDetail == null) {
 
-			O_Response.setMessage("Not Registered..!");
-			return new ResponseEntity<Object>(O_Response, HttpStatus.UNPROCESSABLE_ENTITY);
+			response.setMessage("Not Registered..!");
+			return new ResponseEntity<Object>(response, HttpStatus.UNPROCESSABLE_ENTITY);
 		}
 
-		if (O_User_Detail.getUOtpExp().isBefore(OffsetDateTime.now())) {
+		if (userDetail.getUOtpExp().isBefore(OffsetDateTime.now())) {
 
-			O_Response.setMessage("OTP Expired..!");
-			return new ResponseEntity<Object>(O_Response, HttpStatus.UNPROCESSABLE_ENTITY);
+			response.setMessage("OTP Expired..!");
+			return new ResponseEntity<Object>(response, HttpStatus.UNPROCESSABLE_ENTITY);
 		}
 
-		if (RO_User.getUOtp() != O_User_Detail.getUOtp()) {
+		if (user.getUOtp() != userDetail.getUOtp()) {
 
-			O_Response.setMessage("Invalid OTP..!");
-			return new ResponseEntity<Object>(O_Response, HttpStatus.UNPROCESSABLE_ENTITY);
+			response.setMessage("Invalid OTP..!");
+			return new ResponseEntity<Object>(response, HttpStatus.UNPROCESSABLE_ENTITY);
 		}
 
-		O_UserService.changeOTPStatus(O_User_Detail.getUId());
+		userService.changeOTPStatus(userDetail.getUId());
 
-		O_Response.setMessage("Success..!");
-		return new ResponseEntity<Object>(O_Response, HttpStatus.OK);
+		response.setMessage("Success..!");
+		return new ResponseEntity<Object>(response, HttpStatus.OK);
 	}
 
 	@ResponseBody
 	@PostMapping("/forgot/otp/verify")
 
-	private ResponseEntity<?> FORGOT_OTP_VERIFY(@RequestBody User RO_User) {
+	private ResponseEntity<?> FORGOT_OTP_VERIFY(@RequestBody User user) {
 
-		Response O_Response = new Response();
+		Response response = new Response();
 
-		if (RO_User.getUOtp() == 0) {
+		if (user.getUOtp() == 0) {
 
-			O_Response.setMessage("Invalid OTP..!");
-			return new ResponseEntity<Object>(O_Response, HttpStatus.UNPROCESSABLE_ENTITY);
+			response.setMessage("Invalid OTP..!");
+			return new ResponseEntity<Object>(response, HttpStatus.UNPROCESSABLE_ENTITY);
 		}
 
-		if (RO_User.getUHashKey().isBlank()) {
+		if (user.getUHashKey().isBlank()) {
 
-			O_Response.setMessage("Hash Key Is Empty..!");
-			return new ResponseEntity<Object>(O_Response, HttpStatus.UNPROCESSABLE_ENTITY);
+			response.setMessage("Hash Key Is Empty..!");
+			return new ResponseEntity<Object>(response, HttpStatus.UNPROCESSABLE_ENTITY);
 		}
 
-		User O_User_Detail = O_UserService.getUserDetailHash(RO_User);
+		User userDetail = userService.getUserDetailHash(user);
 
-		if (O_User_Detail == null) {
+		if (userDetail == null) {
 
-			O_Response.setMessage("Not Registered..!");
-			return new ResponseEntity<Object>(O_Response, HttpStatus.UNPROCESSABLE_ENTITY);
+			response.setMessage("Not Registered..!");
+			return new ResponseEntity<Object>(response, HttpStatus.UNPROCESSABLE_ENTITY);
 		}
 
-		if (O_User_Detail.getUOtpExp().isBefore(OffsetDateTime.now())) {
+		if (userDetail.getUOtpExp().isBefore(OffsetDateTime.now())) {
 
-			O_Response.setMessage("OTP Expired..!");
-			return new ResponseEntity<Object>(O_Response, HttpStatus.UNPROCESSABLE_ENTITY);
+			response.setMessage("OTP Expired..!");
+			return new ResponseEntity<Object>(response, HttpStatus.UNPROCESSABLE_ENTITY);
 		}
 
-		if (RO_User.getUOtp() != O_User_Detail.getUOtp()) {
+		if (user.getUOtp() != userDetail.getUOtp()) {
 
-			O_Response.setMessage("Invalid OTP..!");
-			return new ResponseEntity<Object>(O_Response, HttpStatus.UNPROCESSABLE_ENTITY);
+			response.setMessage("Invalid OTP..!");
+			return new ResponseEntity<Object>(response, HttpStatus.UNPROCESSABLE_ENTITY);
 		}
 
-		O_Response.setMessage("Success..!");
-		return new ResponseEntity<Object>(O_Response, HttpStatus.OK);
+		response.setMessage("Success..!");
+		return new ResponseEntity<Object>(response, HttpStatus.OK);
 	}
 
 	@ResponseBody
 	@PostMapping("/login")
-	private ResponseEntity<?> LOGIN(@RequestBody User RO_User, HttpServletRequest httpServletRequest) {
+	private ResponseEntity<?> LOGIN(@RequestBody User user, HttpServletRequest httpServletRequest) {
 
 		Integer OTP = SingleTon.getRandomUserId();
 
-		Response O_Response = new Response();
+		Response response = new Response();
 
-		if (RO_User.getURegType() == null) {
+		if (user.getURegType() == null) {
 
-			O_Response.setMessage("Registration Type is Missing..!");
-			return new ResponseEntity<Object>(O_Response, HttpStatus.UNPROCESSABLE_ENTITY);
+			response.setMessage("Registration Type is Missing..!");
+			return new ResponseEntity<Object>(response, HttpStatus.UNPROCESSABLE_ENTITY);
 
 		}
 
-		if (RO_User.getURegType().equals("E")) {
+		if (user.getURegType().equals("E")) {
 
 			// Null-check for Email Id
-			if (RO_User.getUMail() == null || RO_User.getUMail().isBlank()) {
+			if (user.getUMail() == null || user.getUMail().isBlank()) {
 
-				O_Response.setMessage("Email Id is Empty..!");
-				return new ResponseEntity<Object>(O_Response, HttpStatus.UNPROCESSABLE_ENTITY);
+				response.setMessage("Email Id is Empty..!");
+				return new ResponseEntity<Object>(response, HttpStatus.UNPROCESSABLE_ENTITY);
 			}
 
 			// Email Validation
-			if (!SingleTon.isEmailValid(RO_User.getUMail())) {
+			if (!SingleTon.isEmailValid(user.getUMail())) {
 
-				O_Response.setMessage("Invalid Email Id..!");
-				return new ResponseEntity<Object>(O_Response, HttpStatus.UNPROCESSABLE_ENTITY);
+				response.setMessage("Invalid Email Id..!");
+				return new ResponseEntity<Object>(response, HttpStatus.UNPROCESSABLE_ENTITY);
 			}
 
 			// Email Registered Or Not
-			User O_User_Detail = O_UserService.isUserEmailAvailable(RO_User.getUMail());
-			if (O_User_Detail == null) {
+			User userDetail = userService.isUserEmailAvailable(user.getUMail());
+			if (userDetail == null) {
 
-				O_Response.setMessage("Email Id Not Registered..!");
-				return new ResponseEntity<Object>(O_Response, HttpStatus.UNPROCESSABLE_ENTITY);
+				response.setMessage("Email Id Not Registered..!");
+				return new ResponseEntity<Object>(response, HttpStatus.UNPROCESSABLE_ENTITY);
 			}
 
 			// OTP STATUS
-			if (O_User_Detail.getUOtpStatus().equals("N")) {
+			if (userDetail.getUOtpStatus().equals("N")) {
 
-				O_MailService.sendMail(RO_User.getUMail(), SingleTon.PASSWORD_RESET_MAIL_HEADER,
+				mailService.sendMail(user.getUMail(), SingleTon.PASSWORD_RESET_MAIL_HEADER,
 
 						"Your OTP is " + OTP);
 
-				User O_USER1 = new User();
-				O_USER1.setUHashKey(O_UserService.saveOTPDetails(OTP, O_User_Detail.getUId()));
+				User user1 = new User();
+				user1.setUHashKey(userService.saveOTPDetails(OTP, userDetail.getUId()));
 
-				return new ResponseEntity<Object>(O_USER1, HttpStatus.OK);
+				return new ResponseEntity<Object>(user1, HttpStatus.OK);
 
 			}
 
 			// Validate STATUS
-			if (O_User_Detail.getUStatus().equals("N")) {
+			if (userDetail.getUStatus().equals("N")) {
 
-				O_Response.setMessage("Your Account is Deactivated..!");
-				return new ResponseEntity<Object>(O_Response, HttpStatus.UNPROCESSABLE_ENTITY);
+				response.setMessage("Your Account is Deactivated..!");
+				return new ResponseEntity<Object>(response, HttpStatus.UNPROCESSABLE_ENTITY);
 			}
 
 			// Validate Password
-			if (!new BCryptPasswordEncoder().matches(RO_User.getUPassword(), O_User_Detail.getUPassword())) {
+			if (!new BCryptPasswordEncoder().matches(user.getUPassword(), userDetail.getUPassword())) {
 
-				O_Response.setMessage("Wrong Password..!");
-				return new ResponseEntity<Object>(O_Response, HttpStatus.UNPROCESSABLE_ENTITY);
+				response.setMessage("Wrong Password..!");
+				return new ResponseEntity<Object>(response, HttpStatus.UNPROCESSABLE_ENTITY);
 			}
 			String apisecret = new BCryptPasswordEncoder()
 					.encode(String.valueOf(Calendar.getInstance().getTimeInMillis()));
 
-			UserSession O_UserSession = O_UserService.getApiSecretDataByNewSecret(apisecret, O_User_Detail.getUId());
+			UserSession userSession = userService.getApiSecretDataByNewSecret(apisecret, userDetail.getUId());
 
-			O_User_Detail.setApiKey(apisecret);
+			userDetail.setApiKey(apisecret);
 
-			O_UserService.addAuditDetail(O_User_Detail, httpServletRequest);
+			userService.addAuditDetail(userDetail, httpServletRequest);
 
-			return new ResponseEntity<Object>(O_UserSession, HttpStatus.OK);
+			return new ResponseEntity<Object>(userSession, HttpStatus.OK);
 
-		} else if (RO_User.getURegType().equals("M")) {
+		} else if (user.getURegType().equals("M")) {
 
 			// Null-check for Phone
-			if (RO_User.getUPhone() == null) {
+			if (user.getUPhone() == null) {
 
-				O_Response.setMessage("Phone Number Is Empty..!");
-				return new ResponseEntity<Object>(O_Response, HttpStatus.UNPROCESSABLE_ENTITY);
+				response.setMessage("Phone Number Is Empty..!");
+				return new ResponseEntity<Object>(response, HttpStatus.UNPROCESSABLE_ENTITY);
 			}
 			// Phone Number Registered Or Not
-			User O_User_Detail = O_UserService.isUserPhoneNoAvailable(RO_User.getUPhone());
-			if (O_User_Detail == null) {
+			User userDetail = userService.isUserPhoneNoAvailable(user.getUPhone());
+			if (userDetail == null) {
 
-				O_Response.setMessage("Phone Number Not Registered..!");
-				return new ResponseEntity<Object>(O_Response, HttpStatus.UNPROCESSABLE_ENTITY);
+				response.setMessage("Phone Number Not Registered..!");
+				return new ResponseEntity<Object>(response, HttpStatus.UNPROCESSABLE_ENTITY);
 			}
 			// OTP STATUS
-			if (O_User_Detail.getUOtpStatus().equals("N")) {
+			if (userDetail.getUOtpStatus().equals("N")) {
 
-				O_MailService.sendSMS(RO_User.getUPhone(), RO_User.getUPhoneCode(), "Your OTP is " + OTP);
+				mailService.sendSMS(user.getUPhone(), user.getUPhoneCode(), "Your OTP is " + OTP);
 
-				User O_User1 = new User();
+				User user1 = new User();
 
-				O_User1.setUHashKey(O_UserService.saveOTPDetails(OTP, O_User_Detail.getUId()));
+				user1.setUHashKey(userService.saveOTPDetails(OTP, userDetail.getUId()));
 
-				return new ResponseEntity<Object>(O_User1, HttpStatus.OK);
+				return new ResponseEntity<Object>(user1, HttpStatus.OK);
 
 			} // Validate STATUS
-			if (O_User_Detail.getUStatus().equals("N")) {
+			if (userDetail.getUStatus().equals("N")) {
 
-				O_Response.setMessage("Your Account is Deactivated..!");
-				return new ResponseEntity<Object>(O_Response, HttpStatus.UNPROCESSABLE_ENTITY);
+				response.setMessage("Your Account is Deactivated..!");
+				return new ResponseEntity<Object>(response, HttpStatus.UNPROCESSABLE_ENTITY);
 			}
 
 			// Validate Password
-			if (!new BCryptPasswordEncoder().matches(RO_User.getUPassword(), O_User_Detail.getUPassword())) {
+			if (!new BCryptPasswordEncoder().matches(user.getUPassword(), userDetail.getUPassword())) {
 
-				O_Response.setMessage("Wrong Password..!");
-				return new ResponseEntity<Object>(O_Response, HttpStatus.UNPROCESSABLE_ENTITY);
+				response.setMessage("Wrong Password..!");
+				return new ResponseEntity<Object>(response, HttpStatus.UNPROCESSABLE_ENTITY);
 			}
 			// API SECRET KEY LOGIC HERE
 			String apisecret = new BCryptPasswordEncoder()
 					.encode(String.valueOf(Calendar.getInstance().getTimeInMillis()));
 
-			UserSession O_UserSession = O_UserService.getApiSecretDataByNewSecret(apisecret, O_User_Detail.getUId());
+			UserSession userSession = userService.getApiSecretDataByNewSecret(apisecret, userDetail.getUId());
 
-			O_User_Detail.setApiKey(apisecret);
+			userDetail.setApiKey(apisecret);
 
-			O_UserService.addAuditDetail(O_User_Detail, httpServletRequest);
+			userService.addAuditDetail(userDetail, httpServletRequest);
 
-			return new ResponseEntity<Object>(O_UserSession, HttpStatus.OK);
+			return new ResponseEntity<Object>(userSession, HttpStatus.OK);
 		} else {
 
-			O_Response.setMessage("Registration Type is Missing..!");
-			return new ResponseEntity<Object>(O_Response, HttpStatus.UNPROCESSABLE_ENTITY);
+			response.setMessage("Registration Type is Missing..!");
+			return new ResponseEntity<Object>(response, HttpStatus.UNPROCESSABLE_ENTITY);
 		}
 	}
 
 	@ResponseBody
 	@PostMapping("/forgot")
-	private ResponseEntity<?> FORGOT(@RequestBody User RO_User) {
+	private ResponseEntity<?> FORGOT(@RequestBody User user) {
 
 		Integer OTP = SingleTon.getRandomUserId();
 
-		Response O_Response = new Response();
+		Response response = new Response();
 
-		if (RO_User.getURegType() == null) {
+		if (user.getURegType() == null) {
 
-			O_Response.setMessage("Registration Type is Missing..!");
-			return new ResponseEntity<Object>(O_Response, HttpStatus.UNPROCESSABLE_ENTITY);
+			response.setMessage("Registration Type is Missing..!");
+			return new ResponseEntity<Object>(response, HttpStatus.UNPROCESSABLE_ENTITY);
 
 		}
 
-		if (RO_User.getURegType().equals("E")) {
+		if (user.getURegType().equals("E")) {
 
-			if (RO_User.getUMail() == null || RO_User.getUMail().isBlank()) {
+			if (user.getUMail() == null || user.getUMail().isBlank()) {
 
-				O_Response.setMessage("Email Id Is Empty..!");
+				response.setMessage("Email Id Is Empty..!");
 
-				return new ResponseEntity<>(O_Response, HttpStatus.UNPROCESSABLE_ENTITY);
+				return new ResponseEntity<>(response, HttpStatus.UNPROCESSABLE_ENTITY);
 			}
 
-			if (!SingleTon.isEmailValid(RO_User.getUMail())) {
+			if (!SingleTon.isEmailValid(user.getUMail())) {
 
-				O_Response.setMessage("Invalid Email Id..!");
-				return new ResponseEntity<Object>(O_Response, HttpStatus.UNPROCESSABLE_ENTITY);
+				response.setMessage("Invalid Email Id..!");
+				return new ResponseEntity<Object>(response, HttpStatus.UNPROCESSABLE_ENTITY);
 			}
-			User O_User_Detail = O_UserService.isUserEmailAvailable(RO_User.getUMail());
-			if (O_User_Detail == null) {
+			User userDetail = userService.isUserEmailAvailable(user.getUMail());
+			if (userDetail == null) {
 
-				O_Response.setMessage("Email Id Not Registered..!");
-				return new ResponseEntity<Object>(O_Response, HttpStatus.UNPROCESSABLE_ENTITY);
+				response.setMessage("Email Id Not Registered..!");
+				return new ResponseEntity<Object>(response, HttpStatus.UNPROCESSABLE_ENTITY);
 			}
 
-			O_MailService.sendMail(RO_User.getUMail(), SingleTon.PASSWORD_RESET_MAIL_HEADER,
+			mailService.sendMail(user.getUMail(), SingleTon.PASSWORD_RESET_MAIL_HEADER,
 
 					"Your OTP is " + OTP);
 
-			User O_User1 = new User();
+			User user1 = new User();
 
-			O_User1.setUHashKey(O_UserService.saveOTPDetails(OTP, O_User_Detail.getUId()));
+			user1.setUHashKey(userService.saveOTPDetails(OTP, userDetail.getUId()));
 
-			return new ResponseEntity<Object>(O_User1, HttpStatus.OK);
+			return new ResponseEntity<Object>(user1, HttpStatus.OK);
 
-		} else if (RO_User.getURegType().equals("M")) {
+		} else if (user.getURegType().equals("M")) {
 
-			if (RO_User.getUPhone() == null) {
+			if (user.getUPhone() == null) {
 
-				O_Response.setMessage("Mobile Number Is Empty..!");
-				return new ResponseEntity<Object>(O_Response, HttpStatus.UNPROCESSABLE_ENTITY);
+				response.setMessage("Mobile Number Is Empty..!");
+				return new ResponseEntity<Object>(response, HttpStatus.UNPROCESSABLE_ENTITY);
 			}
 
-			User O_User_Detail = O_UserService.isUserPhoneNoAvailable(RO_User.getUPhone());
-			if (O_User_Detail == null) {
+			User userDetail = userService.isUserPhoneNoAvailable(user.getUPhone());
+			if (userDetail == null) {
 
-				O_Response.setMessage("Mobile Number Not Registered..!");
-				return new ResponseEntity<Object>(O_Response, HttpStatus.UNPROCESSABLE_ENTITY);
+				response.setMessage("Mobile Number Not Registered..!");
+				return new ResponseEntity<Object>(response, HttpStatus.UNPROCESSABLE_ENTITY);
 			}
 
-			O_MailService.sendSMS(RO_User.getUPhone(), RO_User.getUPhoneCode(), "Your OTP is " + OTP);
+			mailService.sendSMS(user.getUPhone(), user.getUPhoneCode(), "Your OTP is " + OTP);
 
-			User O_User1 = new User();
+			User user1 = new User();
 
-			O_User1.setUHashKey(O_UserService.saveOTPDetails(OTP, O_User_Detail.getUId()));
+			user1.setUHashKey(userService.saveOTPDetails(OTP, userDetail.getUId()));
 
-			return new ResponseEntity<Object>(O_User1, HttpStatus.OK);
+			return new ResponseEntity<Object>(user1, HttpStatus.OK);
 
 		} else {
 
-			O_Response.setMessage("Registration Type is Missing..!");
-			return new ResponseEntity<Object>(O_Response, HttpStatus.UNPROCESSABLE_ENTITY);
+			response.setMessage("Registration Type is Missing..!");
+			return new ResponseEntity<Object>(response, HttpStatus.UNPROCESSABLE_ENTITY);
 		}
 
 	}
@@ -450,92 +450,92 @@ public class RegisterController {
 	@ResponseBody
 	@PutMapping("/update/password")
 
-	private ResponseEntity<?> UPDATE_PASSWORD(@RequestBody User RO_User) {
+	private ResponseEntity<?> UPDATE_PASSWORD(@RequestBody User user) {
 
-		Response O_Response = new Response();
+		Response response = new Response();
 
-		if (RO_User.getUPassword().length() > 14 || RO_User.getUPassword().length() < 4) {
+		if (user.getUPassword().length() > 14 || user.getUPassword().length() < 4) {
 
-			O_Response.setMessage("Password Shoud be 4 to 14 Charaters ..!");
-			return new ResponseEntity<Object>(O_Response, HttpStatus.UNPROCESSABLE_ENTITY);
+			response.setMessage("Password Shoud be 4 to 14 Charaters ..!");
+			return new ResponseEntity<Object>(response, HttpStatus.UNPROCESSABLE_ENTITY);
 		}
 
-		if (RO_User.getUHashKey().isBlank()) {
+		if (user.getUHashKey().isBlank()) {
 
-			O_Response.setMessage("Hash Key Is Empty..!");
-			return new ResponseEntity<Object>(O_Response, HttpStatus.UNPROCESSABLE_ENTITY);
+			response.setMessage("Hash Key Is Empty..!");
+			return new ResponseEntity<Object>(response, HttpStatus.UNPROCESSABLE_ENTITY);
 		}
 
-		User O_User_Detail = O_UserService.getUserDetailHash(RO_User);
+		User userDetail = userService.getUserDetailHash(user);
 
-		if (O_User_Detail == null) {
+		if (userDetail == null) {
 
-			O_Response.setMessage("Not Registered..!");
-			return new ResponseEntity<Object>(O_Response, HttpStatus.UNPROCESSABLE_ENTITY);
+			response.setMessage("Not Registered..!");
+			return new ResponseEntity<Object>(response, HttpStatus.UNPROCESSABLE_ENTITY);
 		}
-		O_User_Detail.setUPassword(new BCryptPasswordEncoder().encode(RO_User.getUPassword()));
+		userDetail.setUPassword(new BCryptPasswordEncoder().encode(user.getUPassword()));
 
-		O_UserService.updatePassword(O_User_Detail);
-		O_Response.setMessage("Password Updated Successfully..!");
-		return new ResponseEntity<Object>(O_Response, HttpStatus.OK);
+		userService.updatePassword(userDetail);
+		response.setMessage("Password Updated Successfully..!");
+		return new ResponseEntity<Object>(response, HttpStatus.OK);
 
 	}
 
 	@ResponseBody
 	@PostMapping("/change/password")
-	private ResponseEntity<?> CHANGE_PASSWORD(@RequestBody User RO_User,
+	private ResponseEntity<?> CHANGE_PASSWORD(@RequestBody User user,
 			@RequestHeader(value = "apiKey") String apiKey) {
 
-		Response O_Response = new Response();
+		Response response = new Response();
 
-		if (RO_User.getUPassword().length() > 14 || RO_User.getUPassword().length() < 4) {
+		if (user.getUPassword().length() > 14 || user.getUPassword().length() < 4) {
 
-			O_Response.setMessage("Password Shoud be 4 to 14 Charaters ..!");
-			return new ResponseEntity<Object>(O_Response, HttpStatus.UNPROCESSABLE_ENTITY);
+			response.setMessage("Password Shoud be 4 to 14 Charaters ..!");
+			return new ResponseEntity<Object>(response, HttpStatus.UNPROCESSABLE_ENTITY);
 		}
 
-		if (RO_User.getOldPassword().isBlank()) {
+		if (user.getOldPassword().isBlank()) {
 
-			O_Response.setMessage("Old Password Is Empty ..!");
-			return new ResponseEntity<Object>(O_Response, HttpStatus.UNPROCESSABLE_ENTITY);
+			response.setMessage("Old Password Is Empty ..!");
+			return new ResponseEntity<Object>(response, HttpStatus.UNPROCESSABLE_ENTITY);
 		}
 
-		User O_User_Detail = O_UserService.getUserDetailAPIKey(apiKey);
+		User userDetail = userService.getUserDetailAPIKey(apiKey);
 
-		if (!new BCryptPasswordEncoder().matches(RO_User.getOldPassword(), O_User_Detail.getUPassword())) {
+		if (!new BCryptPasswordEncoder().matches(user.getOldPassword(), userDetail.getUPassword())) {
 
-			O_Response.setMessage("Invalid Old Password..!");
-			return new ResponseEntity<Object>(O_Response, HttpStatus.UNPROCESSABLE_ENTITY);
+			response.setMessage("Invalid Old Password..!");
+			return new ResponseEntity<Object>(response, HttpStatus.UNPROCESSABLE_ENTITY);
 		}
-		if (RO_User.getOldPassword().equals(RO_User.getUPassword())) {
+		if (user.getOldPassword().equals(user.getUPassword())) {
 
-			O_Response.setMessage("New Password Is Same As Above..!");
-			return new ResponseEntity<Object>(O_Response, HttpStatus.UNPROCESSABLE_ENTITY);
+			response.setMessage("New Password Is Same As Above..!");
+			return new ResponseEntity<Object>(response, HttpStatus.UNPROCESSABLE_ENTITY);
 		}
-		RO_User.setUId(O_User_Detail.getUId());
-		RO_User.setUPassword(new BCryptPasswordEncoder().encode(RO_User.getUPassword()));
+		user.setUId(userDetail.getUId());
+		user.setUPassword(new BCryptPasswordEncoder().encode(user.getUPassword()));
 
-		O_UserService.updatePassword(RO_User);
-		O_Response.setMessage("Password Changed Successfully..!");
-		return new ResponseEntity<Object>(O_Response, HttpStatus.OK);
+		userService.updatePassword(user);
+		response.setMessage("Password Changed Successfully..!");
+		return new ResponseEntity<Object>(response, HttpStatus.OK);
 	}
 
 	@ResponseBody
 	@GetMapping(value = "/logout")
 	ResponseEntity<?> LOGOUT(@RequestHeader(value = "X-Auth-Token") String apiKey) {
 
-		Response O_Response = new Response();
+		Response response = new Response();
 
-		Boolean logoutUpdate = O_UserService.userLogout(apiKey);
+		Boolean logoutUpdate = userService.userLogout(apiKey);
 
 		if (!logoutUpdate) {
 
-			O_Response.setMessage("Logout Error..!");
-			return new ResponseEntity<Object>(O_Response, HttpStatus.UNPROCESSABLE_ENTITY);
+			response.setMessage("Logout Error..!");
+			return new ResponseEntity<Object>(response, HttpStatus.UNPROCESSABLE_ENTITY);
 		}
 
-		O_Response.setMessage("success..!");
-		return new ResponseEntity<Object>(O_Response, HttpStatus.OK);
+		response.setMessage("success..!");
+		return new ResponseEntity<Object>(response, HttpStatus.OK);
 	}
 
 }

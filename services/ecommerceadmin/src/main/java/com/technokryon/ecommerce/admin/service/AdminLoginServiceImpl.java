@@ -16,67 +16,67 @@ import com.technokryon.ecommerce.admin.pojo.UserSession;
 public class AdminLoginServiceImpl implements AdminLoginService {
 
 	@Autowired
-	private AdminLoginDao O_AdminLoginDao;
+	private AdminLoginDao adminLoginDao;
 
 	@Override
 	public Boolean checkRoleByUserId(String uId) {
-		// TODO Auto-generated method stub
-		return O_AdminLoginDao.checkRoleByUserId(uId);
+
+		return adminLoginDao.checkRoleByUserId(uId);
 	}
 
 	@Override
 	public User isUserEmailAvailable(String mail) {
 
-		return O_AdminLoginDao.isUserEmailAvailable(mail);
+		return adminLoginDao.isUserEmailAvailable(mail);
 	}
 
 	@Override
 	public String saveOTPDetails(Integer oTP, String userId) {
 
-		return O_AdminLoginDao.saveOTPDetails(oTP, userId);
+		return adminLoginDao.saveOTPDetails(oTP, userId);
 	}
 
 	@Override
-	public User getUserDetailHash(User RO_User) {
+	public User getUserDetailHash(User user) {
 
-		return O_AdminLoginDao.getUserDetailHash(RO_User);
+		return adminLoginDao.getUserDetailHash(user);
 	}
 
 	@Override
-	public void updatePassword(User O_User_Detail) {
+	public void updatePassword(User userDetail) {
 
-		O_AdminLoginDao.updatePassword(O_User_Detail);
+		adminLoginDao.updatePassword(userDetail);
 
 	}
 
 	@Override
 	public UserSession getApiSecretDataByNewSecret(String apisecret, String userId) {
 
-		return O_AdminLoginDao.getApiSecretDataByNewSecret(apisecret, userId);
+		return adminLoginDao.getApiSecretDataByNewSecret(apisecret, userId);
 	}
 
 	@Override
-	public void addAuditDetail(User O_USER_DETAIL, HttpServletRequest httpServletRequest) {
+	public void addAuditDetail(User userDetail, HttpServletRequest httpServletRequest) {
 
-		O_AdminLoginDao.addAuditDetail(O_USER_DETAIL, httpServletRequest);
+		adminLoginDao.addAuditDetail(userDetail, httpServletRequest);
 	}
 
 	@Override
 	public User getUserDetailAPIKey(String apiKey) {
 
-		return O_AdminLoginDao.getUserDetailAPIKey(apiKey);
+		return adminLoginDao.getUserDetailAPIKey(apiKey);
 	}
 
 	@Override
 	public Boolean userLogout(String apiKey) {
 
-		return O_AdminLoginDao.userLogout(apiKey);
+		return adminLoginDao.userLogout(apiKey);
 	}
 
 	@Override
 	public void changeOTPStatus(String uId) {
 
-		O_AdminLoginDao.changeOTPStatus(uId);
+		adminLoginDao.changeOTPStatus(uId);
 
 	}
 

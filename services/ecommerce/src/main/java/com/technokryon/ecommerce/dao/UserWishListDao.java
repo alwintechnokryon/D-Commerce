@@ -6,10 +6,10 @@ import com.technokryon.ecommerce.pojo.WishList;
 
 public interface UserWishListDao {
 
-	void addWishList(WishList RO_WishList);
+	void addWishList(WishList wishList);
 
 	List<WishList> listWishList(String uId);
 
-	void deleteWishlist(WishList RO_WishList);
+	void deleteWishlist(WishList wishList);
 
 }

@@ -16,25 +16,25 @@ import com.technokryon.ecommerce.pojo.WishList;
 public class UserWishListServiceImpl implements UserWishListService {
 
 	@Autowired
-	private UserWishListDao O_UserWishListDao;
+	private UserWishListDao userWishListDao;
 
 	@Override
-	public void addWishList(WishList RO_WishList) {
+	public void addWishList(WishList wishList) {
 
-		O_UserWishListDao.addWishList(RO_WishList);
+		userWishListDao.addWishList(wishList);
 	}
 
 	@Override
 	public List<WishList> listWishList(String uId) {
 
-		return O_UserWishListDao.listWishList(uId);
+		return userWishListDao.listWishList(uId);
 
 	}
 
 	@Override
-	public void deleteWishlist(WishList RO_WishList) {
+	public void deleteWishlist(WishList wishList) {
 
-		O_UserWishListDao.deleteWishlist(RO_WishList);
+		userWishListDao.deleteWishlist(wishList);
 
 	}
 

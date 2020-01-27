@@ -11,23 +11,23 @@ public interface UserService {
 
 	User isUserEmailAvailable(String mail);
 
-	String createNewUserByEmail(User RO_User);
+	String createNewUserByEmail(User user);
 
 	String saveOTPDetails(Integer oTP, String userId);
 
 	User isUserPhoneNoAvailable(BigInteger phoneNo);
 
-	String createNewUserByPhoneNo(User RO_User);
+	String createNewUserByPhoneNo(User user);
 
-	User getUserDetailHash(User RO_User);
+	User getUserDetailHash(User user);
 
 	void changeOTPStatus(String userId);
 
-	void updatePassword(User O_User_Detail);
+	void updatePassword(User userDetail);
 
 	UserSession getApiSecretDataByNewSecret(String apisecret, String userId);
 
-	void addAuditDetail(User O_USER_DETAIL, HttpServletRequest httpServletRequest);
+	void addAuditDetail(User userDetail, HttpServletRequest httpServletRequest);
 
 	User getUserDetailAPIKey(String apiKey);
 

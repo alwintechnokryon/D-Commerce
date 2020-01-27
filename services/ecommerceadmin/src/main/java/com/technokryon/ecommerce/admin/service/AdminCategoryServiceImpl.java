@@ -16,37 +16,36 @@ import com.technokryon.ecommerce.admin.pojo.Category;
 public class AdminCategoryServiceImpl implements AdminCategoryService {
 
 	@Autowired
-	private AdminCategoryDao O_AdminCategoryDao;
+	private AdminCategoryDao adminCategoryDao;
 
 	@Override
 	public Boolean checkCategoryName(String cCategoryName) {
-		// TODO Auto-generated method stub
-		return O_AdminCategoryDao.checkCategoryName(cCategoryName);
+		
+		return adminCategoryDao.checkCategoryName(cCategoryName);
 	}
 
 	@Override
-	public String addCategory(Category RO_Category) {
-		// TODO Auto-generated method stub
-		return O_AdminCategoryDao.addCategory(RO_Category);
+	public String addCategory(Category category) {
+		
+		return adminCategoryDao.addCategory(category);
 	}
 
 	@Override
 	public List<Category> categoryList() {
-		// TODO Auto-generated method stub
-		return O_AdminCategoryDao.categoryList();
+		
+		return adminCategoryDao.categoryList();
 	}
 
 	@Override
-	public List<Category> categoryListById(Category RO_Category) {
-		// TODO Auto-generated method stub
-		return O_AdminCategoryDao.categoryListById(RO_Category);
+	public List<Category> categoryListById(Category category) {
+		
+		return adminCategoryDao.categoryListById(category);
 	}
 
 	@Override
-	public Boolean updateCategory(Category RO_Category) {
-		// TODO Auto-generated method stub
+	public Boolean updateCategory(Category category) {
 
-		return O_AdminCategoryDao.updateCategory(RO_Category);
+		return adminCategoryDao.updateCategory(category);
 
 	}
 }

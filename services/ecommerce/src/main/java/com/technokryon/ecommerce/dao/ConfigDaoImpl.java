@@ -30,123 +30,123 @@ import com.technokryon.ecommerce.pojo.State;
 public class ConfigDaoImpl implements ConfigDao {
 
 	@Autowired
-	private SessionFactory O_SessionFactory;
+	private SessionFactory sessionFactory;
 
 	@Autowired
-	private ModelMapper O_ModelMapper;
+	private ModelMapper modelMapper;
 
 	@Override
 	public List<Country> countryList() {
 
-		List<Country> LO_Country = new ArrayList<Country>();
+		List<Country> country = new ArrayList<Country>();
 
 		String countryList = "FROM TKECMCOUNTRY";
 
-		Query countryListQuery = O_SessionFactory.getCurrentSession().createQuery(countryList);
+		Query countryListQuery = sessionFactory.getCurrentSession().createQuery(countryList);
 
-		List<TKECMCOUNTRY> LO_TKECMCOUNTRY = (List<TKECMCOUNTRY>) countryListQuery.getResultList();
+		List<TKECMCOUNTRY> tKECMCOUNTRY = (List<TKECMCOUNTRY>) countryListQuery.getResultList();
 
-		for (TKECMCOUNTRY O_TKECMCOUNTRY : LO_TKECMCOUNTRY) {
+		for (TKECMCOUNTRY tKECMCOUNTRY1 : tKECMCOUNTRY) {
 
-			Country O_Country = O_ModelMapper.map(O_TKECMCOUNTRY, Country.class);
-			LO_Country.add(O_Country);
+			Country country1 = modelMapper.map(tKECMCOUNTRY1, Country.class);
+			country.add(country1);
 		}
-		return LO_Country;
+		return country;
 	}
 
 	@Override
 	public List<ProductType> productTypeList() {
 
-		List<ProductType> LO_ProductType = new ArrayList<ProductType>();
+		List<ProductType> productType = new ArrayList<ProductType>();
 
 		String productTypeList = "FROM TKECMPRODUCTTYPE";
 
-		Query productTypeListQuery = O_SessionFactory.getCurrentSession().createQuery(productTypeList);
+		Query productTypeListQuery = sessionFactory.getCurrentSession().createQuery(productTypeList);
 
-		List<TKECMPRODUCTTYPE> LO_TKECMPRODUCTTYPE = (List<TKECMPRODUCTTYPE>) productTypeListQuery.getResultList();
+		List<TKECMPRODUCTTYPE> tKECMPRODUCTTYPE = (List<TKECMPRODUCTTYPE>) productTypeListQuery.getResultList();
 
-		for (TKECMPRODUCTTYPE O_TKECMPRODUCTTYPE : LO_TKECMPRODUCTTYPE) {
+		for (TKECMPRODUCTTYPE tKECMPRODUCTTYPE1 : tKECMPRODUCTTYPE) {
 
-			ProductType O_ProductType = O_ModelMapper.map(O_TKECMPRODUCTTYPE, ProductType.class);
-			LO_ProductType.add(O_ProductType);
+			ProductType productType1 = modelMapper.map(tKECMPRODUCTTYPE1, ProductType.class);
+			productType.add(productType1);
 		}
-		return LO_ProductType;
+		return productType;
 	}
 
 	@Override
 	public List<ProductPaymentType> productPaymentTypeList() {
 
-		List<ProductPaymentType> LO_ProductPaymentType = new ArrayList<ProductPaymentType>();
+		List<ProductPaymentType> productPaymentType = new ArrayList<ProductPaymentType>();
 
 		String productPaymentTypeList = "FROM TKECMPRODUCTPAYMENTTYPE";
 
-		Query productPaymentTypeListQuery = O_SessionFactory.getCurrentSession().createQuery(productPaymentTypeList);
+		Query productPaymentTypeListQuery = sessionFactory.getCurrentSession().createQuery(productPaymentTypeList);
 
-		List<TKECMPRODUCTPAYMENTTYPE> LO_TKECMPRODUCTPAYMENTTYPE = (List<TKECMPRODUCTPAYMENTTYPE>) productPaymentTypeListQuery
+		List<TKECMPRODUCTPAYMENTTYPE> tKECMPRODUCTPAYMENTTYPE = (List<TKECMPRODUCTPAYMENTTYPE>) productPaymentTypeListQuery
 				.getResultList();
 
-		for (TKECMPRODUCTPAYMENTTYPE O_TKECMPRODUCTPAYMENTTYPE : LO_TKECMPRODUCTPAYMENTTYPE) {
+		for (TKECMPRODUCTPAYMENTTYPE tKECMPRODUCTPAYMENTTYPE1 : tKECMPRODUCTPAYMENTTYPE) {
 
-			ProductPaymentType O_ProductPaymentType = O_ModelMapper.map(O_TKECMPRODUCTPAYMENTTYPE,
+			ProductPaymentType productPaymentType1 = modelMapper.map(tKECMPRODUCTPAYMENTTYPE1,
 					ProductPaymentType.class);
-			LO_ProductPaymentType.add(O_ProductPaymentType);
+			productPaymentType.add(productPaymentType1);
 		}
-		return LO_ProductPaymentType;
+		return productPaymentType;
 	}
 
 	@Override
 	public List<State> stateListById(Integer sTkecmcnAgId) {
 
-		List<State> LO_State = new ArrayList<State>();
+		List<State> state = new ArrayList<State>();
 
 		String stateListById = "FROM TKECTSTATE WHERE sTkecmcnAgId.cnAgId =:countryAgId";
 
-		Query stateListByIdQuery = O_SessionFactory.getCurrentSession().createQuery(stateListById);
+		Query stateListByIdQuery = sessionFactory.getCurrentSession().createQuery(stateListById);
 
 		stateListByIdQuery.setParameter("countryAgId", sTkecmcnAgId);
 
-		List<TKECTSTATE> LO_TKECTSTATE = stateListByIdQuery.getResultList();
+		List<TKECTSTATE> tKECTSTATE = stateListByIdQuery.getResultList();
 
-		PropertyMap<TKECTSTATE, State> O_PropertyMap = new PropertyMap<TKECTSTATE, State>() {
+		PropertyMap<TKECTSTATE, State> propertyMap = new PropertyMap<TKECTSTATE, State>() {
 			protected void configure() {
 
 				skip().setSFipsCode(null);
 				skip().setSTkecmcnAgId(null);
 			}
 		};
-		TypeMap<TKECTSTATE, State> O_TypeMap = O_ModelMapper.getTypeMap(TKECTSTATE.class, State.class);
+		TypeMap<TKECTSTATE, State> typeMap = modelMapper.getTypeMap(TKECTSTATE.class, State.class);
 
-		if (O_TypeMap == null) {
-			O_ModelMapper.addMappings(O_PropertyMap);
+		if (typeMap == null) {
+			modelMapper.addMappings(propertyMap);
 		}
 
-		for (TKECTSTATE O_TKECTSTATE : LO_TKECTSTATE) {
+		for (TKECTSTATE tKECTSTATE1 : tKECTSTATE) {
 
-			State O_State = O_ModelMapper.map(O_TKECTSTATE, State.class);
+			State state1 = modelMapper.map(tKECTSTATE1, State.class);
 
-			LO_State.add(O_State);
+			state.add(state1);
 		}
 
-		return LO_State;
+		return state;
 	}
 
 	@Override
 	public List<Attribute> attributeList() {
 
-		List<Attribute> LO_Attribute = new ArrayList<Attribute>();
+		List<Attribute> attribute = new ArrayList<Attribute>();
 
 		String attributeList = "FROM TKECMATTRIBUTE";
 
-		Query attributeListQuery = O_SessionFactory.getCurrentSession().createQuery(attributeList);
+		Query attributeListQuery = sessionFactory.getCurrentSession().createQuery(attributeList);
 
-		List<TKECMATTRIBUTE> LO_TKECMATTRIBUTE = (List<TKECMATTRIBUTE>) attributeListQuery.getResultList();
+		List<TKECMATTRIBUTE> tKECMATTRIBUTE = (List<TKECMATTRIBUTE>) attributeListQuery.getResultList();
 
-		for (TKECMATTRIBUTE O_TKECMATTRIBUTE : LO_TKECMATTRIBUTE) {
+		for (TKECMATTRIBUTE tKECMATTRIBUTE1 : tKECMATTRIBUTE) {
 
-			Attribute O_Attribute = O_ModelMapper.map(O_TKECMATTRIBUTE, Attribute.class);
-			LO_Attribute.add(O_Attribute);
+			Attribute attribute1 = modelMapper.map(tKECMATTRIBUTE1, Attribute.class);
+			attribute.add(attribute1);
 		}
-		return LO_Attribute;
+		return attribute;
 	}
 
 }

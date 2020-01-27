@@ -16,44 +16,44 @@ import com.technokryon.ecommerce.pojo.ProductCart;
 public class UserCartServiceImpl implements UserCartService {
 
 	@Autowired
-	private UserCartDao O_UserCartDao;
+	private UserCartDao userCartDao;
 
 	@Override
-	public void addToCart(ProductCart RO_ProductCart) {
+	public void addToCart(ProductCart productCart) {
 
-		O_UserCartDao.addToCart(RO_ProductCart);
+		userCartDao.addToCart(productCart);
 
 	}
 
 	@Override
 	public List<ProductCart> listCart(String uId) {
 
-		return O_UserCartDao.listCart(uId);
+		return userCartDao.listCart(uId);
 	}
 
 	@Override
 	public Integer checkTotalQuantity(String pcTkecmpId) {
 
-		return O_UserCartDao.checkTotalQuantity(pcTkecmpId);
+		return userCartDao.checkTotalQuantity(pcTkecmpId);
 	}
 
 	@Override
-	public Boolean addQuantity(ProductCart RO_ProductCart) {
+	public Boolean addQuantity(ProductCart productCart) {
 
-		return O_UserCartDao.addQuantity(RO_ProductCart);
+		return userCartDao.addQuantity(productCart);
 	}
 
 	@Override
-	public void saveLater(ProductCart RO_ProductCart) {
+	public void saveLater(ProductCart productCart) {
 
-		O_UserCartDao.saveLater(RO_ProductCart);
+		userCartDao.saveLater(productCart);
 
 	}
 
 	@Override
-	public void deleteCart(ProductCart RO_ProductCart) {
+	public void deleteCart(ProductCart productCart) {
 
-		O_UserCartDao.deleteCart(RO_ProductCart);
+		userCartDao.deleteCart(productCart);
 
 	}
 

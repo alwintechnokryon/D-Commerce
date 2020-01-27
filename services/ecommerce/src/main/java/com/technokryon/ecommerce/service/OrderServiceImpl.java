@@ -17,42 +17,42 @@ import com.technokryon.ecommerce.pojo.Product;
 public class OrderServiceImpl implements OrderService {
 
 	@Autowired
-	OrderDao O_OrderDao;
+	OrderDao orderDao;
 
 	@Override
-	public String requestOrder(Order RO_Order) {
+	public String requestOrder(Order order) {
 
-		return O_OrderDao.requestOrder(RO_Order);
+		return orderDao.requestOrder(order);
 	}
 
 	@Override
-	public Boolean checkAvailableProductQuantity(List<Product> LO_PRODUCT) {
+	public Boolean checkAvailableProductQuantity(List<Product> product) {
 
-		return O_OrderDao.checkAvailableProductQuantity(LO_PRODUCT);
+		return orderDao.checkAvailableProductQuantity(product);
 	}
 
 	@Override
-	public String updateTransactionId(Order RO_Order) {
+	public String updateTransactionId(Order order) {
 
-		return O_OrderDao.updateTransactionId(RO_Order);
+		return orderDao.updateTransactionId(order);
 	}
 
 	@Override
 	public List<OrderItem> orderList(String uId) {
 		// TODO Auto-generated method stub
-		return O_OrderDao.orderList(uId);
+		return orderDao.orderList(uId);
 	}
 
 	@Override
 	public OrderItem orderItemById(Integer oiAgId) {
 		// TODO Auto-generated method stub
-		return O_OrderDao.orderItemById(oiAgId);
+		return orderDao.orderItemById(oiAgId);
 	}
 
 	@Override
 	public void orderCancel(Integer oshAgId, String uId) {
 		// TODO Auto-generated method stub
-		O_OrderDao.orderCancel(oshAgId, uId);
+		orderDao.orderCancel(oshAgId, uId);
 	}
 
 }

@@ -21,18 +21,18 @@ import com.technokryon.ecommerce.admin.service.AdminShippingService;
 public class AdminShippingController {
 
 	@Autowired
-	private AdminShippingService O_AdminShippingService;
+	private AdminShippingService adminShippingService;
 
 	@ResponseBody
 	@PostMapping("/add/cost")
 	private ResponseEntity<?> ADD_COST(@RequestHeader(value = "X-Auth-Token") String apiKey,
-			@RequestBody ShippingCost RO_ShippingCost) {
+			@RequestBody ShippingCost shippingCost) {
 
-		Response O_Response = new Response();
+		Response response = new Response();
 
-		O_AdminShippingService.addShippingCost(RO_ShippingCost);
-		O_Response.setMessage("Shipping Cost Added SuccessFully");
-		return new ResponseEntity<>(O_Response, HttpStatus.OK);
+		adminShippingService.addShippingCost(shippingCost);
+		response.setMessage("Shipping Cost Added SuccessFully");
+		return new ResponseEntity<>(response, HttpStatus.OK);
 
 	}
 }

@@ -24,21 +24,21 @@ import com.technokryon.ecommerce.pojo.WishList;
 public class UserWishListDaoImpl implements UserWishListDao {
 
 	@Autowired
-	private SessionFactory O_SessionFactory;
+	private SessionFactory sessionFactory;
 
 	@Autowired
-	private ModelMapper O_ModelMapper;
+	private ModelMapper modelMapper;
 
 	@Override
-	public void addWishList(WishList RO_WishList) {
+	public void addWishList(WishList wishList) {
 
-		TKECTWISHLIST O_TKECTWISHLIST = new TKECTWISHLIST();
+		TKECTWISHLIST tKECTWISHLIST = new TKECTWISHLIST();
 
-		O_TKECTWISHLIST.setWlUserId(RO_WishList.getWlUserId());
-		O_TKECTWISHLIST.setWlTkecmpId(
-				O_SessionFactory.getCurrentSession().get(TKECMPRODUCT.class, RO_WishList.getWlTkecmpId()));
-		O_TKECTWISHLIST.setWlCreatedDate(OffsetDateTime.now());
-		O_SessionFactory.getCurrentSession().save(O_TKECTWISHLIST);
+		tKECTWISHLIST.setWlUserId(wishList.getWlUserId());
+		tKECTWISHLIST.setWlTkecmpId(
+				sessionFactory.getCurrentSession().get(TKECMPRODUCT.class, wishList.getWlTkecmpId()));
+		tKECTWISHLIST.setWlCreatedDate(OffsetDateTime.now());
+		sessionFactory.getCurrentSession().save(tKECTWISHLIST);
 	}
 
 	@Override
@@ -46,45 +46,45 @@ public class UserWishListDaoImpl implements UserWishListDao {
 
 		String userId = "FROM TKECTWISHLIST WHERE wlUserId =:userId";
 
-		Query userIdQuery = O_SessionFactory.getCurrentSession().createQuery(userId);
+		Query userIdQuery = sessionFactory.getCurrentSession().createQuery(userId);
 		userIdQuery.setParameter("userId", uId);
 
-		List<TKECTWISHLIST> LO_TKECTWISHLIST = userIdQuery.getResultList();
+		List<TKECTWISHLIST> tKECTWISHLIST = userIdQuery.getResultList();
 
-		List<WishList> LO_WishList = new ArrayList<>();
+		List<WishList> wishList = new ArrayList<>();
 
-		PropertyMap<TKECTWISHLIST, WishList> O_PropertyMap = new PropertyMap<TKECTWISHLIST, WishList>() {
+		PropertyMap<TKECTWISHLIST, WishList> propertyMap = new PropertyMap<TKECTWISHLIST, WishList>() {
 			protected void configure() {
 
 				skip().setWlCreatedDate(null);
 
 			}
 		};
-		TypeMap<TKECTWISHLIST, WishList> O_TypeMap = O_ModelMapper.getTypeMap(TKECTWISHLIST.class, WishList.class);
+		TypeMap<TKECTWISHLIST, WishList> typeMap = modelMapper.getTypeMap(TKECTWISHLIST.class, WishList.class);
 
-		if (O_TypeMap == null) {
-			O_ModelMapper.addMappings(O_PropertyMap);
+		if (typeMap == null) {
+			modelMapper.addMappings(propertyMap);
 		}
 
-		for (TKECTWISHLIST O_TKECTWISHLIST : LO_TKECTWISHLIST) {
+		for (TKECTWISHLIST tKECTWISHLIST1 : tKECTWISHLIST) {
 
-			WishList O_WishList = O_ModelMapper.map(O_TKECTWISHLIST, WishList.class);
+			WishList wishList1 = modelMapper.map(tKECTWISHLIST1, WishList.class);
 
-			LO_WishList.add(O_WishList);
+			wishList.add(wishList1);
 		}
 
-		return LO_WishList;
+		return wishList;
 	}
 
 	@Override
-	public void deleteWishlist(WishList RO_WishList) {
+	public void deleteWishlist(WishList wishList) {
 
 		String deleteAgId = "DELETE FROM TKECTWISHLIST WHERE wlUserId =:userId AND wlAgId =:agId";
 
-		Query deleteAgIdQuery = O_SessionFactory.getCurrentSession().createQuery(deleteAgId);
+		Query deleteAgIdQuery = sessionFactory.getCurrentSession().createQuery(deleteAgId);
 
-		deleteAgIdQuery.setParameter("userId", RO_WishList.getWlUserId());
-		deleteAgIdQuery.setParameter("agId", RO_WishList.getWlAgId());
+		deleteAgIdQuery.setParameter("userId", wishList.getWlUserId());
+		deleteAgIdQuery.setParameter("agId", wishList.getWlAgId());
 		deleteAgIdQuery.executeUpdate();
 
 	}

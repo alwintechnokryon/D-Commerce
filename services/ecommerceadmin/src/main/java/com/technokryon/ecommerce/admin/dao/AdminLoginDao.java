@@ -9,17 +9,17 @@ public interface AdminLoginDao {
 
 	Boolean checkRoleByUserId(String uId);
 
-	User getUserDetailHash(User RO_User);
+	User getUserDetailHash(User user);
 
 	User isUserEmailAvailable(String mail);
 
 	String saveOTPDetails(Integer oTP, String userId);
 
-	void updatePassword(User O_USER_DETAIL);
+	void updatePassword(User userDetail);
 
 	UserSession getApiSecretDataByNewSecret(String apisecret, String userId);
 
-	void addAuditDetail(User O_USER_DETAIL, HttpServletRequest httpServletRequest);
+	void addAuditDetail(User userDetail, HttpServletRequest httpServletRequest);
 
 	User getUserDetailAPIKey(String apiKey);
 

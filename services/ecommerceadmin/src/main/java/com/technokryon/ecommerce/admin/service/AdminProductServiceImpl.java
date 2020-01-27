@@ -13,18 +13,18 @@ import com.technokryon.ecommerce.admin.pojo.Product;
 public class AdminProductServiceImpl implements AdminProductService {
 
 	@Autowired
-	private AdminProductDao O_AdminProductDao;
+	private AdminProductDao adminProductDao;
 
 	@Override
-	public String addProduct(Product O_Product) {
+	public String addProduct(Product product) {
 		// TODO Auto-generated method stub
-		return O_AdminProductDao.addProduct(O_Product);
+		return adminProductDao.addProduct(product);
 	}
 
 	@Override
 	public Boolean checkSkuAvailable(String sku) {
 		// TODO Auto-generated method stub
-		return O_AdminProductDao.checkSkuAvailable(sku);
+		return adminProductDao.checkSkuAvailable(sku);
 	}
 
 }

@@ -1,5 +1,6 @@
 package com.technokryon.ecommerce.pojo;
 
+import java.time.OffsetDateTime;
 import java.util.List;
 
 import com.technokryon.ecommerce.model.TKECMCATEGORY;
@@ -15,6 +16,8 @@ public class Category {
 	String cParentId;
 	String cCategoryName;
 	Integer cCategoryLevel;
+	OffsetDateTime cCreatedDate;
+	String cCreatedUserId;
 	List<Category> childCategory;
 
 	public Category(TKECMCATEGORY child_O_TKECMCATEGORY, List<Category> childCategories) {

@@ -20,36 +20,36 @@ import com.technokryon.ecommerce.pojo.State;
 public class ConfigServiceImpl implements ConfigService {
 
 	@Autowired
-	private ConfigDao O_ConfigDao;
+	private ConfigDao configDao;
 
 	@Override
 	public List<Country> countryList() {
 		
-		return O_ConfigDao.countryList();
+		return configDao.countryList();
 	}
 
 	@Override
 	public List<ProductType> productTypeList() {
 		
-		return O_ConfigDao.productTypeList();
+		return configDao.productTypeList();
 	}
 
 	@Override
 	public List<ProductPaymentType> productPaymentTypeList() {
 		
-		return O_ConfigDao.productPaymentTypeList();
+		return configDao.productPaymentTypeList();
 	}
 
 	@Override
 	public List<State> stateListById(Integer sTkecmcnAgId) {
 		
-		return O_ConfigDao.stateListById(sTkecmcnAgId);
+		return configDao.stateListById(sTkecmcnAgId);
 	}
 
 	@Override
 	public List<Attribute> attributeList() {
 		
-		return O_ConfigDao.attributeList();
+		return configDao.attributeList();
 	}
 
 }

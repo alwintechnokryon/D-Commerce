@@ -27,115 +27,115 @@ import com.technokryon.ecommerce.service.UserService;
 public class UserOrderController {
 
 	@Autowired
-	private UserService O_UserService;
+	private UserService userService;
 
 	@Autowired
-	private OrderService O_OrderService;
+	private OrderService orderService;
 
 	@PostMapping("/product")
-	private ResponseEntity<?> ORDER_PRODUCT(@RequestBody Order RO_Order,
+	private ResponseEntity<?> ORDER_PRODUCT(@RequestBody Order order,
 			@RequestHeader(value = "apiKey") String apiKey) {
 
-		Response O_Response = new Response();
+		Response response = new Response();
 
-		User O_User_Detail = O_UserService.getUserDetailAPIKey(apiKey);
+		User userDetail = userService.getUserDetailAPIKey(apiKey);
 
-		if (RO_Order.getBillingAddress() == null) {
+		if (order.getBillingAddress() == null) {
 
-			O_Response.setMessage("Billing Address is Mandatory..!");
-			return new ResponseEntity<Object>(O_Response, HttpStatus.UNPROCESSABLE_ENTITY);
+			response.setMessage("Billing Address is Mandatory..!");
+			return new ResponseEntity<Object>(response, HttpStatus.UNPROCESSABLE_ENTITY);
 		}
-		if (RO_Order.getOTkecmpptId() == null || RO_Order.getOTkecmpptId().isBlank()) {
+		if (order.getOTkecmpptId() == null || order.getOTkecmpptId().isBlank()) {
 
-			O_Response.setMessage("Payment Type Is Missing..!");
-			return new ResponseEntity<Object>(O_Response, HttpStatus.UNPROCESSABLE_ENTITY);
+			response.setMessage("Payment Type Is Missing..!");
+			return new ResponseEntity<Object>(response, HttpStatus.UNPROCESSABLE_ENTITY);
 		}
 
-		Boolean checkProQuantity = O_OrderService.checkAvailableProductQuantity(RO_Order.getLO_PRODUCT());
+		Boolean checkProQuantity = orderService.checkAvailableProductQuantity(order.getLO_PRODUCT());
 
 		if (!checkProQuantity) {
 
-			O_Response.setMessage("Out Of Stock..!");
-			return new ResponseEntity<Object>(O_Response, HttpStatus.UNPROCESSABLE_ENTITY);
+			response.setMessage("Out Of Stock..!");
+			return new ResponseEntity<Object>(response, HttpStatus.UNPROCESSABLE_ENTITY);
 
 		}
-		if (RO_Order.getOGrandTotal() == null) {
+		if (order.getOGrandTotal() == null) {
 
-			O_Response.setMessage("Grand Total Is Missing..!");
-			return new ResponseEntity<Object>(O_Response, HttpStatus.UNPROCESSABLE_ENTITY);
+			response.setMessage("Grand Total Is Missing..!");
+			return new ResponseEntity<Object>(response, HttpStatus.UNPROCESSABLE_ENTITY);
 		}
 
-		if (RO_Order.getOTaxAmount() == null) {
+		if (order.getOTaxAmount() == null) {
 
-			O_Response.setMessage("Tax Amount Is Missing..!");
-			return new ResponseEntity<Object>(O_Response, HttpStatus.UNPROCESSABLE_ENTITY);
+			response.setMessage("Tax Amount Is Missing..!");
+			return new ResponseEntity<Object>(response, HttpStatus.UNPROCESSABLE_ENTITY);
 		}
 
-		RO_Order.setOTkecmuId(O_User_Detail.getUId());
-		RO_Order.setOCreatedUserId(O_User_Detail.getUId());
-		String orderId = O_OrderService.requestOrder(RO_Order);
+		order.setOTkecmuId(userDetail.getUId());
+		order.setOCreatedUserId(userDetail.getUId());
+		String orderId = orderService.requestOrder(order);
 
-		O_Response.setMessage(orderId);
-		return new ResponseEntity<Object>(O_Response, HttpStatus.OK);
+		response.setMessage(orderId);
+		return new ResponseEntity<Object>(response, HttpStatus.OK);
 	}
 
 	@PostMapping("/payment")
-	private ResponseEntity<?> ORDER_PAYMENT(@RequestBody Order RO_Order,
+	private ResponseEntity<?> ORDER_PAYMENT(@RequestBody Order order,
 			@RequestHeader(value = "apiKey") String apiKey) {
 
-		Response O_Response = new Response();
+		Response response = new Response();
 
-		User O_User_Detail = O_UserService.getUserDetailAPIKey(apiKey);
+		User userDetail = userService.getUserDetailAPIKey(apiKey);
 
-		if (RO_Order.getOId() == null || RO_Order.getOId().isBlank()) {
+		if (order.getOId() == null || order.getOId().isBlank()) {
 
-			O_Response.setMessage("Order Id is Empty..!");
-			return new ResponseEntity<Object>(O_Response, HttpStatus.UNPROCESSABLE_ENTITY);
+			response.setMessage("Order Id is Empty..!");
+			return new ResponseEntity<Object>(response, HttpStatus.UNPROCESSABLE_ENTITY);
 		}
 
-		RO_Order.setUserId(O_User_Detail.getUId());
+		order.setUserId(userDetail.getUId());
 
-		String updateTransactionId = O_OrderService.updateTransactionId(RO_Order);
+		String updateTransactionId = orderService.updateTransactionId(order);
 
 		if (updateTransactionId != null) {
 
-			O_Response.setMessage(updateTransactionId);
-			return new ResponseEntity<Object>(O_Response, HttpStatus.UNPROCESSABLE_ENTITY);
+			response.setMessage(updateTransactionId);
+			return new ResponseEntity<Object>(response, HttpStatus.UNPROCESSABLE_ENTITY);
 		}
-		O_Response.setMessage("Success");
-		return new ResponseEntity<Object>(O_Response, HttpStatus.OK);
+		response.setMessage("Success");
+		return new ResponseEntity<Object>(response, HttpStatus.OK);
 
 	}
 
 	@GetMapping("/list")
 	private ResponseEntity<?> ORDER_LIST(@RequestHeader(value = "apiKey") String apiKey) {
 
-		User O_User_Detail = O_UserService.getUserDetailAPIKey(apiKey);
+		User userDetail = userService.getUserDetailAPIKey(apiKey);
 
-		List<OrderItem> LO_OrderItem = O_OrderService.orderList(O_User_Detail.getUId());
+		List<OrderItem> orderItem = orderService.orderList(userDetail.getUId());
 
-		return new ResponseEntity<Object>(LO_OrderItem, HttpStatus.OK);
+		return new ResponseEntity<Object>(orderItem, HttpStatus.OK);
 
 	}
 
 	@GetMapping("/item/by/id")
 	private ResponseEntity<?> ORDER_ITEM_BY_ID(@RequestParam(name = "oiAgId", required = true) Integer oiAgId) {
 
-		OrderItem O_OrderItem = O_OrderService.orderItemById(oiAgId);
+		OrderItem orderItem = orderService.orderItemById(oiAgId);
 
-		return new ResponseEntity<Object>(O_OrderItem, HttpStatus.OK);
+		return new ResponseEntity<Object>(orderItem, HttpStatus.OK);
 	}
 
 	@PostMapping("/cancel")
 	private ResponseEntity<?> ORDER_CANCEL(@RequestHeader(value = "apiKey") String apiKey,
 			@RequestParam(name = "oshAgId", required = true) Integer oshAgId) {
 
-		Response O_Response = new Response();
-		User O_User_Detail = O_UserService.getUserDetailAPIKey(apiKey);
+		Response response = new Response();
+		User userDetail = userService.getUserDetailAPIKey(apiKey);
 
-		O_OrderService.orderCancel(oshAgId,O_User_Detail.getUId());
-		O_Response.setMessage("Order Canceled Successfully");
-		return new ResponseEntity<Object>(O_Response, HttpStatus.OK);
+		orderService.orderCancel(oshAgId,userDetail.getUId());
+		response.setMessage("Order Canceled Successfully");
+		return new ResponseEntity<Object>(response, HttpStatus.OK);
 
 	}
 

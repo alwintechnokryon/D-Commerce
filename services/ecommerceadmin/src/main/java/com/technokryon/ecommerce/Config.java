@@ -43,7 +43,7 @@ public class Config implements WebMvcConfigurer {
 	private Environment env;
 
 	@Autowired
-	private Interceptor O_Interceptor;
+	private Interceptor interceptor;
 
 	@Bean
 	public DataSource getECommerceDataSource() {
@@ -85,15 +85,15 @@ public class Config implements WebMvcConfigurer {
 	@Bean
 	public ModelMapper getModelMapper() {
 
-		ModelMapper O_ModelMapper = new ModelMapper();
+		ModelMapper modelMapper = new ModelMapper();
 
-		return O_ModelMapper;
+		return modelMapper;
 	}
 
 	@Override
 	public void addInterceptors(InterceptorRegistry registry) {
 
-		registry.addInterceptor(O_Interceptor).addPathPatterns("/api/v1/admin/auth/**", "/api/v1/admin/change/password",
+		registry.addInterceptor(interceptor).addPathPatterns("/api/v1/admin/auth/**", "/api/v1/admin/change/password",
 				"/api/v1/admin/logout");
 
 	}

@@ -107,9 +107,9 @@ public class Config implements WebMvcConfigurer
 	@Bean
 	public ModelMapper getModelMapper() {
 
-		ModelMapper O_ModelMapper = new ModelMapper();
+		ModelMapper modelMapper = new ModelMapper();
 
-		return O_ModelMapper;
+		return modelMapper;
 	}
 
 }

@@ -1,5 +1,6 @@
 package com.technokryon.ecommerce.admin.dao;
 
+import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,20 +23,20 @@ import com.technokryon.ecommerce.admin.pojo.Category;
 public class AdminCategoryDaoImpl implements AdminCategoryDao {
 
 	@Autowired
-	private SessionFactory O_SessionFactory;
+	private SessionFactory sessionFactory;
 
 	@Override
 	public Boolean checkCategoryName(String cCategoryName) {
 
 		String getCategoryName = "FROM TKECMCATEGORY WHERE cCategoryName =:categoryName";
 
-		Query getCategoryNameQuery = O_SessionFactory.getCurrentSession().createQuery(getCategoryName);
+		Query getCategoryNameQuery = sessionFactory.getCurrentSession().createQuery(getCategoryName);
 
 		getCategoryNameQuery.setParameter("categoryName", cCategoryName);
 
-		TKECMCATEGORY O_TKECMCATEGORY = (TKECMCATEGORY) getCategoryNameQuery.uniqueResult();
+		TKECMCATEGORY tKECMCATEGORY = (TKECMCATEGORY) getCategoryNameQuery.uniqueResult();
 
-		if (O_TKECMCATEGORY == null) {
+		if (tKECMCATEGORY == null) {
 
 			return false;
 		}
@@ -44,48 +45,50 @@ public class AdminCategoryDaoImpl implements AdminCategoryDao {
 	}
 
 	@Override
-	public String addCategory(Category RO_Category) {
+	public String addCategory(Category category) {
 
-		Session O_Session = O_SessionFactory.openSession();
-		Transaction O_Transaction = O_Session.beginTransaction();
+		Session session = sessionFactory.openSession();
+		Transaction transaction = session.beginTransaction();
 
 		String getCategory = "FROM TKECMCATEGORY ORDER BY cCategoryId DESC";
 
-		Query categoryQuery = O_SessionFactory.getCurrentSession().createQuery(getCategory);
+		Query categoryQuery = sessionFactory.getCurrentSession().createQuery(getCategory);
 		categoryQuery.setMaxResults(1);
-		TKECMCATEGORY O_TKECMCATEGORY1 = (TKECMCATEGORY) categoryQuery.uniqueResult();
+		TKECMCATEGORY tKECMCATEGORY1 = (TKECMCATEGORY) categoryQuery.uniqueResult();
 
-		TKECMCATEGORY O_TKECMCATEGORY = new TKECMCATEGORY();
+		TKECMCATEGORY tKECMCATEGORY = new TKECMCATEGORY();
 
-		if (O_TKECMCATEGORY1 == null) {
+		if (tKECMCATEGORY1 == null) {
 
-			O_TKECMCATEGORY.setCCategoryId("TKECC0001");
+			tKECMCATEGORY.setCCategoryId("TKECC0001");
 		} else {
 
-			String categoryId = O_TKECMCATEGORY1.getCCategoryId();
+			String categoryId = tKECMCATEGORY1.getCCategoryId();
 			Integer Ag = Integer.valueOf(categoryId.substring(5));
 			Ag++;
 
 			System.err.println(Ag);
-			O_TKECMCATEGORY.setCCategoryId("TKECC" + String.format("%04d", Ag));
+			tKECMCATEGORY.setCCategoryId("TKECC" + String.format("%04d", Ag));
 		}
 
 		try {
 
-			O_TKECMCATEGORY.setCCategoryName(RO_Category.getCCategoryName());
-			O_TKECMCATEGORY.setCParentId(RO_Category.getCParentId());
-			O_TKECMCATEGORY.setCCategoryLevel(RO_Category.getCCategoryLevel());
-			O_Session.save(O_TKECMCATEGORY);
-			O_Transaction.commit();
-			O_Session.close();
+			tKECMCATEGORY.setCCategoryName(category.getCCategoryName());
+			tKECMCATEGORY.setCParentId(category.getCParentId());
+			tKECMCATEGORY.setCCategoryLevel(category.getCCategoryLevel());
+			tKECMCATEGORY.setCCreatedUserId(category.getCCreatedUserId());
+			tKECMCATEGORY.setCCreatedDate(OffsetDateTime.now());
+			session.save(tKECMCATEGORY);
+			transaction.commit();
+			session.close();
 
-			return O_TKECMCATEGORY.getCCategoryId();
+			return tKECMCATEGORY.getCCategoryId();
 		} catch (Exception e) {
 			e.printStackTrace();
-			if (O_Transaction.isActive()) {
-				O_Transaction.rollback();
+			if (transaction.isActive()) {
+				transaction.rollback();
 			}
-			O_Session.close();
+			session.close();
 
 			return null;
 		}
@@ -93,50 +96,49 @@ public class AdminCategoryDaoImpl implements AdminCategoryDao {
 
 	@Override
 	public List<Category> categoryList() {
-		List<Category> LO_Category = new ArrayList<Category>();
+		List<Category> category = new ArrayList<Category>();
 
 		String parentCategory = "FROM TKECMCATEGORY WHERE cParentId IS NULL";
 
-		Query parentCategoryQry = O_SessionFactory.getCurrentSession().createQuery(parentCategory);
+		Query parentCategoryQry = sessionFactory.getCurrentSession().createQuery(parentCategory);
 
-		List<TKECMCATEGORY> LO_TKECMCATEGORY = (List<TKECMCATEGORY>) parentCategoryQry.getResultList();
+		List<TKECMCATEGORY> tKECMCATEGORY = (List<TKECMCATEGORY>) parentCategoryQry.getResultList();
 
-		for (TKECMCATEGORY O_TKECMCATEGORY : LO_TKECMCATEGORY) {
+		for (TKECMCATEGORY tKECMCATEGORY1 : tKECMCATEGORY) {
 
-			LO_Category.add(new Category(O_TKECMCATEGORY, getChildCategories(O_TKECMCATEGORY.getCCategoryId())));
+			category.add(new Category(tKECMCATEGORY1, getChildCategories(tKECMCATEGORY1.getCCategoryId())));
 
 		}
 
-		return LO_Category;
+		return category;
 	}
 
 	public List<Category> getChildCategories(String parentId) {
 
-		List<Category> LO_Category = new ArrayList<Category>();
+		List<Category> category = new ArrayList<Category>();
 
 		String childCategory = "FROM TKECMCATEGORY WHERE cParentId =: parentId";
 
-		Query childCategoryQry = O_SessionFactory.getCurrentSession().createQuery(childCategory);
+		Query childCategoryQry = sessionFactory.getCurrentSession().createQuery(childCategory);
 
 		childCategoryQry.setParameter("parentId", parentId);
 
-		List<TKECMCATEGORY> child_LO_TKECMCATEGORY = (List<TKECMCATEGORY>) childCategoryQry.getResultList();
+		List<TKECMCATEGORY> childtKECMCATEGORY = (List<TKECMCATEGORY>) childCategoryQry.getResultList();
 
-		for (TKECMCATEGORY child_O_TKECMCATEGORY : child_LO_TKECMCATEGORY) {
+		for (TKECMCATEGORY childTKECMCATEGORY : childtKECMCATEGORY) {
 
-			LO_Category.add(
-					new Category(child_O_TKECMCATEGORY, getChildCategories(child_O_TKECMCATEGORY.getCCategoryId())));
+			category.add(new Category(childTKECMCATEGORY, getChildCategories(childTKECMCATEGORY.getCCategoryId())));
 		}
 
-		return LO_Category;
+		return category;
 	}
 
 	@Override
-	public List<Category> categoryListById(Category RO_Category) {
+	public List<Category> categoryListById(Category category) {
 
-		List<Category> LO_Category = new ArrayList<>();
+		List<Category> category1 = new ArrayList<>();
 
-		ModelMapper O_ModelMapper = new ModelMapper();
+		ModelMapper modelMapper = new ModelMapper();
 
 		String categoryListById = "FROM TKECMCATEGORY WHERE cParentId =:parentid";
 
@@ -144,41 +146,41 @@ public class AdminCategoryDaoImpl implements AdminCategoryDao {
 
 		Query categoryListByIdQry;
 
-		if (RO_Category.getCCategoryId() == null) {
+		if (category.getCCategoryId() == null) {
 
-			categoryListByIdQry = O_SessionFactory.getCurrentSession().createQuery(parentId);
+			categoryListByIdQry = sessionFactory.getCurrentSession().createQuery(parentId);
 
 		} else {
-			categoryListByIdQry = O_SessionFactory.getCurrentSession().createQuery(categoryListById);
-			categoryListByIdQry.setParameter("parentid", RO_Category.getCCategoryId());
+			categoryListByIdQry = sessionFactory.getCurrentSession().createQuery(categoryListById);
+			categoryListByIdQry.setParameter("parentid", category.getCCategoryId());
 		}
 
-		List<TKECMCATEGORY> LO_TKECMCATEGORY = categoryListByIdQry.getResultList();
+		List<TKECMCATEGORY> tKECMCATEGORY = categoryListByIdQry.getResultList();
 
-		for (TKECMCATEGORY O_TKECMCATEGORY : LO_TKECMCATEGORY) {
+		for (TKECMCATEGORY tKECMCATEGORY1 : tKECMCATEGORY) {
 
-			Category O_Category = O_ModelMapper.map(O_TKECMCATEGORY, Category.class);
-			O_Category.setChildCategory(getChildCategories(O_TKECMCATEGORY.getCCategoryId()));
+			Category category2 = modelMapper.map(tKECMCATEGORY1, Category.class);
+			category2.setChildCategory(getChildCategories(tKECMCATEGORY1.getCCategoryId()));
 
-			LO_Category.add(O_Category);
+			category1.add(category2);
 
 		}
-		return LO_Category;
+		return category1;
 	}
 
 	@Override
-	public Boolean updateCategory(Category RO_Category) {
+	public Boolean updateCategory(Category category) {
 
-		TKECMCATEGORY O_TKECMCATEGORY = O_SessionFactory.getCurrentSession().get(TKECMCATEGORY.class,
-				RO_Category.getCCategoryId());
+		TKECMCATEGORY tKECMCATEGORY = sessionFactory.getCurrentSession().get(TKECMCATEGORY.class,
+				category.getCCategoryId());
 
-		if (O_TKECMCATEGORY == null) {
+		if (tKECMCATEGORY == null) {
 
 			return false;
 		}
 
-		O_TKECMCATEGORY.setCCategoryName(RO_Category.getCCategoryName());
-		O_SessionFactory.getCurrentSession().update(O_TKECMCATEGORY);
+		tKECMCATEGORY.setCCategoryName(category.getCCategoryName());
+		sessionFactory.getCurrentSession().update(tKECMCATEGORY);
 
 		return true;
 

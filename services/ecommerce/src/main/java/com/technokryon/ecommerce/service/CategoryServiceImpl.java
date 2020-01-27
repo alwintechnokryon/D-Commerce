@@ -15,17 +15,17 @@ import com.technokryon.ecommerce.pojo.Category;
 public class CategoryServiceImpl implements CategoryService {
 
 	@Autowired
-	private CategoryDao O_CategoryDao;
+	private CategoryDao categoryDao;
 
 	@Override
 	public List<Category> categoryList() {
 
-		return O_CategoryDao.categoryList();
+		return categoryDao.categoryList();
 	}
 
 	@Override
-	public List<Category> categoryListById(Category RO_Category) {
+	public List<Category> categoryListById(Category category) {
 
-		return O_CategoryDao.categoryListById(RO_Category);
+		return categoryDao.categoryListById(category);
 	}
 }

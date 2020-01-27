@@ -31,10 +31,10 @@ import com.technokryon.ecommerce.admin.service.AdminProductService;
 public class AdminProductController {
 
 	@Autowired
-	private AdminProductService O_AdminProductService;
+	private AdminProductService adminProductService;
 
 	@Autowired
-	private AdminLoginService O_AdminLoginService;
+	private AdminLoginService adminLoginService;
 
 	@PostMapping("/add")
 	private ResponseEntity<?> ADD_PRODUCT(@RequestHeader(value = "X-Auth-Token") String apiKey,
@@ -48,100 +48,102 @@ public class AdminProductController {
 			@RequestParam(value = "pCountryOfMfg", required = false) String countryOfMfg,
 			@RequestParam(value = "pTkecmptId", required = true) String productTypeId,
 			@RequestParam(value = "pPrice", required = true) Double price, @RequestParam MultipartFile[] files,
-			HttpServletRequest O_HttpServletRequest) {
+			HttpServletRequest httpServletRequest) {
 
-		Response O_Response = new Response();
+		Response response = new Response();
 
 		if (productName.isBlank()) {
 
-			O_Response.setMessage("Product Name is Empty..!");
-			return new ResponseEntity<Object>(O_Response, HttpStatus.UNPROCESSABLE_ENTITY);
+			response.setMessage("Product Name is Empty..!");
+			return new ResponseEntity<Object>(response, HttpStatus.UNPROCESSABLE_ENTITY);
 		}
 		if (sku.isBlank()) {
 
-			O_Response.setMessage("SKU is Empty..!");
-			return new ResponseEntity<Object>(O_Response, HttpStatus.UNPROCESSABLE_ENTITY);
+			response.setMessage("SKU is Empty..!");
+			return new ResponseEntity<Object>(response, HttpStatus.UNPROCESSABLE_ENTITY);
 		}
 		if (categoryId.isBlank()) {
 
-			O_Response.setMessage("CategoryId is Empty..!");
-			return new ResponseEntity<Object>(O_Response, HttpStatus.UNPROCESSABLE_ENTITY);
+			response.setMessage("CategoryId is Empty..!");
+			return new ResponseEntity<Object>(response, HttpStatus.UNPROCESSABLE_ENTITY);
 		}
 		if (weight == null || weight == 0) {
 
-			O_Response.setMessage("Weight is Empty..!");
-			return new ResponseEntity<Object>(O_Response, HttpStatus.UNPROCESSABLE_ENTITY);
+			response.setMessage("Weight is Empty..!");
+			return new ResponseEntity<Object>(response, HttpStatus.UNPROCESSABLE_ENTITY);
 		}
 		if (quantity == null || quantity == 0) {
 
-			O_Response.setMessage("Quantity is Empty..!");
-			return new ResponseEntity<Object>(O_Response, HttpStatus.UNPROCESSABLE_ENTITY);
+			response.setMessage("Quantity is Empty..!");
+			return new ResponseEntity<Object>(response, HttpStatus.UNPROCESSABLE_ENTITY);
 		}
 		if (shortDesc.isBlank()) {
 
-			O_Response.setMessage("Short Desc is Empty..!");
-			return new ResponseEntity<Object>(O_Response, HttpStatus.UNPROCESSABLE_ENTITY);
+			response.setMessage("Short Desc is Empty..!");
+			return new ResponseEntity<Object>(response, HttpStatus.UNPROCESSABLE_ENTITY);
 		}
 		if (longDesc.isBlank()) {
 
-			O_Response.setMessage("Long Desc is Empty..!");
-			return new ResponseEntity<Object>(O_Response, HttpStatus.UNPROCESSABLE_ENTITY);
+			response.setMessage("Long Desc is Empty..!");
+			return new ResponseEntity<Object>(response, HttpStatus.UNPROCESSABLE_ENTITY);
 		}
 		if (productTypeId.isBlank()) {
 
-			O_Response.setMessage("Product Type is Empty..!");
-			return new ResponseEntity<Object>(O_Response, HttpStatus.UNPROCESSABLE_ENTITY);
+			response.setMessage("Product Type is Empty..!");
+			return new ResponseEntity<Object>(response, HttpStatus.UNPROCESSABLE_ENTITY);
 		}
 		if (price == null || price == 0) {
 
-			O_Response.setMessage("Price is Empty..!");
-			return new ResponseEntity<Object>(O_Response, HttpStatus.UNPROCESSABLE_ENTITY);
+			response.setMessage("Price is Empty..!");
+			return new ResponseEntity<Object>(response, HttpStatus.UNPROCESSABLE_ENTITY);
 		}
 		if (files.length == 0) {
 
-			O_Response.setMessage("File is Empty..!");
-			return new ResponseEntity<Object>(O_Response, HttpStatus.UNPROCESSABLE_ENTITY);
+			response.setMessage("File is Empty..!");
+			return new ResponseEntity<Object>(response, HttpStatus.UNPROCESSABLE_ENTITY);
 		}
 
-		Product O_Product = new Product();
+		Product product = new Product();
 
-		O_Product.setPName(productName);
-		O_Product.setPSku(sku);
-		O_Product.setPTkecmcCategoryId(categoryId);
-		O_Product.setPWeight(weight);
-		O_Product.setPQuantity(quantity);
-		O_Product.setPShortDesc(shortDesc);
-		O_Product.setPLongDesc(longDesc);
-		O_Product.setPCountryOfMfg(countryOfMfg);
-		O_Product.setPTkecmptId(productTypeId);
-		O_Product.setPPrice(price);
+		product.setPName(productName);
+		product.setPSku(sku);
+		product.setPTkecmcCategoryId(categoryId);
+		product.setPWeight(weight);
+		product.setPQuantity(quantity);
+		product.setPShortDesc(shortDesc);
+		product.setPLongDesc(longDesc);
+		product.setPCountryOfMfg(countryOfMfg);
+		product.setPTkecmptId(productTypeId);
+		product.setPPrice(price);
 
-		User O_User_Detail = O_AdminLoginService.getUserDetailAPIKey(apiKey);
+		User userDetail = adminLoginService.getUserDetailAPIKey(apiKey);
 
-		Boolean checkSkuAvailable = O_AdminProductService.checkSkuAvailable(sku);
+		Boolean checkSkuAvailable = adminProductService.checkSkuAvailable(sku);
 
 		if (checkSkuAvailable) {
 
-			O_Response.setMessage("SKU Already Exist..!");
-			return new ResponseEntity<Object>(O_Response, HttpStatus.UNPROCESSABLE_ENTITY);
+			response.setMessage("SKU Already Exist..!");
+			return new ResponseEntity<Object>(response, HttpStatus.UNPROCESSABLE_ENTITY);
 		}
 
-		List<Image> LO_Image = new ArrayList<>();
+		List<Image> image = new ArrayList<>();
 
 		for (int i = 0; i < files.length; i++) {
 
-			MultipartFile O_MultipartFile = files[i];
+			MultipartFile multipartFile = files[i];
 
-			String multipartFileName = SingleTon.getFilenamebyfile(O_MultipartFile);
+			String multipartFileName = SingleTon.getFilenamebyfile(multipartFile);
 
-			Image O_Image = new Image();
+			Image image1 = new Image();
 
-			O_Image.setIFileName(multipartFileName);
+			image1.setIFileName(multipartFileName);
+
+			System.err.println(multipartFileName);
 
 			if (multipartFileName.toLowerCase().endsWith(".jpg") || multipartFileName.toLowerCase().endsWith(".jpeg")
 					|| multipartFileName.toLowerCase().endsWith(".png")) {
 
-				O_Image.setIFileType("Image");
+				image1.setIFileType("Image");
 			}
 
 			if (multipartFileName.toLowerCase().endsWith(".mp4") || multipartFileName.toLowerCase().endsWith(".mpg")
@@ -150,14 +152,14 @@ public class AdminProductController {
 					|| multipartFileName.toLowerCase().endsWith(".avi")
 					|| multipartFileName.toLowerCase().endsWith(".3gp")) {
 
-				O_Image.setIFileType("Video");
+				image1.setIFileType("Video");
 			}
-			LO_Image.add(O_Image);
+			image.add(image1);
 		}
-		O_Product.setLO_IMAGE(LO_Image);
-		O_Product.setPCreatedUserId(O_User_Detail.getUId());
+		product.setLO_IMAGE(image);
+		product.setPCreatedUserId(userDetail.getUId());
 
-		String productId = O_AdminProductService.addProduct(O_Product);
+		String productId = adminProductService.addProduct(product);
 
 		return new ResponseEntity<Object>(productId, HttpStatus.OK);
 	}

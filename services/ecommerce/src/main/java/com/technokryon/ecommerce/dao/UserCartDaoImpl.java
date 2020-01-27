@@ -27,108 +27,109 @@ import com.technokryon.ecommerce.pojo.ProductCart;
 public class UserCartDaoImpl implements UserCartDao {
 
 	@Autowired
-	private SessionFactory O_SessionFactory;
+	private SessionFactory sessionFactory;
 
 	@Autowired
-	private ModelMapper O_ModelMapper;
+	private ModelMapper modelMapper;
 
 	@Override
-	public void addToCart(ProductCart RO_ProductCart) {
+	public void addToCart(ProductCart productCart) {
 
-		Session O_Session = O_SessionFactory.openSession();
-		Transaction O_Transaction = O_Session.beginTransaction();
+		Session session = sessionFactory.openSession();
+		Transaction transaction = session.beginTransaction();
 
 		try {
-			TKECTPRODUCTCART O_TKECTPRODUCTCART = new TKECTPRODUCTCART();
+			TKECTPRODUCTCART tKECTPRODUCTCART = new TKECTPRODUCTCART();
 
-			O_TKECTPRODUCTCART.setPcTkecmuId(O_Session.get(TKECMUSER.class, RO_ProductCart.getPcTkecmuId()));
-			O_TKECTPRODUCTCART.setPcTkecmpId(O_Session.get(TKECMPRODUCT.class, RO_ProductCart.getPcTkecmpId()));
-			O_TKECTPRODUCTCART.setPcQuantity(RO_ProductCart.getPcQuantity());
-			O_TKECTPRODUCTCART.setPcCartSaveStatus("Y");
-			O_TKECTPRODUCTCART.setPcCreatedDate(OffsetDateTime.now());
-			O_TKECTPRODUCTCART.setPcCreatedUserId(RO_ProductCart.getPcTkecmuId());
-			O_Session.save(O_TKECTPRODUCTCART);
+			tKECTPRODUCTCART.setPcTkecmuId(session.get(TKECMUSER.class, productCart.getPcTkecmuId()));
+			tKECTPRODUCTCART.setPcTkecmpId(session.get(TKECMPRODUCT.class, productCart.getPcTkecmpId()));
+			tKECTPRODUCTCART.setPcQuantity(productCart.getPcQuantity());
+			tKECTPRODUCTCART.setPcCartSaveStatus("Y");
+			tKECTPRODUCTCART.setPcCreatedDate(OffsetDateTime.now());
+			tKECTPRODUCTCART.setPcCreatedUserId(productCart.getPcTkecmuId());
+			session.save(tKECTPRODUCTCART);
 
-			O_Transaction.commit();
-			O_Session.close();
+			transaction.commit();
+			session.close();
 
 		} catch (Exception e) {
 			e.printStackTrace();
-			if (O_Transaction.isActive()) {
-				O_Transaction.rollback();
+			if (transaction.isActive()) {
+				transaction.rollback();
 			}
-			O_Session.close();
+			session.close();
 
 		}
 	}
 
 	@Override
 	public List<ProductCart> listCart(String uId) {
-		
-		List<ProductCart> LO_PRODUCTCART = new ArrayList<>();
+
+		List<ProductCart> productCart = new ArrayList<>();
 
 		String userId = "FROM TKECTPRODUCTCART WHERE pcTkecmuId.uId =:userId";
 
-		Query userIdQuery = O_SessionFactory.getCurrentSession().createQuery(userId);
+		Query userIdQuery = sessionFactory.getCurrentSession().createQuery(userId);
 
 		userIdQuery.setParameter("userId", uId);
 
-		List<TKECTPRODUCTCART> LO_TKECTPRODUCTCART = userIdQuery.getResultList();
+		List<TKECTPRODUCTCART> tKECTPRODUCTCART = userIdQuery.getResultList();
 
-		PropertyMap<TKECTPRODUCTCART, ProductCart> O_PropertyMap = new PropertyMap<TKECTPRODUCTCART, ProductCart>() {
+		PropertyMap<TKECTPRODUCTCART, ProductCart> propertyMap = new PropertyMap<TKECTPRODUCTCART, ProductCart>() {
 			protected void configure() {
 
 				skip().setPcCreatedUserId(null);
 				skip().setPcCreatedDate(null);
 			}
 		};
-		TypeMap<TKECTPRODUCTCART, ProductCart> O_TypeMap = O_ModelMapper.getTypeMap(TKECTPRODUCTCART.class,
+		TypeMap<TKECTPRODUCTCART, ProductCart> typeMap = modelMapper.getTypeMap(TKECTPRODUCTCART.class,
 				ProductCart.class);
 
-		if (O_TypeMap == null) {
-			O_ModelMapper.addMappings(O_PropertyMap);
+		if (typeMap == null) {
+			modelMapper.addMappings(propertyMap);
 		}
-		for (TKECTPRODUCTCART O_TKECTPRODUCTCART : LO_TKECTPRODUCTCART) {
+		for (TKECTPRODUCTCART tKECTPRODUCTCART1 : tKECTPRODUCTCART) {
 
-			ProductCart O_ProductCart = O_ModelMapper.map(O_TKECTPRODUCTCART, ProductCart.class);
+			ProductCart productCart1 = modelMapper.map(tKECTPRODUCTCART1, ProductCart.class);
 
-			LO_PRODUCTCART.add(O_ProductCart);
+			productCart.add(productCart1);
 		}
 
-		return LO_PRODUCTCART;
+		return productCart;
 	}
 
 	@Override
 	public Integer checkTotalQuantity(String pcTkecmpId) {
 
-		TKECMPRODUCT O_TKECMPRODUCT = O_SessionFactory.getCurrentSession().get(TKECMPRODUCT.class, pcTkecmpId);
+		TKECMPRODUCT tKECMPRODUCT = sessionFactory.getCurrentSession().get(TKECMPRODUCT.class, pcTkecmpId);
 
-		return O_TKECMPRODUCT.getPQuantity();
+		System.err.println(tKECMPRODUCT);
+		return tKECMPRODUCT.getPQuantity();
 	}
 
 	@Override
-	public Boolean addQuantity(ProductCart RO_ProductCart) {
+	public Boolean addQuantity(ProductCart productCart) {
 
-		TKECMPRODUCT O_TKECMPRODUCT = O_SessionFactory.getCurrentSession().get(TKECMPRODUCT.class,
-				RO_ProductCart.getPcTkecmpId());
+		TKECMPRODUCT tKECMPRODUCT = sessionFactory.getCurrentSession().get(TKECMPRODUCT.class,
+				productCart.getPcTkecmpId());
 
-		if (RO_ProductCart.getPcQuantity() <= O_TKECMPRODUCT.getPQuantity()) {
+		if (productCart.getPcQuantity() <= tKECMPRODUCT.getPQuantity()) {
 
-			TKECTPRODUCTCART O_TKECTPRODUCTCART = O_SessionFactory.getCurrentSession().get(TKECTPRODUCTCART.class,
-					RO_ProductCart.getPcAgId());
+			TKECTPRODUCTCART tKECTPRODUCTCART = sessionFactory.getCurrentSession().get(TKECTPRODUCTCART.class,
+					productCart.getPcAgId());
 
-			O_TKECTPRODUCTCART.setPcQuantity(RO_ProductCart.getPcQuantity());
-			O_SessionFactory.getCurrentSession().update(O_TKECTPRODUCTCART);
+			tKECTPRODUCTCART.setPcQuantity(productCart.getPcQuantity());
+			sessionFactory.getCurrentSession().update(tKECTPRODUCTCART);
 
 			return true;
 
 		} else {
 
-			TKECTPRODUCTCART O_TKECTPRODUCTCART = O_SessionFactory.getCurrentSession().get(TKECTPRODUCTCART.class,
-					RO_ProductCart.getPcAgId());
+			TKECTPRODUCTCART tKECTPRODUCTCART = sessionFactory.getCurrentSession().get(TKECTPRODUCTCART.class,
+					productCart.getPcAgId());
 
-			O_TKECTPRODUCTCART.setPcQuantity(O_TKECMPRODUCT.getPQuantity());
-			O_SessionFactory.getCurrentSession().update(O_TKECTPRODUCTCART);
+			tKECTPRODUCTCART.setPcQuantity(tKECMPRODUCT.getPQuantity());
+			sessionFactory.getCurrentSession().update(tKECTPRODUCTCART);
 
 		}
 
@@ -137,25 +138,25 @@ public class UserCartDaoImpl implements UserCartDao {
 	}
 
 	@Override
-	public void saveLater(ProductCart RO_ProductCart) {
+	public void saveLater(ProductCart productCart) {
 
-		TKECTPRODUCTCART O_TKECTPRODUCTCART = O_SessionFactory.getCurrentSession().get(TKECTPRODUCTCART.class,
-				RO_ProductCart.getPcAgId());
+		TKECTPRODUCTCART tKECTPRODUCTCART = sessionFactory.getCurrentSession().get(TKECTPRODUCTCART.class,
+				productCart.getPcAgId());
 
-		O_TKECTPRODUCTCART.setPcCartSaveStatus(RO_ProductCart.getPcCartSaveStatus());
-		O_SessionFactory.getCurrentSession().update(O_TKECTPRODUCTCART);
+		tKECTPRODUCTCART.setPcCartSaveStatus(productCart.getPcCartSaveStatus());
+		sessionFactory.getCurrentSession().update(tKECTPRODUCTCART);
 
 	}
 
 	@Override
-	public void deleteCart(ProductCart RO_ProductCart) {
+	public void deleteCart(ProductCart productCart) {
 
 		String deleteAgId = "DELETE FROM TKECTPRODUCTCART WHERE pcAgId =:agId AND pcTkecmuId.uId =:userId";
 
-		Query deleteAgIdQuery = O_SessionFactory.getCurrentSession().createQuery(deleteAgId);
+		Query deleteAgIdQuery = sessionFactory.getCurrentSession().createQuery(deleteAgId);
 
-		deleteAgIdQuery.setParameter("agId", RO_ProductCart.getPcAgId());
-		deleteAgIdQuery.setParameter("userId", RO_ProductCart.getPcTkecmuId());
+		deleteAgIdQuery.setParameter("agId", productCart.getPcAgId());
+		deleteAgIdQuery.setParameter("userId", productCart.getPcTkecmuId());
 		deleteAgIdQuery.executeUpdate();
 
 	}

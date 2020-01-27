@@ -25,92 +25,92 @@ import com.technokryon.ecommerce.service.UserService;
 public class UserCartController {
 
 	@Autowired
-	private UserCartService O_UserCartService;
+	private UserCartService userCartService;
 
 	@Autowired
-	private UserService O_UserService;
+	private UserService userService;
 
 	@PostMapping("/add")
 	private ResponseEntity<?> ADD_CART(@RequestHeader(value = "apikey") String apiKey,
-			@RequestBody ProductCart RO_ProductCart) {
+			@RequestBody ProductCart productCart) {
 
-		Response O_Response = new Response();
+		Response response = new Response();
 
-		User O_User_Detail = O_UserService.getUserDetailAPIKey(apiKey);
+		User userDetail = userService.getUserDetailAPIKey(apiKey);
 
-		RO_ProductCart.setPcTkecmuId(O_User_Detail.getUId());
+		productCart.setPcTkecmuId(userDetail.getUId());
 
-		O_UserCartService.addToCart(RO_ProductCart);
+		userCartService.addToCart(productCart);
 
-		O_Response.setMessage("Product Added To Cart SuccessFully..");
+		response.setMessage("Product Added To Cart SuccessFully..");
 
-		return new ResponseEntity<Object>(O_Response, HttpStatus.OK);
+		return new ResponseEntity<Object>(response, HttpStatus.OK);
 	}
 
 	@GetMapping("/list")
 	private ResponseEntity<?> LIST_CART(@RequestHeader(value = "apikey") String apiKey) {
 
-		User O_User_Detail = O_UserService.getUserDetailAPIKey(apiKey);
+		User userDetail = userService.getUserDetailAPIKey(apiKey);
 
-		List<ProductCart> LO_ProductCart = O_UserCartService.listCart(O_User_Detail.getUId());
+		List<ProductCart> productCart = userCartService.listCart(userDetail.getUId());
 
-		return new ResponseEntity<Object>(LO_ProductCart, HttpStatus.OK);
+		return new ResponseEntity<Object>(productCart, HttpStatus.OK);
 
 	}
 
 	@PostMapping("/add/quantity")
 	private ResponseEntity<?> ADD_QUANTITY(@RequestHeader(value = "apikey") String apiKey,
-			@RequestBody ProductCart RO_ProductCart) {
+			@RequestBody ProductCart productCart) {
 
-		Response O_Response = new Response();
+		Response response = new Response();
 
 		// User O_USER_DETAIL = O_UserService.getUserDetailAPIKey(apiKey);
 
-		Integer totalQuantity = O_UserCartService.checkTotalQuantity(RO_ProductCart.getPcTkecmpId());
+		Integer totalQuantity = userCartService.checkTotalQuantity(productCart.getPcTkecmpId());
 
-		Boolean addQuantity = O_UserCartService.addQuantity(RO_ProductCart);
+		Boolean addQuantity = userCartService.addQuantity(productCart);
 
 		if (!addQuantity) {
 
-			O_Response.setMessage("Only " + totalQuantity + " Product Available");
-			return new ResponseEntity<Object>(O_Response, HttpStatus.UNPROCESSABLE_ENTITY);
+			response.setMessage("Only " + totalQuantity + " Product Available");
+			return new ResponseEntity<Object>(response, HttpStatus.UNPROCESSABLE_ENTITY);
 		} else {
 
-			O_Response.setMessage("Quantity Added SuccessFully");
-			return new ResponseEntity<Object>(O_Response, HttpStatus.OK);
+			response.setMessage("Quantity Added SuccessFully");
+			return new ResponseEntity<Object>(response, HttpStatus.OK);
 		}
 	}
 
 	@PostMapping("/save/later")
 	private ResponseEntity<?> UPDATE_CART(@RequestHeader(value = "apikey") String apiKey,
-			@RequestBody ProductCart RO_ProductCart) {
+			@RequestBody ProductCart productCart) {
 
-		Response O_Response = new Response();
+		Response response = new Response();
 
 //		User O_USER_DETAIL = O_UserService.getUserDetailAPIKey(apiKey);
 
-		O_UserCartService.saveLater(RO_ProductCart);
+		userCartService.saveLater(productCart);
 
-		O_Response.setMessage("SuccessFully Product Save For Later ");
-		return new ResponseEntity<Object>(O_Response, HttpStatus.OK);
+		response.setMessage("SuccessFully Product Save For Later ");
+		return new ResponseEntity<Object>(response, HttpStatus.OK);
 
 	}
 
 	@PostMapping("/delete")
 	private ResponseEntity<?> DELETE_CART(@RequestHeader(value = "apikey") String apiKey,
-			@RequestBody ProductCart RO_ProductCart) {
+			@RequestBody ProductCart productCart) {
 
-		Response O_Response = new Response();
+		Response response = new Response();
 
-		User O_User_Detail = O_UserService.getUserDetailAPIKey(apiKey);
+		User userDetail = userService.getUserDetailAPIKey(apiKey);
 
-		RO_ProductCart.setPcTkecmuId(O_User_Detail.getUId());
+		productCart.setPcTkecmuId(userDetail.getUId());
 
-		O_UserCartService.deleteCart(RO_ProductCart);
+		userCartService.deleteCart(productCart);
 
-		O_Response.setMessage("Cart Deleted SuccessFully");
+		response.setMessage("Cart Deleted SuccessFully");
 
-		return new ResponseEntity<Object>(O_Response, HttpStatus.OK);
+		return new ResponseEntity<Object>(response, HttpStatus.OK);
 
 	}
 

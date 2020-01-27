@@ -15,30 +15,30 @@ import com.technokryon.ecommerce.pojo.UserAddress;
 public class UserAddressServiceImpl implements UserAddressService {
 
 	@Autowired
-	private UserAddressDao O_UserAddressDao;
+	private UserAddressDao userAddressDao;
 
 	@Override
-	public void addUserAddress(UserAddress RO_UserAddress) {
-		
-		O_UserAddressDao.addUserAddress(RO_UserAddress);
+	public void addUserAddress(UserAddress userAddress) {
+
+		userAddressDao.addUserAddress(userAddress);
 	}
 
 	@Override
 	public List<UserAddress> listUserAddress(String uId) {
-		
-		return O_UserAddressDao.listUserAddress(uId);
+
+		return userAddressDao.listUserAddress(uId);
 	}
 
 	@Override
-	public void updateUserAddress(UserAddress RO_UserAddress) {
-		
-		O_UserAddressDao.updateUserAddress(RO_UserAddress);
+	public void updateUserAddress(UserAddress userAddress) {
+
+		userAddressDao.updateUserAddress(userAddress);
 	}
 
 	@Override
-	public void deleteUserAddress(UserAddress RO_UserAddress) {
-		
-		O_UserAddressDao.deleteUserAddress(RO_UserAddress);
+	public void deleteUserAddress(UserAddress userAddress) {
+
+		userAddressDao.deleteUserAddress(userAddress);
 	}
 
 }

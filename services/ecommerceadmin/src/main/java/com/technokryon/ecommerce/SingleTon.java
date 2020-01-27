@@ -38,7 +38,7 @@ public class SingleTon {
 
 	public static String getFilenamebyfile(MultipartFile file) {
 
-		String rootPath = "E:\\Ecommerce_IMG";
+		String rootPath = "D:\\Ecommerce_IMG";
 		// String rootPath = BASE_PATH;
 		if (!file.isEmpty()) {
 

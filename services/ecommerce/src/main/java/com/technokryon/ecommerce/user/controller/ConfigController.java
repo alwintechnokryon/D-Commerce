@@ -24,45 +24,45 @@ import com.technokryon.ecommerce.service.ConfigService;
 public class ConfigController {
 
 	@Autowired
-	private ConfigService O_ConfigService;
+	private ConfigService configService;
 
 	@GetMapping("/product/type/list")
 	private ResponseEntity<?> PRODUCT_TYPE_LIST() {
 
-		List<ProductType> LO_ProductType = O_ConfigService.productTypeList();
+		List<ProductType> productType = configService.productTypeList();
 
-		return new ResponseEntity<Object>(LO_ProductType, HttpStatus.OK);
+		return new ResponseEntity<Object>(productType, HttpStatus.OK);
 	}
 
 	@GetMapping("/product/payment/type/list")
 	private ResponseEntity<?> PRODUCT_PAYMENT_TYPE_LIST() {
 
-		List<ProductPaymentType> LO_ProductPaymentType = O_ConfigService.productPaymentTypeList();
+		List<ProductPaymentType> productPaymentType = configService.productPaymentTypeList();
 
-		return new ResponseEntity<Object>(LO_ProductPaymentType, HttpStatus.OK);
+		return new ResponseEntity<Object>(productPaymentType, HttpStatus.OK);
 	}
 
 	@GetMapping("/country/list")
 	private ResponseEntity<?> COUNTRY_LIST() {
 
-		List<Country> LO_Country = O_ConfigService.countryList();
+		List<Country> country = configService.countryList();
 
-		return new ResponseEntity<Object>(LO_Country, HttpStatus.OK);
+		return new ResponseEntity<Object>(country, HttpStatus.OK);
 	}
 
 	@GetMapping("/state/list/by/id")
 	private ResponseEntity<?> STATE_LIST(@RequestParam(name = "sTkecmcnAgId", required = true) Integer sTkecmcnAgId) {
 
-		List<State> LO_State = O_ConfigService.stateListById(sTkecmcnAgId);
+		List<State> state = configService.stateListById(sTkecmcnAgId);
 
-		return new ResponseEntity<Object>(LO_State, HttpStatus.OK);
+		return new ResponseEntity<Object>(state, HttpStatus.OK);
 	}
 
 	@GetMapping("/attribute/list")
 	private ResponseEntity<?> ATTRIBUTE_LIST() {
 
-		List<Attribute> LO_Attribute = O_ConfigService.attributeList();
+		List<Attribute> attribute = configService.attributeList();
 
-		return new ResponseEntity<Object>(LO_Attribute, HttpStatus.OK);
+		return new ResponseEntity<Object>(attribute, HttpStatus.OK);
 	}
 }

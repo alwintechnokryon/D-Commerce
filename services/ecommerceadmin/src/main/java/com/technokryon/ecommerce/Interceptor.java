@@ -14,7 +14,7 @@ import com.technokryon.ecommerce.admin.service.AdminLoginService;
 public class Interceptor implements HandlerInterceptor {
 
 	@Autowired
-	private AdminLoginService O_AdminLoginService;
+	private AdminLoginService adminLoginService;
 
 	@Override
 	public boolean preHandle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse,
@@ -31,7 +31,7 @@ public class Interceptor implements HandlerInterceptor {
 			return false;
 		}
 
-		User O_User_Detail = O_AdminLoginService.getUserDetailAPIKey(apikey);
+		User O_User_Detail = adminLoginService.getUserDetailAPIKey(apikey);
 
 		if (O_User_Detail == null) {
 

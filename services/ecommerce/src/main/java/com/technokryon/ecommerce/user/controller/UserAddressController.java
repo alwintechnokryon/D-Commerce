@@ -28,182 +28,181 @@ import com.technokryon.ecommerce.service.UserService;
 public class UserAddressController {
 
 	@Autowired
-	private UserAddressService O_UserAddressService;
+	private UserAddressService userAddressService;
 
 	@Autowired
-	private UserService O_UserService;
+	private UserService userService;
 
 	@PostMapping("/add")
 	private ResponseEntity<?> ADD_ADDRESS(@RequestHeader(value = "X-Auth-Token") String apiKey,
-			@RequestBody UserAddress RO_UserAddress,HttpServletRequest O_HttpServletRequest) {
+			@RequestBody UserAddress userAddress) {
 
-		Response O_Response = new Response();
+		Response response = new Response();
 
-		User O_User_Detail = O_UserService.getUserDetailAPIKey(apiKey);
+		User userDetail = userService.getUserDetailAPIKey(apiKey);
 
-		if (RO_UserAddress.getUadName() == null || RO_UserAddress.getUadName().isBlank()) {
+		if (userAddress.getUadName() == null || userAddress.getUadName().isBlank()) {
 
-			O_Response.setMessage("Name is Empty..!");
-			return new ResponseEntity<Object>(O_Response, HttpStatus.UNPROCESSABLE_ENTITY);
-
-		}
-
-		if (RO_UserAddress.getUadPhone() == null) {
-
-			O_Response.setMessage("Phone Number Is Empty..!");
-			return new ResponseEntity<Object>(O_Response, HttpStatus.UNPROCESSABLE_ENTITY);
+			response.setMessage("Name is Empty..!");
+			return new ResponseEntity<Object>(response, HttpStatus.UNPROCESSABLE_ENTITY);
 
 		}
 
-		if (RO_UserAddress.getUadPostalCode() == null || RO_UserAddress.getUadPostalCode().isBlank()) {
+		if (userAddress.getUadPhone() == null) {
 
-			O_Response.setMessage("PostalCode Is Empty..!");
-			return new ResponseEntity<Object>(O_Response, HttpStatus.UNPROCESSABLE_ENTITY);
-
-		}
-
-		if (RO_UserAddress.getUadAddress() == null || RO_UserAddress.getUadAddress().isBlank()) {
-
-			O_Response.setMessage("Address Is Empty..!");
-			return new ResponseEntity<Object>(O_Response, HttpStatus.UNPROCESSABLE_ENTITY);
+			response.setMessage("Phone Number Is Empty..!");
+			return new ResponseEntity<Object>(response, HttpStatus.UNPROCESSABLE_ENTITY);
 
 		}
 
-		if (RO_UserAddress.getUadCity() == null || RO_UserAddress.getUadCity().isBlank()) {
+		if (userAddress.getUadPostalCode() == null || userAddress.getUadPostalCode().isBlank()) {
 
-			O_Response.setMessage("City Is Empty..!");
-			return new ResponseEntity<Object>(O_Response, HttpStatus.UNPROCESSABLE_ENTITY);
-
-		}
-
-		if (RO_UserAddress.getUadTkectsAgId() == null) {
-
-			O_Response.setMessage("State Is Empty..!");
-			return new ResponseEntity<Object>(O_Response, HttpStatus.UNPROCESSABLE_ENTITY);
+			response.setMessage("PostalCode Is Empty..!");
+			return new ResponseEntity<Object>(response, HttpStatus.UNPROCESSABLE_ENTITY);
 
 		}
 
-		if (RO_UserAddress.getUadAddressType() == null || RO_UserAddress.getUadAddressType().isBlank()) {
+		if (userAddress.getUadAddress() == null || userAddress.getUadAddress().isBlank()) {
 
-			O_Response.setMessage("Address Type Is Empty..!");
-			return new ResponseEntity<Object>(O_Response, HttpStatus.UNPROCESSABLE_ENTITY);
-
-		}
-		if (!RO_UserAddress.getUadAddressType().equals("Home") && !RO_UserAddress.getUadAddressType().equals("Work")) {
-
-			O_Response.setMessage("Address Type Is MisMatch..!");
-			return new ResponseEntity<Object>(O_Response, HttpStatus.UNPROCESSABLE_ENTITY);
+			response.setMessage("Address Is Empty..!");
+			return new ResponseEntity<Object>(response, HttpStatus.UNPROCESSABLE_ENTITY);
 
 		}
-		System.err.println( O_HttpServletRequest.getAttribute("userId"));
-		RO_UserAddress.setUadTkecmuId((String) O_HttpServletRequest.getAttribute("userId"));
 
-		O_UserAddressService.addUserAddress(RO_UserAddress);
+		if (userAddress.getUadCity() == null || userAddress.getUadCity().isBlank()) {
 
-		O_Response.setMessage("Address Added SuccessFully");
-		return new ResponseEntity<Object>(O_Response, HttpStatus.OK);
+			response.setMessage("City Is Empty..!");
+			return new ResponseEntity<Object>(response, HttpStatus.UNPROCESSABLE_ENTITY);
+
+		}
+
+		if (userAddress.getUadTkectsAgId() == null) {
+
+			response.setMessage("State Is Empty..!");
+			return new ResponseEntity<Object>(response, HttpStatus.UNPROCESSABLE_ENTITY);
+
+		}
+
+		if (userAddress.getUadAddressType() == null || userAddress.getUadAddressType().isBlank()) {
+
+			response.setMessage("Address Type Is Empty..!");
+			return new ResponseEntity<Object>(response, HttpStatus.UNPROCESSABLE_ENTITY);
+
+		}
+		if (!userAddress.getUadAddressType().equals("Home") && !userAddress.getUadAddressType().equals("Work")) {
+
+			response.setMessage("Address Type Is MisMatch..!");
+			return new ResponseEntity<Object>(response, HttpStatus.UNPROCESSABLE_ENTITY);
+
+		}
+		userAddress.setUadTkecmuId(userDetail.getUId());
+
+		userAddressService.addUserAddress(userAddress);
+
+		response.setMessage("Address Added SuccessFully");
+		return new ResponseEntity<Object>(response, HttpStatus.OK);
 
 	}
 
 	@GetMapping("/list")
 	private ResponseEntity<?> LIST_ADDRESS(@RequestHeader(value = "apikey") String apiKey) {
 
-		User O_User_Detail = O_UserService.getUserDetailAPIKey(apiKey);
+		User userDetail = userService.getUserDetailAPIKey(apiKey);
 
-		List<UserAddress> LO_UserAddress = O_UserAddressService.listUserAddress(O_User_Detail.getUId());
+		List<UserAddress> userAddress = userAddressService.listUserAddress(userDetail.getUId());
 
-		return new ResponseEntity<Object>(LO_UserAddress, HttpStatus.OK);
+		return new ResponseEntity<Object>(userAddress, HttpStatus.OK);
 
 	}
 
 	@PutMapping("/update")
 	private ResponseEntity<?> UPDATE_ADDRESS(@RequestHeader(value = "apikey") String apiKey,
-			@RequestBody UserAddress RO_UserAddress) {
+			@RequestBody UserAddress userAddress) {
 
-		Response O_Response = new Response();
+		Response response = new Response();
 
-		User O_User_Detail = O_UserService.getUserDetailAPIKey(apiKey);
+		User userDetail = userService.getUserDetailAPIKey(apiKey);
 
-		if (RO_UserAddress.getUadAgId() == null) {
+		if (userAddress.getUadAgId() == null) {
 
-			O_Response.setMessage("Address Id Is Empty..!");
-			return new ResponseEntity<Object>(O_Response, HttpStatus.UNPROCESSABLE_ENTITY);
-
-		}
-
-		if (RO_UserAddress.getUadPhone() == null) {
-
-			O_Response.setMessage("Phone Number Is Empty..!");
-			return new ResponseEntity<Object>(O_Response, HttpStatus.UNPROCESSABLE_ENTITY);
+			response.setMessage("Address Id Is Empty..!");
+			return new ResponseEntity<Object>(response, HttpStatus.UNPROCESSABLE_ENTITY);
 
 		}
 
-		if (RO_UserAddress.getUadPostalCode() == null || RO_UserAddress.getUadPostalCode().isBlank()) {
+		if (userAddress.getUadPhone() == null) {
 
-			O_Response.setMessage("PostalCode Is Empty..!");
-			return new ResponseEntity<Object>(O_Response, HttpStatus.UNPROCESSABLE_ENTITY);
-
-		}
-
-		if (RO_UserAddress.getUadAddress() == null || RO_UserAddress.getUadAddress().isBlank()) {
-
-			O_Response.setMessage("Address Is Empty..!");
-			return new ResponseEntity<Object>(O_Response, HttpStatus.UNPROCESSABLE_ENTITY);
+			response.setMessage("Phone Number Is Empty..!");
+			return new ResponseEntity<Object>(response, HttpStatus.UNPROCESSABLE_ENTITY);
 
 		}
 
-		if (RO_UserAddress.getUadCity() == null || RO_UserAddress.getUadCity().isBlank()) {
+		if (userAddress.getUadPostalCode() == null || userAddress.getUadPostalCode().isBlank()) {
 
-			O_Response.setMessage("City Is Empty..!");
-			return new ResponseEntity<Object>(O_Response, HttpStatus.UNPROCESSABLE_ENTITY);
-
-		}
-
-		if (RO_UserAddress.getUadTkectsAgId() == null) {
-
-			O_Response.setMessage("State Is Empty..!");
-			return new ResponseEntity<Object>(O_Response, HttpStatus.UNPROCESSABLE_ENTITY);
+			response.setMessage("PostalCode Is Empty..!");
+			return new ResponseEntity<Object>(response, HttpStatus.UNPROCESSABLE_ENTITY);
 
 		}
 
-		if (RO_UserAddress.getUadAddressType() == null || RO_UserAddress.getUadAddressType().isBlank()) {
+		if (userAddress.getUadAddress() == null || userAddress.getUadAddress().isBlank()) {
 
-			O_Response.setMessage("Address Type Is Empty..!");
-			return new ResponseEntity<Object>(O_Response, HttpStatus.UNPROCESSABLE_ENTITY);
-
-		}
-		if (!RO_UserAddress.getUadAddressType().equals("Home") && !RO_UserAddress.getUadAddressType().equals("Work")) {
-
-			O_Response.setMessage("Address Type Is MisMatch..!");
-			return new ResponseEntity<Object>(O_Response, HttpStatus.UNPROCESSABLE_ENTITY);
+			response.setMessage("Address Is Empty..!");
+			return new ResponseEntity<Object>(response, HttpStatus.UNPROCESSABLE_ENTITY);
 
 		}
 
-		RO_UserAddress.setUadTkecmuId(O_User_Detail.getUId());
+		if (userAddress.getUadCity() == null || userAddress.getUadCity().isBlank()) {
 
-		O_UserAddressService.updateUserAddress(RO_UserAddress);
+			response.setMessage("City Is Empty..!");
+			return new ResponseEntity<Object>(response, HttpStatus.UNPROCESSABLE_ENTITY);
 
-		O_Response.setMessage("Address Updated SuccessFully");
+		}
 
-		return new ResponseEntity<Object>(O_Response, HttpStatus.OK);
+		if (userAddress.getUadTkectsAgId() == null) {
+
+			response.setMessage("State Is Empty..!");
+			return new ResponseEntity<Object>(response, HttpStatus.UNPROCESSABLE_ENTITY);
+
+		}
+
+		if (userAddress.getUadAddressType() == null || userAddress.getUadAddressType().isBlank()) {
+
+			response.setMessage("Address Type Is Empty..!");
+			return new ResponseEntity<Object>(response, HttpStatus.UNPROCESSABLE_ENTITY);
+
+		}
+		if (!userAddress.getUadAddressType().equals("Home") && !userAddress.getUadAddressType().equals("Work")) {
+
+			response.setMessage("Address Type Is MisMatch..!");
+			return new ResponseEntity<Object>(response, HttpStatus.UNPROCESSABLE_ENTITY);
+
+		}
+
+		userAddress.setUadTkecmuId(userDetail.getUId());
+
+		userAddressService.updateUserAddress(userAddress);
+
+		response.setMessage("Address Updated SuccessFully");
+
+		return new ResponseEntity<Object>(response, HttpStatus.OK);
 
 	}
 
 	@PostMapping("/delete")
 	private ResponseEntity<?> DELETE_ADDRESS(@RequestHeader(value = "apikey") String apiKey,
-			@RequestBody UserAddress RO_UserAddress) {
+			@RequestBody UserAddress userAddress) {
 
-		Response O_Response = new Response();
+		Response response = new Response();
 
-		User O_User_Detail = O_UserService.getUserDetailAPIKey(apiKey);
+		User userDetail = userService.getUserDetailAPIKey(apiKey);
 
-		RO_UserAddress.setUadTkecmuId(O_User_Detail.getUId());
+		userAddress.setUadTkecmuId(userDetail.getUId());
 
-		O_UserAddressService.deleteUserAddress(RO_UserAddress);
+		userAddressService.deleteUserAddress(userAddress);
 
-		O_Response.setMessage("Address Deleted SuccessFully");
+		response.setMessage("Address Deleted SuccessFully");
 
-		return new ResponseEntity<Object>(O_Response, HttpStatus.OK);
+		return new ResponseEntity<Object>(response, HttpStatus.OK);
 
 	}
 

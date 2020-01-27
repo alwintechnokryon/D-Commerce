@@ -20,15 +20,15 @@ import com.technokryon.ecommerce.service.UserService;
 public class UserProfileController {
 
 	@Autowired
-	private UserService O_UserService;
+	private UserService userService;
 
 	@ResponseBody
 	@GetMapping(value = { "/detail" })
 	ResponseEntity<?> USER_DETAIL(@RequestHeader(value = "X-Auth-Token") String apiKey) {
 
-		Response O_Response = new Response();
+		Response response = new Response();
 
-		User O_User_Detail = O_UserService.getUserDetailAPIKey(apiKey);
+		User userDetail = userService.getUserDetailAPIKey(apiKey);
 
 //		if (O_USER_DETAIL == null) {
 //
@@ -36,10 +36,10 @@ public class UserProfileController {
 //			return new ResponseEntity<Object>(O_Response, HttpStatus.UNPROCESSABLE_ENTITY);
 //		}
 
-		O_User_Detail.setUPassword(null);
-		O_User_Detail.setUId(null);
+		userDetail.setUPassword(null);
+		userDetail.setUId(null);
 
-		O_Response.setMessage("Success!");
-		return new ResponseEntity<Object>(O_User_Detail, HttpStatus.UNPROCESSABLE_ENTITY);
+		response.setMessage("Success!");
+		return new ResponseEntity<Object>(userDetail, HttpStatus.OK);
 	}
 }

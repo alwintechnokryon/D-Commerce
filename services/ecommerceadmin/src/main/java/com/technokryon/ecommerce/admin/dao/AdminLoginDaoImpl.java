@@ -1,6 +1,7 @@
 package com.technokryon.ecommerce.admin.dao;
 
 import java.time.OffsetDateTime;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -28,35 +29,35 @@ import com.technokryon.ecommerce.admin.pojo.UserSession;
 public class AdminLoginDaoImpl implements AdminLoginDao {
 
 	@Autowired
-	private SessionFactory O_SessionFactory;
+	private SessionFactory sessionFactory;
 
 	@Autowired
-	private ModelMapper O_ModelMapper;
+	private ModelMapper modelMapper;
 
 	@Override
 	public User isUserEmailAvailable(String mail) {
 
 		String getUserByEmail = "FROM TKECMUSER WHERE uMail =:email";
 
-		Query getUserByEmailQry = O_SessionFactory.getCurrentSession().createQuery(getUserByEmail);
+		Query getUserByEmailQry = sessionFactory.getCurrentSession().createQuery(getUserByEmail);
 		getUserByEmailQry.setParameter("email", mail);
 
-		TKECMUSER O_TKECMUSER = (TKECMUSER) getUserByEmailQry.uniqueResult();
+		TKECMUSER tKECMUSER = (TKECMUSER) getUserByEmailQry.uniqueResult();
 
-		if (O_TKECMUSER == null) {
+		if (tKECMUSER == null) {
 
 			return null;
 
 		}
 
-		User O_User = O_ModelMapper.map(O_TKECMUSER, User.class);
+		User user = modelMapper.map(tKECMUSER, User.class);
 
 //		O_PJ_TKECMUSER.setTkecmuPassword(O_TKECMUSER.getTkecmuPassword());
 //		O_PJ_TKECMUSER.setTkecmuId(O_TKECMUSER.getTkecmuId());
 //		O_PJ_TKECMUSER.setTkecmuStatus(O_TKECMUSER.getTkecmuStatus());
 //		O_PJ_TKECMUSER.setTkecmuOtpStatus(O_TKECMUSER.getTkecmuOtpStatus());
 
-		return O_User;
+		return user;
 
 	}
 
@@ -65,13 +66,13 @@ public class AdminLoginDaoImpl implements AdminLoginDao {
 
 		String checkUserId = "FROM TKECTUSERAPPLYROLE WHERE uarTkecmuId.uId =:userId";
 
-		Query checkUserIdQuery = O_SessionFactory.getCurrentSession().createQuery(checkUserId);
+		Query checkUserIdQuery = sessionFactory.getCurrentSession().createQuery(checkUserId);
 
 		checkUserIdQuery.setParameter("userId", uId);
 
-		TKECTUSERAPPLYROLE O_TKECTUSERAPPLYROLE = (TKECTUSERAPPLYROLE) checkUserIdQuery.uniqueResult();
+		TKECTUSERAPPLYROLE tKECTUSERAPPLYROLE = (TKECTUSERAPPLYROLE) checkUserIdQuery.uniqueResult();
 
-		if (O_TKECTUSERAPPLYROLE == null) {
+		if (tKECTUSERAPPLYROLE == null) {
 
 			return false;
 
@@ -86,161 +87,175 @@ public class AdminLoginDaoImpl implements AdminLoginDao {
 
 		String hash = new BCryptPasswordEncoder().encode(OffsetDateTime.now().toString());
 
-		TKECMUSER O_TKECMUSER = O_SessionFactory.getCurrentSession().get(TKECMUSER.class, userId);
+		TKECMUSER tKECMUSER = sessionFactory.getCurrentSession().get(TKECMUSER.class, userId);
 
-		O_TKECMUSER.setUOtp(oTP);
-		O_TKECMUSER.setUHashKey(hash);
-		O_TKECMUSER.setUOtpExp((OffsetDateTime.now().plusMinutes(5)));
+		tKECMUSER.setUOtp(oTP);
+		tKECMUSER.setUHashKey(hash);
+		tKECMUSER.setUOtpExp((OffsetDateTime.now().plusMinutes(5)));
 
-		O_SessionFactory.getCurrentSession().save(O_TKECMUSER);
+		sessionFactory.getCurrentSession().save(tKECMUSER);
 
 		return hash;
 	}
 
 	@Override
-	public User getUserDetailHash(User RO_User) {
+	public User getUserDetailHash(User user) {
 
 		String getUserDetail = "FROM TKECMUSER WHERE uHashKey =:hashKey";
 
-		Query query = O_SessionFactory.getCurrentSession().createQuery(getUserDetail);
-		query.setParameter("hashKey", RO_User.getUHashKey());
-		TKECMUSER O_TKECMUSER = (TKECMUSER) query.uniqueResult();
+		Query query = sessionFactory.getCurrentSession().createQuery(getUserDetail);
+		query.setParameter("hashKey", user.getUHashKey());
+		TKECMUSER tKECMUSER = (TKECMUSER) query.uniqueResult();
 
-		if (O_TKECMUSER == null) {
+		if (tKECMUSER == null) {
 			return null;
 		}
-		User O_User = O_ModelMapper.map(O_TKECMUSER, User.class);
+		User user1 = modelMapper.map(tKECMUSER, User.class);
 
 //		O_PJ_TKECMUSER.setTkecmuOtp(O_TKECMUSER.getTkecmuOtp());
 //		O_PJ_TKECMUSER.setTkecmuOtpExp(O_TKECMUSER.getTkecmuOtpExp());
 //		O_PJ_TKECMUSER.setTkecmuId(O_TKECMUSER.getTkecmuId());
 
-		return O_User;
+		return user1;
 	}
 
 	@Override
 	public void changeOTPStatus(String userId) {
 
-		TKECMUSER O_TKECMUSER = O_SessionFactory.getCurrentSession().get(TKECMUSER.class, userId);
-		O_TKECMUSER.setUStatus("Y");
-		O_TKECMUSER.setUOtpStatus("Y");
-		O_SessionFactory.getCurrentSession().update(O_TKECMUSER);
+		TKECMUSER tKECMUSER = sessionFactory.getCurrentSession().get(TKECMUSER.class, userId);
+		tKECMUSER.setUStatus("Y");
+		tKECMUSER.setUOtpStatus("Y");
+		sessionFactory.getCurrentSession().update(tKECMUSER);
 	}
 
 	@Override
-	public void updatePassword(User O_User_Detail) {
+	public void updatePassword(User userDetail) {
 
-		TKECMUSER O_TKECMUSER = O_SessionFactory.getCurrentSession().get(TKECMUSER.class, O_User_Detail.getUId());
-		O_TKECMUSER.setUPassword(O_User_Detail.getUPassword());
-		O_TKECMUSER.setUModifideDate(OffsetDateTime.now());
-		O_SessionFactory.getCurrentSession().update(O_TKECMUSER);
+		TKECMUSER tKECMUSER = sessionFactory.getCurrentSession().get(TKECMUSER.class, userDetail.getUId());
+		tKECMUSER.setUPassword(userDetail.getUPassword());
+		tKECMUSER.setUModifideDate(OffsetDateTime.now());
+		sessionFactory.getCurrentSession().update(tKECMUSER);
 
 	}
 
 	@Override
 	public UserSession getApiSecretDataByNewSecret(String apisecret, String userId) {
 
-		TKECMUSER O_TKECMUSER = O_SessionFactory.getCurrentSession().get(TKECMUSER.class, userId);
+		Session session = sessionFactory.openSession();
+		Transaction transaction = session.beginTransaction();
 
-		Session O_Session = O_SessionFactory.openSession();
-		Transaction O_Transaction = O_Session.beginTransaction();
+		String sessionUserId = "FROM TKECTUSERSESSION WHERE usTkecmuId.uId =:userId AND usAliveYN =:aliveYN";
 
-		TKECTUSERSESSION O_TKECTUSERSESSION = new TKECTUSERSESSION();
-		O_TKECTUSERSESSION.setUsTkecmuId(O_TKECMUSER);
-		O_TKECTUSERSESSION.setUsApiKey(apisecret);
-		O_TKECTUSERSESSION.setUsCreatedDate(OffsetDateTime.now());
-		O_TKECTUSERSESSION.setUsAliveYN("Y");
-		O_Session.save(O_TKECTUSERSESSION);
+		Query sessionUserIdQuery = session.createQuery(sessionUserId);
+		sessionUserIdQuery.setParameter("userId", userId);
+		sessionUserIdQuery.setParameter("aliveYN", "Y");
 
-		O_Transaction.commit();
-		O_Session.close();
+		try {
+			List<TKECTUSERSESSION> tKECTUSERSESSION1 = sessionUserIdQuery.getResultList();
 
-		UserSession O_UserSession = new UserSession();
+			for (TKECTUSERSESSION tKECTUSERSESSION2 : tKECTUSERSESSION1) {
 
-		O_UserSession.setUsApiKey(O_TKECTUSERSESSION.getUsApiKey());
+				tKECTUSERSESSION2.setUsAliveYN("N");
+				session.update(tKECTUSERSESSION2);
 
-		return O_UserSession;
+			}
+
+			TKECTUSERSESSION tKECTUSERSESSION = new TKECTUSERSESSION();
+			tKECTUSERSESSION.setUsTkecmuId(sessionFactory.getCurrentSession().get(TKECMUSER.class, userId));
+			tKECTUSERSESSION.setUsApiKey(apisecret);
+			tKECTUSERSESSION.setUsCreatedDate(OffsetDateTime.now());
+			tKECTUSERSESSION.setUsAliveYN("Y");
+			session.save(tKECTUSERSESSION);
+
+			transaction.commit();
+			session.close();
+
+			UserSession userSession = new UserSession();
+
+			userSession.setUsApiKey(tKECTUSERSESSION.getUsApiKey());
+
+			return userSession;
+		} catch (Exception e) {
+			e.printStackTrace();
+			if (transaction.isActive()) {
+				transaction.rollback();
+			}
+			session.close();
+
+			return null;
+		}
 	}
 
 	@Override
-	public void addAuditDetail(User O_USER_DETAIL, HttpServletRequest httpServletRequest) {
+	public void addAuditDetail(User userDetail, HttpServletRequest httpServletRequest) {
 
-		TKECTUSERAUDIT O_TKECTUSERAUDIT = new TKECTUSERAUDIT();
+		TKECTUSERAUDIT tKECTUSERAUDIT = new TKECTUSERAUDIT();
 
-		O_TKECTUSERAUDIT.setUaLoginTime(OffsetDateTime.now());
-		O_TKECTUSERAUDIT.setUaUserAgent(httpServletRequest.getHeader("user-agent"));
-		O_TKECTUSERAUDIT
-				.setUaTkecmuId(O_SessionFactory.getCurrentSession().get(TKECMUSER.class, O_USER_DETAIL.getUId()));
-		O_TKECTUSERAUDIT.setUaApiKey(O_USER_DETAIL.getApiKey());
+		tKECTUSERAUDIT.setUaLoginTime(OffsetDateTime.now());
+		tKECTUSERAUDIT.setUaUserAgent(httpServletRequest.getHeader("user-agent"));
+		tKECTUSERAUDIT.setUaUserId(userDetail.getUId());
+		tKECTUSERAUDIT.setUaApiKey(userDetail.getApiKey());
 		// O_TKECTUSERAUDIT.setTKECTUA_IP(httpServletRequest.getRemoteHost());
 
-		O_SessionFactory.getCurrentSession().save(O_TKECTUSERAUDIT);
+		sessionFactory.getCurrentSession().save(tKECTUSERAUDIT);
 
 	}
 
 	@Override
 	public User getUserDetailAPIKey(String apiKey) {
 
-		String apiQuery = "FROM TKECTUSERSESSION WHERE usApiKey =:apikey";
+		TKECTUSERSESSION tKECTUSERSESSION = sessionFactory.getCurrentSession().get(TKECTUSERSESSION.class, apiKey);
 
-		Query query = O_SessionFactory.getCurrentSession().createQuery(apiQuery);
-		query.setParameter("apikey", apiKey);
-		TKECTUSERSESSION O_TKECTUSERSESSION = (TKECTUSERSESSION) query.uniqueResult();
-
-		if (O_TKECTUSERSESSION == null) {
+		if (tKECTUSERSESSION == null) {
 			return null;
 		}
 		// TKECMUSER O_TKECMUSER = O_TKECTUSERSESSION.getTkectusUserId();
 		// PJ_TKECMUSER O_PJ_TKECMUSER = O_ModelMapper.map(O_TKECMUSER,
 		// PJ_TKECMUSER.class);
 
-		User O_User = new User();
+		User user = new User();
 
-		O_User.setUName(O_TKECTUSERSESSION.getUsTkecmuId().getUName());
-		O_User.setUMail(O_TKECTUSERSESSION.getUsTkecmuId().getUMail());
-		O_User.setUPhone(O_TKECTUSERSESSION.getUsTkecmuId().getUPhone());
-		O_User.setUPassword(O_TKECTUSERSESSION.getUsTkecmuId().getUPassword());
-		O_User.setUId(O_TKECTUSERSESSION.getUsTkecmuId().getUId());
-		return O_User;
+		user.setUName(tKECTUSERSESSION.getUsTkecmuId().getUName());
+		user.setUMail(tKECTUSERSESSION.getUsTkecmuId().getUMail());
+		user.setUPhone(tKECTUSERSESSION.getUsTkecmuId().getUPhone());
+		user.setUPassword(tKECTUSERSESSION.getUsTkecmuId().getUPassword());
+		user.setUId(tKECTUSERSESSION.getUsTkecmuId().getUId());
+		return user;
 	}
 
 	@Override
 	public Boolean userLogout(String apiKey) {
-		Session O_Session = O_SessionFactory.openSession();
-		Transaction O_Transaction = O_Session.beginTransaction();
-
-		String getApiKey = "FROM TKECTUSERSESSION WHERE usApiKey =:apiKey";
+		Session session = sessionFactory.openSession();
+		Transaction transaction = session.beginTransaction();
 
 		try {
 
-			Query getApiKeyQuery = O_Session.createQuery(getApiKey);
-			getApiKeyQuery.setParameter("apiKey", apiKey);
-			TKECTUSERSESSION O_TKECTUSERSESSION = (TKECTUSERSESSION) getApiKeyQuery.uniqueResult();
+			TKECTUSERSESSION tKECTUSERSESSION = session.get(TKECTUSERSESSION.class, apiKey);
 
-			O_TKECTUSERSESSION.setUsAliveYN("N");
+			tKECTUSERSESSION.setUsAliveYN("N");
 
-			O_Session.update(O_TKECTUSERSESSION);
+			session.update(tKECTUSERSESSION);
 
 			String getUserId1 = "FROM TKECTUSERAUDIT WHERE uaApiKey =:apikey ";
 
-			Query query1 = O_Session.createQuery(getUserId1);
+			Query query1 = session.createQuery(getUserId1);
 			query1.setParameter("apikey", apiKey);
 
-			TKECTUSERAUDIT O_TKECTUSERAUDIT = (TKECTUSERAUDIT) query1.uniqueResult();
-			O_TKECTUSERAUDIT.setUaLogoutTime((OffsetDateTime.now()));
-			O_Session.update(O_TKECTUSERAUDIT);
+			TKECTUSERAUDIT tKECTUSERAUDIT = (TKECTUSERAUDIT) query1.uniqueResult();
+			tKECTUSERAUDIT.setUaLogoutTime((OffsetDateTime.now()));
+			session.update(tKECTUSERAUDIT);
 
-			O_Transaction.commit();
-			O_Session.close();
+			transaction.commit();
+			session.close();
 
 		}
 
 		catch (Exception e) {
 
 			e.printStackTrace();
-			if (O_Transaction.isActive()) {
-				O_Transaction.rollback();
-				O_Session.close();
+			if (transaction.isActive()) {
+				transaction.rollback();
+				session.close();
 			}
 			return false;
 		}

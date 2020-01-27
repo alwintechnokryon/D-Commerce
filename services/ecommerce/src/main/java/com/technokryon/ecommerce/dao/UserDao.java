@@ -10,25 +10,25 @@ import com.technokryon.ecommerce.pojo.UserSession;
 
 public interface UserDao {
 
-	User getUserDetailHash(User RO_User);
+	User getUserDetailHash(User user);
 
 	void changeOTPStatus(String userId);
 
 	User isUserEmailAvailable(String mail);
 
-	String createNewUserByEmail(User RO_User);
+	String createNewUserByEmail(User user);
 
 	String saveOTPDetails(Integer oTP, String userId);
 
 	User isUserPhoneNoAvailable(BigInteger phoneNo);
 
-	String createNewUserByPhoneNo(User RO_User);
+	String createNewUserByPhoneNo(User user);
 
-	void updatePassword(User O_USER_DETAIL);
+	void updatePassword(User userDetail);
 
 	UserSession getApiSecretDataByNewSecret(String apisecret, String userId);
 
-	void addAuditDetail(User O_USER_DETAIL, HttpServletRequest httpServletRequest);
+	void addAuditDetail(User userDetail, HttpServletRequest httpServletRequest);
 
 	User getUserDetailAPIKey(String apiKey);
 

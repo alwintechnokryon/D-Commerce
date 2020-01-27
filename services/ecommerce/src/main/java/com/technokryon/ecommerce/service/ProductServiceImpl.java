@@ -15,18 +15,18 @@ import com.technokryon.ecommerce.pojo.Product;
 public class ProductServiceImpl implements ProductService {
 
 	@Autowired
-	private ProductDao O_ProductDao;
+	private ProductDao productDao;
 
 	@Override
 	public List<Product> getListByCategory(String categoryId, Integer PageNumber, String uId) {
 
-		return O_ProductDao.getListByCategory(categoryId, PageNumber, uId);
+		return productDao.getListByCategory(categoryId, PageNumber, uId);
 	}
 
 	@Override
 	public Product getDetailById(String tkecmpId, String uId) {
 
-		return O_ProductDao.getDetailById(tkecmpId, uId);
+		return productDao.getDetailById(tkecmpId, uId);
 	}
 
 }

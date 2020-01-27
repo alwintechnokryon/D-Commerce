@@ -4,6 +4,6 @@ import com.technokryon.ecommerce.admin.pojo.ShippingCost;
 
 public interface AdminShippingService {
 
-	void addShippingCost(ShippingCost RO_ShippingCost);
+	void addShippingCost(ShippingCost shippingCost);
 
 }

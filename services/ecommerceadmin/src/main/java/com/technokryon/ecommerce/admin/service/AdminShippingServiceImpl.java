@@ -14,11 +14,11 @@ import com.technokryon.ecommerce.admin.pojo.ShippingCost;
 public class AdminShippingServiceImpl implements AdminShippingService {
 
 	@Autowired
-	private AdminShippingDao O_AdminShippingDao;
+	private AdminShippingDao adminShippingDao;
 
 	@Override
-	public void addShippingCost(ShippingCost RO_ShippingCost) {
-		O_AdminShippingDao.addShippingCost(RO_ShippingCost); 
+	public void addShippingCost(ShippingCost shippingCost) {
+		adminShippingDao.addShippingCost(shippingCost); 
 	}
 
 }

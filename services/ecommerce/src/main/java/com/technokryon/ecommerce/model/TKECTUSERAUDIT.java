@@ -2,16 +2,11 @@ package com.technokryon.ecommerce.model;
 
 import java.time.OffsetDateTime;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import lombok.Data;
@@ -28,9 +23,8 @@ public class TKECTUSERAUDIT {
 	@Column(name = "TKECTUA_AG_ID")
 	private Integer uaAgId;
 
-	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	@JoinColumn(name = "TKECTUA_TKECMU_ID", foreignKey = @ForeignKey(name = "FK_TKECTUA_TKECMU_ID"))
-	private TKECMUSER uaTkecmuId;
+	@Column(name = "TKECTUA_USER_ID")
+	private String uaUserId;
 
 	@Column(name = "TKECTUA_LOGIN_TIME")
 	private OffsetDateTime uaLoginTime;

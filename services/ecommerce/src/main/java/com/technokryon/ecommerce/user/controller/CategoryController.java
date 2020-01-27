@@ -22,24 +22,24 @@ import com.technokryon.ecommerce.service.CategoryService;
 public class CategoryController {
 
 	@Autowired
-	private CategoryService O_CategoryService;
+	private CategoryService categoryService;
 
 	@ResponseBody
 	@GetMapping("/list")
 	private ResponseEntity<?> LIST() {
 
-		List<Category> LO_Category = O_CategoryService.categoryList();
+		List<Category> category = categoryService.categoryList();
 
-		return new ResponseEntity<Object>(LO_Category, HttpStatus.OK);
+		return new ResponseEntity<Object>(category, HttpStatus.OK);
 
 	}
 
 	@ResponseBody
 	@PostMapping("/list/id") 
-	private ResponseEntity<?> LIST_BY_ID(@RequestBody Category RO_Category){
+	private ResponseEntity<?> LIST_BY_ID(@RequestBody Category category){
 		
 
-		List<Category> LO_Category = O_CategoryService.categoryListById(RO_Category);
+		List<Category> category1 = categoryService.categoryListById(category);
 		
-		return new ResponseEntity<Object>(LO_Category, HttpStatus.OK);	}
+		return new ResponseEntity<Object>(category1, HttpStatus.OK);	}
 }

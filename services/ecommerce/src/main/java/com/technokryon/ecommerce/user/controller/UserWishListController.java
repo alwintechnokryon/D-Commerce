@@ -25,53 +25,53 @@ import com.technokryon.ecommerce.service.UserWishListService;
 public class UserWishListController {
 
 	@Autowired
-	private UserWishListService O_UserWishListService;
+	private UserWishListService userWishListService;
 
 	@Autowired
-	private UserService O_UserService;
+	private UserService userService;
 
 	@PostMapping("/add")
-	private ResponseEntity<?> ADD(@RequestHeader(value = "apikey") String apiKey, @RequestBody WishList RO_WishList) {
+	private ResponseEntity<?> ADD(@RequestHeader(value = "apikey") String apiKey, @RequestBody WishList wishList) {
 
-		Response O_Response = new Response();
+		Response response = new Response();
 
-		User O_User_Detail = O_UserService.getUserDetailAPIKey(apiKey);
+		User userDetail = userService.getUserDetailAPIKey(apiKey);
 
-		RO_WishList.setWlUserId(O_User_Detail.getUId());
+		wishList.setWlUserId(userDetail.getUId());
 
-		O_UserWishListService.addWishList(RO_WishList);
+		userWishListService.addWishList(wishList);
 
-		O_Response.setMessage("Product Added To WishList");
-		return new ResponseEntity<Object>(O_Response, HttpStatus.OK);
+		response.setMessage("Product Added To WishList");
+		return new ResponseEntity<Object>(response, HttpStatus.OK);
 
 	}
 
 	@GetMapping("/list")
 	private ResponseEntity<?> LIST(@RequestHeader(value = "apikey") String apiKey) {
 
-		User O_User_Detail = O_UserService.getUserDetailAPIKey(apiKey);
+		User userDetail = userService.getUserDetailAPIKey(apiKey);
 
-		List<WishList> LO_WishList = O_UserWishListService.listWishList(O_User_Detail.getUId());
+		List<WishList> wishList = userWishListService.listWishList(userDetail.getUId());
 
-		return new ResponseEntity<Object>(LO_WishList, HttpStatus.OK);
+		return new ResponseEntity<Object>(wishList, HttpStatus.OK);
 
 	}
 
 	@PostMapping("/delete")
 	private ResponseEntity<?> DELETE(@RequestHeader(value = "apikey") String apiKey,
-			@RequestBody WishList RO_WishList) {
+			@RequestBody WishList wishList) {
 
-		Response O_Response = new Response();
+		Response response = new Response();
 
-		User O_User_Detail = O_UserService.getUserDetailAPIKey(apiKey);
+		User userDetail = userService.getUserDetailAPIKey(apiKey);
 
-		RO_WishList.setWlUserId(O_User_Detail.getUId());
+		wishList.setWlUserId(userDetail.getUId());
 
-		O_UserWishListService.deleteWishlist(RO_WishList);
+		userWishListService.deleteWishlist(wishList);
 
-		O_Response.setMessage("Deleted SuccessFully");
+		response.setMessage("Deleted SuccessFully");
 
-		return new ResponseEntity<Object>(O_Response, HttpStatus.OK);
+		return new ResponseEntity<Object>(response, HttpStatus.OK);
 
 	}
 

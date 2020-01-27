@@ -8,6 +8,6 @@ public interface CategoryDao {
 
 	List<Category> categoryList();
 
-	List<Category> categoryListById(Category RO_Category);
+	List<Category> categoryListById(Category category);
 
 }
