@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Jan 27, 2020 at 09:40 AM
+-- Generation Time: Feb 13, 2020 at 01:35 PM
 -- Server version: 5.7.23
 -- PHP Version: 5.6.38
 
@@ -21,6 +21,100 @@ SET time_zone = "+00:00";
 --
 -- Database: `DStore`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `API_DM_MODULE`
+--
+
+DROP TABLE IF EXISTS `API_DM_MODULE`;
+CREATE TABLE IF NOT EXISTS `API_DM_MODULE` (
+  `APIDMM_AG_ID` int(11) NOT NULL AUTO_INCREMENT,
+  `APIDMM_NAME` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `APIDMM_FLAG` varchar(1) COLLATE utf8_unicode_ci DEFAULT NULL,
+  PRIMARY KEY (`APIDMM_AG_ID`)
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Dumping data for table `API_DM_MODULE`
+--
+
+INSERT INTO `API_DM_MODULE` (`APIDMM_AG_ID`, `APIDMM_NAME`, `APIDMM_FLAG`) VALUES
+(1, 'Registration', 'U'),
+(2, 'Profile', 'U'),
+(3, 'Config', 'U'),
+(4, 'Category', 'U'),
+(5, 'Product', 'U'),
+(6, 'Address', 'U'),
+(7, 'Order', 'U'),
+(8, 'Cart', 'U'),
+(9, 'WishList', 'U'),
+(10, 'LogIn', 'A'),
+(11, 'Category', 'A'),
+(12, 'Product', 'A'),
+(13, 'Shipping', 'A');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `API_DT_API`
+--
+
+DROP TABLE IF EXISTS `API_DT_API`;
+CREATE TABLE IF NOT EXISTS `API_DT_API` (
+  `APIDTA_AG_ID` int(11) NOT NULL AUTO_INCREMENT,
+  `APIDTA_APIDMM_AG_ID` int(11) DEFAULT NULL,
+  `APIDTA_API_NAME` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `APIDTA_DESCRIPTION` text COLLATE utf8_unicode_ci,
+  `APIDTA_TYPE` varchar(10) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `APIDTA_URL` varchar(500) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `APIDTA_EXAMPLE_URL` varchar(500) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `APIDTA_REQUEST_HEADER` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `APIDTA_RESPONSE_HEADER` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `APIDTA_BODY` text COLLATE utf8_unicode_ci,
+  `APIDTA_RESPONSE_CODE` int(11) DEFAULT NULL,
+  PRIMARY KEY (`APIDTA_AG_ID`),
+  KEY `FK_APIDTA_APIDMM_AG_ID` (`APIDTA_APIDMM_AG_ID`)
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Dumping data for table `API_DT_API`
+--
+
+INSERT INTO `API_DT_API` (`APIDTA_AG_ID`, `APIDTA_APIDMM_AG_ID`, `APIDTA_API_NAME`, `APIDTA_DESCRIPTION`, `APIDTA_TYPE`, `APIDTA_URL`, `APIDTA_EXAMPLE_URL`, `APIDTA_REQUEST_HEADER`, `APIDTA_RESPONSE_HEADER`, `APIDTA_BODY`, `APIDTA_RESPONSE_CODE`) VALUES
+(1, 1, 'Register Via POST', 'Registration is the process by which a company files required documents with the Securities and Exchange Commission (SEC)', 'POST', '/api/v1/user/register', 'localhost:/api/v1/user/register', 'Content-Type: application/json', NULL, NULL, 200),
+(2, 1, 'OTP Verify Via POST', 'OTP Verification verifies Email Address/Mobile Number of users by sending verification code(OTP) during registration.', 'POST', '/api/v1/user/otp/verify', 'localhost:/api/v1/user/otp/verify', 'Content-Type: application/json', NULL, NULL, 200),
+(3, 1, 'LogIn Via POST', 'A login is a set of credentials used to authenticate a user. Most often, these consist of a username and password.', 'POST', '/api/v1/user/login', 'localhost:/api/v1/user/login', 'Content-Type: application/json', NULL, NULL, 200),
+(4, 1, 'Forgot Via POST', 'Reset your password? Please provide the username or email address that you used when you signed up for your Evernote account. We will send you an email ', 'POST', '/api/v1/user/forgot', 'localhost:/api/v1/user/forgot', 'Content-Type: application/json', NULL, NULL, 200),
+(5, 2, 'Detail Via GET', 'A user profile is a visual display of personal data associated with a specific user, or a customized desktop environment.', 'GET', '/api/v1/user/detail', 'localhost:/api/v1/user/detail', 'Content-Type: application/json', NULL, NULL, 200);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `API_DT_API_PARAMS`
+--
+
+DROP TABLE IF EXISTS `API_DT_API_PARAMS`;
+CREATE TABLE IF NOT EXISTS `API_DT_API_PARAMS` (
+  `APIDTAP_AG_ID` int(11) NOT NULL AUTO_INCREMENT,
+  `APIDTAP_APIDTA_AG_ID` int(11) DEFAULT NULL,
+  `APIDTAP_PARAM_NAME` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `APIDTAP_DATA_TYPE` varchar(20) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `APIDTAP_DESCRIPTION` text COLLATE utf8_unicode_ci,
+  `APIDTAP_REQUIRED` varchar(20) COLLATE utf8_unicode_ci DEFAULT NULL,
+  PRIMARY KEY (`APIDTAP_AG_ID`),
+  KEY `FK_APIDTAP_APIDTA_AG_ID` (`APIDTAP_APIDTA_AG_ID`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Dumping data for table `API_DT_API_PARAMS`
+--
+
+INSERT INTO `API_DT_API_PARAMS` (`APIDTAP_AG_ID`, `APIDTAP_APIDTA_AG_ID`, `APIDTAP_PARAM_NAME`, `APIDTAP_DATA_TYPE`, `APIDTAP_DESCRIPTION`, `APIDTAP_REQUIRED`) VALUES
+(1, 1, 'uMail', 'String', 'Enter Your Email', 'Required'),
+(2, 1, 'uName', 'String', 'Enter Your Name', 'Required'),
+(3, 1, 'uPassword', 'String', 'Enter Your Password', 'Required');
 
 -- --------------------------------------------------------
 
@@ -1286,7 +1380,7 @@ CREATE TABLE IF NOT EXISTS `TKECT_PRODUCT_CART` (
   PRIMARY KEY (`TKECTPC_AG_ID`),
   KEY `FK_TKECTPC_TKECMU_ID` (`TKECTPC_TKECMU_ID`),
   KEY `FK_TKECTPC_TKECMP_ID` (`TKECTPC_TKECMP_ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Dumping data for table `TKECT_PRODUCT_CART`
@@ -6248,7 +6342,7 @@ CREATE TABLE IF NOT EXISTS `TKECT_USER_ADDRESS` (
   KEY `FK_TKECTUAD_TKECMU_ID` (`TKECTUA_TKECMU_ID`) USING BTREE,
   KEY `FK_TKECTUA_TKECMCN_AG_ID` (`TKECTUA_TKECMCN_AG_ID`),
   KEY `FK_TKECTUA_TKECTS_AG_ID` (`TKECTUA_TKECTS_AG_ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=27 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Dumping data for table `TKECT_USER_ADDRESS`
@@ -6459,7 +6553,7 @@ CREATE TABLE IF NOT EXISTS `TKECT_WISH_LIST` (
   `TKECTWL_CREATED_DATE` datetime DEFAULT NULL,
   PRIMARY KEY (`TKECTWL_AG_ID`),
   KEY `FK_TKECTWL_TKECMP_ID` (`TKECTWL_TKECMP_ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Dumping data for table `TKECT_WISH_LIST`
@@ -6476,6 +6570,18 @@ INSERT INTO `TKECT_WISH_LIST` (`TKECTWL_AG_ID`, `TKECTWL_USER_ID`, `TKECTWL_TKEC
 --
 -- Constraints for dumped tables
 --
+
+--
+-- Constraints for table `API_DT_API`
+--
+ALTER TABLE `API_DT_API`
+  ADD CONSTRAINT `FK_APIDTA_APIDMM_AG_ID` FOREIGN KEY (`APIDTA_APIDMM_AG_ID`) REFERENCES `API_DM_MODULE` (`APIDMM_AG_ID`);
+
+--
+-- Constraints for table `API_DT_API_PARAMS`
+--
+ALTER TABLE `API_DT_API_PARAMS`
+  ADD CONSTRAINT `FK_APIDTAP_APIDTA_AG_ID` FOREIGN KEY (`APIDTAP_APIDTA_AG_ID`) REFERENCES `API_DT_API` (`APIDTA_AG_ID`);
 
 --
 -- Constraints for table `TKECM_IMAGE`

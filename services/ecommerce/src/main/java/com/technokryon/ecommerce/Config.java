@@ -19,6 +19,9 @@ import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
+import com.technokryon.ecommerce.apidoc.model.APIDMMODULE;
+import com.technokryon.ecommerce.apidoc.model.APIDTAPI;
+import com.technokryon.ecommerce.apidoc.model.APIDTAPIPARAMS;
 import com.technokryon.ecommerce.model.TKECMATTRIBUTE;
 import com.technokryon.ecommerce.model.TKECMCATEGORY;
 import com.technokryon.ecommerce.model.TKECMCOUNTRY;
@@ -92,7 +95,8 @@ public class Config implements WebMvcConfigurer
 				TKECTORDERADDRESS.class, TKECMORDER.class, TKECTORDERITEM.class, TKECMORDERSTATUS.class,
 				TKECTORDERSTATUSHISTORY.class, TKECMCOUNTRY.class, TKECMPRODUCTPAYMENTTYPE.class, TKECTSTATE.class,
 				TKECTPRODUCTCART.class, TKECMROLE.class, TKECTUSERAPPLYROLE.class, TKECTPRODUCTSTORE.class,
-				TKECMSTORE.class, TKECMPRODUCTSHIPMENT.class, TKECTWISHLIST.class);
+				TKECMSTORE.class, TKECMPRODUCTSHIPMENT.class, TKECTWISHLIST.class, APIDMMODULE.class, APIDTAPI.class,
+				APIDTAPIPARAMS.class);
 
 		return factoryBean;
 	}
