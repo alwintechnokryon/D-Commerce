@@ -12,5 +12,6 @@ public class ApiParams {
 	String apParamName;
 	String apDatatype;
 	String apDescription;
-	String iAgId;
+	String apRequired;
+	
 }

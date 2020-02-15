@@ -30,4 +30,19 @@ public class ApiDocumentServiceImpl implements ApiDocumentService {
 		return apiDocumentDao.getDetailById(module);
 	}
 
+	@Override
+	public void addApi(Module module) {
+		
+		apiDocumentDao.addApi(module);
+		
+	}
+
+	@Override
+	public void addParams(Api api) {
+		
+		apiDocumentDao.addParams(api);
+
+		
+	}
+
 }

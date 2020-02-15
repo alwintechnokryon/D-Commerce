@@ -3,7 +3,9 @@ package com.technokryon.ecommerce.apidoc.dao;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.PropertyMap;
@@ -19,8 +21,6 @@ import com.technokryon.ecommerce.apidoc.model.APIDTAPIPARAMS;
 import com.technokryon.ecommerce.apidoc.pojo.Api;
 import com.technokryon.ecommerce.apidoc.pojo.ApiParams;
 import com.technokryon.ecommerce.apidoc.pojo.Module;
-import com.technokryon.ecommerce.model.TKECTSTATE;
-import com.technokryon.ecommerce.pojo.State;
 
 @Repository("ApiDocumentDao")
 @Transactional
@@ -108,5 +108,63 @@ public class ApiDocumentDaoImpl implements ApiDocumentDao {
 		}
 
 		return api1;
+	}
+
+	@Override
+	public void addApi(Module module) {
+
+		Session session = sessionFactory.openSession();
+		Transaction transaction = session.beginTransaction();
+
+		try {
+
+			APIDMMODULE aPIDMMODULE = new APIDMMODULE();
+
+			aPIDMMODULE.setMName(module.getMName());
+			aPIDMMODULE.setMFlag(module.getMFlag());
+			session.save(aPIDMMODULE);
+
+			for (Api api : module.getApi()) {
+
+				APIDTAPI aPIDTAPI = new APIDTAPI();
+
+				aPIDTAPI.setABody(api.getABody());
+				aPIDTAPI.setADescription(api.getADescription());
+				aPIDTAPI.setAExampleUrl(api.getAExampleUrl());
+				aPIDTAPI.setAName(api.getAName());
+				aPIDTAPI.setARequestHeader(api.getARequestHeader());
+				aPIDTAPI.setAResponseCode(api.getAResponseCode());
+				aPIDTAPI.setAResponseHeader(api.getAResponseHeader());
+				aPIDTAPI.setAType(api.getAType());
+				aPIDTAPI.setAUrl(api.getAUrl());
+				aPIDTAPI.setAApidmmAgId(session.get(APIDMMODULE.class, aPIDMMODULE.getMAgId()));
+				session.save(aPIDTAPI);
+
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			if (transaction.isActive()) {
+				transaction.rollback();
+			}
+			session.close();
+		}
+	}
+
+	@Override
+	public void addParams(Api api) {
+
+		for (ApiParams apiParams : api.getApiParams()) {
+
+			APIDTAPIPARAMS aPIDTAPIPARAMS = new APIDTAPIPARAMS();
+
+			aPIDTAPIPARAMS.setApDatatype(apiParams.getApDatatype());
+			aPIDTAPIPARAMS.setApDescription(apiParams.getApDescription());
+			aPIDTAPIPARAMS.setApParamName(apiParams.getApParamName());
+			aPIDTAPIPARAMS.setApApidtaAgId(sessionFactory.getCurrentSession().get(APIDTAPI.class, api.getAAgId()));
+			aPIDTAPIPARAMS.setApRequired(apiParams.getApRequired());
+			sessionFactory.getCurrentSession().save(aPIDTAPIPARAMS);
+		}
+
 	}
 }

@@ -11,4 +11,8 @@ public interface ApiDocumentDao {
 
 	List<Api> getDetailById(Module module);
 
+	void addApi(Module module);
+
+	void addParams(Api api);
+
 }

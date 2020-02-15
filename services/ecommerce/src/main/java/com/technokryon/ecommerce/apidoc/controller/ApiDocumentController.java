@@ -12,8 +12,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.technokryon.ecommerce.apidoc.pojo.Api;
 import com.technokryon.ecommerce.apidoc.pojo.Module;
 import com.technokryon.ecommerce.apidoc.service.ApiDocumentService;
+import com.technokryon.ecommerce.pojo.Response;
 
 @Controller
 @CrossOrigin
@@ -41,4 +43,32 @@ public class ApiDocumentController {
 
 	}
 
+	@ResponseBody
+	@PostMapping("/add/api")
+	private ResponseEntity<?> ADD_API(@RequestBody Module module){
+		
+		Response response = new Response();
+		
+		apiDocumentService.addApi(module);
+		
+		response.setMessage("Added Successfully");
+		
+		return new ResponseEntity<Object>(response,HttpStatus.OK);
+	}
+	
+	@ResponseBody
+	@PostMapping("/add/params")
+	private ResponseEntity<?> ADD_PARAMS(@RequestBody Api api){
+		
+		Response response = new Response();
+		
+		apiDocumentService.addParams(api);
+		
+		response.setMessage("Added Successfully");
+		
+		return new ResponseEntity<Object>(response,HttpStatus.OK);
+	}
+	
+	
+	
 }

@@ -40,6 +40,6 @@ public class APIDTAPIPARAMS {
 	private String apDescription;
 	
 	@Column(name = "APIDTAP_REQUIRED")
-	private String iAgId;
+	private String apRequired;
 	
 }
