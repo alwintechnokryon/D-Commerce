@@ -67,7 +67,7 @@ public class Config implements WebMvcConfigurer
 	private Environment env;
 
 	@Bean
-	public DataSource getECommerceDataSource() {
+	public DataSource getECommerceUserDataSource() {
 		BasicDataSource dataSource = new BasicDataSource();
 		dataSource.setDriverClassName(env.getProperty("db.driver"));
 		dataSource.setUrl(env.getProperty("db.url"));
@@ -77,9 +77,9 @@ public class Config implements WebMvcConfigurer
 	}
 
 	@Bean
-	public LocalSessionFactoryBean getECommerceSessionFactory() {
+	public LocalSessionFactoryBean getECommerceUserSessionFactory() {
 		LocalSessionFactoryBean factoryBean = new LocalSessionFactoryBean();
-		factoryBean.setDataSource(getECommerceDataSource());
+		factoryBean.setDataSource(getECommerceUserDataSource());
 
 		Properties props = new Properties();
 		props.put("hibernate.show_sql", env.getProperty("hibernate.show_sql"));
@@ -102,14 +102,14 @@ public class Config implements WebMvcConfigurer
 	}
 
 	@Bean
-	public HibernateTransactionManager getECommerceTransactionManager() {
+	public HibernateTransactionManager getECommerceUserTransactionManager() {
 		HibernateTransactionManager transactionManager = new HibernateTransactionManager();
-		transactionManager.setSessionFactory(getECommerceSessionFactory().getObject());
+		transactionManager.setSessionFactory(getECommerceUserSessionFactory().getObject());
 		return transactionManager;
 	}
 
 	@Bean
-	public ModelMapper getModelMapper() {
+	public ModelMapper getUserModelMapper() {
 
 		ModelMapper modelMapper = new ModelMapper();
 

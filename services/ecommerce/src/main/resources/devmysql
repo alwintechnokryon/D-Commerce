@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Feb 13, 2020 at 01:35 PM
+-- Generation Time: Mar 10, 2020 at 01:18 PM
 -- Server version: 5.7.23
 -- PHP Version: 5.6.38
 
@@ -34,7 +34,7 @@ CREATE TABLE IF NOT EXISTS `API_DM_MODULE` (
   `APIDMM_NAME` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `APIDMM_FLAG` varchar(1) COLLATE utf8_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`APIDMM_AG_ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Dumping data for table `API_DM_MODULE`
@@ -53,7 +53,7 @@ INSERT INTO `API_DM_MODULE` (`APIDMM_AG_ID`, `APIDMM_NAME`, `APIDMM_FLAG`) VALUE
 (10, 'LogIn', 'A'),
 (11, 'Category', 'A'),
 (12, 'Product', 'A'),
-(13, 'Shipping', 'A');
+(15, 'Shipping', 'A');
 
 -- --------------------------------------------------------
 
@@ -76,7 +76,7 @@ CREATE TABLE IF NOT EXISTS `API_DT_API` (
   `APIDTA_RESPONSE_CODE` int(11) DEFAULT NULL,
   PRIMARY KEY (`APIDTA_AG_ID`),
   KEY `FK_APIDTA_APIDMM_AG_ID` (`APIDTA_APIDMM_AG_ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Dumping data for table `API_DT_API`
@@ -87,7 +87,8 @@ INSERT INTO `API_DT_API` (`APIDTA_AG_ID`, `APIDTA_APIDMM_AG_ID`, `APIDTA_API_NAM
 (2, 1, 'OTP Verify Via POST', 'OTP Verification verifies Email Address/Mobile Number of users by sending verification code(OTP) during registration.', 'POST', '/api/v1/user/otp/verify', 'localhost:/api/v1/user/otp/verify', 'Content-Type: application/json', NULL, NULL, 200),
 (3, 1, 'LogIn Via POST', 'A login is a set of credentials used to authenticate a user. Most often, these consist of a username and password.', 'POST', '/api/v1/user/login', 'localhost:/api/v1/user/login', 'Content-Type: application/json', NULL, NULL, 200),
 (4, 1, 'Forgot Via POST', 'Reset your password? Please provide the username or email address that you used when you signed up for your Evernote account. We will send you an email ', 'POST', '/api/v1/user/forgot', 'localhost:/api/v1/user/forgot', 'Content-Type: application/json', NULL, NULL, 200),
-(5, 2, 'Detail Via GET', 'A user profile is a visual display of personal data associated with a specific user, or a customized desktop environment.', 'GET', '/api/v1/user/detail', 'localhost:/api/v1/user/detail', 'Content-Type: application/json', NULL, NULL, 200);
+(7, 2, 'Register Via POST', 'Registration is the process by which a company files required documents with the Securities and Exchange Commission (SEC)', 'GET', '/api/v1/user/register', 'localhost:/api/v1/user/register', 'Content-Type: application/json', NULL, NULL, 200),
+(8, 3, 'Login Via POST', 'A login is a set of credentials used to authenticate a user. Most often, these consist of a username and password.', 'GET', '/api/v1/user/register', 'localhost:/api/v1/user/register', 'Content-Type: application/json', NULL, NULL, 200);
 
 -- --------------------------------------------------------
 
@@ -105,7 +106,7 @@ CREATE TABLE IF NOT EXISTS `API_DT_API_PARAMS` (
   `APIDTAP_REQUIRED` varchar(20) COLLATE utf8_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`APIDTAP_AG_ID`),
   KEY `FK_APIDTAP_APIDTA_AG_ID` (`APIDTAP_APIDTA_AG_ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Dumping data for table `API_DT_API_PARAMS`
@@ -114,7 +115,13 @@ CREATE TABLE IF NOT EXISTS `API_DT_API_PARAMS` (
 INSERT INTO `API_DT_API_PARAMS` (`APIDTAP_AG_ID`, `APIDTAP_APIDTA_AG_ID`, `APIDTAP_PARAM_NAME`, `APIDTAP_DATA_TYPE`, `APIDTAP_DESCRIPTION`, `APIDTAP_REQUIRED`) VALUES
 (1, 1, 'uMail', 'String', 'Enter Your Email', 'Required'),
 (2, 1, 'uName', 'String', 'Enter Your Name', 'Required'),
-(3, 1, 'uPassword', 'String', 'Enter Your Password', 'Required');
+(3, 1, 'uPassword', 'String', 'Enter Your Password', 'Required'),
+(4, 2, 'name', 'string', 'string', 'string'),
+(5, 2, 'mail', 'string', 'string', 'string'),
+(6, 7, 'name', 'string', 'string', 'string'),
+(7, 7, 'mail', 'string', 'string', 'string'),
+(8, 7, 'name', 'string', 'string', 'string'),
+(9, 7, 'mail', 'string', 'string', 'string');
 
 -- --------------------------------------------------------
 
@@ -942,6 +949,34 @@ INSERT INTO `TKECM_USER` (`TKECMU_ID`, `TKECMU_NAME`, `TKECMU_REG_TYPE`, `TKECMU
 ('TKECU0036', ' ', 'E', 'asasd@gmail.com', 164782, '2020-01-09 11:30:51', '$2a$10$KzaykYKkNAJGEV0sad9oJ.AsDJVR81GrQ/WMJnhVFqgVVdaOLeddG', '$2a$10$GsSL2UK4c7hMRvRuwpIoaO.eovayz5UZMTgUrD2XgeYqoq3jmmd66', '2020-01-09 11:25:46', NULL, NULL, 'N', 'N', NULL),
 ('TKECU0037', 'Sasi', 'E', 'sasimsk234@gmail.com', 108554, '2020-01-09 15:54:56', '$2a$10$AkraTimDRSJwyFU6Y6yg3e0tXb75LqOmMDZZsH60NsaaZB4.ds.wC', '$2a$10$95mc2ivM6X.HkSBUfmAhN.guF4tp6IfR5EQWObSnV/C3U/3NDMPaW', '2020-01-09 15:49:52', NULL, NULL, 'Y', 'Y', NULL),
 ('TKECU0038', 'MSK', 'E', 'sasimsk61996@gmail.com', 119950, '2020-01-27 12:46:09', '$2a$10$5gugeEsiXpH9RnWcTq9XKOK5Pa17V6Pjz00Q1f9kYZIfXKEUUeRA6', '$2a$10$AIPCLXeXuTY16q7qvpZOLu2Vw8XCcjqIM4qc/KD4qZqx5U/2bNXW.', '2020-01-27 11:37:45', NULL, NULL, 'Y', 'Y', '2020-01-27 12:51:04');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `TKECM_USER_GROUP`
+--
+
+DROP TABLE IF EXISTS `TKECM_USER_GROUP`;
+CREATE TABLE IF NOT EXISTS `TKECM_USER_GROUP` (
+  `TKECMUG_ID` varchar(20) COLLATE utf8_unicode_ci NOT NULL,
+  `TKECMUG_NAME` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `TKECMUG_DESCRIPTION` text COLLATE utf8_unicode_ci,
+  `TKECMUG_STATUS_YN` varchar(1) COLLATE utf8_unicode_ci NOT NULL,
+  `TKECMUG_CREATED_DATE` datetime DEFAULT NULL,
+  `TKECMUG_CREATED_USER_ID` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `TKECMUG_MODIFIED_DATE` datetime DEFAULT NULL,
+  `TKECMUG_MODIFIED_USER_ID` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  PRIMARY KEY (`TKECMUG_ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Dumping data for table `TKECM_USER_GROUP`
+--
+
+INSERT INTO `TKECM_USER_GROUP` (`TKECMUG_ID`, `TKECMUG_NAME`, `TKECMUG_DESCRIPTION`, `TKECMUG_STATUS_YN`, `TKECMUG_CREATED_DATE`, `TKECMUG_CREATED_USER_ID`, `TKECMUG_MODIFIED_DATE`, `TKECMUG_MODIFIED_USER_ID`) VALUES
+('TKECG0001', 'group1', 'This is group1', 'Y', '2020-03-10 17:56:20', 'TKECU0020', NULL, NULL),
+('TKECG0002', 'GROUP2', 'This is GROUP2', 'N', '2020-03-10 17:57:21', 'TKECU0020', '2020-03-10 18:00:16', 'TKECU0020'),
+('TKECG0003', 'GROUP3', 'THIS IS GROUP3', 'N', '2020-03-10 18:41:09', 'TKEC0017', '2020-03-10 18:43:13', 'TKEC0017');
 
 -- --------------------------------------------------------
 
@@ -6370,6 +6405,32 @@ INSERT INTO `TKECT_USER_ADDRESS` (`TKECTUA_AG_ID`, `TKECTUA_TKECMU_ID`, `TKECTUA
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `TKECT_USER_APPLY_GROUP`
+--
+
+DROP TABLE IF EXISTS `TKECT_USER_APPLY_GROUP`;
+CREATE TABLE IF NOT EXISTS `TKECT_USER_APPLY_GROUP` (
+  `TKECTUAG_AG_ID` int(11) NOT NULL AUTO_INCREMENT,
+  `TKECTUAG_TKECMU_ID` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `TKECTUAG_TKECMUG_ID` varchar(20) COLLATE utf8_unicode_ci NOT NULL,
+  `TKECTUAG_CREATED_DATE` datetime DEFAULT NULL,
+  `TKECTUAG_CREATED_USER_ID` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  PRIMARY KEY (`TKECTUAG_AG_ID`),
+  KEY `FK_TKECTUAG_TKECMU_ID` (`TKECTUAG_TKECMU_ID`),
+  KEY `FK_TKECTUAG_TKECMUG_ID` (`TKECTUAG_TKECMUG_ID`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Dumping data for table `TKECT_USER_APPLY_GROUP`
+--
+
+INSERT INTO `TKECT_USER_APPLY_GROUP` (`TKECTUAG_AG_ID`, `TKECTUAG_TKECMU_ID`, `TKECTUAG_TKECMUG_ID`, `TKECTUAG_CREATED_DATE`, `TKECTUAG_CREATED_USER_ID`) VALUES
+(1, 'TKEC0012', 'TKECG0001', '2020-03-10 18:04:08', 'TKECU0020'),
+(4, 'TKEC0013', 'TKECG0001', '2020-03-10 18:27:53', 'TKECU0020');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `TKECT_USER_APPLY_ROLE`
 --
 
@@ -6694,6 +6755,14 @@ ALTER TABLE `TKECT_USER_ADDRESS`
   ADD CONSTRAINT `FK_TKECTUAD_TKECMU_ID` FOREIGN KEY (`TKECTUA_TKECMU_ID`) REFERENCES `TKECM_USER` (`TKECMU_ID`),
   ADD CONSTRAINT `FK_TKECTUA_TKECMCN_AG_ID` FOREIGN KEY (`TKECTUA_TKECMCN_AG_ID`) REFERENCES `TKECM_COUNTRY` (`TKECMCN_AG_ID`),
   ADD CONSTRAINT `FK_TKECTUA_TKECTS_AG_ID` FOREIGN KEY (`TKECTUA_TKECTS_AG_ID`) REFERENCES `TKECT_STATE` (`TKECTS_AG_ID`);
+
+--
+-- Constraints for table `TKECT_USER_APPLY_GROUP`
+--
+ALTER TABLE `TKECT_USER_APPLY_GROUP`
+  ADD CONSTRAINT `FK_	TKECTUAG_TKECMUG_ID` FOREIGN KEY (`TKECTUAG_TKECMUG_ID`) REFERENCES `TKECM_USER_GROUP` (`TKECMUG_ID`),
+  ADD CONSTRAINT `FK_TKECTUAG_TKECMUG_ID` FOREIGN KEY (`TKECTUAG_TKECMUG_ID`) REFERENCES `TKECM_USER_GROUP` (`TKECMUG_ID`),
+  ADD CONSTRAINT `FK_TKECTUAG_TKECMU_ID` FOREIGN KEY (`TKECTUAG_TKECMU_ID`) REFERENCES `TKECM_USER` (`TKECMU_ID`);
 
 --
 -- Constraints for table `TKECT_USER_APPLY_ROLE`

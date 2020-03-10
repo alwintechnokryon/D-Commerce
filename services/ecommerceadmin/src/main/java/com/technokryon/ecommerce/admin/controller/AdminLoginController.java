@@ -100,7 +100,7 @@ public class AdminLoginController {
 
 		Response response = new Response();
 
-		if (user.getUMail() == null || user.getUMail().isBlank()) {
+		if (user.getUMail() == null || user.getUMail().trim().isEmpty()) {
 
 			response.setMessage("Email Id Is Empty..!");
 
@@ -144,7 +144,7 @@ public class AdminLoginController {
 			return new ResponseEntity<Object>(response, HttpStatus.UNPROCESSABLE_ENTITY);
 		}
 
-		if (user.getUHashKey().isBlank()) {
+		if (user.getUHashKey().trim().isEmpty()) {
 
 			response.setMessage("Hash Key Is Empty..!");
 			return new ResponseEntity<Object>(response, HttpStatus.UNPROCESSABLE_ENTITY);
@@ -187,7 +187,7 @@ public class AdminLoginController {
 			return new ResponseEntity<Object>(response, HttpStatus.UNPROCESSABLE_ENTITY);
 		}
 
-		if (user.getUHashKey().isBlank()) {
+		if (user.getUHashKey().trim().isEmpty()) {
 
 			response.setMessage("Hash Key Is Empty..!");
 			return new ResponseEntity<Object>(response, HttpStatus.UNPROCESSABLE_ENTITY);

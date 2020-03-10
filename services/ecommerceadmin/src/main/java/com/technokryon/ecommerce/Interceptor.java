@@ -11,7 +11,7 @@ import com.technokryon.ecommerce.admin.pojo.User;
 import com.technokryon.ecommerce.admin.service.AdminLoginService;
 
 @Component
-public class Interceptor implements HandlerInterceptor {
+public class Interceptor implements HandlerInterceptor {	
 
 	@Autowired
 	private AdminLoginService adminLoginService;
@@ -46,3 +46,4 @@ public class Interceptor implements HandlerInterceptor {
 		return true;
 	}
 }
+	

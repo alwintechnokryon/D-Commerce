@@ -26,8 +26,10 @@ import com.technokryon.ecommerce.admin.model.TKECMPRODUCTTYPE;
 import com.technokryon.ecommerce.admin.model.TKECMROLE;
 import com.technokryon.ecommerce.admin.model.TKECMSHIPPINGCOST;
 import com.technokryon.ecommerce.admin.model.TKECMUSER;
+import com.technokryon.ecommerce.admin.model.TKECMUSERGROUP;
 import com.technokryon.ecommerce.admin.model.TKECTOPTIONATTRIBUTE;
 import com.technokryon.ecommerce.admin.model.TKECTPRODUCTATTRIBUTE;
+import com.technokryon.ecommerce.admin.model.TKECTUSERAPPLYGROUP;
 import com.technokryon.ecommerce.admin.model.TKECTUSERAPPLYROLE;
 import com.technokryon.ecommerce.admin.model.TKECTUSERAUDIT;
 import com.technokryon.ecommerce.admin.model.TKECTUSERSESSION;
@@ -46,7 +48,7 @@ public class Config implements WebMvcConfigurer {
 	private Interceptor interceptor;
 
 	@Bean
-	public DataSource getECommerceDataSource() {
+	public DataSource getECommerceAdminDataSource() {
 		BasicDataSource dataSource = new BasicDataSource();
 		dataSource.setDriverClassName(env.getProperty("db.driver"));
 		dataSource.setUrl(env.getProperty("db.url"));
@@ -56,9 +58,9 @@ public class Config implements WebMvcConfigurer {
 	}
 
 	@Bean
-	public LocalSessionFactoryBean getECommerceSessionFactory() {
+	public LocalSessionFactoryBean getECommerceAdminSessionFactory() {
 		LocalSessionFactoryBean factoryBean = new LocalSessionFactoryBean();
-		factoryBean.setDataSource(getECommerceDataSource());
+		factoryBean.setDataSource(getECommerceAdminDataSource());
 
 		Properties props = new Properties();
 		props.put("hibernate.show_sql", env.getProperty("hibernate.show_sql"));
@@ -70,20 +72,20 @@ public class Config implements WebMvcConfigurer {
 		factoryBean.setAnnotatedClasses(TKECMUSER.class, TKECTUSERSESSION.class, TKECTUSERAUDIT.class,
 				TKECMCATEGORY.class, TKECMATTRIBUTE.class, TKECTOPTIONATTRIBUTE.class, TKECTPRODUCTATTRIBUTE.class,
 				TKECMIMAGE.class, TKECMPRODUCT.class, TKECMPRODUCTTYPE.class, TKECMROLE.class, TKECTUSERAPPLYROLE.class,
-				TKECMSHIPPINGCOST.class);
+				TKECMSHIPPINGCOST.class, TKECMUSERGROUP.class, TKECTUSERAPPLYGROUP.class);
 
 		return factoryBean;
 	}
 
 	@Bean
-	public HibernateTransactionManager getECommerceTransactionManager() {
+	public HibernateTransactionManager getECommerceAdminTransactionManager() {
 		HibernateTransactionManager transactionManager = new HibernateTransactionManager();
-		transactionManager.setSessionFactory(getECommerceSessionFactory().getObject());
+		transactionManager.setSessionFactory(getECommerceAdminSessionFactory().getObject());
 		return transactionManager;
 	}
 
 	@Bean
-	public ModelMapper getModelMapper() {
+	public ModelMapper getAdminModelMapper() {
 
 		ModelMapper modelMapper = new ModelMapper();
 

@@ -2,8 +2,6 @@ package com.technokryon.ecommerce.user.controller;
 
 import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -41,7 +39,7 @@ public class UserAddressController {
 
 		User userDetail = userService.getUserDetailAPIKey(apiKey);
 
-		if (userAddress.getUadName() == null || userAddress.getUadName().isBlank()) {
+		if (userAddress.getUadName() == null || userAddress.getUadName().trim().isEmpty()) {
 
 			response.setMessage("Name is Empty..!");
 			return new ResponseEntity<Object>(response, HttpStatus.UNPROCESSABLE_ENTITY);
@@ -55,21 +53,21 @@ public class UserAddressController {
 
 		}
 
-		if (userAddress.getUadPostalCode() == null || userAddress.getUadPostalCode().isBlank()) {
+		if (userAddress.getUadPostalCode() == null || userAddress.getUadPostalCode().trim().isEmpty()) {
 
 			response.setMessage("PostalCode Is Empty..!");
 			return new ResponseEntity<Object>(response, HttpStatus.UNPROCESSABLE_ENTITY);
 
 		}
 
-		if (userAddress.getUadAddress() == null || userAddress.getUadAddress().isBlank()) {
+		if (userAddress.getUadAddress() == null || userAddress.getUadAddress().trim().isEmpty()) {
 
 			response.setMessage("Address Is Empty..!");
 			return new ResponseEntity<Object>(response, HttpStatus.UNPROCESSABLE_ENTITY);
 
 		}
 
-		if (userAddress.getUadCity() == null || userAddress.getUadCity().isBlank()) {
+		if (userAddress.getUadCity() == null || userAddress.getUadCity().trim().isEmpty()) {
 
 			response.setMessage("City Is Empty..!");
 			return new ResponseEntity<Object>(response, HttpStatus.UNPROCESSABLE_ENTITY);
@@ -83,7 +81,7 @@ public class UserAddressController {
 
 		}
 
-		if (userAddress.getUadAddressType() == null || userAddress.getUadAddressType().isBlank()) {
+		if (userAddress.getUadAddressType() == null || userAddress.getUadAddressType().trim().isEmpty()) {
 
 			response.setMessage("Address Type Is Empty..!");
 			return new ResponseEntity<Object>(response, HttpStatus.UNPROCESSABLE_ENTITY);
@@ -137,21 +135,21 @@ public class UserAddressController {
 
 		}
 
-		if (userAddress.getUadPostalCode() == null || userAddress.getUadPostalCode().isBlank()) {
+		if (userAddress.getUadPostalCode() == null || userAddress.getUadPostalCode().trim().isEmpty()) {
 
 			response.setMessage("PostalCode Is Empty..!");
 			return new ResponseEntity<Object>(response, HttpStatus.UNPROCESSABLE_ENTITY);
 
 		}
 
-		if (userAddress.getUadAddress() == null || userAddress.getUadAddress().isBlank()) {
+		if (userAddress.getUadAddress() == null || userAddress.getUadAddress().trim().isEmpty()) {
 
 			response.setMessage("Address Is Empty..!");
 			return new ResponseEntity<Object>(response, HttpStatus.UNPROCESSABLE_ENTITY);
 
 		}
 
-		if (userAddress.getUadCity() == null || userAddress.getUadCity().isBlank()) {
+		if (userAddress.getUadCity() == null || userAddress.getUadCity().trim().isEmpty()) {
 
 			response.setMessage("City Is Empty..!");
 			return new ResponseEntity<Object>(response, HttpStatus.UNPROCESSABLE_ENTITY);
@@ -165,7 +163,7 @@ public class UserAddressController {
 
 		}
 
-		if (userAddress.getUadAddressType() == null || userAddress.getUadAddressType().isBlank()) {
+		if (userAddress.getUadAddressType() == null || userAddress.getUadAddressType().trim().isEmpty()) {
 
 			response.setMessage("Address Type Is Empty..!");
 			return new ResponseEntity<Object>(response, HttpStatus.UNPROCESSABLE_ENTITY);

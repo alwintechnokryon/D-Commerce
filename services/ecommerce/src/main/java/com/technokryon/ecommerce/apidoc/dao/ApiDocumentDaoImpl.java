@@ -40,27 +40,37 @@ public class ApiDocumentDaoImpl implements ApiDocumentDao {
 
 		String getModuleList = "FROM APIDMMODULE WHERE mFlag =:flag";
 
+		String getApiList = "FROM APIDTAPI WHERE aApidmmAgId.mAgId =:moduleAgId ";
+
 		Query getModuleListQuery = sessionFactory.getCurrentSession().createQuery(getModuleList);
 
 		getModuleListQuery.setParameter("flag", module.getMFlag());
 
 		List<APIDMMODULE> aPIDMMODULE = getModuleListQuery.getResultList();
 
-		PropertyMap<APIDMMODULE, Module> propertyMap = new PropertyMap<APIDMMODULE, Module>() {
-			protected void configure() {
-
-				skip().setMFlag(null);
-			}
-		};
-		TypeMap<APIDMMODULE, Module> typeMap = modelMapper.getTypeMap(APIDMMODULE.class, Module.class);
-
-		if (typeMap == null) {
-			modelMapper.addMappings(propertyMap);
-		}
-
 		for (APIDMMODULE aPIDMMODULE1 : aPIDMMODULE) {
 
 			Module module2 = modelMapper.map(aPIDMMODULE1, Module.class);
+
+			Query getApiListQuery = sessionFactory.getCurrentSession().createQuery(getApiList);
+
+			getApiListQuery.setParameter("moduleAgId", aPIDMMODULE1.getMAgId());
+
+			List<APIDTAPI> aPIDTAPI = getApiListQuery.getResultList();
+
+			List<Api> api = new ArrayList<Api>();
+
+			for (APIDTAPI apidtapi1 : aPIDTAPI) {
+
+				Api api1 = new Api();
+				api1.setAName(apidtapi1.getAName());
+				api1.setAAgId(apidtapi1.getAAgId());
+				api.add(api1);
+
+				module2.setApi(api);
+
+			}
+
 			module1.add(module2);
 
 		}

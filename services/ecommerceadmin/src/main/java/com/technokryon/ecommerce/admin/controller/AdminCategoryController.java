@@ -75,11 +75,11 @@ public class AdminCategoryController {
 
 		Response response = new Response();
 
-		if (category.getCCategoryId().isBlank()) {
+		if (category.getCCategoryId().trim().isEmpty()) {
 			response.setMessage("category Id Is Empty");
 			return new ResponseEntity<Object>(response, HttpStatus.UNPROCESSABLE_ENTITY);
 		}
-		if (category.getCCategoryName().isBlank()) {
+		if (category.getCCategoryName().trim().isEmpty()) {
 
 			response.setMessage("category Name Is Empty");
 			return new ResponseEntity<Object>(response, HttpStatus.UNPROCESSABLE_ENTITY);

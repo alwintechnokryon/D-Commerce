@@ -53,7 +53,7 @@ public class RegisterController {
 
 		}
 
-		if (user.getUName() == null || user.getUName().isBlank()) {
+		if (user.getUName() == null || user.getUName().trim().isEmpty()) {
 			response.setMessage("User Name is Empty..!");
 			return new ResponseEntity<Object>(response, HttpStatus.UNPROCESSABLE_ENTITY);
 		}
@@ -61,7 +61,7 @@ public class RegisterController {
 		if (user.getURegType().equals("E")) {
 
 			// Null-check for user name
-			if (user.getUMail() == null || user.getUMail().isBlank()) {
+			if (user.getUMail() == null || user.getUMail().trim().isEmpty()) {
 
 				response.setMessage("Email Id is Empty..!");
 				return new ResponseEntity<Object>(response, HttpStatus.UNPROCESSABLE_ENTITY);
@@ -161,7 +161,7 @@ public class RegisterController {
 			return new ResponseEntity<Object>(response, HttpStatus.UNPROCESSABLE_ENTITY);
 		}
 
-		if (user.getUHashKey().isBlank()) {
+		if (user.getUHashKey().trim().isEmpty()) {
 
 			response.setMessage("Hash Key Is Empty..!");
 			return new ResponseEntity<Object>(response, HttpStatus.UNPROCESSABLE_ENTITY);
@@ -206,7 +206,7 @@ public class RegisterController {
 			return new ResponseEntity<Object>(response, HttpStatus.UNPROCESSABLE_ENTITY);
 		}
 
-		if (user.getUHashKey().isBlank()) {
+		if (user.getUHashKey().trim().isEmpty()) {
 
 			response.setMessage("Hash Key Is Empty..!");
 			return new ResponseEntity<Object>(response, HttpStatus.UNPROCESSABLE_ENTITY);
@@ -254,7 +254,7 @@ public class RegisterController {
 		if (user.getURegType().equals("E")) {
 
 			// Null-check for Email Id
-			if (user.getUMail() == null || user.getUMail().isBlank()) {
+			if (user.getUMail() == null || user.getUMail().trim().isEmpty()) {
 
 				response.setMessage("Email Id is Empty..!");
 				return new ResponseEntity<Object>(response, HttpStatus.UNPROCESSABLE_ENTITY);
@@ -387,7 +387,7 @@ public class RegisterController {
 
 		if (user.getURegType().equals("E")) {
 
-			if (user.getUMail() == null || user.getUMail().isBlank()) {
+			if (user.getUMail() == null || user.getUMail().trim().isEmpty()) {
 
 				response.setMessage("Email Id Is Empty..!");
 
@@ -460,7 +460,7 @@ public class RegisterController {
 			return new ResponseEntity<Object>(response, HttpStatus.UNPROCESSABLE_ENTITY);
 		}
 
-		if (user.getUHashKey().isBlank()) {
+		if (user.getUHashKey().trim().isEmpty()) {
 
 			response.setMessage("Hash Key Is Empty..!");
 			return new ResponseEntity<Object>(response, HttpStatus.UNPROCESSABLE_ENTITY);
@@ -494,7 +494,7 @@ public class RegisterController {
 			return new ResponseEntity<Object>(response, HttpStatus.UNPROCESSABLE_ENTITY);
 		}
 
-		if (user.getOldPassword().isBlank()) {
+		if (user.getOldPassword().trim().isEmpty()) {
 
 			response.setMessage("Old Password Is Empty ..!");
 			return new ResponseEntity<Object>(response, HttpStatus.UNPROCESSABLE_ENTITY);

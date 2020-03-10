@@ -52,17 +52,17 @@ public class AdminProductController {
 
 		Response response = new Response();
 
-		if (productName.isBlank()) {
+		if (productName.trim().isEmpty()) {
 
 			response.setMessage("Product Name is Empty..!");
 			return new ResponseEntity<Object>(response, HttpStatus.UNPROCESSABLE_ENTITY);
 		}
-		if (sku.isBlank()) {
+		if (sku.trim().isEmpty()) {
 
 			response.setMessage("SKU is Empty..!");
 			return new ResponseEntity<Object>(response, HttpStatus.UNPROCESSABLE_ENTITY);
 		}
-		if (categoryId.isBlank()) {
+		if (categoryId.trim().isEmpty()) {
 
 			response.setMessage("CategoryId is Empty..!");
 			return new ResponseEntity<Object>(response, HttpStatus.UNPROCESSABLE_ENTITY);
@@ -77,17 +77,17 @@ public class AdminProductController {
 			response.setMessage("Quantity is Empty..!");
 			return new ResponseEntity<Object>(response, HttpStatus.UNPROCESSABLE_ENTITY);
 		}
-		if (shortDesc.isBlank()) {
+		if (shortDesc.trim().isEmpty()) {
 
 			response.setMessage("Short Desc is Empty..!");
 			return new ResponseEntity<Object>(response, HttpStatus.UNPROCESSABLE_ENTITY);
 		}
-		if (longDesc.isBlank()) {
+		if (longDesc.trim().isEmpty()) {
 
 			response.setMessage("Long Desc is Empty..!");
 			return new ResponseEntity<Object>(response, HttpStatus.UNPROCESSABLE_ENTITY);
 		}
-		if (productTypeId.isBlank()) {
+		if (productTypeId.trim().isEmpty()) {
 
 			response.setMessage("Product Type is Empty..!");
 			return new ResponseEntity<Object>(response, HttpStatus.UNPROCESSABLE_ENTITY);
